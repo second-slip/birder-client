@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ReadTokenService } from '../_auth/read-token.service';
 import { AuthenticationService } from '../_services/authentication.service';
-import { TokenService } from '../_services/token.service';
+
 // import { UserViewModel } from '@app/_models/UserViewModel';
 // import { AuthenticationService } from '@app/_services/authentication.service';
 // import { TokenService } from '@app/_services/token.service';
@@ -13,25 +15,22 @@ import { TokenService } from '../_services/token.service';
 })
 export class NavMenuComponent implements OnInit {
   isNavbarCollapsed = true;
-  isLoggedIn: boolean = false;
-  //subscription: Subscription;
-  //authenticatedUser: UserViewModel;
 
-  constructor(private authenticationService: AuthenticationService
-    , private tokenService: TokenService) { }
+  authenticatedUser: any; // UserViewModel;
+
+  constructor(readonly _service: AuthenticationService) {}
 
   ngOnInit(): void {
-    // this.subscription = this.authenticationService.isAuthenticated$
-    //   .subscribe(isLoggedIn => {
-    //     this.isLoggedIn = isLoggedIn;
-    //     this.updateAuthenticatedUser();
-    //   });
-    // this.authenticationService.checkIsAuthenticated();
+    this._getAuthStatus();
   }
 
-  // updateAuthenticatedUser(): void {
-  //   if (this.isLoggedIn === true) {
-  //     this.authenticatedUser = this.tokenService.getAuthenticatedUserDetails();
+  private _getAuthStatus(): void {
+    this._service.TEMPORARY();
+  }
+
+  // private _getAuthenticatedUser(): void {
+  //   if (this.isLoggedIn) {
+  //     this.authenticatedUser = this._service.GetAuthenticatedUserDetails();
   //   } else {
   //     this.authenticatedUser = null;
   //   }

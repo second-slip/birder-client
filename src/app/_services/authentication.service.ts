@@ -3,8 +3,8 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { tap } from 'rxjs/operators';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { LoginViewModel } from './LoginViewModel';
-import { AuthenticationResultDto } from './AuthenticationResultDto';
+import { IauthenticationResult } from '../_auth/iauthentication-result.dto';
+import { Ilogin } from '../_auth/ilogin.dto';
 
 
 const httpOptions = {
@@ -16,23 +16,26 @@ const httpOptions = {
 })
 
 export class AuthenticationService {
-  private isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  isAuthenticated$: Observable<boolean> = this.isAuthenticated.asObservable();
+  private readonly _isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  
+  isAuthenticated$: Observable<boolean> = this._isAuthenticated$.asObservable();
 
-  constructor(private readonly _http: HttpClient
-    , private jwtHelper: JwtHelperService) { }
+  constructor(private readonly _http: HttpClient, private jwtHelper: JwtHelperService) { }
 
-  login(viewModel: LoginViewModel): Observable<AuthenticationResultDto> {
-    return this._http.post<any>('api/Authentication/login', viewModel, httpOptions)
-      .pipe(
-        tap(response => this.setAuthenticationToken(response)));
+  public get isAuth(): Observable<boolean> {
+    return this._isAuthenticated$.asObservable();
   }
 
-  setAuthenticationToken(token: AuthenticationResultDto): void {
-    if (token && token.authenticationToken) {
-      localStorage.setItem('jwt', token.authenticationToken);
-      this.isAuthenticated.next(true);
-    }
+
+  public TEMPORARY(): void {
+    return;
+  }
+
+
+  public login(viewModel: Ilogin): Observable<IauthenticationResult> {
+    return this._http.post<any>('api/Authentication/login', viewModel, httpOptions)
+      .pipe(
+        tap(response => this._setAuthenticationToken(response)));
   }
 
   getAuthenticationToken(): string {
@@ -47,19 +50,26 @@ export class AuthenticationService {
 
   logout(): void {
     localStorage.removeItem('jwt');
-    this.isAuthenticated.next(false);
+    this._isAuthenticated$.next(false);
   }
 
   checkIsAuthenticated(): boolean {
     const token = localStorage.getItem('jwt');
 
     if (token && !this.jwtHelper.isTokenExpired(token)) {
-      this.isAuthenticated.next(true);
+      this._isAuthenticated$.next(true);
       return true;
     } else {
       localStorage.removeItem('jwt');
-      this.isAuthenticated.next(false);
+      this._isAuthenticated$.next(false);
       return false;
+    }
+  }
+
+  private _setAuthenticationToken(token: IauthenticationResult): void {
+    if (token && token.authenticationToken) {
+      localStorage.setItem('jwt', token.authenticationToken);
+      this._isAuthenticated$.next(true);
     }
   }
 }

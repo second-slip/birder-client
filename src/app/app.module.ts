@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './_services/auth-guard.service';
 import { AuthenticationService } from './_services/authentication.service';
-import { TokenService } from './_services/token.service';
 import { AboutComponent } from './_home/about/about.component';
 import { ContactComponent } from './_home/contact/contact.component';
 import { ContactFormComponent } from './_home/contact-form/contact-form.component';
@@ -39,6 +38,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ReadTokenService } from './_auth/read-token.service';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -100,7 +100,7 @@ export function tokenGetter() {
     }),
   ],
   providers: [
-    AuthenticationService, TokenService, AuthGuard
+    AuthenticationService, ReadTokenService, AuthGuard
   ],
   bootstrap: [AppComponent]
 })

@@ -6,7 +6,6 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { IauthenticationResult } from '../_auth/iauthentication-result.dto';
 import { Ilogin } from '../_auth/ilogin.dto';
 
-
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };

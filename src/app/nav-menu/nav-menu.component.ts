@@ -1,11 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { ReadTokenService } from '../_auth/read-token.service';
 import { AuthenticationService } from '../_services/authentication.service';
-
-// import { UserViewModel } from '@app/_models/UserViewModel';
-// import { AuthenticationService } from '@app/_services/authentication.service';
-// import { TokenService } from '@app/_services/token.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -15,10 +9,10 @@ import { AuthenticationService } from '../_services/authentication.service';
 })
 export class NavMenuComponent implements OnInit {
   isNavbarCollapsed = true;
-
+  // need to read this from token service...
   authenticatedUser: any; // UserViewModel;
 
-  constructor(readonly _service: AuthenticationService) {}
+  constructor(readonly _service: AuthenticationService) { }
 
   ngOnInit(): void {
     this._getAuthStatus();

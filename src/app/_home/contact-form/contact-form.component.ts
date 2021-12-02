@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { throwError } from 'rxjs';
-import { ContactFormService } from '../contact-form.service';
-import { ContactFormModel } from '../ContactFormModel';
+import { ContactFormModel } from './contact-form-model';
+import { ContactFormService } from './contact-form.service';
 
 @Component({
   selector: 'app-contact-form',

@@ -14,21 +14,24 @@
             <!-- authenticated -->
             <ng-container *ngIf="(_service.isAuth | async)">
 
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" [routerLink]='["/observation-feed"]'>Feed</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" [routerLink]='["/birds-index"]'>Birds</a>
-                    </li>
-                    <!-- READ USERNAME FROM TOKEN -->
-                    <!-- <li class="nav-item" *ngIf="observables.authenticated">
-                        <a class="nav-link" routerLink="/life-list/{{authenticatedUser.userName}}">Life List</a>
-                    </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link" [routerLink]='["/network"]'>Network</a>
-                    </li>
-                </ul>
+                <ng-container *ngIf="(_service.getAuthUser | async) as authUser">
+
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLink]='["/observation-feed"]'>Feed</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLink]='["/birds-index"]'>Birds</a>
+                        </li>
+                        <!-- READ USERNAME FROM TOKEN -->
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/life-list/{{authUser.userName}}">Life List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLink]='["/network"]'>Network</a>
+                        </li>
+                    </ul>
+
                 <!--  -->
                 <div class="right-hand-menu">
                     <ul class="nav navbar-nav mr-auto">
@@ -48,15 +51,15 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img class="avatar" src={{authenticatedUser.avatar}} width="29" height="29"><span
+                                <img class="avatar" src={{authUser.avatar}} width="29" height="29"><span
                                     class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item small-text"
-                                    routerLink="/user-profile/{{authenticatedUser.userName}}">Signed in
-                                    as:<br><span class="username">{{ authenticatedUser.userName }}</span></a>
+                                    routerLink="/user-profile/{{authUser.userName}}">Signed in
+                                    as:<br><span class="username">{{authUser.userName}}</span></a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" routerLink="/user-profile/{{authenticatedUser.userName}}">My
+                                <a class="dropdown-item" routerLink="/user-profile/{{authUser.userName}}">My
                                     Profile</a>
                                 <a class="dropdown-item" [routerLink]='["/account-manager-profile"]'>Manage Account</a>
                                 <a class="dropdown-item" [routerLink]='["/logout"]'>Logout</a>
@@ -64,6 +67,7 @@
                         </li>
                     </ul>
                 </div>
+                </ng-container>
 
             </ng-container>
 

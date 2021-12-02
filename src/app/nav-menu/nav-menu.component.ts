@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ReadTokenService } from '../_auth/read-token.service';
 import { AuthenticationService } from '../_services/authentication.service';
 
 @Component({
@@ -16,10 +17,11 @@ export class NavMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this._getAuthStatus();
+    // this._serv.GetAuthenticatedUserDetails();
   }
 
   private _getAuthStatus(): void {
-    this._service.TEMPORARY();
+    this._service.checkAuthStatus();
   }
 
   private _getAuthenticatedUser(): void {

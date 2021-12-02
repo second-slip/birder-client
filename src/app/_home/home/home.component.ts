@@ -15,8 +15,8 @@ export class HomeComponent implements OnInit {
     , private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
-    if (this.authenticationService.checkIsAuthenticated()) {
-      this.router.navigate(['/observation-feed']);
-    }
+    //if (this.authenticationService.checkIsAuthenticated()) {
+    //  this.router.navigate(['/observation-feed']);
+    //}
   }
 }

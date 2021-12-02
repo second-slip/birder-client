@@ -11,12 +11,13 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router
-    , private authenticationService: AuthenticationService) { }
+  constructor(private router: Router, private _authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
     //if (this.authenticationService.checkIsAuthenticated()) {
     //  this.router.navigate(['/observation-feed']);
     //}
+    if (this._authenticationService.isAuthorised)
+      this.router.navigate(['/observation-feed']);
   }
 }

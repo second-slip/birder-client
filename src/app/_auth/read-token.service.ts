@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { UserViewModel } from '../_services/UserViewModel';
+import { IauthUser } from './iauth-user.dto';
+
 
 @Injectable({
   providedIn: 'root'
@@ -33,14 +34,14 @@ export class ReadTokenService {
     localStorage.removeItem('jwt');
   }
 
-  public GetUser(): UserViewModel | null {
+  public GetUser(): IauthUser | null {
     const token = this._getToken();
 
     if (token && !this._jwtHelper.isTokenExpired(token)) {
 
       const tokenDecoded = this._jwtHelper.decodeToken(token);
 
-      return <UserViewModel>{
+      return <IauthUser>{
         userName: tokenDecoded.unique_name,
         avatar: tokenDecoded.ImageUrl,
         defaultLocationLatitude: Number(tokenDecoded.DefaultLatitude),

@@ -12,7 +12,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
             <!-- authenticated -->
-            <ng-container *ngIf="(_service.isAuth | async)">
+            <ng-container *ngIf="(_service.isAuthorisedObservable | async)">
 
                 <ng-container *ngIf="(_service.getAuthUser | async) as authUser">
 
@@ -72,7 +72,7 @@
             </ng-container>
 
             <!-- not authenticated -->
-            <ng-container *ngIf="!(_service.isAuth | async)">
+            <ng-container *ngIf="!(_service.isAuthorisedObservable | async)">
 
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { UserViewModel } from './UserViewModel';
+import { IauthUser } from '../_auth/iauth-user.dto';
 import { ReadTokenService } from '../_auth/read-token.service';
 
 @Injectable({
@@ -9,16 +9,21 @@ import { ReadTokenService } from '../_auth/read-token.service';
 
 export class AuthenticationService {
   private readonly _isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private readonly _authenticatedUser$: BehaviorSubject<UserViewModel | null> = new BehaviorSubject<UserViewModel | null>(null);
-  //OLD implementation:  isAuthenticated$: Observable<boolean> = this._isAuthenticated$.asObservable();
+  private readonly _authenticatedUser$: BehaviorSubject<IauthUser | null> = new BehaviorSubject<IauthUser | null>(null);
+  // OLD implementation:  isAuthenticated$: Observable<boolean> = this._isAuthenticated$.asObservable();
 
   constructor(private _token: ReadTokenService) { }
 
-  public get isAuth(): Observable<boolean> {
+  public get isAuthorisedObservable(): Observable<boolean> {
     return this._isAuthenticated$.asObservable();
   }
 
-  public get getAuthUser(): Observable<UserViewModel | null> {
+  // to avoid subscription in component, when it is not neccessary/appropriate...
+  public get isAuthorised(): boolean {
+    return this._isAuthenticated$.value;
+  }
+
+  public get getAuthUser(): Observable<IauthUser | null> {
     return this._authenticatedUser$.asObservable();
   }
 
@@ -26,18 +31,6 @@ export class AuthenticationService {
     this._checkAuthStatus();
     this._updateUser();
   }
-  // checkIsAuthenticated(): boolean {
-  //   const token = localStorage.getItem('jwt');
-
-  //   if (token && !this.jwtHelper.isTokenExpired(token)) {
-  //     this._isAuthenticated$.next(true);
-  //     return true;
-  //   } else {
-  //     localStorage.removeItem('jwt');
-  //     this._isAuthenticated$.next(false);
-  //     return false;
-  //   }
-  // }
 
   public logout(): void {
     this._token.removeToken();
@@ -58,7 +51,7 @@ export class AuthenticationService {
   // move to separate service..........
   // public login(viewModel: Ilogin): Observable<IauthenticationResult> {
   //   return this._http.post<any>('api/Authentication/login', viewModel, httpOptions)
-  //     .pipe(
-  //       tap(response => this._setAuthenticationToken(response)));
+  //     .pipe(tap(response => this._setAuthenticationToken(response)));
+  //  call GetAuthStatus on success...
   // }
 }

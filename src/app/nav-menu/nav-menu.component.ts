@@ -28,12 +28,12 @@ export class NavMenuComponent implements OnInit {
     this._service.TEMPORARY();
   }
 
-  // private _getAuthenticatedUser(): void {
+  private _getAuthenticatedUser(): void {
   //   if (this.isLoggedIn) {
   //     this.authenticatedUser = this._service.GetAuthenticatedUserDetails();
   //   } else {
   //     this.authenticatedUser = null;
   //   }
-  // }
+  }
 }
 

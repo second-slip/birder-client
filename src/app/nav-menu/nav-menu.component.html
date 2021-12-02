@@ -1,39 +1,36 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
     <div class="container">
+        <a class="navbar-brand" [routerLink]='["/"]'>
+            <img src="https://birderweb.com/favicon-32x32.png" class="d-inline-block align-top" alt="">
+            Birder
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-        <ng-container *ngIf="{ authenticated: _service.isAuth | async } as observables">
-
-            <a class="navbar-brand" [routerLink]='["/"]'>
-                <img src="https://birderweb.com/favicon-32x32.png" class="d-inline-block align-top" alt="">
-                Birder
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- authenticated -->
+            <ng-container *ngIf="(_service.isAuth | async)">
+                
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item" *ngIf="!observables.authenticated">
-                        <a class="nav-link" [routerLink]='["/about"]'>About</a>
-                    </li>
-                    <li class="nav-item" *ngIf="observables.authenticated">
+                    <li class="nav-item">
                         <a class="nav-link" [routerLink]='["/observation-feed"]'>Feed</a>
                     </li>
-                    <li class="nav-item" *ngIf="observables.authenticated">
+                    <li class="nav-item">
                         <a class="nav-link" [routerLink]='["/birds-index"]'>Birds</a>
                     </li>
+                    <!-- READ USERNAME FROM TOKEN -->
                     <!-- <li class="nav-item" *ngIf="observables.authenticated">
-                    <a class="nav-link" routerLink="/life-list/{{observables.authenticatedUser.userName}}">Life List</a>
+                <a class="nav-link" routerLink="/life-list/{{authenticatedUser.userName}}">Life List</a>
                 </li> -->
-                    <li class="nav-item" *ngIf="observables.authenticated">
+                    <li class="nav-item">
                         <a class="nav-link" [routerLink]='["/network"]'>Network</a>
                     </li>
-
                 </ul>
-
-                <div class="right-hand-menu" *ngIf="observables.authenticated">
+                <!--  -->
+                <div class="right-hand-menu">
                     <ul class="nav navbar-nav mr-auto">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -68,7 +65,18 @@
                     </ul>
                 </div>
 
-                <div class="right-hand-menu" *ngIf="!observables.authenticated">
+            </ng-container>
+
+            <!-- not authenticated -->
+            <ng-container *ngIf="!(_service.isAuth | async)">
+                
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]='["/about"]'>About</a>
+                    </li>
+                </ul>
+                <!--  -->
+                <div class="right-hand-menu">
                     <ul class="nav navbar-nav me-2">
                         <li class="nav-item">
                             <a class="nav-link" [routerLink]='["/login"]'>Login</a>
@@ -79,10 +87,7 @@
                     </ul>
                 </div>
 
-            </div>
-
-        </ng-container>
-
+            </ng-container>
+        </div>
     </div>
-
 </nav>

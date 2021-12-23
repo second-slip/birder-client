@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { IauthUser } from '../_auth/iauth-user.dto';
-import { ReadTokenService } from '../_auth/read-token.service';
+import { IauthUser } from './iauth-user.dto';
+import { ReadTokenService } from './read-token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -46,12 +46,4 @@ export class AuthenticationService {
     // const user = this._token.GetUser();
     this._authenticatedUser$.next(this._token.GetUser());
   }
-
-
-  // move to separate service..........
-  // public login(viewModel: Ilogin): Observable<IauthenticationResult> {
-  //   return this._http.post<any>('api/Authentication/login', viewModel, httpOptions)
-  //     .pipe(tap(response => this._setAuthenticationToken(response)));
-  //  call GetAuthStatus on success...
-  // }
 }

@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './_services/auth-guard.service';
-import { AuthenticationService } from './_services/authentication.service';
+import { AuthenticationService } from './_auth/authentication.service';
 import { AboutComponent } from './_home/about/about.component';
 import { ContactComponent } from './_home/contact/contact.component';
 import { ContactFormComponent } from './_home/contact-form/contact-form.component';
@@ -39,6 +39,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ReadTokenService } from './_auth/read-token.service';
+import { LoginComponent } from './login/login.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -60,7 +61,8 @@ export function tokenGetter() {
 
     //
     LayoutSidebarComponent,
-    LayoutNoSidebarComponent
+    LayoutNoSidebarComponent,
+    LoginComponent
   ],
   imports: [
     AppRoutingModule,

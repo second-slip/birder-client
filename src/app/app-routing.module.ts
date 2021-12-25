@@ -42,6 +42,7 @@
 
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { LoginComponent } from "./login/login.component";
 import { AboutComponent } from "./_home/about/about.component";
 import { ContactComponent } from "./_home/contact/contact.component";
 import { DeveloperComponent } from "./_home/developer/developer.component";
@@ -62,7 +63,7 @@ const routes: Routes = [
       { path: 'about', component: AboutComponent },
       { path: 'contact', component: ContactComponent },
       { path: 'technology', component: TechnologyComponent },
-      // { path: 'login', component: LoginComponent },
+      { path: 'login', component: LoginComponent },
       // { path: 'register', component: RegisterComponent },
       // { path: 'confirm-email', component: ConfirmEmailComponent },
       // { path: 'confirmed-email', component: ConfirmedEmailComponent },

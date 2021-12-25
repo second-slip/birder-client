@@ -82,7 +82,8 @@
               "browserTarget": "birder-client:build:production"
             },
             "development": {
-              "browserTarget": "birder-client:build:development"
+              "browserTarget": "birder-client:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

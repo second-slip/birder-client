@@ -1,11 +1,9 @@
 {
-  "posts": [
-    {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
+  "posts": {
+    "password": "",
+    "rememberMe": false,
+    "userName": ""
+  },
   "comments": [
     {
       "id": 1,

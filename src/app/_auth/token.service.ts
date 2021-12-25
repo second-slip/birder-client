@@ -2,16 +2,18 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { IauthUser } from './iauth-user.dto';
 
-
 @Injectable({
   providedIn: 'root'
 })
-export class ReadTokenService {
+export class TokenService { // should just be token service!
 
   constructor(private _jwtHelper: JwtHelperService) { }
 
   public isTokenValid(): boolean {
+  return this._isValidToken();
+  }
 
+  private _isValidToken(): boolean {
     const token = this._getToken();
 
     if (token && !this._jwtHelper.isTokenExpired(token)) {
@@ -21,7 +23,6 @@ export class ReadTokenService {
       return false;
     }
   }
-
   private _getToken(): string | null {
     return localStorage.getItem('jwt');
   }
@@ -34,7 +35,13 @@ export class ReadTokenService {
     localStorage.removeItem('jwt');
   }
 
-  public GetUser(): IauthUser | null {
+  public addToken(token: string): void {
+    if (this.isTokenValid()) {
+      localStorage.setItem('jwt', token);
+    }
+  }
+
+  public getUser(): IauthUser | null {
     const token = this._getToken();
 
     if (token && !this._jwtHelper.isTokenExpired(token)) {

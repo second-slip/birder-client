@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { IauthUser } from './iauth-user.dto';
-import { ReadTokenService } from './read-token.service';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class AuthenticationService {
   private readonly _authenticatedUser$: BehaviorSubject<IauthUser | null> = new BehaviorSubject<IauthUser | null>(null);
   // OLD implementation:  isAuthenticated$: Observable<boolean> = this._isAuthenticated$.asObservable();
 
-  constructor(private _token: ReadTokenService) { }
+  constructor(private _token: TokenService) { }
 
   public get isAuthorisedObservable(): Observable<boolean> {
     return this._isAuthenticated$.asObservable();
@@ -44,6 +44,6 @@ export class AuthenticationService {
 
   private _updateUser(): void {
     // const user = this._token.GetUser();
-    this._authenticatedUser$.next(this._token.GetUser());
+    this._authenticatedUser$.next(this._token.getUser());
   }
 }

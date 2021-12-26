@@ -47,6 +47,6 @@ Thumbs.db
 
 # json-server helpers
 .middleware.js
-.db.json
+db.json
 .routes.json
 

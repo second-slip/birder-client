@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { AuthenticationService } from '../_auth/authentication.service';
-import { IauthenticationResult } from '../_auth/iauthentication-result.dto';
-import { TokenService } from '../_auth/token.service';
+import { AuthenticationService } from '../authentication.service';
+import { IauthenticationResult } from '../iauthentication-result.dto';
+import { TokenService } from '../token.service';
 import { Ilogin } from './ilogin.dto';
 
 const httpOptions = {
@@ -24,8 +24,7 @@ export class LoginService {
 
   public login(viewModel: Ilogin): Observable<IauthenticationResult> {
     return this._http.post<any>('api/authentication/login', viewModel, httpOptions)
-      .pipe(
-        tap(response => this._handleSuccess(response)))
+      .pipe(tap(response => this._handleSuccess(response)))
   }
 
   private _handleSuccess(response: IauthenticationResult): void {

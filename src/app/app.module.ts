@@ -39,8 +39,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TokenService } from './_auth/token.service';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './_auth/login/login.component';
 import { AuthenticationGuardService } from './_auth/authentication-guard.service';
+import { LogoutComponent } from './_auth/logout/logout.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -63,7 +64,8 @@ export function tokenGetter() {
     //
     LayoutSidebarComponent,
     LayoutNoSidebarComponent,
-    LoginComponent
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     AppRoutingModule,

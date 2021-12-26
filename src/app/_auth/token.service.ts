@@ -10,7 +10,7 @@ export class TokenService { // should just be token service!
   constructor(private _jwtHelper: JwtHelperService) { }
 
   public isTokenValid(): boolean {
-  return this._isValidToken();
+    return this._isValidToken();
   }
 
   private _isValidToken(): boolean {
@@ -36,9 +36,13 @@ export class TokenService { // should just be token service!
   }
 
   public addToken(token: string): void {
-    if (this.isTokenValid()) {
+    //console.log('lh');
+    // if (this.isTokenValid()) {
+    //console.log('ll');
+    if (token && !this._jwtHelper.isTokenExpired(token)) {
       localStorage.setItem('jwt', token);
     }
+    // }
   }
 
   public getUser(): IauthUser | null {

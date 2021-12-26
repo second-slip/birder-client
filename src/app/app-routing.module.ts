@@ -42,7 +42,7 @@
 
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { LoginComponent } from "./login/login.component";
+import { LoginComponent } from "./_auth/login/login.component";
 import { AboutComponent } from "./_home/about/about.component";
 import { ContactComponent } from "./_home/contact/contact.component";
 import { DeveloperComponent } from "./_home/developer/developer.component";

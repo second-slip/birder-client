@@ -46,7 +46,7 @@ testem.log
 Thumbs.db
 
 # json-server helpers
-middleware.js
-db.json
-routes.json
+.middleware.js
+.db.json
+.routes.json
 

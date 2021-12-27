@@ -6,22 +6,22 @@ import { Router, NavigationEnd } from '@angular/router'
   providedIn: 'root'
 })
 export class NavigationService {
-  private history: string[] = []
+  private _history: string[] = []
 
-  constructor(private router: Router, private location: Location) {
-    this.router.events.subscribe((event) => {
+  constructor(private _router: Router, private _location: Location) {
+    this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.history.push(event.urlAfterRedirects)
+        this._history.push(event.urlAfterRedirects)
       }
     })
   }
 
-  back(): void {
-    this.history.pop()
-    if (this.history.length > 0) {
-      this.location.back()
+  public back(): void {
+    this._history.pop()
+    if (this._history.length > 0) {
+      this._location.back()
     } else {
-      this.router.navigateByUrl('/')
+      this._router.navigateByUrl('/')
     }
   }
 }

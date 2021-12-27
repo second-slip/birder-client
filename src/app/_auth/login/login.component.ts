@@ -55,7 +55,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       })
   }
 
-
   // ToDo: decide on the best approach.
   // Not all errors will be the AuthenticationFailureReason - what about connectivity errors etc?
   private _handleError(error: AuthenticationFailureReason): void {

@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { finalize } from 'rxjs';
 import { ParentErrorStateMatcher } from '../../_validators';
 import { AuthenticationService } from '../authentication.service';
 import { Ilogin } from './ilogin.dto';
 import { LoginService } from './login.service';
+import { AuthenticationFailureReason } from '../authentication-failure-reason';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,7 @@ import { LoginService } from './login.service';
 export class LoginComponent implements OnInit {
   requesting: boolean;
   loginForm: FormGroup;
-  errorMessage: string;
+  public errorObject = null;
   parentErrorStateMatcher = new ParentErrorStateMatcher();
   returnUrl: string;
 
@@ -27,9 +29,6 @@ export class LoginComponent implements OnInit {
     'password': [
       { type: 'required', message: 'Password is required' }
     ]
-    // 'rememberMe': [
-    //   { type: 'pattern', message: 'You must accept terms and conditions' }
-    // ]
   };
 
   constructor(private readonly _service: LoginService
@@ -39,38 +38,46 @@ export class LoginComponent implements OnInit {
     , private readonly _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-
     this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
-    this._createForms();
+    this._createForm();
     this._authService.logout();
-
-
-    // const model = <Ilogin>{
-    //   password: '',
-    //   rememberMe: false,
-    //   userName: ''
-    // }
-
-    // this.onSubmit(model);
   }
 
-
   public onSubmit(formData: Ilogin): void {
-
-    //console.log(formData);
+    this.requesting = true;
+    this.loginForm.disable();
+    if (this.errorObject) this.errorObject = null;
 
     this._service.login(formData)
+      .pipe(finalize(() => { this.requesting = false; this.loginForm.enable(); }))
       .subscribe({
-        next: (r) => {
-          console.log(r);
-          this._router.navigate([this.returnUrl]);
-        },
-        error: (e) => { console.log(e); },
+        next: (r) => { this._router.navigate([this.returnUrl]); },
+        error: (e) => { this.errorObject = e; this._handleError(e); },
         complete: () => { }
       })
   }
 
-  private _createForms(): void {
+  // ToDo: decide on the best approach.
+  // Not all errors will be the AuthenticationFailureReason - what about connectivity errors etc?
+  private _handleError(error: AuthenticationFailureReason): void {
+    switch (error) {
+      case AuthenticationFailureReason.EmailConfirmationRequired: {
+        // this.toast.info('You must confirm your email address before you can login.', 'Confirm your email', {
+        //   timeOut: 8000
+        // });
+        this._router.navigate(['/confirm-email']);
+        break;
+      }
+      case AuthenticationFailureReason.LockedOut: {
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
+
+  private _createForm(): void {
     this.loginForm = this._formBuilder.group({
       username: new FormControl('', Validators.compose([
         Validators.required,

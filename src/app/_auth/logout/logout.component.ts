@@ -1,17 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
+import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
-  styleUrls: ['./logout.component.scss']
+  styleUrls: ['./logout.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class LogoutComponent implements OnInit {
+export class LogoutComponent {
 
-  constructor(private readonly _authService: AuthenticationService) { }
+  constructor(private readonly _authService: AuthenticationService
+    , private readonly _navigation: NavigationService
+    , private readonly _router: Router) { }
 
-  ngOnInit(): void {
+  public confirmLogout(): void {
     this._authService.logout();
+    this._router.navigate(['home']);
   }
 
+  public cancelLogout(): void {
+    this._navigation.back();
+  }
 }

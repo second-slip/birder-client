@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { ParentErrorStateMatcher } from '../../_validators';
 import { AuthenticationService } from '../authentication.service';
 import { Ilogin } from './ilogin.dto';
@@ -14,12 +14,13 @@ import { AuthenticationFailureReason } from '../authentication-failure-reason';
   styleUrls: ['./login.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class LoginComponent implements OnInit {
-  requesting: boolean;
-  loginForm: FormGroup;
+export class LoginComponent implements OnInit, OnDestroy {
+  private _returnUrl: string;
+  private _subscription = new Subject();
+  public requesting: boolean;
+  public loginForm: FormGroup;
   public errorObject = null;
-  parentErrorStateMatcher = new ParentErrorStateMatcher();
-  returnUrl: string;
+  public parentErrorStateMatcher = new ParentErrorStateMatcher();
 
   login_validation_messages = {
     'username': [
@@ -38,7 +39,7 @@ export class LoginComponent implements OnInit {
     , private readonly _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
+    this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
     this._createForm();
     this._authService.logout();
   }
@@ -49,9 +50,9 @@ export class LoginComponent implements OnInit {
     if (this.errorObject) this.errorObject = null;
 
     this._service.login(formData)
-      .pipe(finalize(() => { this.requesting = false; this.loginForm.enable(); }))
+      .pipe(finalize(() => { this.requesting = false; this.loginForm.enable(); }), takeUntil(this._subscription))
       .subscribe({
-        next: (r) => { this._router.navigate([this.returnUrl]); },
+        next: (r) => { this._router.navigate([this._returnUrl]); },
         error: (e) => { this.errorObject = e; this._handleError(e); },
         complete: () => { }
       })
@@ -88,5 +89,11 @@ export class LoginComponent implements OnInit {
       ])),
       rememberMe: new FormControl(false)
     });
+  }
+
+  ngOnDestroy(): void {
+    console.log('unsubscribe');
+    this._subscription.next('');
+    this._subscription.complete();
   }
 }

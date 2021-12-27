@@ -1,6 +1,6 @@
 <div class="login-container">
 
-    <h1 class="section-title">Login</h1>
+    <h1 class="header">Login</h1>
 
     <div *ngIf="errorObject" class="alert alert-danger">
         <h4>Login failed</h4>
@@ -39,8 +39,6 @@
                 logged in
             </div>
 
-
-
             <button *ngIf="!requesting" type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">
                 Login
             </button>
@@ -50,7 +48,6 @@
             </button>
 
             <a class="btn btn-link" [routerLink]='["/forgot-password"]'>Forgot password?</a>
-
 
         </form>
     </div>

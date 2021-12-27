@@ -15,9 +15,6 @@ const httpOptions = {
 })
 export class LoginService {
 
-  // subscribe in template
-  // subscribe until
-
   constructor(private readonly _http: HttpClient
     , private readonly _token: TokenService
     , private readonly _authService: AuthenticationService) { }
@@ -28,23 +25,7 @@ export class LoginService {
   }
 
   private _handleSuccess(response: IauthenticationResult): void {
-    console.log(response);
     this._token.addToken(response.authenticationToken);
     this._authService.checkAuthStatus();
   }
-
-  // move to separate service..........
-  // public login(viewModel: Ilogin): Observable<IauthenticationResult> {
-  //   return this._http.post<any>('api/Authentication/login', viewModel, httpOptions)
-  //     .pipe(tap(response => this._setAuthenticationToken(response)));
-  //  call GetAuthStatus on success...
-  // }
-
-
-  // setAuthenticationToken(token: AuthenticationResultDto): void {
-  //   if (token && token.authenticationToken) {
-  //     localStorage.setItem('jwt', token.authenticationToken);
-  //     this.isAuthenticated.next(true);
-  //   }
-  // }
 }

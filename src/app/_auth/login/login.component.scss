@@ -1,6 +1,6 @@
 app-login {
-    .section-title {
-        margin-bottom: 20px;
+    .header {
+        margin-bottom: 5%;
     }
 
     .ng-valid[required],
@@ -17,10 +17,6 @@ app-login {
         margin-bottom: 3%;
     }
 
-    // .btn {
-    //     margin-top: 20px;
-    // }
-
     /* Small devices (portrait tablets and large phones, 600px and up) */
     // @media only screen and (min-width: 600px) {
     //     // th.stat, td.stat {
@@ -30,8 +26,6 @@ app-login {
 
     @media only screen and (max-width: 768px) {
         .login-container {
-            // background: #f8ff2c; // #fff12c; // #dce513;
-            // border-radius: 10px;
             margin: 5% 5%; //(top, bottom) / (right, left)
         }
     }
@@ -39,8 +33,6 @@ app-login {
     /* Medium devices (landscape tablets, 768px and up) */
     @media only screen and (min-width: 768px) {
         .login-container {
-            // background: #f8ff2c; // #fff12c; // #dce513;
-            // border-radius: 10px;
             margin: 5% 15%; //(top, bottom) / (right, left)
         }
     }
@@ -48,9 +40,6 @@ app-login {
     /* Large devices (laptops/desktops, 992px and up) */
     @media only screen and (min-width: 992px) {
         .login-container {
-            // background: #babba9; // #fff12c; // #dce513;
-            // border-radius: 10px;
-            //margin: 3% 1%; //(top, bottom) / (right, left)
             margin: 5% 30%; //(top, bottom) / (right, left)
         }
     }

@@ -43,6 +43,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { LoginComponent } from "./_auth/login/login.component";
+import { LogoutComponent } from "./_auth/logout/logout.component";
 import { AboutComponent } from "./_home/about/about.component";
 import { ContactComponent } from "./_home/contact/contact.component";
 import { DeveloperComponent } from "./_home/developer/developer.component";
@@ -64,6 +65,7 @@ const routes: Routes = [
       { path: 'contact', component: ContactComponent },
       { path: 'technology', component: TechnologyComponent },
       { path: 'login', component: LoginComponent },
+      { path: 'logout', component: LogoutComponent },
       // { path: 'register', component: RegisterComponent },
       // { path: 'confirm-email', component: ConfirmEmailComponent },
       // { path: 'confirmed-email', component: ConfirmedEmailComponent },

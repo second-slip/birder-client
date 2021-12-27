@@ -1,44 +1,55 @@
-import { FormControl } from '@angular/forms';
-import { Injectable } from '@angular/core';
-import { AccountService } from '@app/_account/account.service';
+// import { FormControl } from '@angular/forms';
+// import { Injectable } from '@angular/core';
 
-@Injectable()
-export class UsernameValidator {
-  debouncer: any;
 
-  constructor(public accountService: AccountService) { }
+// @Injectable()
+// export class UsernameValidator {
+//   debouncer: any;
 
-  checkUsername(control: FormControl): any {
+//   constructor(public accountService: AccountService) { }
 
-    clearTimeout(this.debouncer);
+//   checkUsername(control: FormControl): any {
 
-    return new Promise(resolve => {
-      this.debouncer = setTimeout(() => {
-        this.accountService.checkValidUsername(control.value).subscribe((res) => {
-          if (res) {
-            resolve(null);
-          }
-        }, (err) => {
-          resolve({ 'usernameInUse': true });
-        });
-      }, 1000);
-    });
-  }
-}
+//     clearTimeout(this.debouncer);
 
-export class UsernameValidator1 {
-  constructor() { }
+//     return new Promise(resolve => {
+//       this.debouncer = setTimeout(() => {
+//         this.accountService.checkValidUsername(control.value).subscribe((res) => {
+//           if (res) {
+//             resolve(null);
+//           }
+//         }, (err) => {
+//           resolve({ 'usernameInUse': true });
+//         });
+//       }, 1000);
+//     });
+//   }
+// }
 
-  static validUsername(fc: FormControl) {
-    if (fc.value.toLowerCase() === 'abc123' || fc.value.toLowerCase() === '123abc') {
-      return {
-        validUsername: true
-      };
-    } else {
-      return null;
-    }
-  }
-}
+// export class UsernameValidator1 {
+//   constructor() { }
+
+//   static validUsername(fc: FormControl) {
+//     if (fc.value.toLowerCase() === 'abc123' || fc.value.toLowerCase() === '123abc') {
+//       return {
+//         validUsername: true
+//       };
+//     } else {
+//       return null;
+//     }
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
 
 
   // hello(fc: FormControl) {

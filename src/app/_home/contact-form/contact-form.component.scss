@@ -8,6 +8,10 @@ app-contact-form {
         border-left: 5px solid #a94442; /* red */
     }
 
+    .form-group {
+        margin-bottom: 3%;
+    }
+
     /* Extra small devices (phones, 600px and down) */
     @media only screen and (max-width: 600px) {
         .contact-form {

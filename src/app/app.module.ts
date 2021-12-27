@@ -42,6 +42,7 @@ import { TokenService } from './_auth/token.service';
 import { LoginComponent } from './_auth/login/login.component';
 import { AuthenticationGuardService } from './_auth/authentication-guard.service';
 import { LogoutComponent } from './_auth/logout/logout.component';
+import { HttpInterceptorProviders } from './_httpInterceptors';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -105,7 +106,7 @@ export function tokenGetter() {
     }),
   ],
   providers: [
-    AuthenticationService, TokenService, AuthenticationGuardService
+    AuthenticationService, TokenService, AuthenticationGuardService, HttpInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })

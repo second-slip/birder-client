@@ -23,6 +23,11 @@ export class TokenService { // should just be token service!
       return false;
     }
   }
+
+  public getToken(): string | null {
+    return this._getToken();
+  }
+
   private _getToken(): string | null {
     return localStorage.getItem('jwt');
   }

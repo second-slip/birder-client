@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
-import { ParentErrorStateMatcher } from '../../_validators';
 import { AuthenticationService } from '../authentication.service';
 import { Ilogin } from './ilogin.dto';
 import { LoginService } from './login.service';
 import { AuthenticationFailureReason } from '../authentication-failure-reason';
+import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 
 @Component({
   selector: 'app-login',
@@ -15,12 +15,10 @@ import { AuthenticationFailureReason } from '../authentication-failure-reason';
   encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  private _returnUrl: string;
   private _subscription = new Subject();
   public requesting: boolean;
   public loginForm: FormGroup;
   public errorObject = null;
-  public parentErrorStateMatcher = new ParentErrorStateMatcher();
 
   login_validation_messages = {
     'username': [
@@ -35,11 +33,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private readonly _service: LoginService
     , private readonly _authService: AuthenticationService
     , private readonly _router: Router
-    , private readonly _route: ActivatedRoute
-    , private readonly _formBuilder: FormBuilder) { }
+    , private readonly _formBuilder: FormBuilder
+    , private readonly _navigation: NavigationService) { }
 
   ngOnInit(): void {
-    this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
     this._createForm();
     this._authService.logout();
   }
@@ -52,11 +49,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     this._service.login(formData)
       .pipe(finalize(() => { this.requesting = false; this.loginForm.enable(); }), takeUntil(this._subscription))
       .subscribe({
-        next: (r) => { this._router.navigate([this._returnUrl]); },
+        next: (r) => { this._navigation.back(); },
         error: (e) => { this.errorObject = e; this._handleError(e); },
         complete: () => { }
       })
   }
+
 
   // ToDo: decide on the best approach.
   // Not all errors will be the AuthenticationFailureReason - what about connectivity errors etc?
@@ -92,7 +90,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('unsubscribe');
     this._subscription.next('');
     this._subscription.complete();
   }

@@ -1,20 +1,19 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-infinite-scroll',
-  templateUrl: './infinite-scroll.component.html',
-  styleUrls: ['./infinite-scroll.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  template: `<ng-content></ng-content><div #anchor></div>`,
+  styleUrls: ['./infinite-scroll.component.scss']
 })
 export class InfiniteScrollComponent implements OnInit {
   @Input() options = {};
   @Output() scrolled = new EventEmitter();
-  @ViewChild('anchor') anchor: ElementRef<HTMLElement>;
+  @ViewChild('anchor', {static: true}) anchor: ElementRef<HTMLElement>;
 
   private observer: IntersectionObserver;
 
   constructor(private host: ElementRef) { }
-
+  
   get element() {
     return this.host.nativeElement;
   }

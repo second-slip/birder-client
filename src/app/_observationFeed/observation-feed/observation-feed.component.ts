@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ObservationFeedService } from '../observation-feed.service';
 
 @Component({
   selector: 'app-observation-feed',
@@ -8,9 +9,15 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class ObservationFeedComponent implements OnInit {
 
-  constructor() { }
+  constructor(readonly _service: ObservationFeedService) { }
 
   ngOnInit(): void {
+    this._service.getData();
+  }
+
+  onScroll() {
+    console.log('scroll')
+    this._service.getData();
   }
 
 }

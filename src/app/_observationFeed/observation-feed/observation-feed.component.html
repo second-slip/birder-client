@@ -2,13 +2,13 @@
 
 <div class="container">
 
-    <infinite-scroll (scrolled)="onScroll()" style="height: 400px; overflow-y: auto">
-        <app-observation-feed-item *ngFor="let item of observations$ | async" [observation]="item">
+    <app-infinite-scroll (scrolled)="onScroll()" style="height: 400px; overflow-y: auto">
+        <app-observation-feed-item *ngFor="let item of _service.getObservations | async" [observation]="item">
         </app-observation-feed-item>
 
-        <div class="alert alert-dark" *ngIf="isLoading$ | async">
+        <!-- <div class="alert alert-dark" *ngIf="isLoading$ | async">
             Fetching tweets...
-        </div>
-    </infinite-scroll>
+        </div> -->
+    </app-infinite-scroll>
 
 </div>

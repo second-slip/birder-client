@@ -40,14 +40,11 @@ export class TokenService { // should just be token service!
     localStorage.removeItem('jwt');
   }
 
+  // ToDo: if token is invalid?
   public addToken(token: string): void {
-    //console.log('lh');
-    // if (this.isTokenValid()) {
-    //console.log('ll');
     if (token && !this._jwtHelper.isTokenExpired(token)) {
       localStorage.setItem('jwt', token);
     }
-    // }
   }
 
   public getUser(): IauthUser | null {

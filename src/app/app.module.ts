@@ -47,7 +47,6 @@ import { ObservationFeedComponent } from './_observationFeed/observation-feed/ob
 import { TemporarySideBarComponent } from './temporary-side-bar/temporary-side-bar.component';
 import { SideMenuComponent } from './_layout/side-menu/side-menu.component';
 import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.component';
-import { TweetComponent } from './tweet/tweet.component';
 import { ObservationFeedItemComponent } from './_observationFeed/observation-feed-item/observation-feed-item.component';
 
 export function tokenGetter() {
@@ -77,7 +76,6 @@ export function tokenGetter() {
     TemporarySideBarComponent,
     SideMenuComponent,
     InfiniteScrollComponent,
-    TweetComponent,
     ObservationFeedItemComponent
   ],
   imports: [

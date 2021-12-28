@@ -1,7 +1,7 @@
 // import { NgModule } from '@angular/core';
 // import { RouterModule, Routes } from '@angular/router';
 // import { BirdsIndexComponent } from './_birds/birds-index/birds-index.component';
-// import { AuthGuard } from './_services/auth-guard.service';
+
 // import { ObservationFeedComponent } from './_observationFeed/observation-feed/observation-feed.component';
 // import { ObservationDetailComponent } from './_observations/observation-detail/observation-detail.component';
 // import { ObservationAddComponent } from './_observations/observation-add/observation-add.component';
@@ -10,8 +10,6 @@
 // import { ObservationEditComponent } from './_observations/observation-edit/observation-edit.component';
 // import { ObservationDeleteComponent } from './_observations/observation-delete/observation-delete.component';
 // import { LifeListComponent } from './_lists/life-list/life-list.component';
-// import { LayoutNoSidebarComponent } from './_layout/layout-no-sidebar/layout-no-sidebar.component';
-// import { LayoutSidebarComponent } from './_layout/layout-sidebar/layout-sidebar.component';
 // import { UserProfileComponent } from './_users/user-profile/user-profile.component';
 // import { LayoutAccountManagerComponent } from './_layout/layout-account-manager/layout-account-manager.component';
 // import { AccountManagerProfileComponent } from './_accountManager/account-manager-profile/account-manager-profile.component';
@@ -42,6 +40,7 @@
 
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { AuthenticationGuardService } from "./_auth/authentication-guard.service";
 import { LoginComponent } from "./_auth/login/login.component";
 import { LogoutComponent } from "./_auth/logout/logout.component";
 import { AboutComponent } from "./_home/about/about.component";
@@ -51,6 +50,8 @@ import { FutureComponent } from "./_home/future/future.component";
 import { HomeComponent } from "./_home/home/home.component";
 import { TechnologyComponent } from "./_home/technology/technology.component";
 import { LayoutNoSidebarComponent } from "./_layout/layout-no-sidebar/layout-no-sidebar.component";
+import { LayoutSidebarComponent } from "./_layout/layout-sidebar/layout-sidebar.component";
+import { ObservationFeedComponent } from "./_observationFeed/observation-feed/observation-feed.component";
 
 
 const routes: Routes = [
@@ -79,35 +80,35 @@ const routes: Routes = [
       { path: 'future', component: FutureComponent }
     ]
   },
-  // {
-  //   path: '',
-  //   component: LayoutSidebarComponent,
-  //   canActivate: [AuthGuard],
-  //   children: [
-  //     {
-  //       path: '',
-  //       canActivateChild: [AuthGuard],
-  //       children: [
-  //         { path: '', component: HomeComponent, pathMatch: 'full' },
-  //         { path: 'observation-feed', component: ObservationFeedComponent },
-  //         { path: 'observation-detail/:id', component: ObservationDetailComponent },
-  //         { path: 'observation-delete/:id', component: ObservationDeleteComponent },
-  //         { path: 'observation-add', component: ObservationAddComponent, },
-  //         { path: 'observation-edit/:id', component: ObservationEditComponent },
-  //         { path: 'observation-manage-photos/:id', component: ObservationManagePhotosComponent },
-  //         { path: 'birds-index', component: BirdsIndexComponent },
-  //         { path: 'bird-detail/:id', component: BirdDetailComponent },
-  //         { path: 'life-list/:username', component: LifeListComponent },
-  //         { path: 'user-profile/:username', component: UserProfileComponent },
-  //         { path: 'followers/:username', component: FollowersComponent },
-  //         { path: 'following/:username', component: FollowingComponent },
-  //         { path: 'network', component: NetworkComponent },
-  //         { path: 'testing', component: TestingComponent },
-  //         { path: 'logout', component: LogoutComponent },
-  //       ]
-  //     },
-  //   ]
-  // },
+  {
+    path: '',
+    component: LayoutSidebarComponent,
+    canActivate: [AuthenticationGuardService],
+    children: [
+      {
+        path: '',
+        canActivateChild: [AuthenticationGuardService],
+        children: [
+          { path: '', component: HomeComponent, pathMatch: 'full' },
+          { path: 'observation-feed', component: ObservationFeedComponent },
+          //         { path: 'observation-detail/:id', component: ObservationDetailComponent },
+          //         { path: 'observation-delete/:id', component: ObservationDeleteComponent },
+          //         { path: 'observation-add', component: ObservationAddComponent, },
+          //         { path: 'observation-edit/:id', component: ObservationEditComponent },
+          //         { path: 'observation-manage-photos/:id', component: ObservationManagePhotosComponent },
+          //         { path: 'birds-index', component: BirdsIndexComponent },
+          //         { path: 'bird-detail/:id', component: BirdDetailComponent },
+          //         { path: 'life-list/:username', component: LifeListComponent },
+          //         { path: 'user-profile/:username', component: UserProfileComponent },
+          //         { path: 'followers/:username', component: FollowersComponent },
+          //         { path: 'following/:username', component: FollowingComponent },
+          //         { path: 'network', component: NetworkComponent },
+          //         { path: 'testing', component: TestingComponent },
+          //         { path: 'logout', component: LogoutComponent },
+        ]
+      },
+    ]
+  },
   // {
   //   path: '',
   //   component: LayoutAccountManagerComponent,

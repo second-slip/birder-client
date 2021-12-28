@@ -43,6 +43,9 @@ import { LoginComponent } from './_auth/login/login.component';
 import { AuthenticationGuardService } from './_auth/authentication-guard.service';
 import { LogoutComponent } from './_auth/logout/logout.component';
 import { HttpInterceptorProviders } from './_httpInterceptors';
+import { ObservationFeedComponent } from './_observationFeed/observation-feed/observation-feed.component';
+import { TemporarySideBarComponent } from './temporary-side-bar/temporary-side-bar.component';
+import { SideMenuComponent } from './_layout/side-menu/side-menu.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -66,7 +69,10 @@ export function tokenGetter() {
     LayoutSidebarComponent,
     LayoutNoSidebarComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    ObservationFeedComponent,
+    TemporarySideBarComponent,
+    SideMenuComponent
   ],
   imports: [
     AppRoutingModule,

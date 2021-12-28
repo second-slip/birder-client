@@ -1,1 +1,14 @@
 <h1>observation-feed works!</h1>
+
+<div class="container">
+
+    <infinite-scroll (scrolled)="onScroll()" style="height: 400px; overflow-y: auto">
+        <app-observation-feed-item *ngFor="let item of observations$ | async" [observation]="item">
+        </app-observation-feed-item>
+
+        <div class="alert alert-dark" *ngIf="isLoading$ | async">
+            Fetching tweets...
+        </div>
+    </infinite-scroll>
+
+</div>

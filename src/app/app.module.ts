@@ -46,6 +46,7 @@ import { HttpInterceptorProviders } from './_httpInterceptors';
 import { ObservationFeedComponent } from './_observationFeed/observation-feed/observation-feed.component';
 import { TemporarySideBarComponent } from './temporary-side-bar/temporary-side-bar.component';
 import { SideMenuComponent } from './_layout/side-menu/side-menu.component';
+import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -72,7 +73,8 @@ export function tokenGetter() {
     LogoutComponent,
     ObservationFeedComponent,
     TemporarySideBarComponent,
-    SideMenuComponent
+    SideMenuComponent,
+    InfiniteScrollComponent
   ],
   imports: [
     AppRoutingModule,

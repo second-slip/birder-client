@@ -4,6 +4,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Outp
   selector: 'app-infinite-scroll',
   template: `<ng-content></ng-content><div #anchor></div>`,
   styleUrls: ['./infinite-scroll.component.scss']
+  // , encapsulation: ViewEncapsulation.None
 })
 export class InfiniteScrollComponent implements OnInit {
   @Input() options = {};

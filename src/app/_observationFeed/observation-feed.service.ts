@@ -26,23 +26,29 @@ export class ObservationFeedService {
     return this._observations$.asObservable();
   }
 
+  // do this is a more sophisticated way than just on feed component destruction
+  // --> observations are changed / home button clicked etc / after x time elapsed
+  public resetFeed(): void {
+
+    //this._observations$.next([]);
+  }
+
   public getData(): void {
 
     this._isLoading$.next(true);
 
     this._httpClient.get<IObservationFeed[]>(`api/ObservationFeed`)
-      //.pipe(map(data => this._mapToModel(data.rates)), finalize(() => this._isLoading$.next(false)))
       .pipe(finalize(() => this._isLoading$.next(false)))
       .subscribe({
         next: (r: IObservationFeed[]) => {
-          this._observations$.next([...this._observations$.getValue(), ...r]);
+          this._observations$.next([...this._observations$.getValue(), ...r]); // or concat?
         },
         error: (e: any) => { this._handleError(e); },
         complete: () => { }
       })
   }
 
-  private _handleError(error: any) { // no need to send error to the component...
+  private _handleError(error: any) { // no need to send the error to the component...
     this._isError$.next(true);
   }
 }

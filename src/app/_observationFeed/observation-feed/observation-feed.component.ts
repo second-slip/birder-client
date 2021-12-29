@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ObservationFeedService } from '../observation-feed.service';
 
 @Component({
@@ -7,16 +7,20 @@ import { ObservationFeedService } from '../observation-feed.service';
   styleUrls: ['./observation-feed.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ObservationFeedComponent implements OnInit {
+export class ObservationFeedComponent implements OnInit, OnDestroy {
 
   constructor(readonly _service: ObservationFeedService) { }
+  
+  ngOnDestroy(): void {
+    console.log('destroy');
+    this._service.resetFeed();
+  }
 
   ngOnInit(): void {
     this._service.getData();
   }
 
-  onScroll() {
-    console.log('scroll')
+  public onScroll(): void {
     this._service.getData();
   }
 

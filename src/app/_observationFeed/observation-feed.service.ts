@@ -29,8 +29,7 @@ export class ObservationFeedService {
   // do this is a more sophisticated way than just on feed component destruction
   // --> observations are changed / home button clicked etc / after x time elapsed
   public resetFeed(): void {
-
-    //this._observations$.next([]);
+    this._observations$.next([]);
   }
 
   public getData(): void {
@@ -40,8 +39,8 @@ export class ObservationFeedService {
     this._httpClient.get<IObservationFeed[]>(`api/ObservationFeed`)
       .pipe(finalize(() => this._isLoading$.next(false)))
       .subscribe({
-        next: (r: IObservationFeed[]) => {
-          this._observations$.next([...this._observations$.getValue(), ...r]); // or concat?
+        next: (items: IObservationFeed[]) => {
+          this._observations$.next([...this._observations$.getValue(), ...items]); // or concat?
         },
         error: (e: any) => { this._handleError(e); },
         complete: () => { }

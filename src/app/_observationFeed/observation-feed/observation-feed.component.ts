@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { ObservationFeedService } from '../observation-feed.service';
 
 @Component({
@@ -9,11 +10,11 @@ import { ObservationFeedService } from '../observation-feed.service';
 })
 export class ObservationFeedComponent implements OnInit, OnDestroy {
 
-  constructor(readonly _service: ObservationFeedService) { }
+  constructor(readonly _service: ObservationFeedService, readonly _authService: AuthenticationService) { }
   
   ngOnDestroy(): void {
-    console.log('destroy');
-    this._service.resetFeed();
+    // console.log('destroy');
+    // this._service.resetFeed();
   }
 
   ngOnInit(): void {
@@ -23,5 +24,4 @@ export class ObservationFeedComponent implements OnInit, OnDestroy {
   public onScroll(): void {
     this._service.getData();
   }
-
 }

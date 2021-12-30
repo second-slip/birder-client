@@ -1,5 +1,15 @@
-// app-infinite-scroll {
-    :host {
-        display: block;
-    }
-// }
+:host {
+    display: block;
+
+    // ********************** temporarily removed to do work on layout...............
+
+    // https://blog.hubspot.com/website/hide-scrollbar-css
+
+    // -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    // scrollbar-width: none; /* for Firefox */
+    // overflow-y: scroll;
+
+    // -webkit-scrollbar {
+    //     display: none; /* for Chrome, Safari, and Opera */
+    // }
+}

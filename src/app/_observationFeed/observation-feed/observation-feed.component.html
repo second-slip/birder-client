@@ -1,6 +1,6 @@
-<div class="container">
+<div *ngIf="(_service.getObservations | async) as things">{{ things.length }}</div>
 
-    <div *ngIf="(_service.getObservations | async) as things">{{ things.length }}</div>
+<div class="container">
 
     <!-- <app-infinite-scroll (scrolled)="onScroll()" style="height: 500px; overflow-y: auto"> -->
     <app-infinite-scroll (scrolled)="onScroll()">
@@ -12,10 +12,15 @@
             Loading observations...
         </div>
 
+        <div class="alert alert-dark" *ngIf="_service.allLoaded | async">
+            No more records...
+        </div>
+
     </app-infinite-scroll>
 
+    <!-- error -->
 
-    <!-- end of feed -->
+    <!-- end of feed / no MORE items -->
 
     <!-- no items -->
 

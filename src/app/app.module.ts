@@ -29,7 +29,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { LayoutNoSidebarComponent } from './_layout/layout-no-sidebar/layout-no-sidebar.component';
 import { LayoutSidebarComponent } from './_layout/layout-sidebar/layout-sidebar.component';
 import { FooterComponent } from './footer/footer.component';
@@ -48,6 +47,7 @@ import { TemporarySideBarComponent } from './temporary-side-bar/temporary-side-b
 import { SideMenuComponent } from './_layout/side-menu/side-menu.component';
 import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.component';
 import { ObservationFeedItemComponent } from './_observationFeed/observation-feed-item/observation-feed-item.component';
+import { ObservationCountComponent } from './_analysis/observation-count/observation-count.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -76,7 +76,8 @@ export function tokenGetter() {
     TemporarySideBarComponent,
     SideMenuComponent,
     InfiniteScrollComponent,
-    ObservationFeedItemComponent
+    ObservationFeedItemComponent,
+    ObservationCountComponent
   ],
   imports: [
     AppRoutingModule,
@@ -88,7 +89,6 @@ export function tokenGetter() {
     MatTabsModule,
     MatIconModule,
     MatInputModule,
-    MatTooltipModule,
     MatButtonModule,
     // MatButtonModule,
     MatDatepickerModule,

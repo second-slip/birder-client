@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { ObservationTopFiveService } from './observation-top-five.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { ObservationTopFiveService } from './observation-top-five.service';
 export class ObservationTopFiveComponent implements OnInit {
   active: number = 1;
 
-  constructor(readonly _service: ObservationTopFiveService) { }
+  constructor(readonly _service: ObservationTopFiveService, readonly _authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this._getData();

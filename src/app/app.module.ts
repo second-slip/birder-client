@@ -31,8 +31,8 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { LayoutNoSidebarComponent } from './_layout/layout-no-sidebar/layout-no-sidebar.component';
 import { LayoutSidebarComponent } from './_layout/layout-sidebar/layout-sidebar.component';
-import { FooterComponent } from './_layout/footer/footer.component';
-import { NavMenuComponent } from './_layout/nav-menu/nav-menu.component';
+import { FooterComponent } from './footer/footer.component';
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

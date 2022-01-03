@@ -49,6 +49,8 @@ import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.compo
 import { ObservationFeedItemComponent } from './_observationFeed/observation-feed-item/observation-feed-item.component';
 import { ObservationCountComponent } from './_analysis/observation-count/observation-count.component';
 import { ObservationTopFiveComponent } from './_analysis/observation-top-five/observation-top-five.component';
+import { TweetDayComponent } from './_tweet/tweet-day/tweet-day.component';
+import { TweetDayArchiveComponent } from './_tweet/tweet-day-archive/tweet-day-archive.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -79,7 +81,9 @@ export function tokenGetter() {
     InfiniteScrollComponent,
     ObservationFeedItemComponent,
     ObservationCountComponent,
-    ObservationTopFiveComponent
+    ObservationTopFiveComponent,
+    TweetDayComponent,
+    TweetDayArchiveComponent
   ],
   imports: [
     AppRoutingModule,

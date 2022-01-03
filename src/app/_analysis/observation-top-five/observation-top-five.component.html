@@ -84,11 +84,10 @@
             <div [ngbNavOutlet]="nav" class="mt-2"></div>
 
             <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
-                <small><em> See the full list in your ...................
-                        <!-- <a routerLink="/life-list/{{authUser.userName}}">Life List</a> page</em></small> -->
-                    </em></small>
-
+                <small><em> See the full list in your
+                        <a routerLink="/life-list/{{authUser.userName}}">Life List</a> page</em></small>
             </ng-container>
+
         </div>
 
     </ng-container>

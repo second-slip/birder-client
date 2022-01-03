@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ObservationCountService } from '../observation-count.service';
+import { ObservationCountService } from './observation-count.service';
+
 
 @Component({
   selector: 'app-observation-count',

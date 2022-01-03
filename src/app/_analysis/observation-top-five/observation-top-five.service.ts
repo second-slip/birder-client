@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
-import { IObservationCount } from './i-observation-count.dto';
+import { IObservationTopFive } from './i-observation-top-five.dto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ObservationCountService {
+export class ObservationTopFiveService {
 
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  private readonly _observationCount$: BehaviorSubject<IObservationCount | null> = new BehaviorSubject<IObservationCount | null>(null);
+  private readonly _topObservations$: BehaviorSubject<IObservationTopFive | null> = new BehaviorSubject<IObservationTopFive | null>(null);
 
   constructor(private readonly _httpClient: HttpClient) { }
 
@@ -22,19 +22,19 @@ export class ObservationCountService {
     return this._isLoading$.asObservable();
   }
 
-  public get getCount(): Observable<IObservationCount | null> {
-    return this._observationCount$.asObservable();
+  public get getTop(): Observable<IObservationTopFive | null> {
+    return this._topObservations$.asObservable();
   }
 
   public getData(): void {
 
     this._isLoading$.next(true);
 
-    this._httpClient.get<IObservationCount>('api/ObservationAnalysis')
+    this._httpClient.get<IObservationTopFive>('api/List/GetTopObservationsList')
       .pipe(finalize(() => { this._isLoading$.next(false); }))
       .subscribe({
         next: (response) => {
-          this._observationCount$.next(response);
+          this._topObservations$.next(response);
         },
         error: (e) => { this._handleError(e); }
       })
@@ -45,3 +45,4 @@ export class ObservationCountService {
     this._isError$.next(true);
   }
 }
+

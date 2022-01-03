@@ -48,6 +48,7 @@ import { SideMenuComponent } from './_layout/side-menu/side-menu.component';
 import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.component';
 import { ObservationFeedItemComponent } from './_observationFeed/observation-feed-item/observation-feed-item.component';
 import { ObservationCountComponent } from './_analysis/observation-count/observation-count.component';
+import { ObservationTopFiveComponent } from './_analysis/observation-top-five/observation-top-five.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -77,7 +78,8 @@ export function tokenGetter() {
     SideMenuComponent,
     InfiniteScrollComponent,
     ObservationFeedItemComponent,
-    ObservationCountComponent
+    ObservationCountComponent,
+    ObservationTopFiveComponent
   ],
   imports: [
     AppRoutingModule,

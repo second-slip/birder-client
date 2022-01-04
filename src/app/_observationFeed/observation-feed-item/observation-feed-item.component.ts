@@ -1,4 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { IObservationFeed } from '../i-observation-feed.dto';
 
 @Component({
@@ -9,5 +10,7 @@ import { IObservationFeed } from '../i-observation-feed.dto';
 })
 export class ObservationFeedItemComponent {
   @Input() observation: IObservationFeed;
+
+  constructor(readonly _authService: AuthenticationService) { }
 
 }

@@ -23,5 +23,4 @@ export class ObservationCountComponent implements OnInit {
   public reload(): void {
     this._getData();
   }
-
 }

@@ -51,6 +51,9 @@ import { ObservationCountComponent } from './_analysis/observation-count/observa
 import { ObservationTopFiveComponent } from './_analysis/observation-top-five/observation-top-five.component';
 import { TweetDayComponent } from './_tweet/tweet-day/tweet-day.component';
 import { TweetDayArchiveComponent } from './_tweet/tweet-day-archive/tweet-day-archive.component';
+import { NetworkSummaryComponent } from './_network/network-summary/network-summary.component';
+import { NetworkComponent } from './_network/network/network.component';
+import { NetworkSidebarComponent } from './_network/network-sidebar/network-sidebar.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -83,7 +86,10 @@ export function tokenGetter() {
     ObservationCountComponent,
     ObservationTopFiveComponent,
     TweetDayComponent,
-    TweetDayArchiveComponent
+    TweetDayArchiveComponent,
+    NetworkSummaryComponent,
+    NetworkComponent,
+    NetworkSidebarComponent
   ],
   imports: [
     AppRoutingModule,

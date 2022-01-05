@@ -54,6 +54,9 @@ import { TweetDayArchiveComponent } from './_tweet/tweet-day-archive/tweet-day-a
 import { NetworkSummaryComponent } from './_network/network-summary/network-summary.component';
 import { NetworkComponent } from './_network/network/network.component';
 import { NetworkSidebarComponent } from './_network/network-sidebar/network-sidebar.component';
+import { FollowersComponent } from './_network/followers/followers.component';
+import { NetworkUserComponent } from './_network/network-user/network-user.component';
+import { FollowingComponent } from './_network/following/following.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -89,7 +92,10 @@ export function tokenGetter() {
     TweetDayArchiveComponent,
     NetworkSummaryComponent,
     NetworkComponent,
-    NetworkSidebarComponent
+    NetworkSidebarComponent,
+    FollowersComponent,
+    NetworkUserComponent,
+    FollowingComponent
   ],
   imports: [
     AppRoutingModule,

@@ -18,11 +18,8 @@
 // import { ResetPasswordConfirmationComponent } from './_account/reset-password-confirmation/reset-password-confirmation.component';
 // import { AccountManagerAvatarComponent } from './_accountManager/account-manager-avatar/account-manager-avatar.component';
 // import { ObservationManagePhotosComponent } from './_photos/observation-manage-photos/observation-manage-photos.component';
-// import { NetworkComponent } from './_network/network/network.component';
 // import { WhatsNewComponent } from './whats-new/whats-new.component';
 // import { TweetArchiveComponent } from './_tweet/tweet-archive/tweet-archive.component';
-// import { FollowersComponent } from './_network/followers/followers.component';
-// import { FollowingComponent } from './_network/following/following.component';
 // import { BirdDetailComponent } from './_birds/bird-detail/bird-detail.component';
 
 
@@ -39,6 +36,9 @@ import { HomeComponent } from "./_home/home/home.component";
 import { TechnologyComponent } from "./_home/technology/technology.component";
 import { LayoutNoSidebarComponent } from "./_layout/layout-no-sidebar/layout-no-sidebar.component";
 import { LayoutSidebarComponent } from "./_layout/layout-sidebar/layout-sidebar.component";
+import { FollowersComponent } from "./_network/followers/followers.component";
+import { FollowingComponent } from "./_network/following/following.component";
+import { NetworkComponent } from "./_network/network/network.component";
 import { ObservationFeedComponent } from "./_observationFeed/observation-feed/observation-feed.component";
 
 
@@ -68,6 +68,7 @@ const routes: Routes = [
       { path: 'future', component: FutureComponent }
     ]
   },
+  // ToDo: try moving this to the top so components load first with the sidebar if appropriate
   {
     path: '',
     component: LayoutSidebarComponent,
@@ -88,11 +89,10 @@ const routes: Routes = [
           //         { path: 'bird-detail/:id', component: BirdDetailComponent },
           //         { path: 'life-list/:username', component: LifeListComponent },
           //         { path: 'user-profile/:username', component: UserProfileComponent },
-          //         { path: 'followers/:username', component: FollowersComponent },
-          //         { path: 'following/:username', component: FollowingComponent },
-          //         { path: 'network', component: NetworkComponent },
-          //         { path: 'testing', component: TestingComponent },
-          //         { path: 'logout', component: LogoutComponent },
+          { path: 'followers/:username', component: FollowersComponent },
+          { path: 'following/:username', component: FollowingComponent },
+          { path: 'network', component: NetworkComponent },
+          { path: 'logout', component: LogoutComponent },
         ]
       },
     ]

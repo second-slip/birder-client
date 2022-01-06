@@ -2,10 +2,12 @@
 
     <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
         
-        <h3>THIS IS WORNG: {{ authUser.userName}}'s followers</h3>
+        <!-- <h3>THIS IS WORNG: {{ authUser.userName}}'s followers</h3> -->
+
+        <h1>{{ authUser.userName === username ? 'Your followers' : username + '\&#39;s followers' }}</h1>
 
         <nav mat-tab-nav-bar mat-stretch-tabs class="stretched-tabs">
-            <a mat-tab-link routerLink="/following/{{authUser.userName}}">Following</a>
+            <a mat-tab-link routerLink="/following/{{username}}">Following</a>
             <a mat-tab-link [active]="true">Followers</a>
         </nav>
 

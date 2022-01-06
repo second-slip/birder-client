@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
 import { INetworkUser } from '../i-network-user.dto';
@@ -30,11 +30,19 @@ export class FollowersService {
   //   return this._following$.asObservable();
   // }
 
-  public getData(): void {
+  public getData(username: string | null): void {
+
+    if (!username) {
+      this._isError$.next(true);
+      return;
+    }
+
+    const options = username ?
+      { params: new HttpParams().set('requestedUsername', username) } : {};
 
     this._isLoading$.next(true);
 
-    this._httpClient.get<INetworkUser[]>('api/Network/GetFollowers')
+    this._httpClient.get<INetworkUser[]>('api/Network/GetFollowers', options)
       .pipe(finalize(() => this._isLoading$.next(false)))
       .subscribe({
         next: (response) => {

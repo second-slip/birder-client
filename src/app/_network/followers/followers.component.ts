@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { FollowersService } from './followers.service';
 
@@ -10,15 +11,23 @@ import { FollowersService } from './followers.service';
 })
 export class FollowersComponent implements OnInit {
 
+  public username: string | null;
+
   constructor(readonly _service: FollowersService
+    , private _route: ActivatedRoute
     , readonly _authService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this._getData();
+    this._route.params.subscribe(_ => {
+      this._route.paramMap.subscribe(pmap => {
+        this.username = pmap.get('username');
+        this._getData();
+      })
+    });
   }
 
   private _getData(): void {
-    this._service.getData();
+    this._service.getData(this.username);
   }
 
   public reload(): void {

@@ -57,6 +57,7 @@ import { NetworkSidebarComponent } from './_network/network-sidebar/network-side
 import { FollowersComponent } from './_network/followers/followers.component';
 import { NetworkUserComponent } from './_network/network-user/network-user.component';
 import { FollowingComponent } from './_network/following/following.component';
+import { NetworkSuggestionComponent } from './_network/network-suggestion/network-suggestion.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -95,7 +96,8 @@ export function tokenGetter() {
     NetworkSidebarComponent,
     FollowersComponent,
     NetworkUserComponent,
-    FollowingComponent
+    FollowingComponent,
+    NetworkSuggestionComponent
   ],
   imports: [
     AppRoutingModule,

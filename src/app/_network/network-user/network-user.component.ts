@@ -11,23 +11,19 @@ import { NetworkUserService } from './network-user.service';
 export class NetworkUserComponent {
   @Input() user: INetworkUser
 
-  constructor(private _service: NetworkUserService) { }
+  constructor(private readonly _service: NetworkUserService) { }
 
-  // public followOrUnfollow(element: any, user: INetworkUser): void {
   public followOrUnfollow(): void {
-    //const action = element.innerText;
-
-    //console.log(this.user === user);
 
     if (this.user.isFollowing === false) {
       this._service.postFollowUser(this.user)
         .subscribe({
           next: (data: INetworkUser) => {
-            //element.innerText = 'Unfollow';
             this.user = data;
             // this.toast.info('You have followed ' + data.userName, 'Success');
           },
           error: ((error: any) => {
+            // ToDo: write proper error actions
             // this.toast.error(error.friendlyMessage, 'An error occurred');
           })
         });
@@ -36,11 +32,11 @@ export class NetworkUserComponent {
       this._service.postUnfollowUser(this.user)
         .subscribe({
           next: (data: INetworkUser) => {
-            //element.innerText = 'Follow';
             // this.toast.info('You have unfollowed ' + data.userName, 'Success');
             this.user = data;
           },
           error: ((error: any) => {
+            // ToDo: write proper error actions
             // this.toast.error(error.friendlyMessage, 'An error occurred');
           })
         });

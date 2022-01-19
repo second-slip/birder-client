@@ -26,10 +26,6 @@ export class FollowersService {
     return this._followers$.asObservable();
   }
 
-  // public get getFollowing(): Observable<INetworkUser[] | null> {
-  //   return this._following$.asObservable();
-  // }
-
   public getData(username: string | null): void {
 
     if (!username) {
@@ -37,10 +33,10 @@ export class FollowersService {
       return;
     }
 
+    this._isLoading$.next(true);
+
     const options = username ?
       { params: new HttpParams().set('requestedUsername', username) } : {};
-
-    this._isLoading$.next(true);
 
     this._httpClient.get<INetworkUser[]>('api/Network/GetFollowers', options)
       .pipe(finalize(() => this._isLoading$.next(false)))
@@ -56,6 +52,4 @@ export class FollowersService {
     //console.log(error);
     this._isError$.next(true);
   }
-
-
 }

@@ -15,6 +15,7 @@ export class NetworkUserService {
   constructor(private readonly _http: HttpClient) { }
 
   postFollowUser(viewModel: INetworkUser): Observable<INetworkUser> {
+    console.log('postFollowUser');
     return this._http.post<INetworkUser>('api/Network/Follow', viewModel, httpOptions)
       .pipe(tap(_ => { this._onNetworkChanged(); }));
   }

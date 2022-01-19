@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { INetworkUser } from '../i-network-user.dto';
 import { NetworkUserService } from './network-user.service';
 
@@ -13,14 +13,18 @@ export class NetworkUserComponent {
 
   constructor(private _service: NetworkUserService) { }
 
-  public followOrUnfollow(element: any, user: INetworkUser): void {
-    const action = element.innerText;
+  // public followOrUnfollow(element: any, user: INetworkUser): void {
+  public followOrUnfollow(): void {
+    //const action = element.innerText;
 
-    if (action === 'Follow') {
-      this._service.postFollowUser(user)
+    //console.log(this.user === user);
+
+    if (this.user.isFollowing === false) {
+      this._service.postFollowUser(this.user)
         .subscribe({
           next: (data: INetworkUser) => {
-            element.innerText = 'Unfollow';
+            //element.innerText = 'Unfollow';
+            this.user = data;
             // this.toast.info('You have followed ' + data.userName, 'Success');
           },
           error: ((error: any) => {
@@ -29,11 +33,12 @@ export class NetworkUserComponent {
         });
       return;
     } else {
-      this._service.postUnfollowUser(user)
+      this._service.postUnfollowUser(this.user)
         .subscribe({
           next: (data: INetworkUser) => {
-            element.innerText = 'Follow';
+            //element.innerText = 'Follow';
             // this.toast.info('You have unfollowed ' + data.userName, 'Success');
+            this.user = data;
           },
           error: ((error: any) => {
             // this.toast.error(error.friendlyMessage, 'An error occurred');

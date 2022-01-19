@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { INetworkUser } from '../i-network-user.dto';
+import { NetworkSummaryService } from '../network-summary.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,10 +13,9 @@ const httpOptions = {
 })
 export class NetworkUserService {
 
-  constructor(private readonly _http: HttpClient) { }
+  constructor(private readonly _http: HttpClient, private readonly _service: NetworkSummaryService) { }
 
   postFollowUser(viewModel: INetworkUser): Observable<INetworkUser> {
-    console.log('postFollowUser');
     return this._http.post<INetworkUser>('api/Network/Follow', viewModel, httpOptions)
       .pipe(tap(_ => { this._onNetworkChanged(); }));
   }
@@ -26,6 +26,6 @@ export class NetworkUserService {
   }
 
   private _onNetworkChanged(): void {
-    // this.networkChanged.next(1);
+    this._service.getData();
   }
 }

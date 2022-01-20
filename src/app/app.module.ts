@@ -59,10 +59,6 @@ import { NetworkUserComponent } from './_network/network-user/network-user.compo
 import { FollowingComponent } from './_network/following/following.component';
 import { NetworkSuggestionComponent } from './_network/network-suggestion/network-suggestion.component';
 
-export function tokenGetter() {
-  return localStorage.getItem('jwt');
-}
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -129,7 +125,9 @@ export function tokenGetter() {
     NgbModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: tokenGetter,
+        tokenGetter: () => {
+          return localStorage.getItem("jwt");
+        },
         allowedDomains: ['localhost:55722', 'birder20210119224819.azurewebsites.net', 'birderweb.com'],
         disallowedRoutes: ['//localhost:55722/Authentication/Login', '//birder20210119224819.azurewebsites.net/Authentication/Login', '//birderweb.com/Authentication/Login'],
       }

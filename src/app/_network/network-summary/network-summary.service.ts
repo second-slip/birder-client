@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
-import { INetworkSummary } from './i-network-summary.dto';
+import { INetworkSummary } from '../i-network-summary.dto';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
-import { NetworkSummaryService } from '../network-summary.service';
+import { NetworkSummaryService } from './network-summary.service';
 
 @Component({
   selector: 'app-network-summary',

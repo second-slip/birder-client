@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { INetworkUser } from '../i-network-user.dto';
-import { NetworkSummaryService } from '../network-summary.service';
+import { NetworkSummaryService } from '../network-summary/network-summary.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

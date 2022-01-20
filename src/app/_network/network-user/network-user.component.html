@@ -1,7 +1,10 @@
 <div class="flex-container network-list">
-    <img class="avatar" src="{{user.avatar}}">
-    <a class="avatar-title" routerLink="/user-profile/{{user.userName}}">{{user.userName}}</a>
-    <div *ngIf="user.isOwnProfile === false"><button class="btn btn-link btn-sm" (click)="followOrUnfollow()">
+    <!-- <img class="avatar" src="{{user.avatar}}"> -->
+    <a class="navbar-brand" routerLink="/user-profile/{{user.userName}}">
+        <img src="{{user.avatar}}" width="40" height="40">
+        {{user.userName}}
+    </a>
+    <div *ngIf="user.isOwnProfile === false"><button class="btn btn-link btn-sm align-top" (click)="followOrUnfollow()">
             {{ user.isFollowing == true ? 'Unfollow' : 'Follow' }}</button>
     </div>
 </div>

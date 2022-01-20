@@ -4,4 +4,35 @@
 
     <app-network-summary></app-network-summary>
 
+    <div>
+        <ul ngbNav #nav="ngbNav" [destroyOnHide]="false" class="nav-tabs">
+
+            <li [ngbNavItem]="1" [destroyOnHide]="true">
+                <a ngbNavLink>Suggestions</a>
+                <ng-template ngbNavContent let-active>
+                    <ng-container>
+
+                        <h2>Suggested Users</h2>
+
+                        <app-network-suggestion></app-network-suggestion>
+
+                    </ng-container>
+                </ng-template>
+            </li>
+
+            <li [ngbNavItem]="2" [destroyOnHide]="true">
+                <a ngbNavLink>Find</a>
+                <ng-template ngbNavContent>
+
+                    <h2>Find Users</h2>
+
+                    <app-network-find></app-network-find>
+
+                </ng-template>
+            </li>
+        </ul>
+
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </div>
+
 </div>

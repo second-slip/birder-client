@@ -58,6 +58,7 @@ import { FollowersComponent } from './_network/followers/followers.component';
 import { NetworkUserComponent } from './_network/network-user/network-user.component';
 import { FollowingComponent } from './_network/following/following.component';
 import { NetworkSuggestionComponent } from './_network/network-suggestion/network-suggestion.component';
+import { NetworkFindComponent } from './_network/network-find/network-find.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import { NetworkSuggestionComponent } from './_network/network-suggestion/networ
     FollowersComponent,
     NetworkUserComponent,
     FollowingComponent,
-    NetworkSuggestionComponent
+    NetworkSuggestionComponent,
+    NetworkFindComponent
   ],
   imports: [
     AppRoutingModule,

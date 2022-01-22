@@ -2,26 +2,54 @@
 
 <div class="container">
 
-    <!-- <app-infinite-scroll (scrolled)="onScroll()" style="height: 500px; overflow-y: auto"> -->
-    <app-infinite-scroll (scrolled)="onScroll()">
+    <ng-container *ngIf="!(_service.isError | async); else loadingOrError">
 
-        <app-observation-feed-item *ngFor="let item of _service.getObservations | async" [observation]="item">
-        </app-observation-feed-item>
+        <!-- <app-infinite-scroll (scrolled)="onScroll()" style="height: 500px; overflow-y: auto"> -->
+        <app-infinite-scroll (scrolled)="onScroll()">
 
-        <div class="alert alert-dark" *ngIf="_service.isLoading | async">
-            Loading observations...
-        </div>
+            <!-- <ng-container *ngIf="(_service.getObservations | async) as observations"> -->
+                
+                <app-observation-feed-item *ngFor="let item of (_service.getObservations | async)" [observation]="item">
+                </app-observation-feed-item>
 
-        <div class="alert alert-dark" *ngIf="_service.allLoaded | async">
-            No more records...
-        </div>
+                <!-- use allLoaded instead -->
+                <!-- <p *ngIf="!observations.length">
+                    <ngb-alert [dismissible]="false" type="info">
+                        <strong>No itemss</strong><em>&nbsp;XXXX</em>
+                    </ngb-alert>
+                </p> -->
 
-    </app-infinite-scroll>
+                <p *ngIf="(_service.allLoaded | async)">
+                    <ngb-alert [dismissible]="false" type="info">
+                        <!-- <strong>Warning!</strong> Better check yourself, you're not looking too good. -->
+                        <strong>No more items</strong>&nbsp;You have reached the end of the feed.
+                    </ngb-alert>
+                </p>
 
-    <!-- error -->
+                <p *ngIf="_service.isLoading | async">
+                    <ngb-alert [dismissible]="false" type="info">
+                        <!-- <strong>Warning!</strong> Better check yourself, you're not looking too good. -->
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <strong>Loading</strong><em>&nbsp;Fetching more observations...</em>
+                    </ngb-alert>
+                </p>
 
-    <!-- end of feed / no MORE items -->
+        </app-infinite-scroll>
 
-    <!-- no items -->
+    </ng-container>
+
+
+    <ng-template #loadingOrError>
+        <!-- <ng-container *ngIf="(_service.isError | async)"></ng-container> -->
+        <ng-container>
+            <ngb-alert [dismissible]="false" type="danger">
+                <strong>Whoops!</strong>&nbsp;There was an error retrieving the data.
+                <div>
+                    <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button"
+                        (click)="reload()">Retry</button>
+                </div>
+            </ngb-alert>
+        </ng-container>
+    </ng-template>
 
 </div>

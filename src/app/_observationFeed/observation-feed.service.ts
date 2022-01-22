@@ -51,19 +51,21 @@ export class ObservationFeedService {
     this._isLoading$.next(true);
 
     this._httpClient.get<IObservationFeed[]>(`api/ObservationFeed`, { params: parameters })
-      .pipe(finalize(() => this._isLoading$.next(false)))
+      .pipe(finalize(() => {
+        this._isLoading$.next(false);
+      }))
       .subscribe({
         next: (items: IObservationFeed[]) => {
           this._observations$.next([...this._observations$.getValue(), ...items]); // or concat?
-          this._moreToGet(pageSize, items.length)
+          this._moreToGet(pageSize, items.length);
+          if (this._isError$) this._isError$.next(false);
         },
-        error: (e: any) => { this._handleError(e); },
-        complete: () => { }
+        error: (e: any) => { this._handleError(e); } //,
+        // complete: () => {  }
       })
   }
 
   private _moreToGet(pageSize: number, items: number): void {
-
     if (items < pageSize) {
       console.log('no more available');
       this._allLoaded$.next(true);

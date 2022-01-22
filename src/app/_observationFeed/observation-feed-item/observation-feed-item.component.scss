@@ -1,7 +1,7 @@
 app-observation-feed-item {
     .wrapper {
         margin: 15px;
-        height: 190px;
+        height: 155px;
     }
 
     .flex-container {
@@ -21,7 +21,7 @@ app-observation-feed-item {
     }
 
     p {
-        margin: 0em 0;
+        margin: 0em 0 !important;
     }
 
     @media only screen and (max-width: 768px) {

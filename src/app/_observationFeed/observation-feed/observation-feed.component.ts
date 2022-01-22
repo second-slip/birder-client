@@ -37,4 +37,8 @@ export class ObservationFeedComponent implements OnInit, OnDestroy {
     this._page ++;
     this._service.getData(this._page);
   }
+
+  public reload(): void {
+    //this._getData();
+  }
 }

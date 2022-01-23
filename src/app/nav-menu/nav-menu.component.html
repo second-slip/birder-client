@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary logo-container">
 
     <div class="container">
         <a class="navbar-brand" [routerLink]='["/"]'>
@@ -32,41 +32,42 @@
                         </li>
                     </ul>
 
-                <!--  -->
-                <div class="right-hand-menu">
-                    <ul class="nav navbar-nav mr-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <mat-icon class="icon">add</mat-icon><span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" [routerLink]='["/observation-add"]'>Add single
-                                        observation</a>
-                                </li>
-                                <li> <a class="dropdown-item disabled">Add multiple observations</a></li>
-                            </ul>
-                        </li>
+                    <!--  -->
+                    <div class="right-hand-menu">
+                        <ul class="nav navbar-nav mr-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <mat-icon class="icon">add</mat-icon><span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" [routerLink]='["/observation-add"]'>Add single
+                                            observation</a>
+                                    </li>
+                                    <li> <a class="dropdown-item disabled">Add multiple observations</a></li>
+                                </ul>
+                            </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <img class="avatar" src={{authUser.avatar}} width="29" height="29"><span
-                                    class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item small-text"
-                                    routerLink="/user-profile/{{authUser.userName}}">Signed in
-                                    as:<br><span class="username">{{authUser.userName}}</span></a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" routerLink="/user-profile/{{authUser.userName}}">My
-                                    Profile</a>
-                                <a class="dropdown-item" [routerLink]='["/account-manager-profile"]'>Manage Account</a>
-                                <a class="dropdown-item" [routerLink]='["/logout"]'>Logout</a>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img class="avatar" src={{authUser.avatar}} width="29" height="29"><span
+                                        class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item small-text"
+                                        routerLink="/user-profile/{{authUser.userName}}">Signed in
+                                        as:<br><span class="username">{{authUser.userName}}</span></a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" routerLink="/user-profile/{{authUser.userName}}">My
+                                        Profile</a>
+                                    <a class="dropdown-item" [routerLink]='["/account-manager-profile"]'>Manage
+                                        Account</a>
+                                    <a class="dropdown-item" [routerLink]='["/logout"]'>Logout</a>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </ng-container>
 
             </ng-container>

@@ -58,10 +58,9 @@ export class ObservationFeedService {
         next: (items: IObservationFeed[]) => {
           this._observations$.next([...this._observations$.getValue(), ...items]); // or concat?
           this._moreToGet(pageSize, items.length);
-          if (this._isError$) this._isError$.next(false);
         },
-        error: (e: any) => { this._handleError(e); } //,
-        // complete: () => {  }
+        error: (e: any) => { this._handleError(e); },
+        complete: () => { if (this._isError$) this._isError$.next(false); }
       })
   }
 

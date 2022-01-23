@@ -9,36 +9,36 @@ import { ObservationFeedService } from '../observation-feed.service';
   encapsulation: ViewEncapsulation.None
 })
 export class ObservationFeedComponent implements OnInit, OnDestroy {
-
   private _page: number;
 
-  constructor(readonly _service: ObservationFeedService, readonly _authService: AuthenticationService) { }
-  
-  
-  ngOnDestroy(): void {
-    
-    // console.log('destroy');
-    // this._service.resetFeed();
-  }
+  constructor(readonly _service: ObservationFeedService
+    , readonly _authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this._service.resetFeed();
-    console.log('init ' + this._page);
+    // console.log('init ' + this._page);
     this._page = 1
-    console.log(this._page);
+    // console.log(this._page);
     this._service.getData(this._page);
     // this.onScroll();
   }
 
-
   // first load of data means scroll is called twice?
   public onScroll(): void {
-    console.log('onScroll()')
-    this._page ++;
+    // console.log('onScroll()')
+    this._page++;
     this._service.getData(this._page);
   }
 
   public reload(): void {
-    //this._getData();
+    this._service.resetFeed();
+    this._page = 1;
+    this._service.getData(this._page);
+  }
+
+  ngOnDestroy(): void {
+    // ??????????? to reset or not to reset?
+    // console.log('destroy');
+    // this._service.resetFeed();
   }
 }

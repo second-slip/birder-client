@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { ObservationFeedService } from '../observation-feed.service';
 

@@ -13,19 +13,21 @@
                 </ngb-alert>
             </p>
 
-            <p *ngIf="!list.length">
-                <ngb-alert type="warning" [dismissible]="false">
-                    <strong>Nothing yet to show</strong><br>
-                    You have not yet logged any observations...<br>
-                    Why not <a routerLink="/observation-add">click here</a> to add your first one?
-                </ngb-alert>
-            </p>
+            <ng-container *ngIf="!(_service.isLoading | async)">
 
-            <ng-container *ngIf="!(_service.isLoading | async) && (list.length)">
+                <ng-container *ngIf="(_analysisService.getCount | async) as analysis">
+                    <p>You have spotted {{ analysis.uniqueSpeciesCount }} species:</p>
+                </ng-container>
 
-                <p>You have spotted {{ list.length }} species:</p>
+                <p *ngIf="!list.length">
+                    <ngb-alert type="warning" [dismissible]="false">
+                        <strong>Nothing yet to show</strong><br>
+                        You have not yet logged any observations...<br>
+                        Why not <a routerLink="/observation-add">click here</a> to add your first one?
+                    </ngb-alert>
+                </p>
 
-                <table class="table table-striped">
+                <table class="table table-striped" *ngIf="list.length">
                     <thead>
                         <tr>
                             <!-- <th scope="col">#</th> -->
@@ -69,17 +71,8 @@
 
     </ng-container>
 
-    <!-- <ng-template #loading>
-        <p>
-            <ngb-alert [dismissible]="false" type="info">
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                <strong>Loading</strong><em>&nbsp;Fetching more observations...</em>
-            </ngb-alert>
-        </p>
-    </ng-template> -->
 
     <ng-template #errorTemplate>
-        <!-- <ng-container *ngIf="(_service.isError | async); else loadingTemplate"> -->
         <ngb-alert [dismissible]="false" type="danger">
             <strong>Whoops!</strong>&nbsp;There was an error retrieving the data.
             <div>
@@ -87,7 +80,6 @@
                     (click)="reload()">Retry</button>
             </div>
         </ngb-alert>
-        <!-- </ng-container> -->
     </ng-template>
 
 </div>

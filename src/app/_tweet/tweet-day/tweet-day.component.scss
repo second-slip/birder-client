@@ -1,28 +1,17 @@
 app-tweet-day {
-    .container {
-        text-align: center;
-        padding-top: 10px;
-        padding-bottom: 10px;
+    text-align: center;
+    margin: 2%;
+
+    .scientific-name {
+        margin: 0;
+        font-style: italic;
     }
 
-    .loading-placeholder {
-        text-align: center;
-        .mat-spinner {
-            margin: 0 auto;
-        }
+    .audio-control {
+        margin: 7% 0% 2%;
     }
 
-    .bird {
-        display: block;
-        line-height: 0%;
-    }
-
-    .archive-link {
-        text-align: center;
-        padding-bottom: 10px;
-    }
-
-    .loading {
-        text-align: center;
+    .btn {
+        margin: 2%;
     }
 }

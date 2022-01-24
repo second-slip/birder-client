@@ -1,6 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { catchError, Observable, share, throwError } from 'rxjs';
-import { ITweetDay } from '../i-tweet-day.dto';
 import { TweetDayService } from './tweet-day.service';
 
 @Component({
@@ -9,21 +7,19 @@ import { TweetDayService } from './tweet-day.service';
   styleUrls: ['./tweet-day.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TweetDayComponent {
-  tweet$: Observable<ITweetDay>;
-  public errorObject = null;
+export class TweetDayComponent implements OnInit {
 
-  constructor(private tweetsService: TweetDayService) {
-    this.getTweetOfTheDay();
+  constructor(readonly _service: TweetDayService) { }
+
+  ngOnInit(): void {
+    this._getData();
   }
 
-  getTweetOfTheDay(): void {
-    this.tweet$ = this.tweetsService.getTweetDay()
-      .pipe(share(),
-        catchError(err => {
-          this.errorObject = err;
-          return throwError(err);
-        })
-      );
+  private _getData(): void {
+    this._service.getData();
+  }
+
+  public reload(): void {
+    this._getData();
   }
 }

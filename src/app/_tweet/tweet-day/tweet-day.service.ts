@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, first } from 'rxjs';
+import { BehaviorSubject, finalize, Observable } from 'rxjs';
 import { ITweetDay } from '../i-tweet-day.dto';
 
 @Injectable({
@@ -8,19 +8,40 @@ import { ITweetDay } from '../i-tweet-day.dto';
 })
 export class TweetDayService {
 
-  constructor(private http: HttpClient) { }
+  private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  private readonly _observationCount$: BehaviorSubject<ITweetDay | null> = new BehaviorSubject<ITweetDay | null>(null);
 
-  getTweetDay(): Observable<ITweetDay> {
-    return this.http.get<ITweetDay>('api/Tweets/GetTweetDay')
-      .pipe(first());
+  constructor(private readonly _httpClient: HttpClient) { }
+
+  public get isError(): Observable<boolean> {
+    return this._isError$.asObservable();
   }
 
-  // getTweetArchive(pageIndex: number, pageSize: number): Observable<TweetArchiveDto> {
-  //   const params = new HttpParams()
-  //     .set('pageIndex', pageIndex.toString())
-  //     .set('pageSize', pageSize.toString());
+  public get isLoading(): Observable<boolean> {
+    return this._isLoading$.asObservable();
+  }
 
-  //   return this.http.get<TweetArchiveDto>('api/Tweets/GetTweetArchive', { params })
-  //     .pipe(first());
-  // }
+  public get getTweet(): Observable<ITweetDay | null> {
+    return this._observationCount$.asObservable();
+  }
+
+  public getData(): void {
+
+    this._isLoading$.next(true);
+
+    this._httpClient.get<ITweetDay>('api/Tweets/TweetDay')
+      .pipe(finalize(() => { this._isLoading$.next(false); }))
+      .subscribe({
+        next: (response) => {
+          this._observationCount$.next(response);
+        },
+        error: (e) => { this._handleError(e); },
+        complete: () => { if (this._isError$) this._isError$.next(false); }
+      })
+  }
+
+  private _handleError(error: any) { // no need to send error to the component...
+    this._isError$.next(true);
+  }
 }

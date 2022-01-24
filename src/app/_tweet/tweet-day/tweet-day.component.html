@@ -1,42 +1,40 @@
-<div>
+<ng-container *ngIf="(_service.getTweet | async) as tweet; else loadingOrError">
 
-    <ng-container *ngIf="tweet$ | async as tweet; else loadingOrError">
-        <div class="container">
-            <h4>Tweet of the Day</h4>
-            <span class="bird">
-                <h4><a routerLink="/bird-detail/{{tweet.bird.birdId}}">
-                        {{tweet.bird.englishName}}
-                    </a></h4>
-                <small><em>{{tweet.bird.species}}</em></small>
-            </span>
-        </div>
+    <h1>Tweet of the Day</h1>
+    <p>
+        <a routerLink="/bird-detail/{{tweet.bird.birdId}}">{{tweet.bird.englishName}}</a>
+        <br>
+        <small class="scientific-name">{{tweet.bird.species}}</small>
+    </p>
 
-        <div class="container">
-            <audio controls>
-                <source src="{{tweet.songUrl}}" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
-        </div>
+    <div class="audio-control">
+        <audio controls>
+            <source src="{{tweet.songUrl}}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
 
-        <div class="archive-link">
-            <small>
-                <a routerLink="/tweets-archive">View previous days' tweets</a></small>
-        </div>
+    <div class="archive-link">
+        <small>
+            <a routerLink="/tweets-archive">View previous days' tweets</a></small>
+    </div>
 
+</ng-container>
+
+<ng-template #loadingOrError>
+    <ng-container *ngIf="(_service.isError | async); else loading">
+        <p>
+            <strong>Whoops!</strong>&nbsp;An error occurred<br>
+            <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
+                Again</button>
+        </p>
     </ng-container>
-
-    <ng-template #loadingOrError>
-        <ng-container *ngIf="errorObject; else loading">
-            <!-- <app-error-display [error]="errorObject"></app-error-display> -->
-        </ng-container>
-    </ng-template>
+</ng-template>
 
 
-    <ng-template #loading>
-        <div class="loading-placeholder">
-            <p><em>Loading...</em></p>
-            <mat-spinner></mat-spinner>
-        </div>
-    </ng-template>
-
-</div>
+<ng-template #loading>
+    <p>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <strong>&nbsp;Loading</strong>
+    </p>
+</ng-template>

@@ -43,7 +43,6 @@ import { AuthenticationGuardService } from './_auth/authentication-guard.service
 import { LogoutComponent } from './_auth/logout/logout.component';
 import { HttpInterceptorProviders } from './_httpInterceptors';
 import { ObservationFeedComponent } from './_observationFeed/observation-feed/observation-feed.component';
-import { TemporarySideBarComponent } from './temporary-side-bar/temporary-side-bar.component';
 import { SideMenuComponent } from './_layout/side-menu/side-menu.component';
 import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.component';
 import { ObservationFeedItemComponent } from './_observationFeed/observation-feed-item/observation-feed-item.component';
@@ -81,7 +80,6 @@ import { LifeListComponent } from './_list/life-list/life-list.component';
     LoginComponent,
     LogoutComponent,
     ObservationFeedComponent,
-    TemporarySideBarComponent,
     SideMenuComponent,
     InfiniteScrollComponent,
     ObservationFeedItemComponent,

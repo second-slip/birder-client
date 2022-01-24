@@ -23,39 +23,20 @@
 
     <ng-template #loadingOrError>
         <ng-container *ngIf="(_service.isError | async); else loading">
-            <!-- <app-error-display [error]="errorObject"></app-error-display> -->
-            <!-- ToDo: alert with button on the right? -->
-            <p>error</p>
-            <button data-testid="reload-button" (click)="reload()">Retry</button>
+            <p>
+                <strong>Whoops!</strong>&nbsp;An error occurred<br>
+                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button"
+                    (click)="reload()">Retry</button>
+            </p>
         </ng-container>
     </ng-template>
 
 
     <ng-template #loading>
-        <div class="loading-placeholder">
-            <p><em>Loading...</em></p>
-            <mat-spinner></mat-spinner>
-        </div>
+        <p>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <strong>&nbsp;Loading</strong>
+        </p>
     </ng-template>
 
 </div>
-
-<!-- <div *ngIf="(_service.isLoading | async) as loading">
-    <h1 data-testid="loading-header">is loading: {{ loading }}</h1>
-</div>
-
-
-
-<div *ngIf="(_service.getCount | async) as analysis" data-testid="main-content">
-
-    <p class="analysis-text">You have spotted <span class="count-text">{{ analysis.uniqueSpeciesCount }}</span>
-        species <br>in
-        <span class="count-text">{{ analysis.totalObservationsCount }}</span>
-        {{ analysis.totalObservationsCount > 1 ? 'observations' : 'observation' }}
-    </p>
-</div>
-
-<div *ngIf="(_service.isError | async) as error" data-testid="error-content">
-    <h1 data-testid="error-header">is error: {{ error }}</h1>
-    <button data-testid="reload-button" (click)="reload()">Retry</button>
-</div> -->

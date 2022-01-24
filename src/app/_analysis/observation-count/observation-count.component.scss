@@ -1,6 +1,8 @@
 app-observation-count {
     text-align: center;
 
+    margin: 2%;
+
     .analysis-text {
         font-size: 1.2em;
     }
@@ -9,10 +11,7 @@ app-observation-count {
         font-size: 1.5em;
     }
 
-    .loading-placeholder {
-        text-align: center;
-        .mat-spinner {
-            margin: 0 auto;
-        }
+    .btn {
+        margin: 2%;
     }
 }

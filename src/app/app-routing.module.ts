@@ -5,7 +5,6 @@
 // import { ConfirmEmailComponent } from './_account/confirm-email/confirm-email.component';
 // import { ObservationEditComponent } from './_observations/observation-edit/observation-edit.component';
 // import { ObservationDeleteComponent } from './_observations/observation-delete/observation-delete.component';
-// import { LifeListComponent } from './_lists/life-list/life-list.component';
 // import { UserProfileComponent } from './_users/user-profile/user-profile.component';
 // import { LayoutAccountManagerComponent } from './_layout/layout-account-manager/layout-account-manager.component';
 // import { AccountManagerProfileComponent } from './_accountManager/account-manager-profile/account-manager-profile.component';
@@ -36,6 +35,7 @@ import { HomeComponent } from "./_home/home/home.component";
 import { TechnologyComponent } from "./_home/technology/technology.component";
 import { LayoutNoSidebarComponent } from "./_layout/layout-no-sidebar/layout-no-sidebar.component";
 import { LayoutSidebarComponent } from "./_layout/layout-sidebar/layout-sidebar.component";
+import { LifeListComponent } from "./_list/life-list/life-list.component";
 import { FollowersComponent } from "./_network/followers/followers.component";
 import { FollowingComponent } from "./_network/following/following.component";
 import { NetworkComponent } from "./_network/network/network.component";
@@ -87,7 +87,7 @@ const routes: Routes = [
           //         { path: 'observation-manage-photos/:id', component: ObservationManagePhotosComponent },
           //         { path: 'birds-index', component: BirdsIndexComponent },
           //         { path: 'bird-detail/:id', component: BirdDetailComponent },
-          //         { path: 'life-list/:username', component: LifeListComponent },
+          { path: 'life-list/:username', component: LifeListComponent },
           //         { path: 'user-profile/:username', component: UserProfileComponent },
           { path: 'followers/:username', component: FollowersComponent },
           { path: 'following/:username', component: FollowingComponent },

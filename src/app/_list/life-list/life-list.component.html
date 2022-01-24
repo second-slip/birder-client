@@ -1,0 +1,93 @@
+<div class="life-list-container">
+
+    <h1>Your Life List</h1>
+
+    <ng-container *ngIf="!(_service.isError | async); else errorTemplate">
+
+        <ng-container *ngIf="(_service.getLifeList | async) as list">
+
+            <p *ngIf="(_service.isLoading | async)">
+                <ngb-alert [dismissible]="false" type="info">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <strong>&nbsp;Loading</strong><em>&nbsp;Loading the life list...</em>
+                </ngb-alert>
+            </p>
+
+            <p *ngIf="!list.length">
+                <ngb-alert type="warning" [dismissible]="false">
+                    <strong>Nothing yet to show</strong><br>
+                    You have not yet logged any observations...<br>
+                    Why not <a routerLink="/observation-add">click here</a> to add your first one?
+                </ngb-alert>
+            </p>
+
+            <ng-container *ngIf="!(_service.isLoading | async) && (list.length)">
+
+                <p>You have spotted {{ list.length }} species:</p>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <!-- <th scope="col">#</th> -->
+                            <th scope="col">Count</th>
+                            <th scope="col">Species</th>
+                            <th class="hide-small" scope="col">Status / Population</th>
+                            <th scope="col">Risk Flag</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let record of list | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                            <!-- better adding rank on the server! -->
+                            <!-- add equal rank positions too -->
+                            <!-- <th scope="row">{{ i + 1 }}</th> -->
+                            <td>{{ record.count | number }}</td>
+                            <td><a routerLink="/bird-detail/{{record.birdId}}">{{ record.englishName }}</a>
+                                <br><small><em>{{ record.species }}</em></small>
+                            </td>
+                            <td class="hide-small"><small>{{ record.btoStatusInBritain }} <br> {{
+                                    record.populationSize
+                                    }}</small></td>
+                            <td [style.color]="record.conservationListColourCode"><small>{{
+                                    record.conservationStatus
+                                    }}</small>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <hr>
+
+                <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="list.length"
+                    class="d-flex justify-content-center" size="sm" [maxSize]="9" [rotate]="true" [boundaryLinks]="true"
+                    (pageChange)="changePage()">
+                </ngb-pagination>
+
+            </ng-container>
+
+        </ng-container>
+
+    </ng-container>
+
+    <!-- <ng-template #loading>
+        <p>
+            <ngb-alert [dismissible]="false" type="info">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <strong>Loading</strong><em>&nbsp;Fetching more observations...</em>
+            </ngb-alert>
+        </p>
+    </ng-template> -->
+
+    <ng-template #errorTemplate>
+        <!-- <ng-container *ngIf="(_service.isError | async); else loadingTemplate"> -->
+        <ngb-alert [dismissible]="false" type="danger">
+            <strong>Whoops!</strong>&nbsp;There was an error retrieving the data.
+            <div>
+                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button"
+                    (click)="reload()">Retry</button>
+            </div>
+        </ngb-alert>
+        <!-- </ng-container> -->
+    </ng-template>
+
+</div>

@@ -36,12 +36,12 @@ export class ObservationTopFiveService {
         next: (response) => {
           this._topObservations$.next(response);
         },
-        error: (e) => { this._handleError(e); }
+        error: (e) => { this._handleError(e); },
+        complete: () => { if (this._isError$) this._isError$.next(false); }
       })
   }
 
   private _handleError(error: any) { // no need to send error to the component...
-    //console.log(error);
     this._isError$.next(true);
   }
 }

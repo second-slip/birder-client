@@ -1,42 +1,38 @@
-<div>
+<ng-container *ngIf="(_service.getCount | async) as analysis; else loadingOrError">
 
-    <ng-container *ngIf="(_service.getCount | async) as analysis; else loadingOrError">
-
-        <div *ngIf="analysis.totalObservationsCount">
-            <p class="analysis-text">You have spotted <span class="count-text">{{ analysis.uniqueSpeciesCount }}</span>
-                species <br>in
-                <span class="count-text">{{ analysis.totalObservationsCount }}</span>
-                {{ analysis.totalObservationsCount > 1 ? 'observations' : 'observation' }}
-            </p>
-        </div>
-
-        <div *ngIf="!analysis.totalObservationsCount">
-            <p>
-                <ngb-alert type="warning" [dismissible]="false">
-                    You have not yet logged any observations...<br>
-                    <a routerLink="/observation-add">Click here</a> to add your first one
-                </ngb-alert>
-            </p>
-        </div>
-
-    </ng-container>
-
-    <ng-template #loadingOrError>
-        <ng-container *ngIf="(_service.isError | async); else loading">
-            <p>
-                <strong>Whoops!</strong>&nbsp;An error occurred<br>
-                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button"
-                    (click)="reload()">Retry</button>
-            </p>
-        </ng-container>
-    </ng-template>
-
-
-    <ng-template #loading>
-        <p>
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            <strong>&nbsp;Loading</strong>
+    <div *ngIf="analysis.totalObservationsCount">
+        <p class="analysis-text">You have spotted <span class="count-text">{{ analysis.uniqueSpeciesCount }}</span>
+            species <br>in
+            <span class="count-text">{{ analysis.totalObservationsCount }}</span>
+            {{ analysis.totalObservationsCount > 1 ? 'observations' : 'observation' }}
         </p>
-    </ng-template>
+    </div>
 
-</div>
+    <div *ngIf="!analysis.totalObservationsCount">
+        <p>
+            <ngb-alert type="warning" [dismissible]="false">
+                You have not yet logged any observations...<br>
+                <a routerLink="/observation-add">Click here</a> to add your first one
+            </ngb-alert>
+        </p>
+    </div>
+
+</ng-container>
+
+<ng-template #loadingOrError>
+    <ng-container *ngIf="(_service.isError | async); else loading">
+        <p>
+            <strong>Whoops!</strong>&nbsp;An error occurred<br>
+            <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
+                Again</button>
+        </p>
+    </ng-container>
+</ng-template>
+
+
+<ng-template #loading>
+    <p>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <strong>&nbsp;Loading</strong>
+    </p>
+</ng-template>

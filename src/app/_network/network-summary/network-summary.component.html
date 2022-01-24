@@ -1,21 +1,20 @@
 <div class="network-container">
 
-    <ng-container *ngIf="(_service.getSummary | async) as summary">
+  <ng-container *ngIf="(_service.getSummary | async) as summary">
 
-        <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
-            
-            <div class="summary network">
-                <p><a routerLink="/followers/{{authUser.userName}}">{{ summary.followersCount }} {{
-                        summary.followersCount > 1 ? 'followers' : 'follower' }}</a>
-                    /
-                    <a routerLink="/following/{{authUser.userName}}">{{ summary.followingCount }} following</a>
-                </p>
-            </div>
-        </ng-container>
+    <h1 *ngIf="showTitle">Your Birder Network</h1>
 
+    <ng-container class="summary network" *ngIf="(_authService.getAuthUser | async) as authUser">
+      <p><a routerLink="/followers/{{authUser.userName}}">{{ summary.followersCount }} {{
+          summary.followersCount > 1 ? 'followers' : 'follower' }}</a>
+        /
+        <a routerLink="/following/{{authUser.userName}}">{{ summary.followingCount }} following</a>
+      </p>
     </ng-container>
 
-    <!-- <ng-template #loadingOrError>
+  </ng-container>
+
+  <!-- <ng-template #loadingOrError>
         <ng-container *ngIf="errorObject; else loading">
           <app-error-display [error]="errorObject"></app-error-display>
         </ng-container>

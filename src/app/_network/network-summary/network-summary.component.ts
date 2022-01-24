@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { NetworkSummaryService } from './network-summary.service';
 
@@ -9,6 +9,8 @@ import { NetworkSummaryService } from './network-summary.service';
   encapsulation: ViewEncapsulation.None
 })
 export class NetworkSummaryComponent implements OnInit {
+  @Input()
+  public showTitle: boolean;
 
   constructor(readonly _service: NetworkSummaryService
     , readonly _authService: AuthenticationService) { }

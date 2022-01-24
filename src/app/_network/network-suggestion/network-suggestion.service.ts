@@ -36,7 +36,8 @@ export class NetworkSuggestionService {
         next: (response) => {
           this._suggestions$.next(response);
         },
-        error: (e) => { this._handleError(e); }
+        error: (e) => { this._handleError(e); },
+        complete: () => { if (this._isError$) this._isError$.next(false); }
       })
   }
 

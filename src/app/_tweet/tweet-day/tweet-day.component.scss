@@ -2,13 +2,22 @@ app-tweet-day {
     text-align: center;
     margin: 2%;
 
+    .english-name {
+        line-height: 0px;
+    }
+
     .scientific-name {
-        margin: 0;
         font-style: italic;
     }
 
-    .audio-control {
-        margin: 7% 0% 2%;
+    audio {
+        margin: 0 auto;
+        display: block;
+    }
+
+    .archive-link {
+        margin: 3% 0% auto;
+        display: block;
     }
 
     .btn {

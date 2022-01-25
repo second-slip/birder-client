@@ -2,7 +2,7 @@
 
     <ng-container *ngIf="(_service.getNetworkSuggestions | async) as suggestions; else loadingOrError">
 
-        <h2>Suggested Users</h2>
+        <h2 class="heading">Suggested Users</h2>
 
         <div *ngIf="suggestions.length">
             <div *ngFor="let user of suggestions">

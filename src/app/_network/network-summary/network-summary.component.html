@@ -1,6 +1,6 @@
 <div class="network-container">
 
-  <ng-container *ngIf="(_service.getSummary | async) as summary">
+  <ng-container *ngIf="(_service.getSummary | async) as summary; else loadingOrError">
 
     <h1 *ngIf="showTitle">Your Birder Network</h1>
 
@@ -14,18 +14,22 @@
 
   </ng-container>
 
-  <!-- <ng-template #loadingOrError>
-        <ng-container *ngIf="errorObject; else loading">
-          <app-error-display [error]="errorObject"></app-error-display>
-        </ng-container>
-      </ng-template>
+  <ng-template #loadingOrError>
+    <ng-container *ngIf="(_service.isError | async); else loading">
+      <p>
+          <strong>Whoops!</strong>&nbsp;An error occurred&nbsp;&nbsp;
+          <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
+              Again</button>
+      </p>
+  </ng-container>
+  </ng-template>
 
-    
-      <ng-template #loading>
-        <div class="container">
-          <p><em>Loading...</em></p>
-          <mat-spinner></mat-spinner>
-        </div>
-      </ng-template> -->
+
+  <ng-template #loading>
+    <p>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      <strong>&nbsp;Loading</strong>
+    </p>
+  </ng-template>
 
 </div>

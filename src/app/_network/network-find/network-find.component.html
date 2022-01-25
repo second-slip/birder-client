@@ -1,10 +1,11 @@
 <div class="find-container">
 
+    <h2>Find users in the network</h2>
+
     <form id="searchForm" class="form-inline controls" novalidate #searchForm="ngForm" (ngSubmit)="searchNetwork()">
         <!-- <label for="searchTerm" class="sr-only">Password</label> -->
         <input type="text" class="form-control" id="searchTerm" name="searchTerm" placeholder="type search criterion"
             [(ngModel)]="searchTerm" required>
-        <!-- </div> -->
         <button type="submit" class="btn btn-primary" [disabled]="!searchForm.valid">Search</button>
         <!-- <button *ngIf="(searching)" class="btn btn-primary" type="submit" disabled>
       Searching the Birder network
@@ -14,7 +15,9 @@
 
     <hr>
 
-    <div *ngIf="(_service.getSearchResults | async) as results">
+    <div *ngIf="(_service.getSearchResults | async) as results; else loadingOrError">
+
+        <h3>Search results</h3>
 
         <div *ngIf="results.length">
             <div *ngFor="let user of results">
@@ -31,20 +34,22 @@
     </div>
 
 
-    <div #loadingOrError>
-        <ng-container *ngIf="(_service.isError | async)">
-            <!-- <app-error-display [error]="errorObject"></app-error-display> -->
-            <!-- ToDo: alert with button on the right? -->
-            <p>An error occurred.  Please try searching again.</p>
-            <!-- <button data-testid="reload-button" (click)="reload()">Retry</button> -->
+    <ng-template #loadingOrError>
+        <ng-container *ngIf="(_service.isError | async); else loading">
+            <p>
+                <strong>Whoops!</strong>&nbsp;An error occurred<br>
+                Please try searching again.
+            </p>
         </ng-container>
-    </div>
+    </ng-template>
 
-    <div #loading>
-        <div class="loading-placeholder" *ngIf="(_service.isLoading | async)">
-            <p><em>Loading...</em></p>
-            <mat-spinner></mat-spinner>
-        </div>
-    </div>
+    <ng-template #loading>
+        <ng-container *ngIf="(_service.isLoading | async)">
+            <p>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <strong>&nbsp;Loading</strong>
+            </p>
+        </ng-container>
+    </ng-template>
 
 </div>

@@ -22,5 +22,4 @@ export class NetworkSuggestionComponent implements OnInit {
   public reload(): void {
     this._getData();
   }
-
 }

@@ -48,6 +48,10 @@ export class UserProfileService {
       })
   }
 
+  public reset(): void {
+    this._profile$.next(null);
+  }
+
   private _handleError(error: any) { // no need to send error to the component...
     this._isError$.next(true);
   }

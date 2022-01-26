@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ObservationCountService } from 'src/app/_analysis/observation-count/observation-count.service';
 import { INetworkUser } from 'src/app/_network/i-network-user.dto';
@@ -11,7 +11,7 @@ import { UserProfileService } from '../user-profile.service';
   styleUrls: ['./user-profile.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit, OnDestroy {
 
   private _username: string | null;
 
@@ -36,7 +36,6 @@ export class UserProfileComponent implements OnInit {
   public reload(): void {
     this._getData();
   }
-
 
   public followOrUnfollow(element: any, user: INetworkUser): void {
 
@@ -71,5 +70,9 @@ export class UserProfileComponent implements OnInit {
         });
       return;
     }
+  }
+
+  ngOnDestroy(): void {
+    this._service.reset();
   }
 }

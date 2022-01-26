@@ -1,4 +1,4 @@
-import { IBirdSummary } from "../_birds/i-bird-summary.dto";
+import { IBirdSummary } from "../_bird/i-bird-summary.dto";
 
 export interface ITweetDay {
     tweetDayId: number;

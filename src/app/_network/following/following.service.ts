@@ -38,7 +38,7 @@ export class FollowingService {
     const options = username ?
       { params: new HttpParams().set('requestedUsername', username) } : {};
 
-    this._httpClient.get<INetworkUser[]>('api/Network/GetFollowing', options)
+    this._httpClient.get<INetworkUser[]>('api/Network/Following', options)
       .pipe(finalize(() => this._isLoading$.next(false)))
       .subscribe({
         next: (response) => {

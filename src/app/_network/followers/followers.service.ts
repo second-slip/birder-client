@@ -38,7 +38,7 @@ export class FollowersService {
     const options = username ?
       { params: new HttpParams().set('requestedUsername', username) } : {};
 
-    this._httpClient.get<INetworkUser[]>('api/Network/GetFollowers', options)
+    this._httpClient.get<INetworkUser[]>('api/Network/Followers', options)
       .pipe(finalize(() => this._isLoading$.next(false)))
       .subscribe({
         next: (response) => {

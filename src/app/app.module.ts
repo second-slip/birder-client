@@ -60,6 +60,7 @@ import { NetworkSuggestionComponent } from './_network/network-suggestion/networ
 import { NetworkFindComponent } from './_network/network-find/network-find.component';
 import { LifeListComponent } from './_list/life-list/life-list.component';
 import { UserProfileComponent } from './_profile/user-profile/user-profile.component';
+import { SelectSpeciesComponent } from './_observation/select-species/select-species.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { UserProfileComponent } from './_profile/user-profile/user-profile.compo
     NetworkSuggestionComponent,
     NetworkFindComponent,
     LifeListComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    SelectSpeciesComponent
   ],
   imports: [
     AppRoutingModule,

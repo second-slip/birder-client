@@ -40,6 +40,7 @@ import { FollowersComponent } from "./_network/followers/followers.component";
 import { FollowingComponent } from "./_network/following/following.component";
 import { NetworkComponent } from "./_network/network/network.component";
 import { ObservationFeedComponent } from "./_observationFeed/observation-feed/observation-feed.component";
+import { UserProfileComponent } from "./_profile/user-profile/user-profile.component";
 
 
 const routes: Routes = [
@@ -88,7 +89,7 @@ const routes: Routes = [
           //         { path: 'birds-index', component: BirdsIndexComponent },
           //         { path: 'bird-detail/:id', component: BirdDetailComponent },
           { path: 'life-list/:username', component: LifeListComponent },
-          //         { path: 'user-profile/:username', component: UserProfileComponent },
+          { path: 'user-profile/:username', component: UserProfileComponent },
           { path: 'followers/:username', component: FollowersComponent },
           { path: 'following/:username', component: FollowingComponent },
           { path: 'network', component: NetworkComponent },

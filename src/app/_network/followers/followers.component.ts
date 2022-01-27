@@ -11,6 +11,7 @@ import { FollowersService } from './followers.service';
 })
 export class FollowersComponent implements OnInit {
 
+  active =2;
   public username: string | null;
 
   constructor(readonly _service: FollowersService

@@ -108,7 +108,9 @@ import { SelectSpeciesComponent } from './_observation/select-species/select-spe
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
-    MatTabsModule,
+    // ***************************
+    MatTabsModule, 
+    // ***************************
     MatIconModule,
     MatInputModule,
     MatButtonModule,

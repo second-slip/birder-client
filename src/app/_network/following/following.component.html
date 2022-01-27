@@ -4,10 +4,14 @@
 
         <h1>{{ authUser.userName === username ? 'You follow' : username + ' follows' }}</h1>
 
-        <nav mat-tab-nav-bar mat-stretch-tabs class="stretched-tabs">
-            <a mat-tab-link [active]="true">Following</a>
-            <a mat-tab-link routerLink="/followers/{{username}}">Followers</a>
-        </nav>
+        <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs nav-justified">
+            <li [ngbNavItem]="1">
+                <a ngbNavLink>Following</a>
+            </li>
+            <li [ngbNavItem]="2">
+                <a ngbNavLink routerLink="/followers/{{username}}">Followers</a>
+            </li>
+        </ul>
 
     </ng-container>
 

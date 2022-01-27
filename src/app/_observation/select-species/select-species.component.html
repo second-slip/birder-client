@@ -1,1 +1,43 @@
-<p>select-species works!</p>
+
+
+<label for="typeahead-focus">Search for a bird:</label>
+<input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search"
+    (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
+    #instance="ngbTypeahead" [resultFormatter]="formatter" [inputFormatter]="formatter" />
+<hr>
+<pre>Model: {{ model | json }}</pre>
+
+
+<div>
+
+    <!-- <input type="bird" placeholder="Select species" aria-label="Number" matInput [matAutocomplete]="auto" required>
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let bird of _service.filteredOptions$ | async" [value]="bird">
+            <p><b>{{ bird.englishName }} </b>, <em> {{ bird.species }} </em></p>
+        </mat-option>
+    </mat-autocomplete> -->
+
+    <!-- <mat-error *ngFor="let validation of addObservation_validation_messages.bird">
+            <mat-error class="error-message"
+                *ngIf="addObservationForm.get('bird').hasError(validation.type) && (addObservationForm.get('bird').dirty || addObservationForm.get('bird').touched)">
+                {{validation.message}}</mat-error>
+        </mat-error> -->
+    <!-- </mat-form-field> -->
+</div>
+
+<!-- <div>
+    <mat-form-field class="three-quarter-width">
+        <input type="bird" placeholder="Select species" aria-label="Number" matInput
+            formControlName="bird" [matAutocomplete]="auto" required>
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let bird of filteredOptions$ | async" [value]="bird">
+                <p><b>{{ bird.englishName }} </b>, <em> {{ bird.species }} </em></p>
+            </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngFor="let validation of addObservation_validation_messages.bird">
+            <mat-error class="error-message"
+                *ngIf="addObservationForm.get('bird').hasError(validation.type) && (addObservationForm.get('bird').dirty || addObservationForm.get('bird').touched)">
+                {{validation.message}}</mat-error>
+        </mat-error>
+    </mat-form-field>
+</div> -->

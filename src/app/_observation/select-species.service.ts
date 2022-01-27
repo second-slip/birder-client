@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
-import { isThisTypeNode } from 'typescript';
 import { IBirdSummary } from '../_bird/i-bird-summary.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelectSpeciesService {
+  private _dataValidUntil: number = 0;
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private readonly _birds$: BehaviorSubject<IBirdSummary[]> = new BehaviorSubject<IBirdSummary[]>([]);
@@ -26,23 +26,14 @@ export class SelectSpeciesService {
     return this._birds$.value;
   }
 
-  private y = { fetched: false, _fetchedTime: new Date() };
-
-  _check(): boolean {
-    var expiry = new Date();
-    expiry.setUTCHours(23, 59, 59, 999);
-
-    //short circuit
-    var getData = ((!this.y.fetched) || (this.y._fetchedTime > expiry));
-    
-    return getData;
-
-  }
-
   public getData(): void {
 
-    console.log('getData is: ' + this._check());
-
+    if (!this._isCacheExpired()) {
+      console.log('cached data are available');
+      return;
+    } else {
+      console.log('cached data either not available or expired - proceed to data fetch');
+    }
 
     this._isLoading$.next(true);
 
@@ -51,16 +42,21 @@ export class SelectSpeciesService {
       .subscribe({
         next: (response) => {
           this._birds$.next(response);
-          
-          this.y.fetched = true;
-          this.y._fetchedTime = new Date();
+          this._dataValidUntil = new Date().setHours(24, 0, 0, 0);
         },
         error: (e) => { this._handleError(e); },
         complete: () => { if (this._isError$) this._isError$.next(false); }
       })
   }
 
-  private _handleError(error: any) { // no need to send error to the component...
+  private _handleError(error: any) {
     this._isError$.next(true);
+  }
+
+    // The static Date.now() method returns 
+  // the number of milliseconds elapsed since January 1, 1970 00:00:00 UTC.
+  private _isCacheExpired(): boolean {
+    const isExpired = Date.now() >= this._dataValidUntil;
+    return isExpired;
   }
 }

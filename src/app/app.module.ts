@@ -28,6 +28,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
 
 import { LayoutNoSidebarComponent } from './_layout/layout-no-sidebar/layout-no-sidebar.component';
 import { LayoutSidebarComponent } from './_layout/layout-sidebar/layout-sidebar.component';
@@ -61,6 +62,7 @@ import { NetworkFindComponent } from './_network/network-find/network-find.compo
 import { LifeListComponent } from './_list/life-list/life-list.component';
 import { UserProfileComponent } from './_profile/user-profile/user-profile.component';
 import { SelectSpeciesComponent } from './_observation/select-species/select-species.component';
+import { ObservationCreateComponent } from './_observation/observation-create/observation-create.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +101,8 @@ import { SelectSpeciesComponent } from './_observation/select-species/select-spe
     NetworkFindComponent,
     LifeListComponent,
     UserProfileComponent,
-    SelectSpeciesComponent
+    SelectSpeciesComponent,
+    ObservationCreateComponent
   ],
   imports: [
     AppRoutingModule,
@@ -118,7 +121,7 @@ import { SelectSpeciesComponent } from './_observation/select-species/select-spe
     MatDatepickerModule,
     // NgxMatDatetimePickerModule,
     // NgxMatMomentModule,
-    // MatStepperModule,
+    MatStepperModule,
     MatNativeDateModule,
     MatCheckboxModule,
     MatSelectModule,

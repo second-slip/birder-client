@@ -1,0 +1,77 @@
+<!-- ToDo: refactor to use ngTemplate / ngContainer -->
+
+<div>
+     <!-- class="observation-add-container" *ngIf="addObservationForm"> -->
+    <h1>Add observation</h1>
+
+
+
+        <mat-vertical-stepper [linear]="false" #stepper (selectionChange)="onStepperSelectionChange()">
+            <mat-step errorMessage="Section not complete.">
+                <!-- [stepControl]="addObservationForm" -->
+                <!-- <form [formGroup]="firstFormGroup"> -->
+                <ng-template matStepLabel><span class="stepperTop0">Details: what and when?</span></ng-template>
+
+
+                <div>
+                    <button mat-stroked-button matStepperNext type="button">Next</button>
+                </div>
+
+            </mat-step>
+
+            <mat-step>
+                <!-- <form [formGroup]="secondFormGroup"> -->
+                <ng-template matStepLabel><span class="stepperTop1">Location</span></ng-template>
+                <div class="map">
+                    <!-- <app-view-edit-single-marker-map #map [position]="defaultPosition">
+                    </app-view-edit-single-marker-map> -->
+                </div>
+
+                <div>
+                    <button mat-stroked-button matStepperPrevious type="button">Back</button>
+                    <button mat-stroked-button matStepperNext type="button">Next</button>
+                </div>
+                <!-- </form> -->
+            </mat-step>
+            <!--  -->
+            <mat-step [optional]="true">
+                <ng-template matStepLabel><span class="stepperTop2">Notes</span></ng-template>
+                <div class="container">
+                    <!-- <app-add-notes></app-add-notes> -->
+
+                    <button mat-stroked-button matStepperPrevious type="button">Back</button>
+                    <button mat-stroked-button matStepperNext type="button">Next</button>
+                </div>
+            </mat-step>
+            <!--  -->
+
+            <mat-step>
+                <ng-template matStepLabel><span class="stepperTop0">Done</span></ng-template>
+                <div>
+                    <!-- <p *ngIf="!addObservationForm.valid">
+                        Part 1 is not complete. You must complete all manadatory fields.
+                    </p>
+                    <p *ngIf="addObservationForm.valid">
+                        You are now done. Choose 'Save' to add your observation.
+                    </p> -->
+                </div>
+
+                <!-- <div>
+                    <button mat-stroked-button matStepperPrevious type="button">Back</button>
+                    <button mat-stroked-button (click)="stepper.reset()" type="button">Reset</button>
+                    <button mat-stroked-button *ngIf="!requesting" type="submit" [disabled]="!addObservationForm.valid">
+                        Save
+                    </button>
+                    <button mat-stroked-button *ngIf="requesting" type="submit" disabled>
+                        Save observation...
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    </button>
+                </div> -->
+
+            </mat-step>
+
+        </mat-vertical-stepper>
+
+    <!-- </form> -->
+
+</div>

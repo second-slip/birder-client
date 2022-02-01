@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -63,6 +63,9 @@ import { LifeListComponent } from './_list/life-list/life-list.component';
 import { UserProfileComponent } from './_profile/user-profile/user-profile.component';
 import { SelectSpeciesComponent } from './_observation/select-species/select-species.component';
 import { ObservationCreateComponent } from './_observation/observation-create/observation-create.component';
+import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
+import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @NgModule({
   declarations: [
@@ -112,15 +115,15 @@ import { ObservationCreateComponent } from './_observation/observation-create/ob
     BrowserModule,
     BrowserAnimationsModule,
     // ***************************
-    MatTabsModule, 
+    MatTabsModule,
     // ***************************
     MatIconModule,
     MatInputModule,
     MatButtonModule,
     // MatButtonModule,
     MatDatepickerModule,
-    // NgxMatDatetimePickerModule,
-    // NgxMatMomentModule,
+    NgxMatDatetimePickerModule,
+    NgxMatMomentModule,
     MatStepperModule,
     MatNativeDateModule,
     MatCheckboxModule,
@@ -145,7 +148,10 @@ import { ObservationCreateComponent } from './_observation/observation-create/ob
     }),
   ],
   providers: [
-    AuthenticationService, TokenService, AuthenticationGuardService, HttpInterceptorProviders
+    AuthenticationService, TokenService, AuthenticationGuardService, HttpInterceptorProviders,
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: LOCALE_ID, useValue: 'en-GB' },
+    { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } }
   ],
   bootstrap: [AppComponent]
 })

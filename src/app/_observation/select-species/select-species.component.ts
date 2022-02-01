@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, merge, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
@@ -8,11 +9,12 @@ import { SelectSpeciesService } from '../select-species.service';
 @Component({
   selector: 'app-select-species',
   templateUrl: './select-species.component.html',
-  styleUrls: ['./select-species.component.scss']
+  styleUrls: ['./select-species.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class SelectSpeciesComponent implements OnInit {
-  model: IBirdSummary;
-
+  @Input() selectSpeciesForm: FormGroup;
+  
   @ViewChild('instance', { static: true }) instance: NgbTypeahead;
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
@@ -35,5 +37,5 @@ export class SelectSpeciesComponent implements OnInit {
   }
 
   public formatter = (x: { englishName: string }) => x.englishName;
-}
 
+}

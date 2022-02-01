@@ -12,7 +12,7 @@ import { SelectSpeciesService } from '../select-species.service';
   styleUrls: ['./select-species.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class SelectSpeciesComponent implements OnInit {
+export class SelectSpeciesComponent implements OnInit  {
   @Input() selectSpeciesForm: FormGroup;
   
   @ViewChild('instance', { static: true }) instance: NgbTypeahead;

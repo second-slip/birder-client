@@ -6,7 +6,7 @@
     <form [formGroup]="addObservationForm" novalidate (ngSubmit)="onSubmit(addObservationForm.value)">
         <!-- SECTION NOT COMPLETE IF FORM IN CHILD COMPOENT IS INVALID -->
         <mat-vertical-stepper [linear]="false" #stepper (selectionChange)="onStepperSelectionChange()">
-            <mat-step [stepControl]="addObservationForm && species.selectSpeciesForm" errorMessage="Section not complete.">
+            <mat-step [stepControl]="addObservationForm && selectSpeciesForm" errorMessage="Section not complete.">
                 <ng-template matStepLabel><span class="stepperTop0">Details: what and when?</span></ng-template>
 
                 <div class="form-group">

@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ThemePalette } from '@angular/material/core';
 import * as moment from 'moment'; // replace moment with alternative
 import { BirdsListValidator } from 'src/app/_validators';
-import { SelectSpeciesComponent } from '../select-species/select-species.component';
 
 @Component({
   selector: 'app-observation-create',
@@ -16,8 +15,8 @@ export class ObservationCreateComponent implements OnInit {
   public requesting: boolean;
   public addObservationForm: FormGroup;
   public selectSpeciesForm: FormGroup;
-  @ViewChild(SelectSpeciesComponent)
-  private _selectSpeciesComponent: SelectSpeciesComponent;
+  // @ViewChild(SelectSpeciesComponent)
+  // private _selectSpeciesComponent: SelectSpeciesComponent;
 
   @ViewChild('picker') picker: any;
   public minDate = moment().subtract(20, "years");// new Date().toISOString(); // moment.Moment;
@@ -26,6 +25,7 @@ export class ObservationCreateComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder) { }
 
+
   ngOnInit(): void {
     this._createForms();
   }
@@ -33,8 +33,9 @@ export class ObservationCreateComponent implements OnInit {
 
   public onSubmit(formValue: any): void { //ObservationViewModel
     console.log(formValue);
-    console.log(this._selectSpeciesComponent.selectSpeciesForm.value);
-    console.log(this._selectSpeciesComponent.selectSpeciesForm.valid);
+    // console.log(this._selectSpeciesComponent.selectSpeciesForm.value);
+    // console.log(this._selectSpeciesComponent.selectSpeciesForm.valid);
+    console.log(this.selectSpeciesForm.value);
   }
 
   private _createForms(): void {
@@ -44,7 +45,7 @@ export class ObservationCreateComponent implements OnInit {
         BirdsListValidator()
       ]))
     });
-    
+
     this.addObservationForm = this._formBuilder.group({
       quantity: new FormControl(1, Validators.compose([
         Validators.required,

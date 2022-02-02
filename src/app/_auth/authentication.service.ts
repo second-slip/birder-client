@@ -27,6 +27,10 @@ export class AuthenticationService {
     return this._authenticatedUser$.asObservable();
   }
 
+  // public get getAuthUser1(): IauthUser | null {
+  //   return this._authenticatedUser$.value;
+  // }
+
   public checkAuthStatus(): void {
     this._checkAuthStatus();
     this._updateUser();

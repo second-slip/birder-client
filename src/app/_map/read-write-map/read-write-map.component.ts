@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { GeocodeService } from '../geocode.service';
 
@@ -10,8 +11,8 @@ import { GeocodeService } from '../geocode.service';
 export class ReadWriteMapComponent implements OnInit {
   @Input() latitude: number;
   @Input() longitude: number;
-  formattedAddress?: string;
-  shortAddress?: string;
+  formattedAddress: string;
+  shortAddress: string;
 
   @ViewChild(GoogleMap, { static: false }) map: GoogleMap
   @ViewChild(MapInfoWindow, { static: false }) infoWindow: MapInfoWindow
@@ -27,10 +28,7 @@ export class ReadWriteMapComponent implements OnInit {
   constructor(private readonly _geocoding: GeocodeService) { }
 
   ngOnInit(): void {
-    // if (this.formattedAddress || this.shortAddress) {
-      this._addMarker(this.latitude, this.longitude);
-
-    // }
+    this._addMarker(this.latitude, this.longitude);
   }
 
   private _addMarker(latitude: number, longitude: number): void {
@@ -47,7 +45,7 @@ export class ReadWriteMapComponent implements OnInit {
       this.longitude = longitude;
 
       // if (getAddress) {
-        this._getFormattedAddress(latitude, longitude);
+      this._getFormattedAddress(latitude, longitude);
       // }
     } catch (error) {
       // this.errorObject = error;

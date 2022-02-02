@@ -60,10 +60,32 @@ export class TokenService { // should just be token service!
         defaultLocationLatitude: Number(tokenDecoded.DefaultLatitude),
         defaultLocationLongitude: Number(tokenDecoded.DefaultLongitude)
       };
+
     } else {
       return null;
     }
   }
+
+  //   public get getDefaultLocation() {
+      
+  //     const token = this._getToken();
+
+  //     if (token && !this._jwtHelper.isTokenExpired(token)) {
+  
+  //       const tokenDecoded = this._jwtHelper.decodeToken(token);
+
+  //     const model = {
+  //       defaultLocationLatitude: Number(tokenDecoded.DefaultLatitude),
+  //       defaultLocationLongitude: Number(tokenDecoded.DefaultLongitude)
+  //     };
+  //     return model;
+
+  //   } 
+  //   // else {
+  //   //   this.authenticationService.logout();
+
+  //   // }
+  // }
 
 
   // get 

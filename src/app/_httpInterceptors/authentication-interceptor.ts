@@ -11,6 +11,9 @@ export class AuthenticationInterceptor implements HttpInterceptor {
   constructor(private _token: TokenService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
+
+    if (isExcluded(req)) { return next.handle(req); }
+
     // Get the auth token from the service.
     const authToken = this._token.getToken();
 
@@ -29,4 +32,10 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     // send cloned request with header to the next handler.
     return next.handle(authReq);
   }
+
 }
+
+function isExcluded(request: HttpRequest<any>) {
+  return request.method === 'GET'
+    && request.url.indexOf('maps.google.com/') !== 0
+  }

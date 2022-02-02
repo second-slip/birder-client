@@ -66,6 +66,15 @@ import { ObservationCreateComponent } from './_observation/observation-create/ob
 import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { ReadOnlyMapComponent } from './_map/read-only-map/read-only-map.component';
+import { ReadWriteMapComponent } from './_map/read-write-map/read-write-map.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { AddNoteDialogComponent } from './_observationNotes/add-note-dialog/add-note-dialog.component';
+import { AddNotesComponent } from './_observationNotes/add-notes/add-notes.component';
+import { EditNoteDialogComponent } from './_observationNotes/edit-note-dialog/edit-note-dialog.component';
+import { EditNotesComponent } from './_observationNotes/edit-notes/edit-notes.component';
+import { ViewOnlyNotesComponent } from './_observationNotes/view-notes/view-only-notes.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -80,7 +89,6 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
     TechnologyComponent,
     FooterComponent,
     NavMenuComponent,
-
     //
     LayoutSidebarComponent,
     LayoutNoSidebarComponent,
@@ -105,7 +113,14 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
     LifeListComponent,
     UserProfileComponent,
     SelectSpeciesComponent,
-    ObservationCreateComponent
+    ObservationCreateComponent,
+    ReadOnlyMapComponent,
+    ReadWriteMapComponent,
+    ViewOnlyNotesComponent,
+    AddNotesComponent,
+    AddNoteDialogComponent,
+    EditNoteDialogComponent,
+    EditNotesComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -134,16 +149,17 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
     MatTabsModule,
     MatBadgeModule,
     MatAutocompleteModule,
-    // MatDialogModule,
+    MatDialogModule,
     // MatButtonToggleModule,
+    GoogleMapsModule,
     NgbModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
           return localStorage.getItem("jwt");
         },
-        allowedDomains: ['localhost:55722', 'birder20210119224819.azurewebsites.net', 'birderweb.com'],
-        disallowedRoutes: ['//localhost:55722/Authentication/Login', '//birder20210119224819.azurewebsites.net/Authentication/Login', '//birderweb.com/Authentication/Login'],
+        allowedDomains: ['localhost:4200', 'birder20210119224819.azurewebsites.net', 'birderweb.com'],
+        disallowedRoutes: ['//localhost:4200/Authentication/Login', '//birder20210119224819.azurewebsites.net/Authentication/Login', '//birderweb.com/Authentication/Login'],
       }
     }),
   ],

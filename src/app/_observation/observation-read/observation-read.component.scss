@@ -11,24 +11,7 @@ app-observation-read {
 
     // old crap.............
 
-    
-    .example-headers-align .mat-expansion-panel-header-title,
-    .example-headers-align .mat-expansion-panel-header-description {
-        flex-basis: 0;
-    }
 
-    .example-headers-align .mat-expansion-panel-header-description {
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .mat-panel-description-text {
-        font-size: small;
-    }
-
-    .mat-icon {
-        vertical-align: middle;
-    }
 
     // .map-info {
     //     margin-top: 10px;
@@ -39,9 +22,7 @@ app-observation-read {
         text-align: center;
     }
 
-    .navigation-menu {
-        text-align: center;
-    }
+
 
     @media only screen and (max-width: 768px) {
         .observation-detail-container {

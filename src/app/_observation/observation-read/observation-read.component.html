@@ -1,1 +1,106 @@
-<p>observation-read works!</p>
+<div class="observation-detail-container">
+
+    <h1>*** Move to 'tabs' design... lazy load map ***</h1>
+
+    <ng-container *ngIf="(_service.getObservation | async) as observation; else loadingOrError">
+
+        <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
+
+                <h1 class="section-title">Observation Report</h1>
+                <p class="report-summary"><a routerLink="/user/{{observation.user.userName}}">
+                        {{observation.user.userName === authUser.userName ? 'You' : observation.user.userName}}
+                    </a> observed <b>{{observation.quantity}}</b> <a
+                        routerLink="/bird-detail/{{observation.bird.birdId}}">
+                        {{observation.bird.englishName}}
+                    </a> <small><em> {{ observation.bird.species }} </em></small>
+                    on {{ observation.observationDateTime | date: 'EEEE, d MMMM yyyy \'at\' HH:mm' }}.
+                </p>
+
+                <div class="example-headers-align">
+                    <!--  -->
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Location
+                            </mat-panel-title>
+                            <mat-panel-description class="mat-panel-description-text">
+                                <!-- Map -->
+                                <!-- {{ map.position?.shortAddress }} -->
+                                <!-- {{ map.geolocation }} -->
+                                <mat-icon>add_location</mat-icon>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <!-- Map start -->
+                        <div>
+
+                            <!-- <app-view-only-single-marker-map [position]="observation?.position">
+                            </app-view-only-single-marker-map> -->
+
+                            <div *ngIf="observation.user.userName === authUser.userName">
+                                <small class="container map-info">
+                                    <mat-icon color="primary">info</mat-icon>
+                                    <span>You can change the
+                                        location in
+                                        the <a routerLink="/observation-edit/{{observation.observationId}}">edit
+                                            observation</a>
+                                        page</span>
+                                </small>
+                            </div>
+
+                        </div>
+                        <!-- Map end -->
+                    </mat-expansion-panel>
+                    <!--  -->
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Notes
+                            </mat-panel-title>
+                            <mat-panel-description class="mat-panel-description-text">
+                                Notes count: {{ observation.notes.length }}
+                                <mat-icon>create</mat-icon>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <!-- Notes start -->
+                        <app-view-only-notes [notes]="observation.notes">
+                        </app-view-only-notes>
+                        <!-- Notes end -->
+                    </mat-expansion-panel>
+                    <!--  -->
+
+                    <div class="created-updated-dates">
+                        <small><em>Observation created at {{ observation.creationDate | date: 'dd/MM/yyyy HH:mm' }};
+                                last
+                                updated at
+                                {{ observation.lastUpdateDate | date: 'dd/MM/yyyy HH:mm' }}</em></small>
+                    </div>
+                </div>
+
+                <app-navigation-menu [observationId]="observation.observationId"
+                    [isRecordOwner]="observation.user.userName===authUser.userName"></app-navigation-menu>
+
+
+        </ng-container>
+
+
+    </ng-container>
+
+    <ng-template #loadingOrError>
+        <ng-container *ngIf="(_service.isError | async); else loading">
+            <p class="centre">
+                <strong>Whoops!</strong>&nbsp;An error occurred<br>
+                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
+                    Again</button>
+            </p>
+        </ng-container>
+    </ng-template>
+
+
+    <ng-template #loading>
+        <p class="centre">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <strong>&nbsp;Loading</strong>
+        </p>
+    </ng-template>
+
+</div>

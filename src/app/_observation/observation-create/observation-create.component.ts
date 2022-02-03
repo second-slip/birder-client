@@ -48,7 +48,7 @@ export class ObservationCreateComponent implements OnInit {
   }
 
   public onSubmit(): void {
-
+console.log('nnn');
     this.requesting = true;
 
     try {
@@ -60,7 +60,7 @@ export class ObservationCreateComponent implements OnInit {
       this._service.addObservation(model)
         .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
         .subscribe({
-          next: (r) => { this._router.navigate(['/observation/' + r.observationId.toString()]); },
+          next: (r) => { this._router.navigate(['/observation-detail/' + r.observationId.toString()]); },
           error: (e) => { 
             // this.errorObject = e; this._handleError(e); 
           }//,

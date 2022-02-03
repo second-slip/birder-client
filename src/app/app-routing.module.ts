@@ -40,7 +40,7 @@ import { NetworkComponent } from "./_network/network/network.component";
 import { ObservationCreateComponent } from "./_observation/observation-create/observation-create.component";
 import { ObservationReadComponent } from "./_observation/observation-read/observation-read.component";
 import { ObservationFeedComponent } from "./_observationFeed/observation-feed/observation-feed.component";
-import { UserProfileComponent } from "./_profile/user-profile/user-profile.component";
+import { UserProfileComponent } from "./_user/user-profile/user-profile.component";
 
 
 // ToDo: Fix the route names.
@@ -83,10 +83,10 @@ const routes: Routes = [
         children: [
           { path: '', component: HomeComponent, pathMatch: 'full' },
           { path: 'observation-feed', component: ObservationFeedComponent },
-          { path: 'observation/:id', component: ObservationReadComponent },
-          //         { path: 'observation/delete/:id', component: ObservationDeleteComponent },
+          { path: 'observation-detail/:id', component: ObservationReadComponent },
+          //         { path: 'observation/:id', component: ObservationDeleteComponent },
           { path: 'observation/create', component: ObservationCreateComponent, },
-          //         { path: 'observation/edit/:id', component: ObservationEditComponent },
+          //         { path: 'observation/:id', component: ObservationEditComponent },
           //         { path: 'observation-manage-photos/:id', component: ObservationManagePhotosComponent },
           //         { path: 'bird/index', component: BirdsIndexComponent },
           //         { path: 'bird/:id', component: BirdDetailComponent },

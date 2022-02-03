@@ -60,7 +60,7 @@ import { FollowingComponent } from './_network/following/following.component';
 import { NetworkSuggestionComponent } from './_network/network-suggestion/network-suggestion.component';
 import { NetworkFindComponent } from './_network/network-find/network-find.component';
 import { LifeListComponent } from './_list/life-list/life-list.component';
-import { UserProfileComponent } from './_profile/user-profile/user-profile.component';
+import { UserProfileComponent } from './_user/user-profile/user-profile.component';
 import { SelectSpeciesComponent } from './_observation/select-species/select-species.component';
 import { ObservationCreateComponent } from './_observation/observation-create/observation-create.component';
 import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
@@ -76,6 +76,7 @@ import { EditNotesComponent } from './_observationNotes/edit-notes/edit-notes.co
 import { ViewOnlyNotesComponent } from './_observationNotes/view-notes/view-only-notes.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ObservationReadComponent } from './_observation/observation-read/observation-read.component';
+import { NavigationMenuComponent } from './_observation/navigation-menu/navigation-menu.component';
 
 @NgModule({
   declarations: [
@@ -123,6 +124,7 @@ import { ObservationReadComponent } from './_observation/observation-read/observ
     EditNoteDialogComponent,
     EditNotesComponent,
     ObservationReadComponent,
+    NavigationMenuComponent,
   ],
   imports: [
     AppRoutingModule,

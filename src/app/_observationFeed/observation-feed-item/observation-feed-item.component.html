@@ -30,7 +30,7 @@
 
                     <p class="user">
                         <mat-icon>person</mat-icon><span class="aligned-with-icon">
-                            <a routerLink="/user-profile/{{observation.username}}">
+                            <a routerLink="/user/{{observation.username}}">
                                 {{ observation.username === authUser.userName ? 'You' : observation.username }}
                             </a>
                         </span>

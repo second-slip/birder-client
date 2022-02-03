@@ -4,7 +4,6 @@
 // import { ConfirmEmailComponent } from './_account/confirm-email/confirm-email.component';
 // import { ObservationEditComponent } from './_observations/observation-edit/observation-edit.component';
 // import { ObservationDeleteComponent } from './_observations/observation-delete/observation-delete.component';
-// import { UserProfileComponent } from './_users/user-profile/user-profile.component';
 // import { LayoutAccountManagerComponent } from './_layout/layout-account-manager/layout-account-manager.component';
 // import { AccountManagerProfileComponent } from './_accountManager/account-manager-profile/account-manager-profile.component';
 // import { AccountManagerLocationComponent } from './_accountManager/account-manager-location/account-manager-location.component';
@@ -39,9 +38,12 @@ import { FollowersComponent } from "./_network/followers/followers.component";
 import { FollowingComponent } from "./_network/following/following.component";
 import { NetworkComponent } from "./_network/network/network.component";
 import { ObservationCreateComponent } from "./_observation/observation-create/observation-create.component";
+import { ObservationReadComponent } from "./_observation/observation-read/observation-read.component";
 import { ObservationFeedComponent } from "./_observationFeed/observation-feed/observation-feed.component";
 import { UserProfileComponent } from "./_profile/user-profile/user-profile.component";
 
+
+// ToDo: Fix the route names.
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
@@ -51,9 +53,9 @@ const routes: Routes = [
     children: [
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'home', component: HomeComponent, pathMatch: 'full' },
-      { path: 'about', component: AboutComponent },
-      { path: 'contact', component: ContactComponent },
-      { path: 'technology', component: TechnologyComponent },
+      { path: 'about/about', component: AboutComponent },
+      { path: 'about/contact', component: ContactComponent },
+      { path: 'about/technology', component: TechnologyComponent },
       { path: 'login', component: LoginComponent },
       { path: 'logout', component: LogoutComponent },
       // { path: 'register', component: RegisterComponent },
@@ -65,8 +67,8 @@ const routes: Routes = [
       // { path: 'reset-password-confirmation', component: ResetPasswordConfirmationComponent },
       // { path: 'whats-new', component: WhatsNewComponent },
       // { path: 'tweets-archive', component: TweetArchiveComponent },
-      { path: 'developer', component: DeveloperComponent },
-      { path: 'future', component: FutureComponent }
+      { path: 'about/developer', component: DeveloperComponent },
+      { path: 'about/future', component: FutureComponent }
     ]
   },
   // ToDo: try moving this to the top so components load first with the sidebar if appropriate
@@ -81,15 +83,15 @@ const routes: Routes = [
         children: [
           { path: '', component: HomeComponent, pathMatch: 'full' },
           { path: 'observation-feed', component: ObservationFeedComponent },
-          //         { path: 'observation-detail/:id', component: ObservationDetailComponent },
+          { path: 'observation/:id', component: ObservationReadComponent },
           //         { path: 'observation-delete/:id', component: ObservationDeleteComponent },
           { path: 'observation-create', component: ObservationCreateComponent, },
           //         { path: 'observation-edit/:id', component: ObservationEditComponent },
           //         { path: 'observation-manage-photos/:id', component: ObservationManagePhotosComponent },
           //         { path: 'birds-index', component: BirdsIndexComponent },
           //         { path: 'bird-detail/:id', component: BirdDetailComponent },
-          { path: 'life-list/:username', component: LifeListComponent },
-          { path: 'user-profile/:username', component: UserProfileComponent },
+          { path: 'lists/life/:username', component: LifeListComponent },
+          { path: 'user/:username', component: UserProfileComponent },
           { path: 'followers/:username', component: FollowersComponent },
           { path: 'following/:username', component: FollowingComponent },
           { path: 'network', component: NetworkComponent },

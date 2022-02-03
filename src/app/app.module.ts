@@ -77,6 +77,7 @@ import { ViewOnlyNotesComponent } from './_observationNotes/view-notes/view-only
 import { MatDialogModule } from '@angular/material/dialog';
 import { ObservationReadComponent } from './_observation/observation-read/observation-read.component';
 import { NavigationMenuComponent } from './_observation/navigation-menu/navigation-menu.component';
+import { ObservationDeleteComponent } from './_observation/observation-delete/observation-delete.component';
 
 @NgModule({
   declarations: [
@@ -125,6 +126,7 @@ import { NavigationMenuComponent } from './_observation/navigation-menu/navigati
     EditNotesComponent,
     ObservationReadComponent,
     NavigationMenuComponent,
+    ObservationDeleteComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -154,7 +156,6 @@ import { NavigationMenuComponent } from './_observation/navigation-menu/navigati
     MatBadgeModule,
     MatAutocompleteModule,
     MatDialogModule,
-    // MatButtonToggleModule,
     GoogleMapsModule,
     NgbModule,
     JwtModule.forRoot({

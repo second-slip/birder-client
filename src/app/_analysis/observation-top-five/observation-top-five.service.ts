@@ -30,7 +30,7 @@ export class ObservationTopFiveService {
 
     this._isLoading$.next(true);
 
-    this._httpClient.get<IObservationTopFive>('api/List/GetTopObservationsList')
+    this._httpClient.get<IObservationTopFive>('api/List/TopObservationsList')
       .pipe(finalize(() => { this._isLoading$.next(false); }))
       .subscribe({
         next: (response) => {

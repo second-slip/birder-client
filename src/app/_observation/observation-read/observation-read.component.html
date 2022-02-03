@@ -4,21 +4,20 @@
 
         <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
 
-            <h1 class="section-title">Observation Report</h1>
-            <p class="report-summary"><a routerLink="/user/{{observation.user.userName}}">
-                    {{observation.user.userName === authUser.userName ? 'You' : observation.user.userName}}
-                </a> observed {{observation.quantity}} <a routerLink="/bird-detail/{{observation.bird.birdId}}">
-                    {{observation.bird.englishName}}
+            <h1>Observation Report</h1>
+            
+            <p><a routerLink="/user/{{observation.user.userName}}">
+                    {{ observation.user.userName === authUser.userName ? 'You' : observation.user.userName }}
+                </a> observed {{ observation.quantity }} <a routerLink="/bird-detail/{{observation.bird.birdId}}">
+                    {{ observation.bird.englishName }}
                 </a> <small><em> {{ observation.bird.species }} </em></small>
                 on {{ observation.observationDateTime | date: 'EEEE, d MMMM yyyy \'at\' HH:mm' }}.
             </p>
 
-            <!-- <hr> -->
             <ul ngbNav #nav="ngbNav" class="nav-tabs">
                 <li [ngbNavItem]="1">
                     <a ngbNavLink>Map</a>
                     <ng-template ngbNavContent>
-
 
                         <app-read-only-map [position]="observation.position">
                         </app-read-only-map>
@@ -101,7 +100,6 @@
 
 
         </ng-container>
-
 
     </ng-container>
 

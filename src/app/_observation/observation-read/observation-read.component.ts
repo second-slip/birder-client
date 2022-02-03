@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { ObservationReadService } from './observation-read.service';
 
 @Component({
@@ -9,11 +10,12 @@ import { ObservationReadService } from './observation-read.service';
   styleUrls: ['./observation-read.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ObservationReadComponent implements OnInit {
+export class ObservationReadComponent implements OnInit, OnDestroy {
   private _observationId: string;
 
   constructor(readonly _service: ObservationReadService
     , readonly _authService: AuthenticationService
+    , private readonly _navigation: NavigationService
     , private readonly _route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -42,7 +44,11 @@ export class ObservationReadComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this._service.reset();
+  }
+
   private _redirectToHomePage(): void {
-    // redirect to Home (feed...)
+    this._navigation.back();
   }
 }

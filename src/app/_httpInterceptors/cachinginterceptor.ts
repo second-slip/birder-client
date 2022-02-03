@@ -45,13 +45,12 @@ export class CachingInterceptor implements HttpInterceptor {
 /** Is this request cachable? */
 function isCachable(request: HttpRequest<any>) {
   return request.method === 'GET'
-    && request.url.indexOf('api/Test') !== 0
     && request.url.indexOf('api/Photograph') !== 0
     //&& request.url.indexOf('https://preview.ibb.co') !== 0
     && request.url.indexOf('api/ObservationFeed') !== 0
-    && request.url.indexOf('api/Observation/GetObservationDetail') !== 0
+    && request.url.indexOf('api/Observation') !== 0
     && request.url.indexOf('api/ObservationAnalysis') !== 0  // do not cache requests containing 'api/ObservationAnalysis'
-    && request.url.indexOf('api/List/GetTopObservationsList') !== 0
+    && request.url.indexOf('api/List/TopObservationsList') !== 0
     && request.url.indexOf('api/UserProfile') !== 0
     && request.url.indexOf('api/Network') !== 0
     && request.url.indexOf('api/Manage') !== 0
@@ -80,13 +79,6 @@ function sendRequest(
   );
 }
 
-
-
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/
 
 
 // import { Injectable } from '@angular/core';

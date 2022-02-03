@@ -1,9 +1,6 @@
 // import { BirdsIndexComponent } from './_birds/birds-index/birds-index.component';
-// import { ObservationDetailComponent } from './_observations/observation-detail/observation-detail.component';
 // import { RegisterComponent } from './_account/register/register.component';
 // import { ConfirmEmailComponent } from './_account/confirm-email/confirm-email.component';
-// import { ObservationEditComponent } from './_observations/observation-edit/observation-edit.component';
-// import { ObservationDeleteComponent } from './_observations/observation-delete/observation-delete.component';
 // import { LayoutAccountManagerComponent } from './_layout/layout-account-manager/layout-account-manager.component';
 // import { AccountManagerProfileComponent } from './_accountManager/account-manager-profile/account-manager-profile.component';
 // import { AccountManagerLocationComponent } from './_accountManager/account-manager-location/account-manager-location.component';
@@ -38,6 +35,7 @@ import { FollowersComponent } from "./_network/followers/followers.component";
 import { FollowingComponent } from "./_network/following/following.component";
 import { NetworkComponent } from "./_network/network/network.component";
 import { ObservationCreateComponent } from "./_observation/observation-create/observation-create.component";
+import { ObservationDeleteComponent } from "./_observation/observation-delete/observation-delete.component";
 import { ObservationReadComponent } from "./_observation/observation-read/observation-read.component";
 import { ObservationFeedComponent } from "./_observationFeed/observation-feed/observation-feed.component";
 import { UserProfileComponent } from "./_user/user-profile/user-profile.component";
@@ -84,7 +82,7 @@ const routes: Routes = [
           { path: '', component: HomeComponent, pathMatch: 'full' },
           { path: 'observation-feed', component: ObservationFeedComponent },
           { path: 'observation-detail/:id', component: ObservationReadComponent },
-          //         { path: 'observation/:id', component: ObservationDeleteComponent },
+          { path: 'observation/delete/:id', component: ObservationDeleteComponent },
           { path: 'observation/create', component: ObservationCreateComponent, },
           //         { path: 'observation/:id', component: ObservationEditComponent },
           //         { path: 'observation-manage-photos/:id', component: ObservationManagePhotosComponent },

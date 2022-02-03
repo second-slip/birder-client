@@ -48,6 +48,10 @@ export class ObservationReadService {
       })
   }
 
+  public reset(): void {
+    this._observation$.next(null);
+  }
+
   private _handleError(error: any) { // no need to send error to the component...
     this._isError$.next(true);
   }

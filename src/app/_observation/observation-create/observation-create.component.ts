@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
+import { Router } from '@angular/router';
 import * as moment from 'moment'; // replace moment with alternative
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
 import { IObservationPosition } from 'src/app/_map/i-observation-position.dto';
@@ -10,6 +12,7 @@ import { AddNotesComponent } from 'src/app/_observationNotes/add-notes/add-notes
 import { IObservationNote } from 'src/app/_observationNotes/i-observation-note.dto';
 import { ObservationNoteType } from 'src/app/_observationNotes/observation-note-type';
 import { BirdsListValidator } from 'src/app/_validators';
+import { ObservationCrudService } from '../observation-crud.service';
 import { ICreateObservation } from './i-create-observation.dto';
 
 @Component({
@@ -19,6 +22,7 @@ import { ICreateObservation } from './i-create-observation.dto';
   encapsulation: ViewEncapsulation.None
 })
 export class ObservationCreateComponent implements OnInit {
+  private _subscription = new Subject();
   public requesting: boolean;
   public selectSpeciesForm: FormGroup;
   public addObservationForm: FormGroup;
@@ -34,7 +38,9 @@ export class ObservationCreateComponent implements OnInit {
   public maxDate = moment().format('yyyy-MM-dd 23:59:59'); // new Date().toISOString(); // moment.Moment;
   public color: ThemePalette = 'primary';
 
-  constructor(private _formBuilder: FormBuilder
+  constructor(private readonly _router: Router
+    , private readonly _formBuilder: FormBuilder
+    , private readonly _service: ObservationCrudService
     , readonly _authService: AuthenticationService) { }
 
   ngOnInit(): void {
@@ -43,18 +49,32 @@ export class ObservationCreateComponent implements OnInit {
 
   public onSubmit(): void {
 
+    this.requesting = true;
+
     try {
 
       const model = this._mapToModel();
- 
+      //
       console.log(model);
 
-
-
+      this._service.addObservation(model)
+        .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
+        .subscribe({
+          next: (r) => { this._router.navigate(['/observation/' + r.observationId.toString()]); },
+          error: (e) => { 
+            // this.errorObject = e; this._handleError(e); 
+          }//,
+          //complete: () => { }
+        });
 
     } catch (error) {
       console.log(error);
     }
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.next('');
+    this._subscription.complete();
   }
 
   private _mapToModel(): ICreateObservation {
@@ -70,10 +90,10 @@ export class ObservationCreateComponent implements OnInit {
     };
     const notes: IObservationNote[] = this._notesComponent.notes.map(note => (
       {
-      id: 0,
-      noteType: ObservationNoteType[note.noteType as keyof typeof ObservationNoteType],
-      note: note.note
-    }));
+        id: 0,
+        noteType: ObservationNoteType[note.noteType as keyof typeof ObservationNoteType],
+        note: note.note
+      }));
 
     const observation = <ICreateObservation>{
       quantity: quantity,

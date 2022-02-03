@@ -75,6 +75,7 @@ import { EditNoteDialogComponent } from './_observationNotes/edit-note-dialog/ed
 import { EditNotesComponent } from './_observationNotes/edit-notes/edit-notes.component';
 import { ViewOnlyNotesComponent } from './_observationNotes/view-notes/view-only-notes.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ObservationReadComponent } from './_observation/observation-read/observation-read.component';
 
 @NgModule({
   declarations: [
@@ -121,6 +122,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     AddNoteDialogComponent,
     EditNoteDialogComponent,
     EditNotesComponent,
+    ObservationReadComponent,
   ],
   imports: [
     AppRoutingModule,

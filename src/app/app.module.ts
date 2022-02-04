@@ -78,6 +78,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ObservationReadComponent } from './_observation/observation-read/observation-read.component';
 import { NavigationMenuComponent } from './_observation/navigation-menu/navigation-menu.component';
 import { ObservationDeleteComponent } from './_observation/observation-delete/observation-delete.component';
+import { ObservationUpdateComponent } from './_observation/observation-update/observation-update.component';
 
 @NgModule({
   declarations: [
@@ -127,6 +128,7 @@ import { ObservationDeleteComponent } from './_observation/observation-delete/ob
     ObservationReadComponent,
     NavigationMenuComponent,
     ObservationDeleteComponent,
+    ObservationUpdateComponent,
   ],
   imports: [
     AppRoutingModule,

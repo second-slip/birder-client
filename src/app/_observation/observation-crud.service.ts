@@ -20,14 +20,14 @@ export class ObservationCrudService {
       .pipe(tap(() => { this._onObservationsChanged(); }));
   }
 
-  // public updateObservation(id: number, viewModel: any): Observable<IObservation> {
-  //   const options = id ?
-  //     { params: new HttpParams().set('id', id.toString()) } :
-  //     { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+  public updateObservation(id: number, viewModel: any): Observable<IObservation> {
+    const options = id ?
+      { params: new HttpParams().set('id', id.toString()) } :
+      { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
-  //   return this._http.put<IObservation>('api/Observation/Update', viewModel, options)
-  //     .pipe(tap(() => { this._onObservationsChanged(); }));
-  // }
+    return this._http.put<IObservation>('api/Observation/Update', viewModel, options)
+      .pipe(tap(() => { this._onObservationsChanged(); }));
+  }
 
   public deleteObservation(id: number): Observable<Number> {
     const options = id ?

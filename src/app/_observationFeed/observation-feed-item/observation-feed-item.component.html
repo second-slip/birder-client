@@ -61,11 +61,11 @@
                     </p>
 
                     <p class="links">
-                        <a routerLink="/observation-detail/{{observation.observationId}}">
+                        <a routerLink="/observation/detail/{{observation.observationId}}">
                             View
                         </a>
                         <a *ngIf="observation.username === authUser.userName"
-                            routerLink="/observation/edit/{{observation.observationId}}">
+                            routerLink="/observation/update/{{observation.observationId}}">
                             | Edit
                         </a>
                         <a *ngIf="observation.username === authUser.userName"

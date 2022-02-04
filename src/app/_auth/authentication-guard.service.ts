@@ -21,6 +21,8 @@ export class AuthenticationGuardService implements CanActivate, CanActivateChild
   // *****
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    this._getAuthStatus();
+
     if (this._authenticationService.isAuthorised) {
       return true;
     } else {
@@ -30,6 +32,7 @@ export class AuthenticationGuardService implements CanActivate, CanActivateChild
   }
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    this._getAuthStatus();
 
     if (this._authenticationService.isAuthorised) {
       return true;

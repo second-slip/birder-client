@@ -66,29 +66,7 @@ export class TokenService { // should just be token service!
     }
   }
 
-  //   public get getDefaultLocation() {
-      
-  //     const token = this._getToken();
 
-  //     if (token && !this._jwtHelper.isTokenExpired(token)) {
-  
-  //       const tokenDecoded = this._jwtHelper.decodeToken(token);
-
-  //     const model = {
-  //       defaultLocationLatitude: Number(tokenDecoded.DefaultLatitude),
-  //       defaultLocationLongitude: Number(tokenDecoded.DefaultLongitude)
-  //     };
-  //     return model;
-
-  //   } 
-  //   // else {
-  //   //   this.authenticationService.logout();
-
-  //   // }
-  // }
-
-
-  // get 
   public getFlikrKey(): string {
     const token = this._getToken();
 
@@ -100,34 +78,33 @@ export class TokenService { // should just be token service!
     }
   }
 
-  public getMapKey(): string {
-    const token = this._getToken();
+  // public getMapKey(): string {
+  //   const token = this._getToken();
 
-    if (token && !this._jwtHelper.isTokenExpired(token)) {
-      const tokenDecoded = this._jwtHelper.decodeToken(token);
-      return tokenDecoded.MapKey;
-    } else {
-      return 'null';
-    }
-  }
+  //   if (token && !this._jwtHelper.isTokenExpired(token)) {
+  //     const tokenDecoded = this._jwtHelper.decodeToken(token);
+  //     return tokenDecoded.MapKey;
+  //   } else {
+  //     return 'null';
+  //   }
+  // }
 
-  public checkIsRecordOwner(username: string): boolean {
-    const token = this._getToken();
+  // public checkIsRecordOwner(username: string): boolean {
+  //   const token = this._getToken();
 
-    if (token && !this._jwtHelper.isTokenExpired(token)) {
-      const tokenDecoded = this._jwtHelper.decodeToken(token);
+  //   if (token && !this._jwtHelper.isTokenExpired(token)) {
+  //     const tokenDecoded = this._jwtHelper.decodeToken(token);
 
-      if (tokenDecoded.unique_name === username) {
-        return true;
-      } else {
-        return false;
-      }
-
-    } else {
-      // TODO: Remove token (could be expired)
-      return false;
-    }
-  }
+  //     if (tokenDecoded.unique_name === username) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } else {
+  //     this._removeToken();
+  //     return false;
+  //   }
+  // }
 
 
 

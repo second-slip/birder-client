@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { TokenService } from '../_auth/token.service';
 
 @Injectable({
@@ -8,10 +9,9 @@ import { TokenService } from '../_auth/token.service';
 })
 export class GeocodeService {
   private readonly apiUrl = 'https://maps.google.com/maps/api/geocode/json?';
-  private readonly apiKey = 'AIzaSyD4IghqI4x7Sld9KP3sP6FtbN7wCPGySmY'  //this.token.getMapKey();
+  private readonly apiKey = environment.mapKey;
 
   constructor(private readonly _http: HttpClient, private token: TokenService) { }
-    // , private token: TokenService) { }
 
   public geocode(searchTerm: string): Observable<any> {
     return this._http.get<any>(`${this.apiUrl}address=${encodeURIComponent(searchTerm)}&key=${this.apiKey}`);

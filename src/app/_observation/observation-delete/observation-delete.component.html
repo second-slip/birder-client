@@ -1,1 +1,65 @@
-<p>observation-delete works!</p>
+<div class="observation-delete-container">
+
+    <ng-container *ngIf="(_service.getObservation | async) as observation; else loadingOrError">
+
+        <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
+
+            <h1>Delete Observation Report</h1>
+
+            <ng-container *ngIf="observation.user.userName !== authUser.userName">
+                <ngb-alert [dismissible]="false" type="danger">
+                    <strong>Whoops!</strong>&nbsp;Only the owner is allowed to delete their record.<br>
+                    <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button"
+                        (click)="redirect()">Go back</button>
+                </ngb-alert>
+            </ng-container>
+
+            <ng-container *ngIf="observation.user.userName === authUser.userName">
+
+                <p>You observed <b>{{observation.quantity}}</b> <a
+                        routerLink="/bird-detail/{{observation.bird.birdId}}">
+                        {{observation.bird.englishName}}
+                    </a> <small><em> {{ observation.bird.species }} </em></small>
+                    on {{ observation.observationDateTime | date: 'EEEE, d MMMM yyyy' }}.
+                </p>
+
+                <button class="btn btn-danger" (click)="deleteObservation(observation.observationId)">
+                    Delete
+                </button>
+                <button class="btn btn-link" (click)="redirect()">
+                    Return to last page
+                </button>
+
+
+                <p><em>Observation created at {{ observation.creationDate | date: 'dd/MM/yyyy HH:mm' }}; last
+                        updated at
+                        {{ observation.lastUpdateDate | date: 'dd/MM/yyyy HH:mm' }}</em></p>
+
+                <app-navigation-menu [observationId]="observation.observationId" [isRecordOwner]="true">
+                </app-navigation-menu>
+
+            </ng-container>
+
+        </ng-container>
+
+    </ng-container>
+
+    <ng-template #loadingOrError>
+        <ng-container *ngIf="(_service.isError | async); else loading">
+            <p class="centre">
+                <strong>Whoops!</strong>&nbsp;An error occurred<br>
+                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
+                    Again</button>
+            </p>
+        </ng-container>
+    </ng-template>
+
+
+    <ng-template #loading>
+        <p class="centre">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <strong>&nbsp;Loading</strong>
+        </p>
+    </ng-template>
+
+</div>

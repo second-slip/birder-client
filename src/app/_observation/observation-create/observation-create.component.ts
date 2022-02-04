@@ -48,7 +48,7 @@ export class ObservationCreateComponent implements OnInit {
   }
 
   public onSubmit(): void {
-console.log('nnn');
+
     this.requesting = true;
 
     try {

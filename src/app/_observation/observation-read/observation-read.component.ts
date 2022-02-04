@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { ObservationReadService } from './observation-read.service';
@@ -32,7 +32,7 @@ export class ObservationReadComponent implements OnInit, OnDestroy {
       this._service.getData(id);
     }
     else {
-      this._redirectToHomePage();
+      this._redirect();
     }
   }
 
@@ -40,7 +40,7 @@ export class ObservationReadComponent implements OnInit, OnDestroy {
     if (this._observationId) {
       this._getData(this._observationId);
     } else {
-      this._redirectToHomePage();
+      this._redirect();
     }
   }
 
@@ -48,7 +48,7 @@ export class ObservationReadComponent implements OnInit, OnDestroy {
     this._service.reset();
   }
 
-  private _redirectToHomePage(): void {
+  private _redirect(): void {
     this._navigation.back();
   }
 }

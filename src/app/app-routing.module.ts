@@ -37,6 +37,7 @@ import { NetworkComponent } from "./_network/network/network.component";
 import { ObservationCreateComponent } from "./_observation/observation-create/observation-create.component";
 import { ObservationDeleteComponent } from "./_observation/observation-delete/observation-delete.component";
 import { ObservationReadComponent } from "./_observation/observation-read/observation-read.component";
+import { ObservationUpdateComponent } from "./_observation/observation-update/observation-update.component";
 import { ObservationFeedComponent } from "./_observationFeed/observation-feed/observation-feed.component";
 import { UserProfileComponent } from "./_user/user-profile/user-profile.component";
 
@@ -56,6 +57,7 @@ const routes: Routes = [
       { path: 'about/technology', component: TechnologyComponent },
       { path: 'login', component: LoginComponent },
       { path: 'logout', component: LogoutComponent },
+      // { path: --> move to about section ... 'whats-new', component: WhatsNewComponent },
       // { path: 'register', component: RegisterComponent },
       // { path: 'confirm-email', component: ConfirmEmailComponent },
       // { path: 'confirmed-email', component: ConfirmedEmailComponent },
@@ -63,7 +65,6 @@ const routes: Routes = [
       // { path: 'forgot-password-confirmation', component: ForgotPasswordConfirmationComponent },
       // { path: 'reset-password/:code', component: ResetPasswordComponent },
       // { path: 'reset-password-confirmation', component: ResetPasswordConfirmationComponent },
-      // { path: 'whats-new', component: WhatsNewComponent },
       // { path: 'tweets-archive', component: TweetArchiveComponent },
       { path: 'about/developer', component: DeveloperComponent },
       { path: 'about/future', component: FutureComponent }
@@ -81,13 +82,13 @@ const routes: Routes = [
         children: [
           { path: '', component: HomeComponent, pathMatch: 'full' },
           { path: 'observation-feed', component: ObservationFeedComponent },
-          { path: 'observation-detail/:id', component: ObservationReadComponent },
+          { path: 'observation/detail/:id', component: ObservationReadComponent },
           { path: 'observation/delete/:id', component: ObservationDeleteComponent },
           { path: 'observation/create', component: ObservationCreateComponent, },
-          //         { path: 'observation/:id', component: ObservationEditComponent },
-          //         { path: 'observation-manage-photos/:id', component: ObservationManagePhotosComponent },
-          //         { path: 'bird/index', component: BirdsIndexComponent },
-          //         { path: 'bird/:id', component: BirdDetailComponent },
+          { path: 'observation/update/:id', component: ObservationUpdateComponent },
+          // { path: 'observation/photos/:id', component: ObservationManagePhotosComponent },
+          // { path: 'bird/index', component: BirdsIndexComponent },
+          // { path: 'bird/detail/:id', component: BirdDetailComponent },
           { path: 'lists/life/:username', component: LifeListComponent },
           { path: 'user/:username', component: UserProfileComponent },
           { path: 'followers/:username', component: FollowersComponent },

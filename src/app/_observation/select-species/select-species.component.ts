@@ -4,7 +4,7 @@ import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, merge, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
-import { SelectSpeciesService } from '../select-species.service';
+import { SelectSpeciesService } from './select-species.service';
 
 @Component({
   selector: 'app-select-species',

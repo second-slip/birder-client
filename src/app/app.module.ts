@@ -17,17 +17,11 @@ import { HomeComponent } from './_home/home/home.component';
 import { TechnologyComponent } from './_home/technology/technology.component';
 
 import { MatButtonModule } from '@angular/material/button';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 
 import { LayoutNoSidebarComponent } from './_layout/layout-no-sidebar/layout-no-sidebar.component';
@@ -138,26 +132,17 @@ import { ObservationUpdateComponent } from './_observation/observation-update/ob
     BrowserModule,
     BrowserAnimationsModule,
     // ***************************
-    MatTabsModule,
-    // ***************************
     MatIconModule,
-    MatInputModule,
+    //MatInputModule,
     MatButtonModule,
-    // MatButtonModule,
     MatDatepickerModule,
     NgxMatDatetimePickerModule,
     NgxMatMomentModule,
     MatStepperModule,
     MatNativeDateModule,
-    MatCheckboxModule,
-    MatSelectModule,
-    MatProgressSpinnerModule,
-    MatAutocompleteModule,
     MatExpansionModule,
-    MatTabsModule,
-    MatBadgeModule,
-    MatAutocompleteModule,
     MatDialogModule,
+    //
     GoogleMapsModule,
     NgbModule,
     JwtModule.forRoot({

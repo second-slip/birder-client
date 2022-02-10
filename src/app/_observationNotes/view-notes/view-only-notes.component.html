@@ -1,6 +1,8 @@
-<div *ngIf="!notes" class="loading">
-    <p><em>Loading...</em></p>
-    <mat-spinner></mat-spinner>
+<div *ngIf="!notes">
+    <p class="centre">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <strong>&nbsp;Loading</strong>
+    </p>
 </div>
 
 <div *ngIf="notes">

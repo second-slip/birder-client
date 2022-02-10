@@ -1,11 +1,9 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtModule } from '@auth0/angular-jwt';
-
 import { AuthenticationService } from './_auth/authentication.service';
 import { AboutComponent } from './_home/about/about.component';
 import { ContactComponent } from './_home/contact/contact.component';
@@ -15,20 +13,16 @@ import { FeaturesComponent } from './_home/features/features.component';
 import { FutureComponent } from './_home/future/future.component';
 import { HomeComponent } from './_home/home/home.component';
 import { TechnologyComponent } from './_home/technology/technology.component';
-
 import { MatButtonModule } from '@angular/material/button';
-
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
-
 import { LayoutNoSidebarComponent } from './_layout/layout-no-sidebar/layout-no-sidebar.component';
 import { LayoutSidebarComponent } from './_layout/layout-sidebar/layout-sidebar.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -133,7 +127,6 @@ import { ObservationUpdateComponent } from './_observation/observation-update/ob
     BrowserAnimationsModule,
     // ***************************
     MatIconModule,
-    //MatInputModule,
     MatButtonModule,
     MatDatepickerModule,
     NgxMatDatetimePickerModule,

@@ -1,4 +1,3 @@
-
 <div class="container">
     <h1 mat-dialog-title>Edit note</h1>
     <div>
@@ -6,8 +5,8 @@
 
             <div class="form-group" hidden>
                 <label for="id">id</label>
-                <input type="text" class="form-control" id="id" disabled
-                    [(ngModel)]="data.id" name="id" #note="ngModel">
+                <input type="text" class="form-control" id="id" disabled [(ngModel)]="data.id" name="id"
+                    #note="ngModel">
             </div>
 
             <div class="form-group">
@@ -34,8 +33,9 @@
     </div>
 
     <div mat-dialog-actions>
-        <button mat-button (click)="onNoClick()">Exit</button>
-        <button mat-button [disabled]="!editNoteForm.form.valid" [mat-dialog-close]="data" cdkFocusInitial>Edit
+        <button type="button" class="btn btn-light" (click)="onNoClick()">Exit</button>
+        <button type="button" class="btn btn-success" [disabled]="!editNoteForm.form.valid" [mat-dialog-close]="data"
+            cdkFocusInitial>Edit
             note</button>
     </div>
 

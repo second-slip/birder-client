@@ -5,13 +5,23 @@
       <img src="https://birderweb.com/logo-and-slogan.png" alt="Birder">
     </a>
 
-    <nav mat-tab-nav-bar mat-stretch-tabs class="stretched-tabs">
-      <a mat-tab-link routerLink="/about/about">About</a>
-      <a mat-tab-link routerLink="/about/contact">Contact</a>
-      <a mat-tab-link routerLink="/about/developer">Developer</a>
-      <a mat-tab-link [active]="true">Technology</a>
-      <a mat-tab-link routerLink="/about/future">Future</a>
-    </nav>
+    <ul ngbNav #nav="ngbNav" [activeId]="4" class="nav-tabs nav-justified">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink routerLink="/about/about">About</a>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink routerLink="/about/contact">Contact</a>
+      </li>
+      <li [ngbNavItem]="3">
+        <a ngbNavLink routerLink="/about/developer">Developer</a>
+      </li>
+      <li [ngbNavItem]="4">
+        <a ngbNavLink routerLink="/about/technology">Technology</a>
+      </li>
+      <li [ngbNavItem]="5">
+        <a ngbNavLink routerLink="/about/future">Future</a>
+      </li>
+    </ul>
 
   </div>
 

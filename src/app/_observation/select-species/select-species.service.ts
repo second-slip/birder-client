@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
-import { IBirdSummary } from '../_bird/i-bird-summary.dto';
+import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
+
 
 @Injectable({
   providedIn: 'root'

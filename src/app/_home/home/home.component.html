@@ -1,38 +1,25 @@
-<div class="container">
+<div>
 
-    <div class="main">
+    <a [routerLink]='["/"]'>
+        <img src="https://birderweb.com/logo-and-slogan.png" alt="Birder">
+    </a>
 
-        <a [routerLink]='["/"]'>
-            <img src="https://birderweb.com/logo-and-slogan.png" alt="Birder">
-        </a>
+    <p><i>Birder</i> is a free website for logging, sharing, and analysing bird observations</p>
 
-        <p><i>Birder</i> is a free website for logging, sharing, and analysing bird observations.</p>
-
-        <a type="button" class="btn btn-light" [routerLink]='["/login"]'>Login</a>
+    <!-- <a type="button" class="btn btn-light" [routerLink]='["/login"]'>Login</a>
         or &nbsp;
-        <a type="button" class="btn btn-light" [routerLink]='["/register"]'>Register</a>
+        <a type="button" class="btn btn-light" [routerLink]='["/register"]'>Register</a> -->
 
-    </div>
+    <app-features [showBlurb]="false"></app-features>
 
-    <div class="features">
+    <hr>
 
-        <app-features [showBlurb]="false"></app-features>
+    <h3>Find out more - or login or register</h3>
 
-        <hr>
+    <p>You can learn more about Birder in the <a [routerLink]='["/about/about"]'>About</a> page.</p>
 
-        <div class="main">
+    <a type="button" class="btn btn-light" [routerLink]='["/login"]'>Login</a>
+    or &nbsp;
+    <a type="button" class="btn btn-light" [routerLink]='["/register"]'>Register</a>
 
-            <h4>Find out more - or login or register</h4>
-
-            <p>You can find out more about Birder in the <a [routerLink]='["/about/about"]'>About</a> page.</p>
-
-            <p>More information about the features under development are in the <a [routerLink]='["/whats-new"]'>What's
-                    New?</a> page.</p>
-
-            <a type="button" class="btn btn-light" [routerLink]='["/login"]'>Login</a>
-            or &nbsp;
-            <a type="button" class="btn btn-light" [routerLink]='["/register"]'>Register</a>
-
-        </div>
-    </div>
 </div>

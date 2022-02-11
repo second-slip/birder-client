@@ -125,7 +125,7 @@ import { ObservationUpdateComponent } from './_observation/observation-update/ob
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
-    // ***************************
+    //
     MatIconModule,
     MatButtonModule,
     MatDatepickerModule,

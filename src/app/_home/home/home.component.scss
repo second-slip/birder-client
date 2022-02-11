@@ -1,28 +1,13 @@
 app-home {
-  .container {
-    margin: auto;
-    padding: 10px;
+
+    margin: 2%;
     text-align: center;
-  }
-
-  .main img {
-    max-height: 100%;
-    max-width: 100%;
-  }
-
-  .image img {
-    max-height: 100%;
-    max-width: 100%;
-    margin-bottom: 10px;
-  }
 
   .btn {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border-radius: 12px;
+    margin: 2%;
   }
 
-  @media screen and (min-width: 801px) { }
+  // @media screen and (min-width: 801px) { }
   
-  @media screen and (max-width: 800px) { }
+  // @media screen and (max-width: 800px) { }
 }

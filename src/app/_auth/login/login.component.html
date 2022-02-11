@@ -17,9 +17,9 @@
                 <input class="form-control" type="email" id="username" placeholder="Email" formControlName="username"
                     required>
                 <div *ngFor="let validation of login_validation_messages.username">
-                    <div *ngIf="loginForm.get('username')?.hasError(validation.type) && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)"
-                        class="alert alert-danger">
-                        {{validation.message}}</div>
+                    <small *ngIf="loginForm.get('username')?.hasError(validation.type) && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)"
+                        class="text-danger">
+                        {{validation.message}}</small>
                 </div>
             </div>
 
@@ -28,9 +28,9 @@
                 <input class="form-control" type="password" id="password" placeholder="Password"
                     formControlName="password" required>
                 <div *ngFor="let validation of login_validation_messages.password">
-                    <div *ngIf="loginForm.get('password')?.hasError(validation.type) && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)"
-                        class="alert alert-danger">
-                        {{validation.message}}</div>
+                    <small *ngIf="loginForm.get('password')?.hasError(validation.type) && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)"
+                        class="text-danger">
+                        {{validation.message}}</small>
                 </div>
             </div>
 

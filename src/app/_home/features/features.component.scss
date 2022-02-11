@@ -1,9 +1,6 @@
 app-features {
-    .header-section {
-        text-align: center;
-    }
 
-    .title {
+    .centre {
         text-align: center;
         margin: auto;
     }
@@ -13,7 +10,7 @@ app-features {
       }
 
     .section-title {
-        margin: 5% 0% 5%;
+        margin: 5% 0%;
         text-align: center;
     }
 
@@ -42,17 +39,11 @@ app-features {
             //border: black; border-style: solid;
             margin: 3% 5%; //(top, bottom) / (right, left)
         }
-        .features {
-            margin: 3% 5%; //(top, bottom) / (right, left)
-        }
     }
 
     @media only screen and (min-width: 992px) {
         .wrapper {
             //border: black; border-style: solid;
-            margin: 3% 15%; //(top, bottom) / (right, left)
-        }
-        .features {
             margin: 3% 15%; //(top, bottom) / (right, left)
         }
     }

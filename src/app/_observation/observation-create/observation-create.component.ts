@@ -55,13 +55,13 @@ export class ObservationCreateComponent implements OnInit {
 
       const model = this._mapToModel();
       //
-      console.log(model);
+      //console.log(model);
 
       this._service.addObservation(model)
         .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
         .subscribe({
           next: (r) => { this._router.navigate(['/observation/detail/' + r.observationId.toString()]); },
-          error: (e) => { 
+          error: (e) => {
             // this.errorObject = e; this._handleError(e); 
           }//,
           //complete: () => { }
@@ -89,9 +89,9 @@ export class ObservationCreateComponent implements OnInit {
       shortAddress: this._mapComponent.shortAddress
     };
     const notes: IObservationNote[] = this._notesComponent.notes.map(note => (
-      {
+      { // One can also get the updated notes from this.obervation (object is passed by reference to notes child component)
         id: 0,
-        noteType: ObservationNoteType[note.noteType as keyof typeof ObservationNoteType],
+        noteType: note.noteType, //   ObservationNoteType[note.noteType as keyof typeof ObservationNoteType],
         note: note.note
       }));
 

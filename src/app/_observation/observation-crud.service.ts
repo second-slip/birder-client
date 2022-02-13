@@ -15,6 +15,13 @@ export class ObservationCrudService {
 
   constructor(private readonly _http: HttpClient) { }
 
+  public getObservation(id: string): Observable<IObservation> {
+    const options = id ?
+      { params: new HttpParams().append('id', id.toString()) } : {};
+
+    return this._http.get<IObservation>('api/Observation', options);
+  }
+
   public addObservation(model: ICreateObservation): Observable<IObservation> {
     return this._http.post<IObservation>('api/Observation/Create', model, httpOptions)
       .pipe(tap(() => { this._onObservationsChanged(); }));

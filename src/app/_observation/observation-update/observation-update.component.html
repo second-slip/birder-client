@@ -1,1 +1,118 @@
-<h1>Update observation</h1>
+<div class="observation-update-container" *ngIf="updateObservationForm">
+    <h1>Update observation</h1>
+
+    <form [formGroup]="updateObservationForm" novalidate (ngSubmit)="onSubmit()">
+
+        <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
+            <!-- ToDo: auth check -->
+        </ng-container>
+
+        <mat-vertical-stepper [linear]="false" #stepper (selectionChange)="onStepperSelectionChange()">
+
+            <mat-step [stepControl]="updateObservationForm && selectSpeciesForm" errorMessage="Section not complete.">
+                <ng-template matStepLabel><span class="stepperTop0">Details: what and when?</span></ng-template>
+
+                <div class="form-group">
+                    <label for="observationDateTime">Date & time</label>
+                    <div class="date-time-control">
+                        <input class="form-control" type="datetime" id="observationDateTime" readonly="readonly"
+                            required [ngxMatDatetimePicker]="picker" placeholder="Choose a date"
+                            formControlName="observationDateTime" [min]="minDate" [max]="maxDate">
+                        <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #picker [showSpinners]="true" [showSeconds]="false" [stepHour]="1"
+                            [stepMinute]="1" [stepSecond]="1" [touchUi]="false">
+                        </ngx-mat-datetime-picker>
+                    </div>
+                    <div
+                        *ngIf="updateObservationForm.get('observationDateTime')?.invalid && 
+                    updateObservationForm.get('observationDateTime')?.errors && 
+                    (updateObservationForm.get('observationDateTime')?.dirty || updateObservationForm.get('observationDateTime')?.touched)">
+                        <small class="text-danger"
+                            *ngIf="updateObservationForm.get('observationDateTime')?.hasError('required')">
+                            This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">How many</label>
+                    <input class="form-control" type="number" id="quantity" placeholder="Quantity"
+                        formControlName="quantity" required min="1" max="1000">
+                    <div
+                        *ngIf="updateObservationForm.get('quantity')?.invalid && 
+                        updateObservationForm.get('quantity')?.errors && 
+                        (updateObservationForm.get('quantity')?.dirty || updateObservationForm.get('quantity')?.touched)">
+                        <small class="text-danger" *ngIf="updateObservationForm.get('quantity')?.hasError('required')">
+                            This field is required.
+                        </small>
+                        <small class="text-danger" *ngIf="updateObservationForm.get('quantity')?.hasError('min')">
+                            The minimum value is {{ updateObservationForm.get('quantity')?.errors?.min?.min
+                            }}
+                            individual.
+                        </small>
+                        <small class="text-danger" *ngIf="updateObservationForm.get('quantity')?.hasError('max')">
+                            The maximum value is {{ updateObservationForm.get('quantity')?.errors?.max?.max
+                            }}
+                            individuals.
+                        </small>
+                    </div>
+                </div>
+
+                <app-select-species #species [selectSpeciesForm]="selectSpeciesForm"></app-select-species>
+
+                <button matStepperNext type="button">Next</button>
+
+            </mat-step>
+
+            <mat-step>
+
+                <ng-template matStepLabel><span class="stepperTop1">Location</span></ng-template>
+
+                <app-read-write-map [latitude]="observation.position.latitude"
+                    [longitude]="observation.position.longitude">
+                </app-read-write-map>
+
+                <button matStepperPrevious type="button">Back</button>
+                <button matStepperNext type="button">Next</button>
+
+            </mat-step>
+
+            <mat-step [optional]="true">
+                <ng-template matStepLabel><span class="stepperTop2">Notes</span></ng-template>
+
+                <app-edit-notes [notes]="observation.notes"></app-edit-notes>
+
+                <button matStepperPrevious type="button">Back</button>
+                <button matStepperNext type="button">Next</button>
+
+            </mat-step>
+
+
+            <mat-step>
+                <ng-template matStepLabel><span class="stepperTop3">Done</span></ng-template>
+
+                <p *ngIf="!updateObservationForm.valid || !selectSpeciesForm.valid" class="alert alert-danger">
+                    The form is not complete. You must complete all of the manadatory fields in Section 1.
+                </p>
+
+                <p *ngIf="updateObservationForm.valid && selectSpeciesForm.valid">
+                    The form is complete. Choose 'Save' to update your observation.
+                </p>
+
+                <!-- USE BOOTSTRAP BUTTONS -->
+                <button matStepperPrevious type="button">Back</button>
+                <button *ngIf="!requesting" type="submit" [disabled]="!updateObservationForm.valid || !selectSpeciesForm.valid">
+                    Save
+                </button>
+                <button *ngIf="requesting" type="submit" disabled>
+                    Updating observation...
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                </button>
+
+            </mat-step>
+
+        </mat-vertical-stepper>
+
+    </form>
+
+</div>

@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
-import { TokenService } from 'src/app/_auth/token.service';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { ObservationCrudService } from '../observation-crud.service';
 import { ObservationReadService } from '../observation-read/observation-read.service';
@@ -19,11 +18,11 @@ export class ObservationDeleteComponent implements OnInit, OnDestroy {
   public requesting: boolean;
 
   constructor(readonly _service: ObservationReadService
-    , private readonly _router: Router
     , readonly _authService: AuthenticationService
+    , private readonly _router: Router
+    , private readonly _route: ActivatedRoute
     , private readonly _navigation: NavigationService
-    , private readonly _observationCrudService: ObservationCrudService
-    , private readonly _route: ActivatedRoute) { }
+    , private readonly _observationCrudService: ObservationCrudService) { }
 
   ngOnInit(): void {
     this._route.params.subscribe(_ => {

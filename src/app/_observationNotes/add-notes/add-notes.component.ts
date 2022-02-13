@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddNoteDialogComponent } from '../add-note-dialog/add-note-dialog.component';
 import { EditNoteDialogComponent } from '../edit-note-dialog/edit-note-dialog.component';
 import { ObservationNote } from '../observation-note';
+import { ObservationNoteType } from '../observation-note-type';
 
 @Component({
   selector: 'app-add-notes',
@@ -20,7 +21,7 @@ export class AddNotesComponent {
   openAddNoteDialog(): void {
     const dialogRef = this.dialog.open(AddNoteDialogComponent, {
       width: '325px',
-      data: new ObservationNote(0, 'General', '')
+      data: new ObservationNote(0, ObservationNoteType.General, '')
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -13,7 +13,7 @@
                 <label for="noteType">Type</label>
                 <select class="form-control" id="noteType" required [(ngModel)]="data.noteType" name="noteType"
                     #noteType="ngModel">
-                    <option *ngFor="let pow of keys1()" [value]="pow">{{pow}}</option>
+                    <option *ngFor="let type of types | keyvalue" [ngValue]="type.key">{{type.key}}</option>
                 </select>
                 <div [hidden]="noteType.valid || noteType.pristine" class="alert alert-danger">
                     Power is required

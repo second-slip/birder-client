@@ -10,8 +10,7 @@ import { ObservationNoteType } from '../observation-note-type';
   styleUrls: ['./add-note-dialog.component.scss']
 })
 export class AddNoteDialogComponent implements OnInit {
-  keys1() : Array<string> { var keys = Object.keys(this.powers); return keys.slice(keys.length / 2); }
-  powers = ObservationNoteType; 
+  types = ObservationNoteType; 
 
   constructor(
     public dialogRef: MatDialogRef<any>,

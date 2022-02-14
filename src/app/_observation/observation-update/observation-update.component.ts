@@ -180,7 +180,6 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
     }
 
     return observation;
-
   }
 
   public redirect(): void {

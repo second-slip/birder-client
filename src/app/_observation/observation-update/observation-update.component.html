@@ -60,7 +60,7 @@
 
                 <app-select-species #species [selectSpeciesForm]="selectSpeciesForm"></app-select-species>
 
-                <button matStepperNext type="button">Next</button>
+                <button matStepperNext type="button" class="btn btn-light btn-small">Next</button>
 
             </mat-step>
 
@@ -68,12 +68,15 @@
 
                 <ng-template matStepLabel><span class="stepperTop1">Location</span></ng-template>
 
-                <app-read-write-map [latitude]="observation.position.latitude"
-                    [longitude]="observation.position.longitude">
-                </app-read-write-map>
+                <div>
+                    <app-read-write-map [latitude]="observation.position.latitude"
+                        [longitude]="observation.position.longitude">
+                    </app-read-write-map>
+                </div>
 
-                <button matStepperPrevious type="button">Back</button>
-                <button matStepperNext type="button">Next</button>
+                <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
+                <button matStepperNext type="button" class="btn btn-light btn-small">Next</button>
+
 
             </mat-step>
 
@@ -82,8 +85,8 @@
 
                 <app-edit-notes [notes]="observation.notes"></app-edit-notes>
 
-                <button matStepperPrevious type="button">Back</button>
-                <button matStepperNext type="button">Next</button>
+                <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
+                <button matStepperNext type="button" class="btn btn-light btn-small">Next</button>
 
             </mat-step>
 
@@ -91,23 +94,30 @@
             <mat-step>
                 <ng-template matStepLabel><span class="stepperTop3">Done</span></ng-template>
 
-                <p *ngIf="!updateObservationForm.valid || !selectSpeciesForm.valid" class="alert alert-danger">
-                    The form is not complete. You must complete all of the manadatory fields in Section 1.
-                </p>
+                <ng-container *ngIf="!updateObservationForm.valid || !selectSpeciesForm.valid">
+                    <p class="alert alert-danger">
+                        The form is not complete. You must complete the manadatory fields in Section 1.
 
-                <p *ngIf="updateObservationForm.valid && selectSpeciesForm.valid">
-                    The form is complete. Choose 'Save' to update your observation.
-                </p>
+                        <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
+                    </p>
+                </ng-container>
 
-                <!-- USE BOOTSTRAP BUTTONS -->
-                <button matStepperPrevious type="button">Back</button>
-                <button *ngIf="!requesting" type="submit" [disabled]="!updateObservationForm.valid || !selectSpeciesForm.valid">
-                    Save
-                </button>
-                <button *ngIf="requesting" type="submit" disabled>
-                    Updating observation...
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                </button>
+
+                <ng-container *ngIf="updateObservationForm.valid && selectSpeciesForm.valid">
+                    <p class="alert alert-info">
+                        The form is complete. Choose 'Save' to update your observation.
+
+                        <button *ngIf="!requesting" type="submit" class="btn btn-primary btn-small"
+                            [disabled]="!updateObservationForm.valid || !selectSpeciesForm.valid">
+                            Save
+                        </button>
+                        <button *ngIf="requesting" type="submit" disabled>
+                            Updating observation...
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </button>
+                        <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
+                    </p>
+                </ng-container>
 
             </mat-step>
 

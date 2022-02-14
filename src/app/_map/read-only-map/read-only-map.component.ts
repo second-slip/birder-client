@@ -12,8 +12,7 @@ export class ReadOnlyMapComponent implements OnInit {
   @Input() position: IObservationPosition;
   @ViewChild(MapInfoWindow, { static: false }) infoWindow: MapInfoWindow;
 
-  public errorObject = null;
-
+  public errorObject: any = null;
   public locationMarker: any;
   public options: google.maps.MapOptions = {
     mapTypeId: 'terrain', zoom: 8,
@@ -40,7 +39,7 @@ export class ReadOnlyMapComponent implements OnInit {
       })
     } catch (error) {
       // ToDo: implementation
-      //this.errorObject = error;
+      this.errorObject = error;
     }
   }
 }

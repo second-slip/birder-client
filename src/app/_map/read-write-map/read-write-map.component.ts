@@ -1,12 +1,12 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { GeocodeService } from '../geocode.service';
 
 @Component({
   selector: 'app-read-write-map',
   templateUrl: './read-write-map.component.html',
-  styleUrls: ['./read-write-map.component.scss']
+  styleUrls: ['./read-write-map.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ReadWriteMapComponent implements OnInit {
   @Input() latitude: number;
@@ -17,7 +17,7 @@ export class ReadWriteMapComponent implements OnInit {
   @ViewChild(GoogleMap, { static: false }) map: GoogleMap
   @ViewChild(MapInfoWindow, { static: false }) infoWindow: MapInfoWindow
 
-  //public errorObject = null;
+  public errorObject: any = null;
   public locationMarker: any;
   public options: google.maps.MapOptions = {
     mapTypeId: 'terrain', zoom: 8,
@@ -48,7 +48,7 @@ export class ReadWriteMapComponent implements OnInit {
       this._getFormattedAddress(latitude, longitude);
       // }
     } catch (error) {
-      // this.errorObject = error;
+      this.errorObject = error;
     }
     // this.infoWindow.open(this.locationMarker.position);
   }
@@ -63,36 +63,40 @@ export class ReadWriteMapComponent implements OnInit {
 
   private _getFormattedAddress(latitude: number, longitude: number): void {
     this._geocoding.reverseGeocode(latitude, longitude)
-      .subscribe(
-        (response: any) => {
-          //console.log(response);
-          this.formattedAddress = response.results[0].formatted_address;
-          this.shortAddress = this._geocoding.googleApiResponseHelper(response.results[0].address_components, "postal_town") + ', ' + this._geocoding.googleApiResponseHelper(response.results[0].address_components, "country");
+      .subscribe({
+        next: (r) => {
+          this.formattedAddress = r.results[0].formatted_address;
+          this.shortAddress = this._geocoding.googleApiResponseHelper(r.results[0].address_components, "postal_town") + ', ' + this._geocoding.googleApiResponseHelper(r.results[0].address_components, "country");
         },
-        (error: any) => {
-        }
-      );
+        error: (e) => {
+          this.errorObject = e;
+        }//,
+        //complete: () => { }
+      });
   }
 
   public findAddress(searchValue: string): void {
     this._geocoding.geocode(searchValue)
-      .subscribe(
-        (response: any) => {
-          //console.log(response);
-          this._changeZoomLevel(15);
-          this._addMarker(response.results[0].geometry.location.lat, response.results[0].geometry.location.lng); // false to stop second hit on API to get address...
-          this.formattedAddress = response.results[0].formatted_address;
-          if ((response.results[0].formatted_address.split(",").length - 1) === 1) {
-            this.shortAddress = response.results[0].formatted_address;
-          } else {
-            this.shortAddress = this._geocoding.googleApiResponseHelper(response.results[0].address_components, "postal_town") + ', ' + this._geocoding.googleApiResponseHelper(response.results[0].address_components, "country");
-          }
-          this.searchAddress = '';
+    .subscribe({
+      next: (r) => {
+        this._changeZoomLevel(15);
+        this._addMarker(r.results[0].geometry.location.lat, r.results[0].geometry.location.lng); // false to stop second hit on API to get address...
+        this.formattedAddress = r.results[0].formatted_address;
+        if ((r.results[0].formatted_address.split(",").length - 1) === 1) {
+          this.shortAddress = r.results[0].formatted_address;
+        } else {
+          this.shortAddress = this._geocoding.googleApiResponseHelper(r.results[0].address_components, "postal_town") + ', ' + this._geocoding.googleApiResponseHelper(r.results[0].address_components, "country");
         }
-      );
+        this.searchAddress = '';
+      },
+      error: (e) => {
+        this.errorObject = e;
+      }//,
+      //complete: () => { }
+    });
   }
 
-  closeAlert(): void {
+  public closeAlert(): void {
     this.geoError = null;
   }
 
@@ -126,12 +130,3 @@ export class ReadWriteMapComponent implements OnInit {
     this.options.zoom = level;
   }
 }
-
-
-// export interface ObservationPosition {
-//   observationPositionId: number;
-//   latitude: number;
-//   longitude: number;
-//   formattedAddress: string;
-//   shortAddress: string;
-// }

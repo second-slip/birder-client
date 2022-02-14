@@ -11,7 +11,7 @@
 
             <div class="form-group">
                 <label for="noteType">Type</label>
-                <select class="form-control" id="noteType" required [(ngModel)]="data.noteType" name="noteType"
+                <select class="form-select" id="noteType" required [(ngModel)]="data.noteType" name="noteType"
                     #noteType="ngModel">
                     <option *ngFor="let type of types | keyvalue" [ngValue]="type.key">{{type.key}}</option>
                 </select>
@@ -21,7 +21,7 @@
             </div>
 
             <div class="form-group">
-                <label for="note">Note {{ data.note ? data.note.length: '0' }}</label>
+                <label for="note">Note</label>
                 <textarea placeholder="Type your note here... " type="text" class="form-control" id="note" required
                     [(ngModel)]="data.note" name="note" #note="ngModel"></textarea>
                 <div [hidden]="note.valid || note.pristine || note.untouched" class="alert alert-danger">

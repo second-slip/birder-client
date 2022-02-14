@@ -32,7 +32,7 @@ export class SelectSpeciesComponent implements OnInit  {
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
       map(term => (term === '' ? this._service.getBirds
-        : this._service.getBirds.filter(species => species.englishName.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
+        : this._service.getBirds.filter(species => species.englishName.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0))
     );
   }
 

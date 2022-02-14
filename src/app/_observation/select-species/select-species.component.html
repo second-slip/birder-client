@@ -1,8 +1,8 @@
 <form [formGroup]="selectSpeciesForm" novalidate>
     <div class="form-group">
         <label for="typeahead-focus">Choose species:</label>
-        <input id="typeahead-focus" type="text" class="form-control" formControlName="bird" [ngbTypeahead]="search"
-            required placeholder="type species name" (focus)="focus$.next($any($event).target.value)"
+        <input id="typeahead-focus" type="text" class="form-select" formControlName="bird" [ngbTypeahead]="search"
+            required placeholder="type species name to filter species list" (focus)="focus$.next($any($event).target.value)"
             (click)="click$.next($any($event).target.value)" #instance="ngbTypeahead" [resultFormatter]="formatter"
             [inputFormatter]="formatter" />
         <div *ngIf="selectSpeciesForm.get('bird')?.invalid && 

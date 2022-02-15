@@ -104,19 +104,20 @@
 
 
                 <ng-container *ngIf="updateObservationForm.valid && selectSpeciesForm.valid">
-                    <p class="alert alert-info">
+                    <div class="alert alert-info">
                         The form is complete. Choose 'Save' to update your observation.
-
-                        <button *ngIf="!requesting" type="submit" class="btn btn-primary btn-small"
-                            [disabled]="!updateObservationForm.valid || !selectSpeciesForm.valid">
-                            Save
-                        </button>
-                        <button *ngIf="requesting" type="submit" disabled>
-                            Updating observation...
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        </button>
-                        <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
-                    </p>
+                        <p>
+                            <button *ngIf="!requesting" type="submit" class="btn btn-primary btn-small"
+                                [disabled]="!updateObservationForm.valid || !selectSpeciesForm.valid">
+                                Save
+                            </button>
+                            <button *ngIf="requesting" type="submit" class="btn btn-primary btn-small" disabled>
+                                Updating observation...
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            </button>
+                            <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
+                        </p>
+                    </div>
                 </ng-container>
 
             </mat-step>

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@ang
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import * as moment from 'moment';
+import * as moment from 'moment'; //ToDo: replace mment
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
@@ -14,7 +14,6 @@ import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { BirdsListValidator } from 'src/app/_validators';
 import { IObservation } from '../i-observation.dto';
 import { ObservationCrudService } from '../observation-crud.service';
-import { ObservationReadService } from '../observation-read/observation-read.service';
 import { IUpdateObservation } from './i-update-observation.dto';
 
 @Component({
@@ -27,11 +26,10 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
   private _observationId: string;
   private _subscription = new Subject();
   public requesting: boolean;
-
   public observation: IObservation
-
   public selectSpeciesForm: FormGroup;
   public updateObservationForm: FormGroup;
+  public errorObject: any = null;
 
   @ViewChild(ReadWriteMapComponent)
   private _mapComponent: ReadWriteMapComponent;
@@ -49,10 +47,7 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
     , private readonly _route: ActivatedRoute
     , private readonly _navigation: NavigationService
     , private readonly _observationCrudService: ObservationCrudService
-
-    , private readonly _formBuilder: FormBuilder
-
-  ) { }
+    , private readonly _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this._route.params.subscribe(_ => {
@@ -80,10 +75,6 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-
-  }
-
   private _getObservation(): void {
     this._observationCrudService.getObservation(this._observationId)
       .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
@@ -92,17 +83,12 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
           this._createForms(r);
           this.observation = r;
         },
-        error: (e) => {
-          // this.errorObject = e; this._handleError(e); 
-        }//,
-        //complete: () => { }
+        error: (e) => { this._redirect(); }
       });
   }
 
   private _createForms(observation: IObservation): void {
-
     try {
-
       this.selectSpeciesForm = this._formBuilder.group({
         bird: new FormControl(observation.bird, Validators.compose([
           Validators.required,
@@ -121,33 +107,29 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
           Validators.required
         ])),
       });
-
     }
     catch (e) { }
   }
 
-  public onSubmit(): void { 
+  public onSubmit(): void {
     this.requesting = true;
 
     try {
 
       const model = this._mapToModel();
-
       // console.log(model);
       // console.log(this.observation);
 
-      this._observationCrudService.updateObservation(this.observation.observationId, model)
-      .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
-      .subscribe({
-        next: (r) => { this._router.navigate(['/observation/detail/' + r.observationId.toString()]); },
-        error: (e) => {
-          // this.errorObject = e; this._handleError(e); 
-        }//,
-        //complete: () => { }
-      });
+      this._observationCrudService.updateObservation(this._observationId, model)
+        .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
+        .subscribe({
+          next: (r) => { this._router.navigate(['/observation/detail/' + r.observationId.toString()]); },
+          error: (e) => {
+            this.errorObject = e;
+          }
+        });
     }
-    catch (e) {}
-
+    catch (e) { }
   }
 
   private _mapToModel(): IUpdateObservation {
@@ -190,6 +172,11 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
     this._navigation.back();
   }
 
+  ngOnDestroy(): void {
+    this._subscription.next('');
+    this._subscription.complete();
+  }
+
   // This functionality needs to be refactored
   public onStepperSelectionChange() {
     this._scrollToSectionHook();
@@ -207,5 +194,3 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
     }
   }
 }
-
-

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { Router } from '@angular/router';
-import * as moment from 'moment'; // replace moment with alternative
+import * as moment from 'moment'; // ToDo: Replace moment with alternative
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
@@ -10,7 +10,6 @@ import { IObservationPosition } from 'src/app/_map/i-observation-position.dto';
 import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
 import { AddNotesComponent } from 'src/app/_observationNotes/add-notes/add-notes.component';
 import { IObservationNote } from 'src/app/_observationNotes/i-observation-note.dto';
-import { ObservationNoteType } from 'src/app/_observationNotes/observation-note-type';
 import { BirdsListValidator } from 'src/app/_validators';
 import { ObservationCrudService } from '../observation-crud.service';
 import { ICreateObservation } from './i-create-observation.dto';

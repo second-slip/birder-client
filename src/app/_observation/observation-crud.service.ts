@@ -27,7 +27,7 @@ export class ObservationCrudService {
       .pipe(tap(() => { this._onObservationsChanged(); }));
   }
 
-  public updateObservation(id: number, viewModel: any): Observable<IObservation> {
+  public updateObservation(id: string, viewModel: any): Observable<IObservation> {
     const options = id ?
       { params: new HttpParams().set('id', id.toString()) } :
       { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };

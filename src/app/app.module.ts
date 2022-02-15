@@ -68,6 +68,7 @@ import { NavigationMenuComponent } from './_observation/navigation-menu/navigati
 import { ObservationDeleteComponent } from './_observation/observation-delete/observation-delete.component';
 import { ObservationUpdateComponent } from './_observation/observation-update/observation-update.component';
 import { ToastComponent } from './_toast/toast/toast.component';
+import { LoadingComponent } from './_loading/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -119,6 +120,7 @@ import { ToastComponent } from './_toast/toast/toast.component';
     ObservationDeleteComponent,
     ObservationUpdateComponent,
     ToastComponent,
+    LoadingComponent,
   ],
   imports: [
     AppRoutingModule,

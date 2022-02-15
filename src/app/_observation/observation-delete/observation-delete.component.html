@@ -23,17 +23,28 @@
                     on {{ observation.observationDateTime | date: 'EEEE, d MMMM yyyy' }}.
                 </p>
 
-                <button class="btn btn-danger" (click)="deleteObservation(observation.observationId)">
-                    Delete
-                </button>
-                <button class="btn btn-link" (click)="redirect()">
-                    Return to last page
-                </button>
+                <ng-container>
+                    <div class="alert alert-info">
+                        Are you sure you want to delete your observation?
+                        <p>
+                            <button *ngIf="!requesting" type="submit" class="btn btn-danger btn-small"
+                                (click)="deleteObservation(observation.observationId)">
+                                Delete
+                            </button>
+                            <button *ngIf="requesting" type="submit" class="btn btn-danger btn-small" disabled>
+                                Deleting observation...
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            </button>
+                            <button class="btn btn-link" (click)="redirect()">
+                                Go back
+                            </button>
+                        </p>
+                    </div>
+                </ng-container>
 
-
-                <p><em>Observation created at {{ observation.creationDate | date: 'dd/MM/yyyy HH:mm' }}; last
+                <small><em>Observation created at {{ observation.creationDate | date: 'dd/MM/yyyy HH:mm' }}; last
                         updated at
-                        {{ observation.lastUpdateDate | date: 'dd/MM/yyyy HH:mm' }}</em></p>
+                        {{ observation.lastUpdateDate | date: 'dd/MM/yyyy HH:mm' }}</em></small>
 
                 <app-navigation-menu [observationId]="observation.observationId" [isRecordOwner]="true">
                 </app-navigation-menu>
@@ -56,10 +67,7 @@
 
 
     <ng-template #loading>
-        <p class="centre">
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            <strong>&nbsp;Loading</strong>
-        </p>
+        <app-loading></app-loading>
     </ng-template>
 
 </div>

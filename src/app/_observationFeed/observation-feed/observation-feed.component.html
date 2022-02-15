@@ -30,10 +30,7 @@
             </p>
 
             <p *ngIf="_service.isLoading | async">
-                <ngb-alert [dismissible]="false" type="info">
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    <strong>&nbsp;Loading</strong><em>&nbsp;Fetching more observations...</em>
-                </ngb-alert>
+                <app-loading></app-loading>
             </p>
 
         </app-infinite-scroll>

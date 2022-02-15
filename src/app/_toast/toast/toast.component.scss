@@ -1,0 +1,10 @@
+app-toast {
+    :host {
+        margin-top: 62px;
+        position: fixed;
+        top: 50;
+        right: 40;
+        margin: 0.5em;
+        z-index: 1200;
+    }
+}

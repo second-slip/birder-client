@@ -67,6 +67,7 @@ import { ObservationReadComponent } from './_observation/observation-read/observ
 import { NavigationMenuComponent } from './_observation/navigation-menu/navigation-menu.component';
 import { ObservationDeleteComponent } from './_observation/observation-delete/observation-delete.component';
 import { ObservationUpdateComponent } from './_observation/observation-update/observation-update.component';
+import { ToastComponent } from './_toast/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -117,6 +118,7 @@ import { ObservationUpdateComponent } from './_observation/observation-update/ob
     NavigationMenuComponent,
     ObservationDeleteComponent,
     ObservationUpdateComponent,
+    ToastComponent,
   ],
   imports: [
     AppRoutingModule,

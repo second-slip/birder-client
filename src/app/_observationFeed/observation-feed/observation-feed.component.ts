@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { ToastService } from 'src/app/_toast/toast.service';
 import { ObservationFeedService } from '../observation-feed.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class ObservationFeedComponent implements OnInit, OnDestroy {
   private _page: number;
 
   constructor(readonly _service: ObservationFeedService
+    , private _toast: ToastService
     , readonly _authService: AuthenticationService) { }
 
   ngOnInit(): void {
@@ -20,6 +22,9 @@ export class ObservationFeedComponent implements OnInit, OnDestroy {
     this._page = 1
     // console.log(this._page);
     this._service.getData(this._page);
+
+
+    this._toast.show('Hello there', 'Who are you?')
     // this.onScroll();
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ObservationCountService } from 'src/app/_analysis/observation-count/observation-count.service';
+import { ToastService } from 'src/app/_toast/toast.service';
 import { LifeListService } from './life-list.service';
 
 @Component({
@@ -11,7 +12,8 @@ export class LifeListComponent implements OnInit {
   public page: number = 1;
   public pageSize = 10;
 
-  constructor(readonly _service: LifeListService, readonly _analysisService: ObservationCountService) { }
+  constructor(readonly _service: LifeListService
+    , readonly _analysisService: ObservationCountService) { }
 
   ngOnInit(): void {
     this._getData();

@@ -13,7 +13,6 @@ export class ObservationFeedComponent implements OnInit, OnDestroy {
   private _page: number;
 
   constructor(readonly _service: ObservationFeedService
-    , private _toast: ToastService
     , readonly _authService: AuthenticationService) { }
 
   ngOnInit(): void {
@@ -23,8 +22,6 @@ export class ObservationFeedComponent implements OnInit, OnDestroy {
     // console.log(this._page);
     this._service.getData(this._page);
 
-
-    this._toast.show('Hello there', 'Who are you?')
     // this.onScroll();
   }
 

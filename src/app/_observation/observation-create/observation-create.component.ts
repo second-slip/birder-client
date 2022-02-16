@@ -25,6 +25,7 @@ export class ObservationCreateComponent implements OnInit {
   public requesting: boolean;
   public selectSpeciesForm: FormGroup;
   public addObservationForm: FormGroup;
+  public errorObject: any = null;
 
   @ViewChild(ReadWriteMapComponent)
   private _mapComponent: ReadWriteMapComponent;
@@ -51,19 +52,15 @@ export class ObservationCreateComponent implements OnInit {
     this.requesting = true;
 
     try {
-
       const model = this._mapToModel();
-      //
-      //console.log(model);
 
       this._service.addObservation(model)
         .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
         .subscribe({
           next: (r) => { this._router.navigate(['/observation/detail/' + r.observationId.toString()]); },
           error: (e) => {
-            // this.errorObject = e; this._handleError(e); 
-          }//,
-          //complete: () => { }
+            this.errorObject = e;
+          }
         });
 
     } catch (error) {
@@ -77,7 +74,6 @@ export class ObservationCreateComponent implements OnInit {
   }
 
   private _mapToModel(): ICreateObservation {
-
     const quantity = <Number>(this.addObservationForm.value.quantity);
     const dateTime = <Date>(new Date(this.addObservationForm.value.observationDateTime));
     const selectedBird = <IBirdSummary>(this.selectSpeciesForm.value);
@@ -101,10 +97,8 @@ export class ObservationCreateComponent implements OnInit {
       position: position,
       notes: notes,
     }
-
     return observation;
   }
-
 
   private _createForms(): void {
 

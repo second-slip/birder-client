@@ -76,6 +76,7 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
   }
 
   private _getObservation(): void {
+
     this._observationCrudService.getObservation(this._observationId)
       .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
       .subscribe({

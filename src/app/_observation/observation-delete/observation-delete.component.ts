@@ -52,6 +52,8 @@ export class ObservationDeleteComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this._service.reset();
+    this._subscription.next('');
+    this._subscription.complete();
   }
 
   public deleteObservation(id: number): void {

@@ -71,6 +71,9 @@ import { ToastComponent } from './_toast/toast/toast.component';
 import { LoadingComponent } from './_loading/loading/loading.component';
 import { BirdIndexComponent } from './_bird/bird-index/bird-index.component';
 import { BirdDetailComponent } from './_bird/bird-detail/bird-detail.component';
+import { BirdInfoComponent } from './_bird/bird-info/bird-info.component';
+import { RecordingsComponent } from './_bird/recordings/recordings.component';
+import { FlickrComponent } from './_bird/flickr/flickr.component';
 
 @NgModule({
   declarations: [
@@ -125,6 +128,9 @@ import { BirdDetailComponent } from './_bird/bird-detail/bird-detail.component';
     LoadingComponent,
     BirdIndexComponent,
     BirdDetailComponent,
+    BirdInfoComponent,
+    RecordingsComponent,
+    FlickrComponent,
   ],
   imports: [
     AppRoutingModule,

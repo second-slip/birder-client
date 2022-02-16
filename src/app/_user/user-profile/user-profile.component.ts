@@ -12,7 +12,6 @@ import { UserProfileService } from '../user-profile.service';
   encapsulation: ViewEncapsulation.None
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
-
   private _username: string | null;
 
   constructor(readonly _service: UserProfileService

@@ -14,7 +14,6 @@
 // import { WhatsNewComponent } from './whats-new/whats-new.component';
 // import { TweetArchiveComponent } from './_tweet/tweet-archive/tweet-archive.component';
 
-
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AuthenticationGuardService } from "./_auth/authentication-guard.service";
@@ -40,9 +39,6 @@ import { ObservationReadComponent } from "./_observation/observation-read/observ
 import { ObservationUpdateComponent } from "./_observation/observation-update/observation-update.component";
 import { ObservationFeedComponent } from "./_observationFeed/observation-feed/observation-feed.component";
 import { UserProfileComponent } from "./_user/user-profile/user-profile.component";
-
-
-// ToDo: Fix the route names.
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },

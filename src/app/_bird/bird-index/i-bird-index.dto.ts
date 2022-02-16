@@ -1,4 +1,4 @@
-import { IBirdSummary } from "./i-bird-summary.dto";
+import { IBirdSummary } from "../i-bird-summary.dto";
 
 export interface IBirdIndex {
     totalItems: number;

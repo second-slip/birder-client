@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
+import { IBirdSummary } from '../i-bird-summary.dto';
 import { IBirdIndex } from './i-bird-index.dto';
-import { IBirdSummary } from './i-bird-summary.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +24,11 @@ export class BirdIndexService {
     return this._isLoading$.asObservable();
   }
 
-  public get getFollowers(): Observable<IBirdSummary[] | null> {
+  public get getBirds(): Observable<IBirdSummary[] | null> {
     return this._birds$.asObservable();
   }
 
-  public get getTotalItems(): Observable<Number> {
+  public get getTotalItems(): Observable<number> {
     return this._totalItems$.asObservable();
   }
 
@@ -49,7 +49,7 @@ export class BirdIndexService {
           .set('speciesFilter', speciesFilter.toString())
       } : {};
 
-    this._httpClient.get<IBirdIndex>('api/Network/Followers', options)
+    this._httpClient.get<IBirdIndex>('api/Birds', options)
       .pipe(finalize(() => this._isLoading$.next(false)))
       .subscribe({
         next: (response) => {

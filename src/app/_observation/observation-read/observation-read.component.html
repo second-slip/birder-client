@@ -8,7 +8,7 @@
             
             <p><a routerLink="/user/{{observation.user.userName}}">
                     {{ observation.user.userName === authUser.userName ? 'You' : observation.user.userName }}
-                </a> observed {{ observation.quantity }} <a routerLink="/bird-detail/{{observation.bird.birdId}}">
+                </a> observed {{ observation.quantity }} <a routerLink="/bird/detail/{{observation.bird.birdId}}">
                     {{ observation.bird.englishName }}
                 </a> <small><em> {{ observation.bird.species }} </em></small>
                 on {{ observation.observationDateTime | date: 'EEEE, d MMMM yyyy \'at\' HH:mm' }}.

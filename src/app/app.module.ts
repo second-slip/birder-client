@@ -70,6 +70,7 @@ import { ObservationUpdateComponent } from './_observation/observation-update/ob
 import { ToastComponent } from './_toast/toast/toast.component';
 import { LoadingComponent } from './_loading/loading/loading.component';
 import { BirdIndexComponent } from './_bird/bird-index/bird-index.component';
+import { BirdDetailComponent } from './_bird/bird-detail/bird-detail.component';
 
 @NgModule({
   declarations: [
@@ -123,6 +124,7 @@ import { BirdIndexComponent } from './_bird/bird-index/bird-index.component';
     ToastComponent,
     LoadingComponent,
     BirdIndexComponent,
+    BirdDetailComponent,
   ],
   imports: [
     AppRoutingModule,

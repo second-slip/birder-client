@@ -13,7 +13,6 @@
 // import { ObservationManagePhotosComponent } from './_photos/observation-manage-photos/observation-manage-photos.component';
 // import { WhatsNewComponent } from './whats-new/whats-new.component';
 // import { TweetArchiveComponent } from './_tweet/tweet-archive/tweet-archive.component';
-// import { BirdDetailComponent } from './_birds/bird-detail/bird-detail.component';
 
 
 import { NgModule } from "@angular/core";
@@ -21,6 +20,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { AuthenticationGuardService } from "./_auth/authentication-guard.service";
 import { LoginComponent } from "./_auth/login/login.component";
 import { LogoutComponent } from "./_auth/logout/logout.component";
+import { BirdDetailComponent } from "./_bird/bird-detail/bird-detail.component";
 import { BirdIndexComponent } from "./_bird/bird-index/bird-index.component";
 import { AboutComponent } from "./_home/about/about.component";
 import { ContactComponent } from "./_home/contact/contact.component";
@@ -88,7 +88,7 @@ const routes: Routes = [
           { path: 'observation/update/:id', component: ObservationUpdateComponent },
           // { path: 'observation/photos/:id', component: ObservationManagePhotosComponent },
           { path: 'bird/index', component: BirdIndexComponent },
-          // { path: 'bird/detail/:id', component: BirdDetailComponent },
+          { path: 'bird/detail/:id', component: BirdDetailComponent },
           { path: 'lists/life/:username', component: LifeListComponent },
           { path: 'user/:username', component: UserProfileComponent },
           { path: 'followers/:username', component: FollowersComponent },

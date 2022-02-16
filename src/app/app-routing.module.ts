@@ -1,4 +1,3 @@
-// import { BirdsIndexComponent } from './_birds/birds-index/birds-index.component';
 // import { RegisterComponent } from './_account/register/register.component';
 // import { ConfirmEmailComponent } from './_account/confirm-email/confirm-email.component';
 // import { LayoutAccountManagerComponent } from './_layout/layout-account-manager/layout-account-manager.component';
@@ -22,6 +21,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { AuthenticationGuardService } from "./_auth/authentication-guard.service";
 import { LoginComponent } from "./_auth/login/login.component";
 import { LogoutComponent } from "./_auth/logout/logout.component";
+import { BirdIndexComponent } from "./_bird/bird-index/bird-index.component";
 import { AboutComponent } from "./_home/about/about.component";
 import { ContactComponent } from "./_home/contact/contact.component";
 import { DeveloperComponent } from "./_home/developer/developer.component";
@@ -87,7 +87,7 @@ const routes: Routes = [
           { path: 'observation/create', component: ObservationCreateComponent, },
           { path: 'observation/update/:id', component: ObservationUpdateComponent },
           // { path: 'observation/photos/:id', component: ObservationManagePhotosComponent },
-          // { path: 'bird/index', component: BirdsIndexComponent },
+          { path: 'bird/index', component: BirdIndexComponent },
           // { path: 'bird/detail/:id', component: BirdDetailComponent },
           { path: 'lists/life/:username', component: LifeListComponent },
           { path: 'user/:username', component: UserProfileComponent },

@@ -69,6 +69,7 @@ import { ObservationDeleteComponent } from './_observation/observation-delete/ob
 import { ObservationUpdateComponent } from './_observation/observation-update/observation-update.component';
 import { ToastComponent } from './_toast/toast/toast.component';
 import { LoadingComponent } from './_loading/loading/loading.component';
+import { BirdIndexComponent } from './_bird/bird-index/bird-index.component';
 
 @NgModule({
   declarations: [
@@ -121,6 +122,7 @@ import { LoadingComponent } from './_loading/loading/loading.component';
     ObservationUpdateComponent,
     ToastComponent,
     LoadingComponent,
+    BirdIndexComponent,
   ],
   imports: [
     AppRoutingModule,

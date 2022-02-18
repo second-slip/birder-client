@@ -76,6 +76,7 @@ import { RecordingsComponent } from './_bird/recordings/recordings.component';
 import { FlickrComponent } from './_bird/flickr/flickr.component';
 import { AccountRegistrationComponent } from './_account/account-registration/account-registration.component';
 import { ConfirmEmailComponent } from './_account/confirm-email/confirm-email.component';
+import { ConfirmEmailResendComponent } from './_account/confirm-email-resend/confirm-email-resend.component';
 
 @NgModule({
   declarations: [
@@ -135,6 +136,7 @@ import { ConfirmEmailComponent } from './_account/confirm-email/confirm-email.co
     FlickrComponent,
     AccountRegistrationComponent,
     ConfirmEmailComponent,
+    ConfirmEmailResendComponent,
   ],
   imports: [
     AppRoutingModule,

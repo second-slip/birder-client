@@ -1,4 +1,4 @@
-import { FormControl, FormGroup, NgForm, FormGroupDirective } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, FormGroupDirective, ValidatorFn } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 export class ParentErrorStateMatcher implements ErrorStateMatcher {
@@ -14,7 +14,7 @@ export class ParentErrorStateMatcher implements ErrorStateMatcher {
 
 export class PasswordValidator {
   // Inspired on: http://plnkr.co/edit/Zcbg2T3tOxYmhxs7vaAm?p=preview
-  static areEqual(formGroup: FormGroup) {
+  static areEqual(formGroup: FormGroup): any {
     let value;
     let valid = true;
     for (let key in formGroup.controls) {

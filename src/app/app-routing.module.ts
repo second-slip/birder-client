@@ -1,5 +1,3 @@
-// import { RegisterComponent } from './_account/register/register.component';
-// import { ConfirmEmailComponent } from './_account/confirm-email/confirm-email.component';
 // import { LayoutAccountManagerComponent } from './_layout/layout-account-manager/layout-account-manager.component';
 // import { AccountManagerProfileComponent } from './_accountManager/account-manager-profile/account-manager-profile.component';
 // import { AccountManagerLocationComponent } from './_accountManager/account-manager-location/account-manager-location.component';
@@ -16,6 +14,8 @@
 
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { AccountRegistrationComponent } from "./_account/account-registration/account-registration.component";
+import { ConfirmEmailComponent } from "./_account/confirm-email/confirm-email.component";
 import { AuthenticationGuardService } from "./_auth/authentication-guard.service";
 import { LoginComponent } from "./_auth/login/login.component";
 import { LogoutComponent } from "./_auth/logout/logout.component";
@@ -54,8 +54,8 @@ const routes: Routes = [
       { path: 'login', component: LoginComponent },
       { path: 'logout', component: LogoutComponent },
       // { path: --> move to about section ... 'whats-new', component: WhatsNewComponent },
-      // { path: 'register', component: RegisterComponent },
-      // { path: 'confirm-email', component: ConfirmEmailComponent },
+      { path: 'account/registration', component: AccountRegistrationComponent },
+      { path: 'confirm-email', component: ConfirmEmailComponent },
       // { path: 'confirmed-email', component: ConfirmedEmailComponent },
       // { path: 'forgot-password', component: ForgotPasswordComponent },
       // { path: 'forgot-password-confirmation', component: ForgotPasswordConfirmationComponent },

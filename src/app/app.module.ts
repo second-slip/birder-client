@@ -74,6 +74,8 @@ import { BirdDetailComponent } from './_bird/bird-detail/bird-detail.component';
 import { BirdInfoComponent } from './_bird/bird-info/bird-info.component';
 import { RecordingsComponent } from './_bird/recordings/recordings.component';
 import { FlickrComponent } from './_bird/flickr/flickr.component';
+import { AccountRegistrationComponent } from './_account/account-registration/account-registration.component';
+import { ConfirmEmailComponent } from './_account/confirm-email/confirm-email.component';
 
 @NgModule({
   declarations: [
@@ -131,6 +133,8 @@ import { FlickrComponent } from './_bird/flickr/flickr.component';
     BirdInfoComponent,
     RecordingsComponent,
     FlickrComponent,
+    AccountRegistrationComponent,
+    ConfirmEmailComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -140,6 +144,7 @@ import { FlickrComponent } from './_bird/flickr/flickr.component';
     BrowserModule,
     BrowserAnimationsModule,
     //
+    // MatInputModule,
     MatIconModule,
     MatButtonModule,
     MatDatepickerModule,

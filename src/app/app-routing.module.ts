@@ -25,7 +25,7 @@ import { DeveloperComponent } from "./_home/developer/developer.component";
 import { FutureComponent } from "./_home/future/future.component";
 import { HomeComponent } from "./_home/home/home.component";
 import { TechnologyComponent } from "./_home/technology/technology.component";
-import { LayoutAccountManagerComponent } from "./_layout/layout-account-manager/layout-account-manager.component";
+// import { LayoutAccountManagerComponent } from "./_layout/layout-account-manager/layout-account-manager.component";
 import { LayoutNoSidebarComponent } from "./_layout/layout-no-sidebar/layout-no-sidebar.component";
 import { LayoutSidebarComponent } from "./_layout/layout-sidebar/layout-sidebar.component";
 import { LifeListComponent } from "./_list/life-list/life-list.component";
@@ -94,24 +94,24 @@ const routes: Routes = [
       },
     ]
   },
-  {
-    path: '',
-    component: LayoutAccountManagerComponent,
-    canActivate: [AuthenticationGuardService],
-    children: [
-      {
-        path: '',
-        canActivateChild: [AuthenticationGuardService],
-        children: [
-          { path: '', component: HomeComponent, pathMatch: 'full' },
-          //         { path: 'account-manager-profile', component: AccountManagerProfileComponent },
-          //         { path: 'account-manager-avatar', component: AccountManagerAvatarComponent },
-          //         { path: 'account-manager-location', component: AccountManagerLocationComponent },
-          //         { path: 'account-manager-password', component: AccountManagerPasswordComponent },
-        ]
-      },
-    ]
-  },
+  // {
+  //   path: '',
+  //   component: LayoutAccountManagerComponent,
+  //   canActivate: [AuthenticationGuardService],
+  //   children: [
+  //     {
+  //       path: '',
+  //       canActivateChild: [AuthenticationGuardService],
+  //       children: [
+  //         { path: '', component: HomeComponent, pathMatch: 'full' },
+  //         //         { path: 'account-manager-profile', component: AccountManagerProfileComponent },
+  //         //         { path: 'account-manager-avatar', component: AccountManagerAvatarComponent },
+  //         //         { path: 'account-manager-location', component: AccountManagerLocationComponent },
+  //         //         { path: 'account-manager-password', component: AccountManagerPasswordComponent },
+  //       ]
+  //     },
+  //   ]
+  // },
   { path: '**', redirectTo: '' }
 ];
 

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IAccountRegistration } from './account-registration/i-account-registration';
+import { IEmailResend } from './confirm-email/i-email-resend.dto';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -19,16 +20,16 @@ export class AccountService {
     return this._http.post<IAccountRegistration>('api/Account/Register', model, httpOptions);
   }
 
-  // forgotPassword(viewModel: UserEmailDto): Observable<UserEmailDto> {
-  //   return this.http.post<UserEmailDto>('api/Account/ForgotPassword', viewModel, httpOptions);
+  // forgotPassword(model: UserEmailDto): Observable<UserEmailDto> {
+  //   return this.http.post<UserEmailDto>('api/Account/ForgotPassword', model, httpOptions);
   // }
 
-  // resendEmailConfirmation(viewModel: UserEmailDto): Observable<UserEmailDto> {
-  //   return this.http.post<UserEmailDto>('api/Account/ResendEmailConfirmation', viewModel, httpOptions);
-  // }
+  public resendEmailConfirmation(model: IEmailResend): Observable<IEmailResend> {
+    return this._http.post<IEmailResend>('api/Account/ResendEmailConfirmation', model, httpOptions);
+  }
 
-  // resetPassword(viewModel: ResetPasswordViewModel): Observable<ResetPasswordViewModel> {
-  //   return this.http.post<ResetPasswordViewModel>('api/Account/ResetPassword', viewModel, httpOptions);
+  // resetPassword(model: ResetPasswordmodel): Observable<ResetPasswordmodel> {
+  //   return this.http.post<ResetPasswordmodel>('api/Account/ResetPassword', model, httpOptions);
   // }
 
   // checkValidUsername(username: string): Observable<boolean> {

@@ -13,6 +13,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AccountRegistrationComponent } from "./_account/account-registration/account-registration.component";
+import { ConfirmEmailSuccessComponent } from "./_account/confirm-email-success/confirm-email-success.component";
 import { ConfirmEmailComponent } from "./_account/confirm-email/confirm-email.component";
 import { AuthenticationGuardService } from "./_auth/authentication-guard.service";
 import { LoginComponent } from "./_auth/login/login.component";
@@ -54,7 +55,7 @@ const routes: Routes = [
       { path: 'login', component: LoginComponent },
       { path: 'logout', component: LogoutComponent },
       { path: 'confirm-email', component: ConfirmEmailComponent },
-      { path: 'confirmed-email', component: ConfirmEmailComponent },
+      { path: 'confirmed-email', component: ConfirmEmailSuccessComponent },
       { path: 'account/registration', component: AccountRegistrationComponent },
       // { path: 'forgot-password', component: ForgotPasswordComponent },
       // { path: 'forgot-password-confirmation', component: ForgotPasswordConfirmationComponent },

@@ -78,6 +78,7 @@ import { AccountRegistrationComponent } from './_account/account-registration/ac
 import { ConfirmEmailComponent } from './_account/confirm-email/confirm-email.component';
 import { ConfirmEmailResendComponent } from './_account/confirm-email-resend/confirm-email-resend.component';
 import { ConfirmEmailSuccessComponent } from './_account/confirm-email-success/confirm-email-success.component';
+import { ForgotPasswordComponent } from './_account/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -139,6 +140,7 @@ import { ConfirmEmailSuccessComponent } from './_account/confirm-email-success/c
     ConfirmEmailComponent,
     ConfirmEmailResendComponent,
     ConfirmEmailSuccessComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     AppRoutingModule,

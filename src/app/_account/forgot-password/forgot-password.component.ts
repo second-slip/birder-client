@@ -5,19 +5,19 @@ import { AccountService } from '../account.service';
 import { IUserEmail } from '../i-user-email.dto';
 
 @Component({
-  selector: 'app-confirm-email-resend',
-  templateUrl: './confirm-email-resend.component.html',
-  styleUrls: ['./confirm-email-resend.component.scss'],
+  selector: 'app-forgot-password',
+  templateUrl: './forgot-password.component.html',
+  styleUrls: ['./forgot-password.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ConfirmEmailResendComponent implements OnInit, OnDestroy {
+export class ForgotPasswordComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
   public requesting: boolean;
   public submitted: boolean = false;
-  public resendConfirmEmailForm: FormGroup;
+  public requestPasswordResetForm: FormGroup;
   public errorObject: any = null;
 
-  resend_confirm_email_validation_messages = {
+  request_password_reset_validation_messages = {
     'email': [
       { type: 'required', message: 'Email is required' },
       { type: 'pattern', message: 'Enter a valid email' }
@@ -25,8 +25,8 @@ export class ConfirmEmailResendComponent implements OnInit, OnDestroy {
   };
 
   constructor(private _formBuilder: FormBuilder
-    , private _service: AccountService) {}
-
+    , private _service: AccountService) { }
+  
   ngOnInit(): void {
     this._createForms();
   }
@@ -34,7 +34,7 @@ export class ConfirmEmailResendComponent implements OnInit, OnDestroy {
   public onSubmit(formData: IUserEmail): void {
     this.requesting = true;
 
-    this._service.resendEmailConfirmation(formData)
+    this._service.requestPasswordReset(formData)
     .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
     .subscribe({
       next: (r) => { this.submitted = true; },
@@ -45,7 +45,7 @@ export class ConfirmEmailResendComponent implements OnInit, OnDestroy {
   }
 
   private _createForms(): void {
-    this.resendConfirmEmailForm = this._formBuilder.group({
+    this.requestPasswordResetForm = this._formBuilder.group({
       email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')

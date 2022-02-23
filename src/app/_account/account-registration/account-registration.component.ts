@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
@@ -13,7 +13,7 @@ import { UsernameValidationService } from './username-validation-service.service
   styleUrls: ['./account-registration.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AccountRegistrationComponent implements OnInit {
+export class AccountRegistrationComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
   public requesting: boolean;
   public invalidRegistration: boolean;
@@ -119,6 +119,11 @@ export class AccountRegistrationComponent implements OnInit {
       { type: 'match', message: 'Passwords do not match' }
     ]
   };
+
+  ngOnDestroy(): void {
+    this._subscription.next('');
+    this._subscription.complete();
+  }
 }
 
 class ValidatePassword {

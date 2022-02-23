@@ -3,7 +3,6 @@
 // import { AccountManagerLocationComponent } from './_accountManager/account-manager-location/account-manager-location.component';
 // import { AccountManagerPasswordComponent } from './_accountManager/account-manager-password/account-manager-password.component';
 // import { ResetPasswordComponent } from './_account/reset-password/reset-password.component';
-// import { ForgotPasswordComponent } from './_account/forgot-password/forgot-password.component';
 // import { ForgotPasswordConfirmationComponent } from './_account/forgot-password-confirmation/forgot-password-confirmation.component';
 // import { ResetPasswordConfirmationComponent } from './_account/reset-password-confirmation/reset-password-confirmation.component';
 // import { AccountManagerAvatarComponent } from './_accountManager/account-manager-avatar/account-manager-avatar.component';
@@ -15,6 +14,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { AccountRegistrationComponent } from "./_account/account-registration/account-registration.component";
 import { ConfirmEmailSuccessComponent } from "./_account/confirm-email-success/confirm-email-success.component";
 import { ConfirmEmailComponent } from "./_account/confirm-email/confirm-email.component";
+import { ForgotPasswordComponent } from "./_account/forgot-password/forgot-password.component";
 import { AuthenticationGuardService } from "./_auth/authentication-guard.service";
 import { LoginComponent } from "./_auth/login/login.component";
 import { LogoutComponent } from "./_auth/logout/logout.component";
@@ -57,8 +57,8 @@ const routes: Routes = [
       { path: 'confirm-email', component: ConfirmEmailComponent },
       { path: 'confirmed-email', component: ConfirmEmailSuccessComponent },
       { path: 'account/registration', component: AccountRegistrationComponent },
-      // { path: 'forgot-password', component: ForgotPasswordComponent },
-      // { path: 'forgot-password-confirmation', component: ForgotPasswordConfirmationComponent },
+      // change routing 'account/password...'
+      { path: 'forgot-password', component: ForgotPasswordComponent },
       // { path: 'reset-password/:code', component: ResetPasswordComponent },
       // { path: 'reset-password-confirmation', component: ResetPasswordConfirmationComponent },
       { path: 'tweet/archive', component: TweetDayArchiveComponent },

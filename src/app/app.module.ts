@@ -79,6 +79,7 @@ import { ConfirmEmailComponent } from './_account/confirm-email/confirm-email.co
 import { ConfirmEmailResendComponent } from './_account/confirm-email-resend/confirm-email-resend.component';
 import { ConfirmEmailSuccessComponent } from './_account/confirm-email-success/confirm-email-success.component';
 import { ForgotPasswordComponent } from './_account/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './_account/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -141,6 +142,7 @@ import { ForgotPasswordComponent } from './_account/forgot-password/forgot-passw
     ConfirmEmailResendComponent,
     ConfirmEmailSuccessComponent,
     ForgotPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     AppRoutingModule,

@@ -1,8 +1,3 @@
-// import { LayoutAccountManagerComponent } from './_layout/layout-account-manager/layout-account-manager.component';
-// import { AccountManagerProfileComponent } from './_accountManager/account-manager-profile/account-manager-profile.component';
-// import { AccountManagerLocationComponent } from './_accountManager/account-manager-location/account-manager-location.component';
-// import { AccountManagerPasswordComponent } from './_accountManager/account-manager-password/account-manager-password.component';
-// import { AccountManagerAvatarComponent } from './_accountManager/account-manager-avatar/account-manager-avatar.component';
 // import { ObservationManagePhotosComponent } from './_photos/observation-manage-photos/observation-manage-photos.component';
 // import { TweetArchiveComponent } from './_tweet/tweet-archive/tweet-archive.component';
 
@@ -13,6 +8,7 @@ import { ConfirmEmailSuccessComponent } from "./_account/confirm-email-success/c
 import { ConfirmEmailComponent } from "./_account/confirm-email/confirm-email.component";
 import { ForgotPasswordComponent } from "./_account/forgot-password/forgot-password.component";
 import { ResetPasswordComponent } from "./_account/reset-password/reset-password.component";
+import { AccountManagerComponent } from "./_accountManage/account-manager/account-manager.component";
 import { AuthenticationGuardService } from "./_auth/authentication-guard.service";
 import { LoginComponent } from "./_auth/login/login.component";
 import { LogoutComponent } from "./_auth/logout/logout.component";
@@ -57,6 +53,7 @@ const routes: Routes = [
       { path: 'confirm-email', component: ConfirmEmailComponent },
       { path: 'confirmed-email', component: ConfirmEmailSuccessComponent },
       { path: 'account/registration', component: AccountRegistrationComponent },
+      { path: 'account/manage', component: AccountManagerComponent },
       // change routing 'account/password...'
       { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: 'reset-password/:code', component: ResetPasswordComponent },
@@ -92,24 +89,6 @@ const routes: Routes = [
       },
     ]
   },
-  // {
-  //   path: '',
-  //   component: LayoutAccountManagerComponent,
-  //   canActivate: [AuthenticationGuardService],
-  //   children: [
-  //     {
-  //       path: '',
-  //       canActivateChild: [AuthenticationGuardService],
-  //       children: [
-  //         { path: '', component: HomeComponent, pathMatch: 'full' },
-  //         //         { path: 'account-manager-profile', component: AccountManagerProfileComponent },
-  //         //         { path: 'account-manager-avatar', component: AccountManagerAvatarComponent },
-  //         //         { path: 'account-manager-location', component: AccountManagerLocationComponent },
-  //         //         { path: 'account-manager-password', component: AccountManagerPasswordComponent },
-  //       ]
-  //     },
-  //   ]
-  // },
   { path: '**', redirectTo: '' }
 ];
 

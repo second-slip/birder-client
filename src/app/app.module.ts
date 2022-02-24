@@ -80,6 +80,11 @@ import { ConfirmEmailResendComponent } from './_account/confirm-email-resend/con
 import { ConfirmEmailSuccessComponent } from './_account/confirm-email-success/confirm-email-success.component';
 import { ForgotPasswordComponent } from './_account/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './_account/reset-password/reset-password.component';
+import { AccountManagerComponent } from './_accountManage/account-manager/account-manager.component';
+import { AccountManageProfileComponent } from './_accountManage/account-manage-profile/account-manage-profile.component';
+import { AccountManagePasswordComponent } from './_accountManage/account-manage-password/account-manage-password.component';
+import { AccountManageLocationComponent } from './_accountManage/account-manage-location/account-manage-location.component';
+import { AccountManageAvatarComponent } from './_accountManage/account-manage-avatar/account-manage-avatar.component';
 
 @NgModule({
   declarations: [
@@ -143,6 +148,11 @@ import { ResetPasswordComponent } from './_account/reset-password/reset-password
     ConfirmEmailSuccessComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    AccountManagerComponent,
+    AccountManageProfileComponent,
+    AccountManagePasswordComponent,
+    AccountManageLocationComponent,
+    AccountManageAvatarComponent,
   ],
   imports: [
     AppRoutingModule,

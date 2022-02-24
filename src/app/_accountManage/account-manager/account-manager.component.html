@@ -1,0 +1,38 @@
+<h1>Account Manager</h1>
+
+
+<p>
+    You should use <code>class="nav-pills"</code> if you need pills and the <code>[orientation]</code> input
+    to change nav orientation
+</p>
+
+<div class="d-flex">
+    <ul ngbNav #nav="ngbNav" class="nav-pills" orientation="vertical">
+        <li ngbNavItem="0">
+            <a ngbNavLink>Profile</a>
+            <ng-template ngbNavContent>
+                <app-account-manage-profile></app-account-manage-profile>
+            </ng-template>
+        </li>
+        <li ngbNavItem="1">
+            <a ngbNavLink>Password</a>
+            <ng-template ngbNavContent>
+                <app-account-manage-password></app-account-manage-password>
+            </ng-template>
+        </li>
+        <li ngbNavItem="2">
+            <a ngbNavLink>Location</a>
+            <ng-template ngbNavContent>
+                <app-account-manage-location></app-account-manage-location>
+            </ng-template>
+        </li>
+        <li ngbNavItem="3">
+            <a ngbNavLink>Avatar</a>
+            <ng-template ngbNavContent>
+                <app-account-manage-avatar></app-account-manage-avatar>
+            </ng-template>
+        </li>
+    </ul>
+
+    <div [ngbNavOutlet]="nav" class="ms-4"></div>
+</div>

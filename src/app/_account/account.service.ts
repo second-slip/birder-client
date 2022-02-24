@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IAccountRegistration } from './account-registration/i-account-registration';
 import { IUserEmail } from './i-user-email.dto';
+import { IResetPassword } from './reset-password/i-reset-password.dto';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
-
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +28,7 @@ export class AccountService {
     return this._http.post<IUserEmail>('api/Account/ResendEmailConfirmation', model, httpOptions);
   }
 
-  // resetPassword(model: ResetPasswordmodel): Observable<ResetPasswordmodel> {
-  //   return this.http.post<ResetPasswordmodel>('api/Account/ResetPassword', model, httpOptions);
-  // }
-
+  public resetPassword(model: IResetPassword): Observable<IResetPassword> {
+    return this._http.post<IResetPassword>('api/Account/ResetPassword', model, httpOptions);
+  }
 }

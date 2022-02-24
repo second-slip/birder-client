@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { RestrictedNameValidator } from 'src/app/_validators';
+import { ValidatePassword } from 'src/app/_validators';
 import { AccountService } from '../account.service';
 import { IAccountRegistration } from './i-account-registration';
 import { UsernameValidationService } from './username-validation-service.service';
@@ -123,21 +124,5 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._subscription.next('');
     this._subscription.complete();
-  }
-}
-
-class ValidatePassword {
-  static passwordMatcher(c: AbstractControl): ValidationErrors | null {
-    const control = c.get('password');
-    const confirmControl = c.get('confirmPassword');
-
-    if (control?.pristine || confirmControl?.pristine) {
-      return null;
-    }
-
-    if (control?.value === confirmControl?.value) {
-      return null;
-    }
-    return { match: true };
   }
 }

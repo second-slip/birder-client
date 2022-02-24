@@ -2,7 +2,6 @@
 // import { AccountManagerProfileComponent } from './_accountManager/account-manager-profile/account-manager-profile.component';
 // import { AccountManagerLocationComponent } from './_accountManager/account-manager-location/account-manager-location.component';
 // import { AccountManagerPasswordComponent } from './_accountManager/account-manager-password/account-manager-password.component';
-
 // import { AccountManagerAvatarComponent } from './_accountManager/account-manager-avatar/account-manager-avatar.component';
 // import { ObservationManagePhotosComponent } from './_photos/observation-manage-photos/observation-manage-photos.component';
 // import { TweetArchiveComponent } from './_tweet/tweet-archive/tweet-archive.component';
@@ -51,6 +50,8 @@ const routes: Routes = [
       { path: 'about/about', component: AboutComponent },
       { path: 'about/contact', component: ContactComponent },
       { path: 'about/technology', component: TechnologyComponent },
+      { path: 'about/developer', component: DeveloperComponent },
+      { path: 'about/future', component: FutureComponent },
       { path: 'login', component: LoginComponent },
       { path: 'logout', component: LogoutComponent },
       { path: 'confirm-email', component: ConfirmEmailComponent },
@@ -59,10 +60,7 @@ const routes: Routes = [
       // change routing 'account/password...'
       { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: 'reset-password/:code', component: ResetPasswordComponent },
-      // { path: 'reset-password-confirmation', component: ResetPasswordConfirmationComponent },
-      { path: 'tweet/archive', component: TweetDayArchiveComponent },
-      { path: 'about/developer', component: DeveloperComponent },
-      { path: 'about/future', component: FutureComponent }
+      { path: 'tweet/archive', component: TweetDayArchiveComponent }
     ]
   },
   // ToDo: try moving this to the top so components load first with the sidebar if appropriate

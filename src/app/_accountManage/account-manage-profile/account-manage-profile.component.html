@@ -1,1 +1,77 @@
-<p>account-manage-profile works!</p>
+<div>
+    <h1>Update your profile.............................................................................................
+    </h1>
+
+    <p>Submit this form to change your username or email.</p>
+
+    <ng-container *ngIf="manageProfileForm; else loadingOrError">
+
+        <form [formGroup]="manageProfileForm" novalidate (ngSubmit)="onSubmit(manageProfileForm.value)"
+            autocomplete="off">
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <div class="is-loading">
+                    <input class="form-control" id="username" type="text" placeholder="username"
+                        formControlName="userName" required>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                        *ngIf="(manageProfileForm.get('userName')?.pending)"
+                        style="float: right; margin-left: 8px"></span>
+                </div>
+                <div *ngFor="let validation of profile_validation_messages.userName">
+                    <small class="text-danger"
+                        *ngIf="manageProfileForm.get('userName')?.hasError(validation.type) && (manageProfileForm.get('userName')?.dirty || manageProfileForm.get('userName')?.touched)">
+                        {{validation.message}}
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input class="form-control" id="email" type="email" placeholder="Email" formControlName="email"
+                    required>
+                <div *ngFor="let validation of profile_validation_messages.email">
+                    <small class="text-danger"
+                        *ngIf="manageProfileForm.get('email')?.hasError(validation.type) && (manageProfileForm.get('email')?.dirty || manageProfileForm.get('email')?.touched)">
+                        {{validation.message}}
+                    </small>
+                </div>
+                <p [hidden]="!manageProfileForm.get('email')?.dirty" class="alert alert-info email-alert">
+                    <strong>Information</strong>&nbsp;You will need to confirm your new email and login again.
+                </p>
+            </div>
+
+            <ng-container *ngIf="errorObject">
+                <p class="alert alert-warning">
+                    An error occurred. Please check the form and try again.
+                </p>
+            </ng-container>
+
+            <button *ngIf="!requesting" type="submit" class="btn btn-primary" [disabled]="!manageProfileForm.valid">
+                Save
+            </button>
+            <button *ngIf="requesting" class="btn btn-primary" type="submit" disabled>
+                Saving...
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
+
+        </form>
+
+    </ng-container>
+
+    <ng-template #loadingOrError>
+        <ng-container *ngIf="errorObject; else loading">
+            <p class="centre">
+                <strong>Whoops!</strong>&nbsp;An error occurred<br>
+                <!-- ToDo: what's best here? -->
+                <!-- <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
+                Again</button> -->
+            </p>
+        </ng-container>
+    </ng-template>
+
+    <ng-template #loading>
+        <app-loading></app-loading>
+    </ng-template>
+
+</div>

@@ -1,5 +1,4 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
 
 @Component({
   selector: 'app-confirm-email',
@@ -9,7 +8,5 @@ import { AuthenticationService } from 'src/app/_auth/authentication.service';
 })
 export class ConfirmEmailComponent {
 
-  constructor(private readonly _authService: AuthenticationService) { 
-    this._authService.logout(); // for users redirected from account manager
-  }
+  constructor() { }
 }

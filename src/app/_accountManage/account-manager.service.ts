@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { IManageLocation } from './account-manage-location/i-manage-location.dto';
 import { IManageProfile } from './account-manage-profile/i-manage-profile.dto';
 
 const httpOptions = {
@@ -26,9 +27,9 @@ export class AccountManagerService {
   //   return this._http.post<ChangePasswordViewModel>('api/Manage/Password', viewModel, httpOptions);
   // }
 
-  // postSetLocation(viewModel: SetLocationViewModel): Observable<SetLocationViewModel> {
-  //   return this._http.post<SetLocationViewModel>('api/Manage/Location', viewModel, httpOptions);
-  // }
+  public postUpdateLocation(viewModel: IManageLocation): Observable<IManageLocation> {
+    return this._http.post<IManageLocation>('api/Manage/Location', viewModel, httpOptions);
+  }
 
   // postAvatar(formData: FormData): Observable<any> {
   //   return this._http.post('api/Manage/Avatar', formData, { reportProgress: true, observe: 'events' });

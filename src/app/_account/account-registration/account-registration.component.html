@@ -64,17 +64,7 @@
                 </div>
             </div>
 
-            <pre>{{userRegisterForm.value | json}}</pre>
-
-            <!-- <mat-checkbox formControlName="terms">
-                      I accept terms and conditions
-                    </mat-checkbox>
-                    <div *ngFor="let validation of userRegister_validation_messages.terms">
-                      <div class="error-message"
-                        *ngIf="userRegisterForm.get('terms').hasError(validation.type) && (userRegisterForm.get('terms').dirty || userRegisterForm.get('terms').touched)">
-                        {{validation.message}}</div>
-                    </div> -->
-
+            <!-- <pre>{{userRegisterForm.value | json}}</pre> -->
 
             <ng-container *ngIf="errorObject">
                 <p class="alert alert-info">

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
-import { RestrictedNameValidator } from 'src/app/_validators';
+import { MatchOtherValidator, RestrictedNameValidator } from 'src/app/_validators';
 import { ValidatePassword } from 'src/app/_validators';
 import { AccountService } from '../account.service';
 import { IAccountRegistration } from './i-account-registration';
@@ -89,7 +89,9 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
         }],
         confirmPassword: ['', {
           validators: [
-            Validators.required]
+            Validators.required,
+            MatchOtherValidator('password') // makes css ng-valid label invalid if not matching
+          ]
         }],
       }, { validator: ValidatePassword.passwordMatcher })
     })

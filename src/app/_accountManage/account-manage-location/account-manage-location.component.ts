@@ -24,9 +24,7 @@ export class AccountManageLocationComponent implements OnInit, OnDestroy {
     , private readonly _service: AccountManagerService
     , private readonly _router: Router) { }
 
-  ngOnInit(): void {
-    console.log('init location');
-  }
+  ngOnInit(): void { }
 
   public updateLocation(): void {
     this.requesting = true;
@@ -35,8 +33,6 @@ export class AccountManageLocationComponent implements OnInit, OnDestroy {
       defaultLocationLatitude: this._mapComponent.locationMarker.position.lat,
       defaultLocationLongitude: this._mapComponent.locationMarker.position.lng,
     };
-
-    console.log(model);
 
     this._service.postUpdateLocation(model)
     .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))

@@ -1,15 +1,12 @@
-<div class="main-container">
+<div class="child-container">
     <h1>Update your default location</h1>
     <p>Set your default location with this form.</p>
 
-
-    <div>
-        <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
-            <app-read-write-map [latitude]="authUser.defaultLocationLatitude"
-                [longitude]="authUser.defaultLocationLongitude">
-            </app-read-write-map>
-        </ng-container>
-    </div>
+    <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
+        <app-read-write-map [latitude]="authUser.defaultLocationLatitude"
+            [longitude]="authUser.defaultLocationLongitude">
+        </app-read-write-map>
+    </ng-container>
 
     <p class="alert alert-info">
         <strong>Information</strong>&nbsp;If you change your default location you will need to login again.

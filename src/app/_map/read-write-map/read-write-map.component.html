@@ -23,8 +23,6 @@
 
         </form>
 
-    
-
         <p *ngIf="geoError">
             <ngb-alert [dismissible]="true" [type]="'danger'" (close)="closeAlert()">
                 <strong>Warning!</strong> Better check yourself, you're not looking too good.
@@ -42,7 +40,6 @@
         <span>{{ position?.shortAddress }}</span>
       </p> -->
 
-
         <google-map height="300px" width="100%" [center]="locationMarker?.position" [options]="options">
             <map-marker #markerElement="mapMarker" [position]="locationMarker?.position"
                 [options]="locationMarker.options" (mapDragend)="markerChanged($event)"
@@ -50,7 +47,6 @@
                 <map-info-window>{{ formattedAddress }}</map-info-window>
             </map-marker>
         </google-map>
-
 
     </ng-container>
 
@@ -61,7 +57,6 @@
             </div>
         </ng-container>
     </ng-template>
-
 
     <ng-template #loading>
         <p class="centre">

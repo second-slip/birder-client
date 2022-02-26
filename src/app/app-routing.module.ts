@@ -1,4 +1,3 @@
-// import { ObservationManagePhotosComponent } from './_photos/observation-manage-photos/observation-manage-photos.component';
 // import { TweetArchiveComponent } from './_tweet/tweet-archive/tweet-archive.component';
 
 import { NgModule } from "@angular/core";

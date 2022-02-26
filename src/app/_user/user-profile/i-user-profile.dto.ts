@@ -1,4 +1,4 @@
-import { IObservationCount } from "../_analysis/observation-count/i-observation-count.dto";
+import { IObservationCount } from "src/app/_analysis/observation-count/i-observation-count.dto";
 
 export interface IUserProfile {
     userName: string;

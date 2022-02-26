@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ObservationCountService } from 'src/app/_analysis/observation-count/observation-count.service';
 import { INetworkUser } from 'src/app/_network/i-network-user.dto';
 import { NetworkUserService } from 'src/app/_network/network-user/network-user.service';
-import { UserProfileService } from '../user-profile.service';
+import { UserProfileService } from './user-profile.service';
 
 @Component({
   selector: 'app-user-profile',

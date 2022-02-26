@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
-import { IUserProfile } from './i-user-profile.dto';
+import { IUserProfile } from '../user-profile/i-user-profile.dto';
 
 @Injectable({
   providedIn: 'root'

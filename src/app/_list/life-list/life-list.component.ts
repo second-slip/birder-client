@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ObservationCountService } from 'src/app/_analysis/observation-count/observation-count.service';
 import { ToastService } from 'src/app/_toast/toast.service';
 import { LifeListService } from './life-list.service';
@@ -6,7 +6,9 @@ import { LifeListService } from './life-list.service';
 @Component({
   selector: 'app-life-list',
   templateUrl: './life-list.component.html',
-  styleUrls: ['./life-list.component.scss']
+  styleUrls: ['./life-list.component.scss'],
+  providers: [LifeListService],
+  encapsulation: ViewEncapsulation.None
 })
 export class LifeListComponent implements OnInit {
   public page: number = 1;

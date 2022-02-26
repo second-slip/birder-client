@@ -1,4 +1,5 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { first, Subject, takeUntil } from 'rxjs';
 import { INetworkUser } from '../i-network-user.dto';
 import { NetworkUserService } from './network-user.service';
 
@@ -8,8 +9,10 @@ import { NetworkUserService } from './network-user.service';
   styleUrls: ['./network-user.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class NetworkUserComponent {
+export class NetworkUserComponent implements OnDestroy {
   @Input() user: INetworkUser
+
+  private _subscription = new Subject();
 
   constructor(private readonly _service: NetworkUserService) { }
 
@@ -17,6 +20,7 @@ export class NetworkUserComponent {
 
     if (this.user.isFollowing === false) {
       this._service.postFollowUser(this.user)
+        .pipe(first(), takeUntil(this._subscription))
         .subscribe({
           next: (data: INetworkUser) => {
             this.user = data;
@@ -30,6 +34,7 @@ export class NetworkUserComponent {
       return;
     } else {
       this._service.postUnfollowUser(this.user)
+        .pipe(first(), takeUntil(this._subscription))
         .subscribe({
           next: (data: INetworkUser) => {
             // this.toast.info('You have unfollowed ' + data.userName, 'Success');
@@ -42,5 +47,10 @@ export class NetworkUserComponent {
         });
       return;
     }
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.next('');
+    this._subscription.complete();
   }
 }

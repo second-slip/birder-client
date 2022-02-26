@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { first, Subject, takeUntil } from 'rxjs';
 import { ObservationCountService } from 'src/app/_analysis/observation-count/observation-count.service';
 import { INetworkUser } from 'src/app/_network/i-network-user.dto';
 import { NetworkUserService } from 'src/app/_network/network-user/network-user.service';
@@ -9,10 +10,12 @@ import { UserProfileService } from './user-profile.service';
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
+  providers: [UserProfileService],
   encapsulation: ViewEncapsulation.None
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
   private _username: string | null;
+  private _subscription = new Subject();
 
   constructor(readonly _service: UserProfileService
     , readonly _analysisService: ObservationCountService
@@ -42,6 +45,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     if (action === 'Follow') {
       this._networkService.postFollowUser(user)
+        .pipe(first(), takeUntil(this._subscription))
         .subscribe({
           next: _ => {
             //this.user = data;
@@ -56,6 +60,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       return;
     } else {
       this._networkService.postUnfollowUser(user)
+        .pipe(first(), takeUntil(this._subscription))
         .subscribe({
           next: _ => {
             element.innerText = 'Follow';
@@ -72,6 +77,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._service.reset();
+    this._subscription.next('');
+    this._subscription.complete();
   }
 }

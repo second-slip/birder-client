@@ -38,7 +38,7 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
       this._service.postUpdateProfile(model)
         .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
         .subscribe({
-          next: (r) => { this._redirect(r); },
+          next: (r) => { this._redirect(r.isEmailConfirmationRequired); },
           error: (e) => {
             this.errorObject = e;
           }
@@ -49,8 +49,8 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  private _redirect(r: IManageProfile): void {
-    if (r.emailConfirmationRequired) {
+  private _redirect(emailConfirmationRequired: boolean): void {
+    if (emailConfirmationRequired) {
       this._authService.logout();
       this._router.navigate(['/confirm-email']);
     } else {

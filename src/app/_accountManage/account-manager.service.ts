@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IManageLocation } from './account-manage-location/i-manage-location.dto';
+import { IConfirmEmail } from './account-manage-profile/i-confirm-email.dto';
+import { IManagePassword } from './account-manage-password/i-manage-password.dto';
 import { IManageProfile } from './account-manage-profile/i-manage-profile.dto';
 
 const httpOptions = {
@@ -19,13 +21,13 @@ export class AccountManagerService {
     return this._http.get<IManageProfile>('api/Manage');
   }
 
-  public postUpdateProfile(viewModel: IManageProfile): Observable<IManageProfile> {
-    return this._http.post<IManageProfile>('api/Manage/Profile', viewModel, httpOptions);
+  public postUpdateProfile(viewModel: IManageProfile): Observable<IConfirmEmail> {
+    return this._http.post<IConfirmEmail>('api/Manage/Profile', viewModel, httpOptions);
   }
 
-  // postChangePassword(viewModel: ChangePasswordViewModel): Observable<ChangePasswordViewModel> {
-  //   return this._http.post<ChangePasswordViewModel>('api/Manage/Password', viewModel, httpOptions);
-  // }
+  postChangePassword(viewModel: IManagePassword): Observable<any> {
+    return this._http.post<any>('api/Manage/Password', viewModel, httpOptions);
+  }
 
   public postUpdateLocation(viewModel: IManageLocation): Observable<IManageLocation> {
     return this._http.post<IManageLocation>('api/Manage/Location', viewModel, httpOptions);

@@ -1,22 +1,21 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
-import { ToastService } from 'src/app/_toast/toast.service';
 import { ObservationFeedService } from '../observation-feed.service';
 
 @Component({
   selector: 'app-observation-feed',
   templateUrl: './observation-feed.component.html',
   styleUrls: ['./observation-feed.component.scss'],
+  providers: [ObservationFeedService],
   encapsulation: ViewEncapsulation.None
 })
-export class ObservationFeedComponent implements OnInit, OnDestroy {
+export class ObservationFeedComponent implements OnInit {
   private _page: number;
 
   constructor(readonly _service: ObservationFeedService
     , readonly _authService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this._service.resetFeed();
     // console.log('init ' + this._page);
     this._page = 1
     // console.log(this._page);
@@ -33,14 +32,11 @@ export class ObservationFeedComponent implements OnInit, OnDestroy {
   }
 
   public reload(): void {
-    this._service.resetFeed();
     this._page = 1;
     this._service.getData(this._page);
   }
 
-  ngOnDestroy(): void {
-    // ??????????? to reset or not to reset?
-    // console.log('destroy');
-    // this._service.resetFeed();
-  }
+  // ngOnDestroy(): void {
+  //   // console.log('destroy');
+  // }
 }

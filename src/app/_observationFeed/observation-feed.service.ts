@@ -1,12 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
 import { IObservationFeed } from './i-observation-feed.dto';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class ObservationFeedService {
+@Injectable()
+export class ObservationFeedService implements OnDestroy {
 
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -14,6 +12,10 @@ export class ObservationFeedService {
   private readonly _observations$: BehaviorSubject<IObservationFeed[]> = new BehaviorSubject<IObservationFeed[]>([]);
 
   constructor(private _httpClient: HttpClient) { }
+  
+  ngOnDestroy(): void {
+    console.log('service destroyed...');
+  }
 
   public get isError(): Observable<boolean> {
     return this._isError$.asObservable();
@@ -35,9 +37,7 @@ export class ObservationFeedService {
   // --> observations are changed / home button clicked etc / after x time elapsed
 
   // onObservationsChanged    ---> alert which says new observations are available?
-  public resetFeed(): void {
-    this._observations$.next([]);
-  }
+
 
   public getData(pageIndex: number, pageSize: number = 10, filter: string = ''): void {
 
@@ -45,8 +45,6 @@ export class ObservationFeedService {
       .set('pageIndex', pageIndex.toString())
       .set('pageSize', pageSize.toString());
     // .set('filter', filter.toString());
-
-    console.log(pageIndex);
 
     this._isLoading$.next(true);
 

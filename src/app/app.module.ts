@@ -85,7 +85,9 @@ import { AccountManageProfileComponent } from './_accountManage/account-manage-p
 import { AccountManagePasswordComponent } from './_accountManage/account-manage-password/account-manage-password.component';
 import { AccountManageLocationComponent } from './_accountManage/account-manage-location/account-manage-location.component';
 import { AccountManageAvatarComponent } from './_accountManage/account-manage-avatar/account-manage-avatar.component';
-import { UserFeedComponent } from './_user/user-feed/user-feed.component';
+import { UserFeedComponent } from './_observationFeed/user-feed/user-feed.component';
+import { PublicFeedComponent } from './_observationFeed/public-feed/public-feed.component';
+import { NetworkFeedComponent } from './_observationFeed/network-feed/network-feed.component';
 
 @NgModule({
   declarations: [
@@ -155,6 +157,8 @@ import { UserFeedComponent } from './_user/user-feed/user-feed.component';
     AccountManageLocationComponent,
     AccountManageAvatarComponent,
     UserFeedComponent,
+    PublicFeedComponent,
+    NetworkFeedComponent,
   ],
   imports: [
     AppRoutingModule,

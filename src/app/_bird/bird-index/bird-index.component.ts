@@ -5,6 +5,7 @@ import { BirdIndexService } from './bird-index.service';
   selector: 'app-bird-index',
   templateUrl: './bird-index.component.html',
   styleUrls: ['./bird-index.component.scss'],
+  providers: [BirdIndexService],
   encapsulation: ViewEncapsulation.None
 })
 export class BirdIndexComponent implements OnInit {

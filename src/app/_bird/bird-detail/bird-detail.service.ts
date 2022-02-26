@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
 import { IBirdDetail } from './i-bird-detail.dto';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class BirdDetailService {
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -46,10 +44,6 @@ export class BirdDetailService {
         error: (e) => { this._handleError(e); },
         complete: () => { if (this._isError$) this._isError$.next(false); }
       })
-  }
-
-  public reset(): void {
-    this._bird$.next(null);
   }
 
   private _handleError(error: any) { // no need to send error to the component...

@@ -4,9 +4,7 @@ import { BehaviorSubject, finalize, Observable } from 'rxjs';
 import { IBirdSummary } from '../i-bird-summary.dto';
 import { IBirdIndex } from './i-bird-index.dto';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class BirdIndexService {
 
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

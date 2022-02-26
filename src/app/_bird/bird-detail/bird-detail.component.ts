@@ -7,6 +7,7 @@ import { BirdDetailService } from './bird-detail.service';
   selector: 'app-bird-detail',
   templateUrl: './bird-detail.component.html',
   styleUrls: ['./bird-detail.component.scss'],
+  providers: [BirdDetailService],
   encapsulation: ViewEncapsulation.None
 })
 export class BirdDetailComponent implements OnInit {
@@ -44,9 +45,5 @@ export class BirdDetailComponent implements OnInit {
 
   private _redirect(): void {
     this._navigation.back();
-  }
-
-  ngOnDestroy(): void {
-    this._service.reset();
   }
 }

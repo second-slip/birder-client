@@ -2,14 +2,7 @@
 
     <div class="d-flex justify-content-between">
         <h1>Latest observations</h1>
-        <div class="d-inline-block pull-right" ngbDropdown #myDrop="ngbDropdown">
-            <button class="btn btn-outline-primary btn-sm me-2" id="dropdownManual" ngbDropdownAnchor
-                (focus)="myDrop.open()">Filter</button>
-            <div ngbDropdownMenu aria-labelledby="dropdownManual">
-                <a ngbDropdownItem [routerLink]='["/feed/my-network"]'>Show observations in your network</a>
-                <a ngbDropdownItem [routerLink]='["/feed/public"]'>Show all public observations</a>
-            </div>
-        </div>
+        <app-filter-control [component]="'user'"></app-filter-control>
     </div>
 
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at cursus est, vel

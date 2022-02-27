@@ -2,14 +2,7 @@
 
     <div class="d-flex justify-content-between">
         <h1>Latest observations</h1>
-        <div class="d-inline-block pull-right" ngbDropdown #myDrop="ngbDropdown">
-            <button class="btn btn-outline-primary btn-sm me-2" id="dropdownManual" ngbDropdownAnchor
-                (focus)="myDrop.open()">Filter</button>
-            <div ngbDropdownMenu aria-labelledby="dropdownManual">
-                <a ngbDropdownItem [routerLink]='["/feed/my-network"]'>Only my network</a>
-                <a ngbDropdownItem [routerLink]='["/feed/my-observations"]'>Only mine</a>
-            </div>
-        </div>
+        <app-filter-control [component]="'public'"></app-filter-control>
     </div>
    
     <ng-container *ngIf="!(_service.isError | async); else errorTemplate">

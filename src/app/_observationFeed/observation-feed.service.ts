@@ -1,21 +1,17 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, finalize, Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, finalize, Observable, Subject, takeUntil } from 'rxjs';
 import { IObservationFeed } from './i-observation-feed.dto';
 
 @Injectable()
 export class ObservationFeedService implements OnDestroy {
-
+  private _subscription = new Subject();
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private readonly _allLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _observations$: BehaviorSubject<IObservationFeed[]> = new BehaviorSubject<IObservationFeed[]>([]);
 
   constructor(private _httpClient: HttpClient) { }
-  
-  ngOnDestroy(): void {
-    console.log('service destroyed...');
-  }
 
   public get isError(): Observable<boolean> {
     return this._isError$.asObservable();
@@ -33,25 +29,16 @@ export class ObservationFeedService implements OnDestroy {
     return this._observations$.asObservable();
   }
 
-  // do this is a more sophisticated way than just on feed component destruction
-  // --> observations are changed / home button clicked etc / after x time elapsed
+  public getData(pageIndex: number, pageSize: number = 10, url: string = `api/ObservationFeed`): void {
 
-  // onObservationsChanged    ---> alert which says new observations are available?
-
-
-  public getData(pageIndex: number, pageSize: number = 10, filter: string = ''): void {
+    this._isLoading$.next(true);
 
     const parameters = new HttpParams()
       .set('pageIndex', pageIndex.toString())
       .set('pageSize', pageSize.toString());
-    // .set('filter', filter.toString());
 
-    this._isLoading$.next(true);
-
-    this._httpClient.get<IObservationFeed[]>(`api/ObservationFeed`, { params: parameters })
-      .pipe(finalize(() => {
-        this._isLoading$.next(false);
-      }))
+    this._httpClient.get<IObservationFeed[]>(url, { params: parameters })
+      .pipe(finalize(() => { this._isLoading$.next(false) }), takeUntil(this._subscription))
       .subscribe({
         next: (items: IObservationFeed[]) => {
           this._observations$.next([...this._observations$.getValue(), ...items]); // or concat?
@@ -71,5 +58,11 @@ export class ObservationFeedService implements OnDestroy {
 
   private _handleError(error: any) { // no need to send the error to the component...
     this._isError$.next(true);
+  }
+
+  ngOnDestroy(): void {
+    console.log('feed service destroyed...');
+    this._subscription.next('');
+    this._subscription.complete();
   }
 }

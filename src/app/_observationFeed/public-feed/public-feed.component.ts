@@ -1,18 +1,18 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
-import { PublicFeedService } from './public-feed.service';
+import { ObservationFeedService } from '../observation-feed.service';
 
 @Component({
   selector: 'app-public-feed',
   templateUrl: './public-feed.component.html',
   styleUrls: ['./public-feed.component.scss'],
-  providers: [PublicFeedService],
+  providers: [ObservationFeedService],
   encapsulation: ViewEncapsulation.None
 })
 export class PublicFeedComponent implements OnInit {
   private _page: number;
 
-  constructor(readonly _service: PublicFeedService
+  constructor(readonly _service: ObservationFeedService
     , readonly _authService: AuthenticationService) { }
 
   ngOnInit(): void {

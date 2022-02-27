@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { FeedFilterType } from '../feed-filter-type';
 import { ObservationFeedService } from '../observation-feed.service';
 
 @Component({
@@ -14,17 +15,18 @@ export class ObservationFeedComponent implements OnInit {
   private _url: string = 'api/ObservationFeed';
   private _page: number = 1;
 
-  public type: FeedType;
+  public feedFilterType: FeedFilterType;
   public title = 'Latest observations';
 
   constructor(readonly _service: ObservationFeedService
     , readonly _authService: AuthenticationService
-    , private _route: ActivatedRoute) { }
+    , private readonly _route: ActivatedRoute
+    , private readonly _router: Router) { }
 
   ngOnInit(): void {
     this._route.params.subscribe(_ => {
       this._route.paramMap.subscribe(pmap => {
-        this._getFeedType(pmap.get('type'));
+        this._getfeedFilterType(pmap.get('type'));
       })
     });
   }
@@ -43,37 +45,33 @@ export class ObservationFeedComponent implements OnInit {
     this._service.getData(this._page, undefined, this._url);
   }
 
-  private _getFeedType(type: string | null): void {
+  private _getfeedFilterType(type: string | null): void {
 
     switch (type) {
       case 'my-observations':
-        this.type = FeedType.User;
+        this.feedFilterType = FeedFilterType.User;
         this._url = 'api/ObservationFeed/UserFeed';
         this.title = 'Your latest observations';
         break;
       case 'my-network':
-        this.type = FeedType.Network;
+        this.feedFilterType = FeedFilterType.Network;
         this._url = 'api/ObservationFeed/NetworkFeed';
         this.title = 'Latest observations in your network';
         break;
       case 'public':
-        this.type = FeedType.Public
+        this.feedFilterType = FeedFilterType.Public
         this._url = 'api/ObservationFeed';
         this.title = 'Latest observations';
         break;
       default:
-        // ***************************************
-        //redirect
-        this.type = FeedType.Public
+        // bad route
+        this._redirect();
         break;
     }
     this._getData();
   }
-}
 
-
-export enum FeedType {
-  Public = 'Public',
-  User = 'User',
-  Network = 'Network',
+  private _redirect(): void {
+    this._router.navigate(['/feed/public']);
+  }
 }

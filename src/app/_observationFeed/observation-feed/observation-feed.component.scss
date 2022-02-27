@@ -4,19 +4,9 @@ app-observation-feed {
         display: block;
     }
 
-    // .toolbar {
-    //     position: sticky;
-    //     position: -webkit-sticky; /* For macOS/iOS Safari */
-    //     top: 70px;
-    //     background-color: red;
-    //     color: white;
-    //     overflow: hidden;
-    //     overflow-y: hidden;
-    // }
-
-    // .feedEndAlert {
-    //     margin: 20px;
-    // }
+    .no-more-items {
+        margin-top: 5%;
+    }
 
     .add-button {
         margin-right: 25px;
@@ -25,7 +15,6 @@ app-observation-feed {
     .feed-filter-toggle-group {
         float: right;
     }
-
 
     @media only screen and (max-width: 768px) {
         .feed-container {

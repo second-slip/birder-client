@@ -1,28 +1,19 @@
 <div class="feed-container">
 
-    <div *ngIf="(_service.getObservations | async) as things">{{ things.length }}</div>
-
+    <div class="d-flex justify-content-between">
+        <h1>{{ title }}</h1>
+        <app-filter-control [currentFilter]="type"></app-filter-control>
+    </div>
+   
     <ng-container *ngIf="!(_service.isError | async); else errorTemplate">
 
-        <!-- <app-infinite-scroll (scrolled)="onScroll()" style="height: 500px; overflow-y: auto"> -->
         <app-infinite-scroll (scrolled)="onScroll()">
-
-            <!-- <ng-container *ngIf="(_service.getObservations | async) as observations"> -->
 
             <app-observation-feed-item *ngFor="let item of (_service.getObservations | async)" [observation]="item">
             </app-observation-feed-item>
 
-            <!-- use allLoaded instead -->
-            <!-- <p *ngIf="!observations.length">
-                    <ngb-alert [dismissible]="false" type="info">
-                        <strong>No itemss</strong><em>&nbsp;XXXX</em>
-                    </ngb-alert>
-                </p> -->
-
-            <p *ngIf="(_service.allLoaded | async)">
-                <ngb-alert [dismissible]="false" type="info">
-                    <strong>No more items</strong>&nbsp;You have reached the end of the feed.
-                </ngb-alert>
+            <p *ngIf="(_service.allLoaded | async)" class="alert alert-info no-more-items">
+                <strong>No more items</strong>&nbsp;You have reached the end of the feed.
             </p>
 
             <p *ngIf="_service.isLoading | async">
@@ -33,18 +24,12 @@
 
     </ng-container>
 
-
     <ng-template #errorTemplate>
-        <!-- <ng-container *ngIf="(_service.isError | async)"></ng-container> -->
-        <ng-container>
-            <ngb-alert [dismissible]="false" type="danger">
-                <strong>Whoops!</strong>&nbsp;There was an error retrieving the data.
-                <div>
-                    <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button"
-                        (click)="reload()">Try Again</button>
-                </div>
-            </ngb-alert>
-        </ng-container>
+        <div class="alert alert-danger">
+            <strong>Whoops!</strong>&nbsp;There was an error retrieving the data.<br>
+            <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
+                Again</button>
+        </div>
     </ng-template>
 
 </div>

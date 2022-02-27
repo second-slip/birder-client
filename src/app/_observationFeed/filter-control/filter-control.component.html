@@ -2,8 +2,8 @@
     <button class="btn btn-outline-primary btn-sm me-2" id="dropdownManual" ngbDropdownAnchor
         (focus)="myDrop.open()">Filter</button>
     <div ngbDropdownMenu aria-labelledby="dropdownManual">
-        <a [hidden]="component === 'network'" ngbDropdownItem [routerLink]='["/feed/my-network"]'>Only my network</a>
-        <a [hidden]="component === 'user'" ngbDropdownItem [routerLink]='["/feed/my-observations"]'>Only mine</a>
-        <a [hidden]="component === 'public'" ngbDropdownItem [routerLink]='["/feed/public"]'>All public</a>
+        <a [hidden]="currentFilter === 'Network'" ngbDropdownItem [routerLink]='["/feed/my-network"]'>Only my network</a>
+        <a [hidden]="currentFilter === 'User'" ngbDropdownItem [routerLink]='["/feed/my-observations"]'>Only mine</a>
+        <a [hidden]="currentFilter === 'Public'" ngbDropdownItem [routerLink]='["/feed/public"]'>All public</a>
     </div>
 </div>

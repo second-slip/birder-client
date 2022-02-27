@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { catchError, Observable, share, throwError } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { catchError, Observable, share, Subject, takeUntil, throwError } from 'rxjs';
 import { FlickrService } from './flickr.service';
 
 @Component({
@@ -8,7 +8,8 @@ import { FlickrService } from './flickr.service';
   styleUrls: ['./flickr.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class FlickrComponent implements OnInit {
+export class FlickrComponent implements OnInit, OnDestroy {
+  private _subscription = new Subject();
   @Input() species: string;
 
   public images$: Observable<FlickrUrlsViewModel[]>;
@@ -22,11 +23,16 @@ export class FlickrComponent implements OnInit {
 
   private _getImages() {
     this.images$ = this._flickr.getSearchResults(1, this.species, '')
-      .pipe(share(),
+      .pipe(share(), takeUntil(this._subscription),
         catchError(err => {
           this.errorObject = err;
           return throwError(err);
         }));
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.next('');
+    this._subscription.complete();
   }
 }
 

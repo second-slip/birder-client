@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./filter-control.component.scss']
 })
 export class FilterControlComponent {
-  @Input() component: string;
+  @Input() currentFilter: string;
 
   constructor() { }
 }

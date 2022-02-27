@@ -79,9 +79,6 @@ import { ConfirmEmailComponent } from './_account/confirm-email/confirm-email.co
 import { ConfirmEmailResendComponent } from './_account/confirm-email-resend/confirm-email-resend.component';
 import { ConfirmEmailSuccessComponent } from './_account/confirm-email-success/confirm-email-success.component';
 import { ForgotPasswordComponent } from './_account/forgot-password/forgot-password.component';
-import { UserFeedComponent } from './_observationFeed/user-feed/user-feed.component';
-import { PublicFeedComponent } from './_observationFeed/public-feed/public-feed.component';
-import { NetworkFeedComponent } from './_observationFeed/network-feed/network-feed.component';
 import { LoadingComponent } from './_loading/loading/loading.component';
 import { ResetPasswordComponent } from './_account/reset-password/reset-password.component';
 import { AccountManageAvatarComponent } from './_accountManage/account-manage-avatar/account-manage-avatar.component';
@@ -158,9 +155,6 @@ import { FilterControlComponent } from './_observationFeed/filter-control/filter
     AccountManagePasswordComponent,
     AccountManageLocationComponent,
     AccountManageAvatarComponent,
-    UserFeedComponent,
-    PublicFeedComponent,
-    NetworkFeedComponent,
     FilterControlComponent,
   ],
   imports: [

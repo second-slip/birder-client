@@ -18,6 +18,6 @@ export class HomeComponent implements OnInit {
     //  this.router.navigate(['/observation-feed']);
     //}
     if (this._authenticationService.isAuthorised)
-      this._router.navigate(['/observation-feed']);
+      this._router.navigate(['/feed/public']);
   }
 }

@@ -68,7 +68,7 @@ import { NavigationMenuComponent } from './_observation/navigation-menu/navigati
 import { ObservationDeleteComponent } from './_observation/observation-delete/observation-delete.component';
 import { ObservationUpdateComponent } from './_observation/observation-update/observation-update.component';
 import { ToastComponent } from './_toast/toast/toast.component';
-import { LoadingComponent } from './_loading/loading/loading.component';
+
 import { BirdIndexComponent } from './_bird/bird-index/bird-index.component';
 import { BirdDetailComponent } from './_bird/bird-detail/bird-detail.component';
 import { BirdInfoComponent } from './_bird/bird-info/bird-info.component';
@@ -79,15 +79,16 @@ import { ConfirmEmailComponent } from './_account/confirm-email/confirm-email.co
 import { ConfirmEmailResendComponent } from './_account/confirm-email-resend/confirm-email-resend.component';
 import { ConfirmEmailSuccessComponent } from './_account/confirm-email-success/confirm-email-success.component';
 import { ForgotPasswordComponent } from './_account/forgot-password/forgot-password.component';
-import { ResetPasswordComponent } from './_account/reset-password/reset-password.component';
-import { AccountManagerComponent } from './_accountManage/account-manager/account-manager.component';
-import { AccountManageProfileComponent } from './_accountManage/account-manage-profile/account-manage-profile.component';
-import { AccountManagePasswordComponent } from './_accountManage/account-manage-password/account-manage-password.component';
-import { AccountManageLocationComponent } from './_accountManage/account-manage-location/account-manage-location.component';
-import { AccountManageAvatarComponent } from './_accountManage/account-manage-avatar/account-manage-avatar.component';
 import { UserFeedComponent } from './_observationFeed/user-feed/user-feed.component';
 import { PublicFeedComponent } from './_observationFeed/public-feed/public-feed.component';
 import { NetworkFeedComponent } from './_observationFeed/network-feed/network-feed.component';
+import { LoadingComponent } from './_loading/loading/loading.component';
+import { ResetPasswordComponent } from './_account/reset-password/reset-password.component';
+import { AccountManageAvatarComponent } from './_accountManage/account-manage-avatar/account-manage-avatar.component';
+import { AccountManageLocationComponent } from './_accountManage/account-manage-location/account-manage-location.component';
+import { AccountManagePasswordComponent } from './_accountManage/account-manage-password/account-manage-password.component';
+import { AccountManageProfileComponent } from './_accountManage/account-manage-profile/account-manage-profile.component';
+import { AccountManagerComponent } from './_accountManage/account-manager/account-manager.component';
 
 @NgModule({
   declarations: [

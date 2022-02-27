@@ -30,7 +30,10 @@ import { ObservationCreateComponent } from "./_observation/observation-create/ob
 import { ObservationDeleteComponent } from "./_observation/observation-delete/observation-delete.component";
 import { ObservationReadComponent } from "./_observation/observation-read/observation-read.component";
 import { ObservationUpdateComponent } from "./_observation/observation-update/observation-update.component";
+import { NetworkFeedComponent } from "./_observationFeed/network-feed/network-feed.component";
 import { ObservationFeedComponent } from "./_observationFeed/observation-feed/observation-feed.component";
+import { PublicFeedComponent } from "./_observationFeed/public-feed/public-feed.component";
+import { UserFeedComponent } from "./_observationFeed/user-feed/user-feed.component";
 import { TweetDayArchiveComponent } from "./_tweet/tweet-day-archive/tweet-day-archive.component";
 import { UserProfileComponent } from "./_user/user-profile/user-profile.component";
 
@@ -70,12 +73,13 @@ const routes: Routes = [
         canActivateChild: [AuthenticationGuardService],
         children: [
           { path: '', component: HomeComponent, pathMatch: 'full' },
-          { path: 'observation-feed', component: ObservationFeedComponent },
+          { path: 'feed/public', component: PublicFeedComponent },
+          { path: 'feed/my-network', component: NetworkFeedComponent },
+          { path: 'feed/my-observations', component: UserFeedComponent },
           { path: 'observation/detail/:id', component: ObservationReadComponent },
           { path: 'observation/delete/:id', component: ObservationDeleteComponent },
           { path: 'observation/create', component: ObservationCreateComponent, },
           { path: 'observation/update/:id', component: ObservationUpdateComponent },
-          // { path: 'observation/photos/:id', component: ObservationManagePhotosComponent },
           { path: 'bird/index', component: BirdIndexComponent },
           { path: 'bird/detail/:id', component: BirdDetailComponent },
           { path: 'lists/life/:username', component: LifeListComponent },

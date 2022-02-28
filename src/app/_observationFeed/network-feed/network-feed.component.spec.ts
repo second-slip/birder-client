@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ObservationFeedComponent } from './observation-feed.component';
+import { NetworkFeedComponent } from './network-feed.component';
 
-describe('ObservationFeedComponent', () => {
-  let component: ObservationFeedComponent;
-  let fixture: ComponentFixture<ObservationFeedComponent>;
+describe('NetworkFeedComponent', () => {
+  let component: NetworkFeedComponent;
+  let fixture: ComponentFixture<NetworkFeedComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ObservationFeedComponent ]
+      declarations: [ NetworkFeedComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ObservationFeedComponent);
+    fixture = TestBed.createComponent(NetworkFeedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

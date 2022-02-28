@@ -7,10 +7,7 @@
         <ng-container *ngIf="(_service.getLifeList | async) as list">
 
             <p *ngIf="(_service.isLoading | async)">
-                <ngb-alert [dismissible]="false" type="info">
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    <strong>&nbsp;Loading</strong><em>&nbsp;Loading the life list...</em>
-                </ngb-alert>
+                <app-loading></app-loading>
             </p>
 
             <ng-container *ngIf="!(_service.isLoading | async)">

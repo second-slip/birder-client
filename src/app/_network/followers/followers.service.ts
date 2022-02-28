@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
 import { INetworkUser } from '../i-network-user.dto';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class FollowersService {
 
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

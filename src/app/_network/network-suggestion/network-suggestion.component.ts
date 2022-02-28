@@ -5,6 +5,7 @@ import { NetworkSuggestionService } from './network-suggestion.service';
   selector: 'app-network-suggestion',
   templateUrl: './network-suggestion.component.html',
   styleUrls: ['./network-suggestion.component.scss'],
+  providers: [NetworkSuggestionService],
   encapsulation: ViewEncapsulation.None
 })
 export class NetworkSuggestionComponent implements OnInit {

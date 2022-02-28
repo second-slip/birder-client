@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { AuthenticationService } from 'src/app/_auth/authentication.service';
 
 @Component({
   selector: 'app-filter-control',
@@ -8,5 +9,5 @@ import { Component, Input } from '@angular/core';
 export class FilterControlComponent {
   @Input() currentFilter: string;
 
-  constructor() { }
+  constructor(readonly _authService: AuthenticationService) { }
 }

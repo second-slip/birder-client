@@ -31,7 +31,6 @@ import { LoginComponent } from './_auth/login/login.component';
 import { AuthenticationGuardService } from './_auth/authentication-guard.service';
 import { LogoutComponent } from './_auth/logout/logout.component';
 import { HttpInterceptorProviders } from './_httpInterceptors';
-import { ObservationFeedComponent } from './_observationFeed/observation-feed/observation-feed.component';
 import { SideMenuComponent } from './_layout/side-menu/side-menu.component';
 import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.component';
 import { ObservationFeedItemComponent } from './_observationFeed/observation-feed-item/observation-feed-item.component';
@@ -87,6 +86,8 @@ import { AccountManagePasswordComponent } from './_accountManage/account-manage-
 import { AccountManageProfileComponent } from './_accountManage/account-manage-profile/account-manage-profile.component';
 import { AccountManagerComponent } from './_accountManage/account-manager/account-manager.component';
 import { FilterControlComponent } from './_observationFeed/filter-control/filter-control.component';
+import { NetworkFeedComponent } from './_observationFeed/network-feed/network-feed.component';
+import { PublicFeedComponent } from './_observationFeed/public-feed/public-feed.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,6 @@ import { FilterControlComponent } from './_observationFeed/filter-control/filter
     LayoutNoSidebarComponent,
     LoginComponent,
     LogoutComponent,
-    ObservationFeedComponent,
     SideMenuComponent,
     InfiniteScrollComponent,
     ObservationFeedItemComponent,
@@ -156,6 +156,8 @@ import { FilterControlComponent } from './_observationFeed/filter-control/filter
     AccountManageLocationComponent,
     AccountManageAvatarComponent,
     FilterControlComponent,
+    NetworkFeedComponent,
+    PublicFeedComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -165,7 +167,6 @@ import { FilterControlComponent } from './_observationFeed/filter-control/filter
     BrowserModule,
     BrowserAnimationsModule,
     //
-    // MatInputModule,
     MatIconModule,
     MatButtonModule,
     MatDatepickerModule,

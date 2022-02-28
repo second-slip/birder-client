@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, finalize, Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, finalize, Observable, Subject, takeUntil } from 'rxjs';
 import { ILifeList } from './i-life-list.dto';
 
 @Injectable()
-export class LifeListService {
+export class LifeListService implements OnDestroy {
+  private _subscription = new Subject();
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private readonly _suggestions$: BehaviorSubject<ILifeList[]> = new BehaviorSubject<ILifeList[]>([]);
@@ -31,7 +32,7 @@ export class LifeListService {
     this._isLoading$.next(true);
 
     this._httpClient.get<ILifeList[]>('api/List/LifeList')
-      .pipe(finalize(() => this._isLoading$.next(false)))
+      .pipe(finalize(() => this._isLoading$.next(false)), takeUntil(this._subscription))
       .subscribe({
         next: (response) => {
           this._suggestions$.next(response);
@@ -43,5 +44,10 @@ export class LifeListService {
 
   private _handleError(error: any) { // no need to send error to the component...
     this._isError$.next(true);
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.next('');
+    this._subscription.complete();
   }
 }

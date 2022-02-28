@@ -1,6 +1,6 @@
 <div class="wrapper" *ngIf="observation">
 
-    <ng-container class="container" *ngIf="(_authService.getAuthUser | async) as authUser">
+    <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
 
         <article>
 

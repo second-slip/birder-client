@@ -2,7 +2,7 @@
 
     <div class="d-flex justify-content-between">
         <h1>{{ title }}</h1>
-        <app-filter-control [currentFilter]="feedFilterType"></app-filter-control>
+        <app-filter-control [currentFilter]="'Public'"></app-filter-control>
     </div>
    
     <ng-container *ngIf="!(_service.isError | async); else errorTemplate">

@@ -7,6 +7,7 @@ import { FollowersService } from './followers.service';
   selector: 'app-followers',
   templateUrl: './followers.component.html',
   styleUrls: ['./followers.component.scss'],
+  providers: [FollowersService],
   encapsulation: ViewEncapsulation.None
 })
 export class FollowersComponent implements OnInit {

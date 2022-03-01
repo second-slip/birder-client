@@ -1,16 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
-import { ITweetDay } from '../i-tweet-day.dto';
+import { ITweet } from '../i-tweet.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TweetDayService {
-
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  private readonly _observationCount$: BehaviorSubject<ITweetDay | null> = new BehaviorSubject<ITweetDay | null>(null);
+  private readonly _observationCount$: BehaviorSubject<ITweet | null> = new BehaviorSubject<ITweet | null>(null);
 
   constructor(private readonly _httpClient: HttpClient) { }
 
@@ -22,7 +21,7 @@ export class TweetDayService {
     return this._isLoading$.asObservable();
   }
 
-  public get getTweet(): Observable<ITweetDay | null> {
+  public get getTweet(): Observable<ITweet | null> {
     return this._observationCount$.asObservable();
   }
 
@@ -30,7 +29,7 @@ export class TweetDayService {
 
     this._isLoading$.next(true);
 
-    this._httpClient.get<ITweetDay>('api/Tweets/TweetDay')
+    this._httpClient.get<ITweet>('api/Tweets')
       .pipe(finalize(() => { this._isLoading$.next(false); }))
       .subscribe({
         next: (response) => {

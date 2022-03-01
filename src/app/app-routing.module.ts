@@ -55,8 +55,7 @@ const routes: Routes = [
       { path: 'account/manage', component: AccountManagerComponent },
       // change routing 'account/password...'
       { path: 'forgot-password', component: ForgotPasswordComponent },
-      { path: 'reset-password/:code', component: ResetPasswordComponent },
-      { path: 'tweet/archive', component: TweetDayArchiveComponent }
+      { path: 'reset-password/:code', component: ResetPasswordComponent }
     ]
   },
   // ToDo: try moving this to the top so components load first with the sidebar if appropriate
@@ -84,6 +83,7 @@ const routes: Routes = [
           { path: 'following/:username', component: FollowingComponent },
           { path: 'network', component: NetworkComponent },
           { path: 'logout', component: LogoutComponent },
+          { path: 'tweet/archive', component: TweetDayArchiveComponent }
         ]
       },
     ]

@@ -7,24 +7,24 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th class="hide-small" scope="col">#</th>
+                    <th scope="col">#</th>
                     <th scope="col">Date</th>
                     <th scope="col">Species</th>
-                    <th class="hide-small" scope="col">Status / Population</th>
+                    <!-- <th class="hide-small" scope="col">Status / Population</th> -->
                     <th scope="col">Recording</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let record of (_service.getTweets | async); index as i">
                     <!-- *ngFor="let record of tweets.items; index as i"> -->
-                    <th class="hide-small" scope="row">{{ i + 1 }}</th>
+                    <th scope="row">{{ i + 1 }}</th>
                     <td>{{ record.displayDay | date: 'dd/MM/yyyy' }}</td>
                     <td><a routerLink="/bird-detail/{{record.bird.birdId}}">{{ record.bird.englishName }}</a>
                         <br><small><em>{{ record.bird.species }}</em></small>
                     </td>
-                    <td class="hide-small"><small>{{ record.bird.btoStatusInBritain }} <br> {{
+                    <!-- <td class="hide-small"><small>{{ record.bird.btoStatusInBritain }} <br> {{
                             record.bird.populationSize
-                            }}</small></td>
+                            }}</small></td> -->
                     <td><audio class="player" controls>
                             <source src="{{record.songUrl}}" type="audio/mpeg">
                             Your browser does not support the audio element.
@@ -43,7 +43,7 @@
         </p>
 
         <button *ngIf="!(_service.allLoaded | async)" type="button" class="btn btn-primary btn-lg btn-block"
-            (click)="getMoreTweets()">Block level button</button>
+            (click)="getMoreTweets()">Load more Tweets</button>
 
     </ng-container>
 

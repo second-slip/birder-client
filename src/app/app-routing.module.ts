@@ -1,5 +1,3 @@
-// import { TweetArchiveComponent } from './_tweet/tweet-archive/tweet-archive.component';
-
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AccountRegistrationComponent } from "./_account/account-registration/account-registration.component";

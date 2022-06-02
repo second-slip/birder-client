@@ -1,6 +1,6 @@
 import { AuthenticationFailureReason } from "./authentication-failure-reason";
 
-export interface IauthenticationResult {
+export interface IAuthenticationResult {
     authenticationToken: string;
     failureReason: AuthenticationFailureReason;
 }

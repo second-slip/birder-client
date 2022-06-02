@@ -1,4 +1,4 @@
-import { IauthUser } from "src/app/_auth/iauth-user.dto";
+import { IAuthUser } from "src/app/_auth/i-auth-user.dto";
 import { IBirdSummary } from "src/app/_bird/i-bird-summary.dto";
 import { IObservationPosition } from "src/app/_map/i-observation-position.dto";
 import { IObservationNote } from "src/app/_observationNotes/i-observation-note.dto";
@@ -9,7 +9,7 @@ export interface IUpdateObservation {
     observationDateTime: Date; //| string; --> not when posting to the server...
     // birdId: number;
     bird: IBirdSummary;
-    user: IauthUser;
+    user: IAuthUser;
     position: IObservationPosition;
     notes: IObservationNote[];
 }

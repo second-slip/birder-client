@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { IauthUser } from './iauth-user.dto';
+import { IAuthUser } from './i-auth-user.dto';
 import { TokenService } from './token.service';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { TokenService } from './token.service';
 
 export class AuthenticationService {
   private readonly _isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private readonly _authenticatedUser$: BehaviorSubject<IauthUser | null> = new BehaviorSubject<IauthUser | null>(null);
+  private readonly _authenticatedUser$: BehaviorSubject<IAuthUser | null> = new BehaviorSubject<IAuthUser | null>(null);
   // OLD implementation:  isAuthenticated$: Observable<boolean> = this._isAuthenticated$.asObservable();
 
   constructor(private _token: TokenService) { }
@@ -23,11 +23,11 @@ export class AuthenticationService {
     return this._isAuthenticated$.value;
   }
 
-  public get getAuthUser(): Observable<IauthUser | null> {
+  public get getAuthUser(): Observable<IAuthUser | null> {
     return this._authenticatedUser$.asObservable();
   }
 
-  // public get getAuthUser1(): IauthUser | null {
+  // public get getAuthUser1(): IAuthUser | null {
   //   return this._authenticatedUser$.value;
   // }
 

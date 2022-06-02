@@ -5,7 +5,7 @@ import { IauthUser } from './iauth-user.dto';
 @Injectable({
   providedIn: 'root'
 })
-export class TokenService { // should just be token service!
+export class TokenService {
 
   constructor(private _jwtHelper: JwtHelperService) { }
 
@@ -55,10 +55,10 @@ export class TokenService { // should just be token service!
       const tokenDecoded = this._jwtHelper.decodeToken(token);
 
       return <IauthUser>{
-        userName: tokenDecoded.unique_name,
+        userName: tokenDecoded.unique_name, //
         avatar: tokenDecoded.ImageUrl,
-        defaultLocationLatitude: Number(tokenDecoded.DefaultLatitude),
-        defaultLocationLongitude: Number(tokenDecoded.DefaultLongitude)
+        defaultLocationLatitude: Number(tokenDecoded.Lat),
+        defaultLocationLongitude: Number(tokenDecoded.Lng)
       };
 
     } else {
@@ -77,17 +77,7 @@ export class TokenService { // should just be token service!
       return 'null';
     }
   }
-
-  // public getMapKey(): string {
-  //   const token = this._getToken();
-
-  //   if (token && !this._jwtHelper.isTokenExpired(token)) {
-  //     const tokenDecoded = this._jwtHelper.decodeToken(token);
-  //     return tokenDecoded.MapKey;
-  //   } else {
-  //     return 'null';
-  //   }
-  // }
+}
 
   // public checkIsRecordOwner(username: string): boolean {
   //   const token = this._getToken();
@@ -106,13 +96,8 @@ export class TokenService { // should just be token service!
   //   }
   // }
 
-
-
-
   // public GetAuthenticatedUserDetails() {
-
   //   const token = localStorage.getItem('jwt');
-
   //   if (token && !this._jwtHelper.isTokenExpired(token)) {
   //     const tokenDecoded = this._jwtHelper.decodeToken(token);
 
@@ -140,28 +125,6 @@ export class TokenService { // should just be token service!
   //     return 'null';
   //   }
   // }
-
-
-
-  // getDefaultLocation() {
-  //   const token = localStorage.getItem('jwt');
-
-  //   if (token && !this.jwtHelper.isTokenExpired(token)) {
-  //     const tokenDecoded = this.jwtHelper.decodeToken(token);
-
-  //     const model = <SetLocationViewModel>{
-  //       defaultLocationLatitude: Number(tokenDecoded.DefaultLatitude),
-  //       defaultLocationLongitude: Number(tokenDecoded.DefaultLongitude)
-  //     };
-  //     return model;
-
-  //   } else {
-  //     this.authenticationService.logout();
-
-  //   }
-  // }
-}
-
 
 // setToken(token: string) {
 //   if (token) {

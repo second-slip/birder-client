@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { MatchOtherValidator, RestrictedNameValidator } from 'src/app/_validators';
@@ -19,11 +19,11 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
   public requesting: boolean;
   public invalidRegistration: boolean;
   public errorObject: any = null;
-  public userRegisterForm: FormGroup;
+  public userRegisterForm: UntypedFormGroup;
   // passwordGroup: FormGroup;
   // parentErrorStateMatcher = new ParentErrorStateMatcher();
 
-  constructor(private _formBuilder: FormBuilder
+  constructor(private _formBuilder: UntypedFormBuilder
     , private _usernameService: UsernameValidationService
     , private _service: AccountService
     , private _router: Router) { }

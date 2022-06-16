@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment'; //ToDo: replace mment
@@ -27,8 +27,8 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
   public requesting: boolean;
   public observation: IObservation
-  public selectSpeciesForm: FormGroup;
-  public updateObservationForm: FormGroup;
+  public selectSpeciesForm: UntypedFormGroup;
+  public updateObservationForm: UntypedFormGroup;
   public errorObject: any = null;
 
   @ViewChild(ReadWriteMapComponent)
@@ -47,7 +47,7 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
     , private readonly _route: ActivatedRoute
     , private readonly _navigation: NavigationService
     , private readonly _observationCrudService: ObservationCrudService
-    , private readonly _formBuilder: FormBuilder) { }
+    , private readonly _formBuilder: UntypedFormBuilder) { }
 
   ngOnInit(): void {
     this._route.params.subscribe(_ => {
@@ -91,20 +91,20 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
   private _createForms(observation: IObservation): void {
     try {
       this.selectSpeciesForm = this._formBuilder.group({
-        bird: new FormControl(observation.bird, Validators.compose([
+        bird: new UntypedFormControl(observation.bird, Validators.compose([
           Validators.required,
           BirdsListValidator()
         ]))
       });
 
       this.updateObservationForm = this._formBuilder.group({
-        observationId: new FormControl(observation.observationId),
-        quantity: new FormControl(observation.quantity, Validators.compose([
+        observationId: new UntypedFormControl(observation.observationId),
+        quantity: new UntypedFormControl(observation.quantity, Validators.compose([
           Validators.required,
           Validators.min(1),
           Validators.max(1000)
         ])),
-        observationDateTime: new FormControl(observation.observationDateTime, Validators.compose([
+        observationDateTime: new UntypedFormControl(observation.observationDateTime, Validators.compose([
           Validators.required
         ])),
       });

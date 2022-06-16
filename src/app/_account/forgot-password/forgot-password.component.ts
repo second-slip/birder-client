@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { AccountService } from '../account.service';
 import { IUserEmail } from '../i-user-email.dto';
@@ -14,7 +14,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
   public requesting: boolean;
   public submitted: boolean = false;
-  public requestPasswordResetForm: FormGroup;
+  public requestPasswordResetForm: UntypedFormGroup;
   public errorObject: any = null;
 
   request_password_reset_validation_messages = {
@@ -24,7 +24,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     ],
   };
 
-  constructor(private _formBuilder: FormBuilder
+  constructor(private _formBuilder: UntypedFormBuilder
     , private _service: AccountService) { }
   
   ngOnInit(): void {
@@ -46,7 +46,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   private _createForms(): void {
     this.requestPasswordResetForm = this._formBuilder.group({
-      email: new FormControl('', Validators.compose([
+      email: new UntypedFormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),

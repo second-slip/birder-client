@@ -1,8 +1,8 @@
-import { FormControl, FormGroup, NgForm, FormGroupDirective, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { UntypedFormControl, FormGroup, NgForm, FormGroupDirective, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 export class ParentErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = !!(form && form.submitted);
     const controlTouched = !!(control && (control.dirty || control.touched));
     const controlInvalid = !!(control && control.invalid);
@@ -30,10 +30,10 @@ export class ValidatePassword {
 
 export function MatchOtherValidator(otherControlName: string) {
 
-  let thisControl: FormControl;
-  let otherControl: FormControl;
+  let thisControl: UntypedFormControl;
+  let otherControl: UntypedFormControl;
 
-  return function matchOtherValidate(control: FormControl) {
+  return function matchOtherValidate(control: UntypedFormControl) {
 
     if (!control.parent) {
       return null;
@@ -42,7 +42,7 @@ export function MatchOtherValidator(otherControlName: string) {
     // Initializing the validator.
     if (!thisControl) {
       thisControl = control;
-      otherControl = control.parent.get(otherControlName) as FormControl;
+      otherControl = control.parent.get(otherControlName) as UntypedFormControl;
       if (!otherControl) {
         throw new Error('matchOtherValidator(): other control is not found in parent group');
       }

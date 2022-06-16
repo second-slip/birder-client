@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
@@ -20,11 +20,11 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   //
   public requesting: boolean;
   public submitted: boolean = false;
-  public resetPasswordForm: FormGroup;
+  public resetPasswordForm: UntypedFormGroup;
   public errorObject: any = null;
 
   constructor(readonly _service: AccountService
-    , private _formBuilder: FormBuilder
+    , private _formBuilder: UntypedFormBuilder
     , private readonly _navigation: NavigationService
     , private readonly _route: ActivatedRoute) { }
 

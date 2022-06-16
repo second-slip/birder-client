@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from '../authentication.service';
@@ -17,7 +17,7 @@ import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 export class LoginComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
   public requesting: boolean;
-  public loginForm: FormGroup;
+  public loginForm: UntypedFormGroup;
   public errorObject = null;
 
   login_validation_messages = {
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private readonly _service: LoginService
     , private readonly _authService: AuthenticationService
     , private readonly _router: Router
-    , private readonly _formBuilder: FormBuilder
+    , private readonly _formBuilder: UntypedFormBuilder
     , private readonly _navigation: NavigationService) { }
 
   ngOnInit(): void {
@@ -77,14 +77,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private _createForm(): void {
     this.loginForm = this._formBuilder.group({
-      username: new FormControl('', Validators.compose([
+      username: new UntypedFormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
-      password: new FormControl('', Validators.compose([
+      password: new UntypedFormControl('', Validators.compose([
         Validators.required,
       ])),
-      rememberMe: new FormControl(false)
+      rememberMe: new UntypedFormControl(false)
     });
   }
 

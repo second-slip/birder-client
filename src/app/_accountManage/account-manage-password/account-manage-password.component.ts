@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { MatchOtherValidator, ValidatePassword } from 'src/app/_validators';
@@ -17,9 +17,9 @@ export class AccountManagePasswordComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
   public requesting: boolean;
   public errorObject: any = null;
-  public changePasswordForm: FormGroup;
+  public changePasswordForm: UntypedFormGroup;
 
-  constructor(private _formBuilder: FormBuilder
+  constructor(private _formBuilder: UntypedFormBuilder
     , private _service: AccountManagerService
     , private _router: Router) { }
 

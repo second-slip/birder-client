@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { UsernameValidationService } from 'src/app/_account/account-registration/username-validation-service.service';
@@ -18,10 +18,10 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
 
   public requesting: boolean;
-  public manageProfileForm: FormGroup;
+  public manageProfileForm: UntypedFormGroup;
   public errorObject: any = null;
 
-  constructor(private _formBuilder: FormBuilder
+  constructor(private _formBuilder: UntypedFormBuilder
     , private readonly _service: AccountManagerService
     , private readonly _authService: AuthenticationService
     , private readonly _usernameService: UsernameValidationService
@@ -69,7 +69,7 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _createForm(user: IManageProfile): FormGroup {
+  private _createForm(user: IManageProfile): UntypedFormGroup {
     return this._formBuilder.group({
       userName: [
         user.userName,

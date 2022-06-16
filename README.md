@@ -1,6 +1,6 @@
 # BirderClient
 
-
+Angular 14 client app for the Birder website. 
 
 
 ## Development server

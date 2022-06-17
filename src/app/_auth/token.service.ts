@@ -67,16 +67,16 @@ export class TokenService {
   }
 
 
-  public getFlikrKey(): string {
-    const token = this._getToken();
+  // public getFlikrKey(): string {
+  //   const token = this._getToken();
 
-    if (token && !this._jwtHelper.isTokenExpired(token)) {
-      const tokenDecoded = this._jwtHelper.decodeToken(token);
-      return tokenDecoded.FlickrKey;
-    } else {
-      return 'null';
-    }
-  }
+  //   if (token && !this._jwtHelper.isTokenExpired(token)) {
+  //     const tokenDecoded = this._jwtHelper.decodeToken(token);
+  //     return tokenDecoded.FlickrKey;
+  //   } else {
+  //     return 'null';
+  //   }
+  // }
 }
 
   // public checkIsRecordOwner(username: string): boolean {

@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { TokenService } from 'src/app/_auth/token.service';
+import { environment } from 'src/environments/environment';
 import { FlickrUrlsViewModel } from './flickr.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FlickrService {
-  private readonly apiKey = this.token.getFlikrKey();
+  private readonly apiKey = environment.photoKey; // this.token.getFlikrKey();
   private readonly apiUrl = 'https://api.flickr.com/services/rest/';
   private readonly baseUrl = `${this.apiUrl}?api_key=${this.apiKey}&format=json&nojsoncallback=1&method=flickr.photos.`;
   private readonly flickrPhotoSearch = `${this.baseUrl}search&per_page=20&tags=`;

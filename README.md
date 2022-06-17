@@ -9,7 +9,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## Add environment.ts file to compile
 
-You need to add a environment.ts file to the environments folder.  It should follow the same structure as the environment.prod.ts file which _is_ tracked in this repository.
+The development environment configuration file (environment.ts) is untracked.  You need to add the environment.ts file to a cloned copy of the repsository. This should be added to the environments folder and it should follow the same structure as the environment.prod.ts file which _is_ tracked in this repository.
 
 ## Fake REST API for testing
 

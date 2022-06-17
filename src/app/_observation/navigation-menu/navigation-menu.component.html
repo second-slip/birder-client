@@ -1,0 +1,15 @@
+<div>
+    <hr>
+    <a routerLink="/feed/public">
+        Observation Feed
+    </a>
+    <a routerLink="/observation/create">
+        | Create
+    </a>
+    <a *ngIf="isRecordOwner" routerLink="/observation/update/{{observationId}}">
+        | Edit
+    </a>
+    <a *ngIf="isRecordOwner" routerLink="/observation/delete/{{observationId}}">
+        | Delete
+    </a>
+</div>

@@ -1,0 +1,99 @@
+<div class="bird-index-container">
+
+    <h1>Index of British bird species</h1>
+
+    <div class="form-check">
+        <input class="form-check-input" type="radio" [value]="'0'" name="exampleRadios" id="exampleRadios1"
+            value="option1" checked [(ngModel)]="speciesFilter" (change)="onChangeFilter()">
+        <label class="form-check-label" for="exampleRadios1">
+            Show common species only (219)
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" [value]="'1'" name="exampleRadios" id="exampleRadios2"
+            value="option2" [(ngModel)]="speciesFilter" (change)="onChangeFilter()">
+        <label class="form-check-label" for="exampleRadios2">
+            Show all species (616)
+        </label>
+    </div>
+    <!-- <pre>filter: {{speciesFilter}}</pre> -->
+
+    <ng-container *ngIf="(_service.getBirds | async) as birds; else loadingOrError">
+
+        <div *ngIf="birds.length">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <!-- <th scope="col">#</th> -->
+                        <!-- <th scope="col"></th> -->
+                        <th scope="col">Species</th>
+                        <th scope="col">Status / Population<sup>1</sup></th>
+                        <th scope="col">Risk Flag<sup>2</sup></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let record of birds; index as i">
+                        <!-- <th scope="row">{{ i + 1 }}</th> -->
+                        <!-- <td>{{ record.birdId }}</td> -->
+                        <td><a routerLink="/bird/detail/{{record.birdId}}">{{ record.englishName }}</a>
+                            <br><small><em>{{ record.species }}</em></small>
+                        </td>
+                        <td><small>{{ record.btoStatusInBritain }} <br> {{ record.populationSize }}</small></td>
+                        <td [style.color]="record.conservationListColourCode"><small>{{ record.conservationStatus
+                                }}</small>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ng-container *ngIf="(_service.getTotalItems | async) as total">
+                <ngb-pagination class="d-flex justify-content-center" [collectionSize]="total" [(page)]="page"
+                    [pageSize]="pageSize" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
+                    (pageChange)="changePage()">
+                </ngb-pagination>
+                <!-- <pre>Current page: {{page}}</pre> -->
+            </ng-container>
+            <hr>
+
+            <ng-container>
+                <small><br><sup>1</sup> The British list of 616 species occurring in Britain is kept by the British
+                    Ornithologists'
+                    Union (BOU). See <a href="https://www.bto.org/about-birds/birdfacts/british-list" target="_blank">
+                        here</a>
+                    for
+                    the full data and the explanation.
+                    <br><sup>2</sup> Data are from <i>Birds of Conservation Concern 4: the population status of birds in
+                        the
+                        UK,
+                        Channel Islands and Isle of Man.</i> View a summary <a
+                        href="https://www.bto.org/sites/default/files/publications/state-of-uk-birds-2016.pdf"
+                        target="_blank">
+                        here</a>.</small>
+            </ng-container>
+        </div>
+
+        <ng-container *ngIf="!birds.length">
+            <p class="alert alert-info">
+                <strong>Whoops!</strong>&nbsp;An error occurred<br>
+                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
+                    Again</button>
+            </p>
+        </ng-container>
+
+    </ng-container>
+
+    <ng-template #loadingOrError>
+        <ng-container *ngIf="(_service.isError | async); else loading">
+            <p class="centre">
+                <strong>Whoops!</strong>&nbsp;An error occurred<br>
+                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
+                    Again</button>
+            </p>
+        </ng-container>
+    </ng-template>
+
+    <ng-template #loading>
+        <app-loading></app-loading>
+    </ng-template>
+
+</div>

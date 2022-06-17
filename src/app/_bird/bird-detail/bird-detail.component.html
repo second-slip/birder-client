@@ -1,0 +1,70 @@
+<div class="bird-detail-container">
+
+    <ng-container *ngIf="(_service.getBird | async) as bird; else loadingOrError">
+
+        <h1>{{ bird.englishName }}<small><i> {{ bird.species }}</i></small></h1>
+
+        <hr>
+
+        <ul ngbNav #nav="ngbNav" class="nav-tabs">
+            <li [ngbNavItem]="1">
+                <a ngbNavLink>Information</a>
+                <ng-template ngbNavContent>
+                    <app-bird-info [bird]="bird"></app-bird-info>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+                <a ngbNavLink>Flickr photos</a>
+                <ng-template ngbNavContent>
+                    <app-flickr [species]="bird.species"></app-flickr>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="3">
+                <a ngbNavLink>Song Recordings</a>
+                <ng-template ngbNavContent>
+                    <app-recordings [species]="bird.species"></app-recordings>
+
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="4">
+                <a ngbNavLink>Observations</a>
+                <ng-template ngbNavContent>
+                    <!-- <app-bird-observations-list [birdId]="bird?.birdId"></app-bird-observations-list> -->
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="5">
+                <a ngbNavLink>Distribution map</a>
+                <ng-template ngbNavContent>
+                    <!-- <app-distribution-map-user></app-distribution-map-user> -->
+                </ng-template>
+            </li>
+        </ul>
+
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+
+        <div class="navigation-menu">
+            <hr>
+            <a routerLink="/bird/index">
+                Birds List
+            </a>
+        </div>
+
+    </ng-container>
+
+
+    <ng-template #loadingOrError>
+        <ng-container *ngIf="(_service.isError | async); else loading">
+            <p class="centre">
+                <strong>Whoops!</strong>&nbsp;An error occurred<br>
+                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
+                    Again</button>
+            </p>
+        </ng-container>
+    </ng-template>
+
+    <ng-template #loading>
+        <app-loading></app-loading>
+    </ng-template>
+
+</div>

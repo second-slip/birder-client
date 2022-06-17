@@ -1,0 +1,22 @@
+<form [formGroup]="selectSpeciesForm" novalidate>
+    <div class="form-group adjust-size">
+        <label for="typeahead-focus">Choose species:</label>
+        <input id="typeahead-focus" type="text" class="form-select" formControlName="bird" [ngbTypeahead]="search"
+            required placeholder="type species name to filter species list" (focus)="focus$.next($any($event).target.value)"
+            (click)="click$.next($any($event).target.value)" #instance="ngbTypeahead" [resultFormatter]="formatter"
+            [inputFormatter]="formatter" />
+        <div *ngIf="selectSpeciesForm.get('bird')?.invalid && 
+            selectSpeciesForm.get('bird')?.errors && 
+            (selectSpeciesForm.get('bird')?.dirty || selectSpeciesForm.get('bird')?.touched)">
+            <small class="text-danger" *ngIf="selectSpeciesForm.get('bird')?.hasError('required')">
+                This field is required.
+            </small>
+            <small class="text-danger" *ngIf="selectSpeciesForm.get('bird')?.hasError('notBirdListObject')">
+                You must select a bird species from the list.
+            </small>
+        </div>
+        <!-- <hr> -->
+        <!-- <pre>{{ selectSpeciesForm.value.bird.englishName }}</pre> -->
+        <!-- <pre>{{ selectSpeciesForm.value | json }}</pre> -->
+    </div>
+</form>

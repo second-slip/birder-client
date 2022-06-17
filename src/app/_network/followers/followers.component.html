@@ -1,0 +1,48 @@
+<div class="followers-container">
+
+    <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
+
+        <h1>{{ authUser.userName === username ? 'Your followers' : username + '\&#39;s followers' }}</h1>
+
+        <ul ngbNav #nav="ngbNav" [activeId]="2" class="nav-tabs nav-justified">
+            <li [ngbNavItem]="1">
+                <a ngbNavLink routerLink="/following/{{username}}">Following</a>
+            </li>
+            <li [ngbNavItem]="2">
+                <a ngbNavLink>Followers</a>
+            </li>
+        </ul>
+
+    </ng-container>
+
+    <ng-container *ngIf="(_service.getFollowers | async) as followers; else loadingOrError">
+        <div *ngIf="followers.length">
+            <div *ngFor="let user of followers">
+                <app-network-user [user]="user"></app-network-user>
+            </div>
+        </div>
+
+        <div *ngIf="!followers.length">
+            <ngb-alert [dismissible]="false" class="d-block mt-3" type="info">
+                You don't yet have any followers
+            </ngb-alert>
+        </div>
+
+    </ng-container>
+
+    <ng-template #loadingOrError>
+        <ng-container *ngIf="(_service.isError | async); else loading">
+            <p class="centre">
+                <strong>Whoops!</strong>&nbsp;An error occurred<br>
+                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
+                    Again</button>
+            </p>
+        </ng-container>
+    </ng-template>
+
+
+    <ng-template #loading>
+        <app-loading></app-loading>
+    </ng-template>
+
+</div>

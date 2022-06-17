@@ -1,0 +1,144 @@
+<div class="user-profile-container">
+
+    <ng-container *ngIf="(_service.getUserProfile | async) as profile; else loadingOrError">
+
+        <div class="flex-container">
+
+            <img class="avatar" src="{{profile.avatar}}"
+                onerror="this.src='https://img.icons8.com/color/96/000000/user.png';" alt="Smiley face" height="126"
+                width="126">
+
+            <div>
+                <div class="flex-container">
+                    <h1>{{ profile.userName }}</h1>
+                    <div *ngIf="!profile.isOwnProfile" class="follow-button"><button class="btn btn-link btn-sm"
+                            (click)="followOrUnfollow($event.target, profile)">
+                            {{ profile.isFollowing === true ? 'Unfollow' : 'Follow' }}
+                        </button></div>
+                </div>
+
+                <p class="summary"><a routerLink="/followers/{{profile.userName}}">{{ profile.followersCount }} {{
+                        profile.followersCount > 1 ? 'followers' : 'follower' }}</a>
+                    /
+                    <a routerLink="/following/{{profile.userName}}">{{ profile.followingCount }} following</a>
+                </p>
+
+                <ng-container *ngIf="profile.isOwnProfile">
+                    <p class="summary" *ngIf="(_analysisService.getCount | async) as analysis">
+                        {{ analysis.uniqueSpeciesCount }} species in {{ analysis.totalObservationsCount }}
+                        observations
+                    </p>
+                </ng-container>
+                <ng-container *ngIf="!profile.isOwnProfile">
+                    <p class="summary">
+                        {{ profile.observationCount.uniqueSpeciesCount }} species in {{
+                        profile.observationCount.totalObservationsCount }}
+                        observations
+                    </p>
+                </ng-container>
+
+                <p class="register-large summary">Joined on {{ profile.registrationDate | date: 'EEEE, d MMMM yyyy'}}
+                </p>
+
+                <p class="register-small summary">Joined on {{ profile.registrationDate | date: 'dd/MM/yy'}}</p>
+
+            </div>
+        </div>
+
+        <hr>
+
+        <ul ngbNav #nav="ngbNav" class="nav-tabs">
+            <li [ngbNavItem]="1">
+                <a ngbNavLink>Observations</a>
+                <ng-template ngbNavContent>
+                    <!-- Keep content! -->
+                    <!-- <app-user-feed></app-user-feed> -->
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+                <a ngbNavLink>Distribution map</a>
+                <ng-template ngbNavContent>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at cursus est, vel
+                        scelerisque
+                        metus. Fusce eu egestas dolor. Suspendisse efficitur odio urna, vitae commodo ante lacinia
+                        at.
+                        In a aliquam turpis. Suspendisse ac justo at arcu tristique efficitur. Morbi sit amet magna
+                        sit
+                        amet est rhoncus pretium. Suspendisse ac placerat nisl, eget malesuada dui. Praesent
+                        pulvinar
+                        volutpat enim ac imperdiet. Ut in hendrerit nisi, at fringilla turpis. Aliquam pharetra,
+                        odio id
+                        rhoncus condimentum, arcu neque posuere mi, vitae iaculis odio massa non enim. Donec quis
+                        tempus
+                        libero, a egestas est. Proin non felis ut massa dictum aliquam a eget ante. Quisque
+                        consectetur
+                        sapien malesuada mauris tristique, eget porttitor lectus porttitor. Fusce in laoreet massa.
+                        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
+                        egestas.
+                        Nullam in ipsum blandit, malesuada velit eget, bibendum purus.
+
+                        Etiam quis suscipit ante. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                        mollis
+                        mauris turpis, sit amet luctus libero vulputate volutpat. In ipsum tellus, vehicula eu
+                        efficitur
+                        eget, cursus non ante. Sed hendrerit auctor nisi, eget auctor dui viverra quis. Phasellus
+                        pulvinar pretium justo vitae maximus. Integer pellentesque cursus rhoncus. Morbi sapien
+                        turpis,
+                        volutpat ornare ultricies a, ultrices eu lectus. Praesent at vulputate lorem. Quisque
+                        tincidunt
+                        imperdiet molestie. Sed sed volutpat velit, a eleifend leo. Pellentesque imperdiet tempor
+                        massa.
+                        Nunc et tellus pellentesque leo gravida hendrerit.</p>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="3">
+                <a ngbNavLink>Achievements</a>
+                <ng-template ngbNavContent>
+                    <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id
+                        diam.
+                        Nulla facilisi.
+                        Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt
+                        eu,
+                        congue et odio.
+                        Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices
+                        et.
+                        Sed diam urna,
+                        egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus
+                        faucibus
+                        nisl enim, nec
+                        tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius
+                        natoque
+                        penatibus et
+                        magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet
+                        ultricies in eget
+                        neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>
+                </ng-template>
+            </li>
+        </ul>
+
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+
+    </ng-container>
+
+
+    <ng-template #loadingOrError>
+        <ng-container *ngIf="(_service.isError | async); else loading">
+            <p class="centre">
+                <strong>Whoops!</strong>&nbsp;An error occurred<br>
+                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
+                    Again</button>
+            </p>
+        </ng-container>
+    </ng-template>
+
+
+    <ng-template #loading>
+        <p class="centre">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <strong>&nbsp;Loading</strong>
+        </p>
+    </ng-template>
+
+
+</div>

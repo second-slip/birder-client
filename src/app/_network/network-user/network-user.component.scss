@@ -1,0 +1,13 @@
+app-network-user {
+    .flex-container {
+        display: flex;
+    }
+
+    .network-list {
+        margin: 2%;
+    }
+
+    a.navbar-brand {
+        margin-right: 0 !important;
+    }
+}

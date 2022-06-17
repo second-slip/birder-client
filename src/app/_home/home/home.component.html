@@ -1,0 +1,21 @@
+<div>
+
+    <a [routerLink]='["/"]'>
+        <img src="https://birderweb.com/logo-and-slogan.png" alt="Birder">
+    </a>
+
+    <p><i>Birder</i> is a free website for logging, sharing, and analysing bird observations</p>
+
+    <app-features [showBlurb]="false"></app-features>
+
+    <hr>
+
+    <h3>Find out more - or login or register</h3>
+
+    <p>You can learn more about Birder in the <a [routerLink]='["/about/about"]'>About</a> page.</p>
+
+    <a type="button" class="btn btn-light" [routerLink]='["/login"]'>Login</a>
+    or &nbsp;
+    <a type="button" class="btn btn-light" [routerLink]='["/account/registration"]'>Register</a>
+
+</div>

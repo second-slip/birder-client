@@ -1,0 +1,25 @@
+<div class="network-container">
+    <h1>Your Birder Network</h1>
+
+    <app-network-summary [showTitle]="false"></app-network-summary>
+
+    <ul ngbNav #nav="ngbNav" [destroyOnHide]="false" class="nav-tabs">
+
+        <li [ngbNavItem]="1" [destroyOnHide]="true">
+            <a ngbNavLink>Suggestions</a>
+            <ng-template ngbNavContent let-active>
+                <app-network-suggestion></app-network-suggestion>
+            </ng-template>
+        </li>
+
+        <li [ngbNavItem]="2" [destroyOnHide]="true">
+            <a ngbNavLink>Find</a>
+            <ng-template ngbNavContent>
+                <app-network-find></app-network-find>
+            </ng-template>
+        </li>
+    </ul>
+
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+</div>

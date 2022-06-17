@@ -7,6 +7,10 @@ Angular 14 client app for the Birder website.
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+## Add environment.ts file to compile
+
+You need to add a environment.ts file to the environments folder.  It should follow the same structure as the environment.prod.ts file which _is_ tracked in this repository.
+
 ## Fake REST API for testing
 
 [json-server](https://www.npmjs.com/package/json-server) files which can be used to fake the Birder REST API are available on request (they are not tracked in this repository).

@@ -51,6 +51,5 @@ db.json
 routes.json
 
 # hide environment.ts (development evironment)
-#/src/environments/environment.ts
 /src/environments/environment.ts
 

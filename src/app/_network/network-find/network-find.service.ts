@@ -35,7 +35,7 @@ export class NetworkFindService {
     const options = searchCriterion ?
       { params: new HttpParams().set('searchCriterion', searchCriterion) } : {};
 
-    this._httpClient.get<INetworkUser[]>('api/Network/SearchNetwork', options)
+    this._httpClient.get<INetworkUser[]>('api/Network/Search', options)
       .pipe(finalize(() => this._isLoading$.next(false)))
       .subscribe({
         next: (response) => {

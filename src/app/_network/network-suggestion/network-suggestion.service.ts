@@ -28,7 +28,7 @@ export class NetworkSuggestionService {
 
     this._isLoading$.next(true);
 
-    this._httpClient.get<INetworkUser[]>('api/Network/NetworkSuggestions')
+    this._httpClient.get<INetworkUser[]>('api/Network/Suggestions')
       .pipe(finalize(() => this._isLoading$.next(false)))
       .subscribe({
         next: (response) => {

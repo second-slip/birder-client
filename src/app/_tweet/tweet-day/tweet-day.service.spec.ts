@@ -4,7 +4,7 @@ import { ITweet } from '../i-tweet.dto';
 import { skip } from 'rxjs/operators';
 
 import { TweetDayService } from './tweet-day.service';
-import { fakeITweet, fakeTweetResponse } from './test-helper';
+import { fakeITweet, fakeTweetResponse } from './tweet-day-test-helper';
 
 const _apiUrl = 'api/Tweets';
 

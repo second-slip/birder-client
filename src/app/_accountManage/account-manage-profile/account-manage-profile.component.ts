@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
-import { UsernameValidationService } from 'src/app/_account/account-registration/username-validation-service.service';
+import { UsernameValidationService } from 'src/app/_account/account-registration/username-validation.service';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { RestrictedNameValidator } from 'src/app/_validators';
 import { AccountManagerService } from '../account-manager.service';

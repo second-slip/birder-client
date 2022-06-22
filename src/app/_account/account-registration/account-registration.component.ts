@@ -6,7 +6,7 @@ import { MatchOtherValidator, RestrictedNameValidator } from 'src/app/_validator
 import { ValidatePassword } from 'src/app/_validators';
 import { AccountService } from '../account.service';
 import { IAccountRegistration } from './i-account-registration';
-import { UsernameValidationService } from './username-validation-service.service';
+import { UsernameValidationService } from './username-validation.service';
 
 @Component({
   selector: 'app-account-registration',

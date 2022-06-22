@@ -3,8 +3,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { HomeComponent } from './home.component';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '@app/_services/authentication.service';
+
 import { of } from 'rxjs';
+import { AuthenticationService } from 'src/app/_auth/authentication.service';
 
 
 describe('HomeComponent', () => {

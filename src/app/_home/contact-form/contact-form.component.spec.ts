@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { ContactFormService } from '../contact-form.service';
+
 
 import { ContactFormComponent } from './contact-form.component';
+import { ContactFormService } from './contact-form.service';
 
 describe('ContactFormComponent', () => {
   let component: ContactFormComponent;

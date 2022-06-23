@@ -1,5 +1,5 @@
 import { IBirdSummary } from "src/app/_bird/i-bird-summary.dto";
-import { ITweet } from "../i-tweet.dto";
+import { ITweet } from "../_tweet/i-tweet.dto";
 
 export const fakeIBirdSummary: IBirdSummary = {
     birdId: 1113,

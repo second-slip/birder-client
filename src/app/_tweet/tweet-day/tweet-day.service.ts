@@ -9,7 +9,7 @@ import { ITweet } from '../i-tweet.dto';
 export class TweetDayService {
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  private readonly _observationCount$: BehaviorSubject<ITweet | null> = new BehaviorSubject<ITweet | null>(null);
+  private readonly _tweet$: BehaviorSubject<ITweet | null> = new BehaviorSubject<ITweet | null>(null);
 
   constructor(private readonly _httpClient: HttpClient) { }
 
@@ -22,7 +22,7 @@ export class TweetDayService {
   }
 
   public get getTweet(): Observable<ITweet | null> {
-    return this._observationCount$.asObservable();
+    return this._tweet$.asObservable();
   }
 
   public getData(): void {
@@ -33,7 +33,7 @@ export class TweetDayService {
       .pipe(finalize(() => { this._isLoading$.next(false); }))
       .subscribe({
         next: (response) => {
-          this._observationCount$.next(response);
+          this._tweet$.next(response);
         },
         error: (e) => { this._handleError(e); },
         complete: () => { if (this._isError$) this._isError$.next(false); }

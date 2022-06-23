@@ -4,7 +4,7 @@ import { ITweet } from '../i-tweet.dto';
 import { skip } from 'rxjs/operators';
 
 import { TweetDayService } from './tweet-day.service';
-import { fakeITweet, fakeTweetResponse } from './tweet-day-test-helper';
+import { fakeITweet, fakeTweetResponse } from '../../_unit-test-helpers/tweet-day-test-helper';
 
 const _apiUrl = 'api/Tweets';
 
@@ -36,8 +36,8 @@ describe('TweetDayService', () => {
     service.getData(); // call http request method
 
     // We expect that the Observable emits an array that equals to the one from the API response:
-    service.getTweet.subscribe((ratesObservable) => {
-      actualTweet = ratesObservable
+    service.getTweet.subscribe((tweetObservable) => {
+      actualTweet = tweetObservable
     });
 
     service.isError

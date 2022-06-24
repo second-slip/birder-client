@@ -1,10 +1,12 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ITweet } from '../i-tweet.dto';
+
 import { skip } from 'rxjs/operators';
+import { fakeITweet, fakeTweetResponse } from '../../_unit-test-helpers/tweet-day-test-helper';
+import { ITweet } from '../i-tweet.dto';
 
 import { TweetDayService } from './tweet-day.service';
-import { fakeITweet, fakeTweetResponse } from '../../_unit-test-helpers/tweet-day-test-helper';
+
 
 const _apiUrl = 'api/Tweets';
 

@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+// import { TestBed } from '@angular/core/testing';
 
-import { ObservationCountService } from './observation-count.service';
+// import { ObservationCountService } from './observation-count.service';
 
-describe('ObservationCountService', () => {
-  let service: ObservationCountService;
+// describe('ObservationCountService', () => {
+//   let service: ObservationCountService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ObservationCountService);
-  });
+//   beforeEach(() => {
+//     TestBed.configureTestingModule({});
+//     service = TestBed.inject(ObservationCountService);
+//   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+//   it('should be created', () => {
+//     expect(service).toBeTruthy();
+//   });
+// });

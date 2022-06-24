@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+// import { TestBed } from '@angular/core/testing';
 
-import { ObservationFeedService } from './observation-feed.service';
+// import { ObservationFeedService } from './observation-feed.service';
 
-describe('ObservationFeedService', () => {
-  let service: ObservationFeedService;
+// describe('ObservationFeedService', () => {
+//   let service: ObservationFeedService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ObservationFeedService);
-  });
+//   beforeEach(() => {
+//     TestBed.configureTestingModule({});
+//     service = TestBed.inject(ObservationFeedService);
+//   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+//   it('should be created', () => {
+//     expect(service).toBeTruthy();
+//   });
+// });

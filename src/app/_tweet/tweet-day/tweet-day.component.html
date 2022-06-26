@@ -1,18 +1,14 @@
 <ng-container *ngIf="(_service.getTweet | async) as tweet; else loadingOrError">
-
     <h1 data-testid="main-title">Tweet of the Day</h1>
     <h2 class="english-name" data-testid="english-name">
         <a routerLink="/bird/detail/{{tweet.bird.birdId}}">{{tweet.bird.englishName}}</a>
     </h2>
     <p class="scientific-name" data-testid="scientific-name">{{tweet.bird.species}}</p>
-
     <audio controls>
         <source src="{{tweet.songUrl}}" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-
     <a class="archive-link" routerLink="/tweet/archive">View previous days' tweets</a>
-
 </ng-container>
 
 <ng-template #loadingOrError>
@@ -25,8 +21,6 @@
     </ng-container>
 </ng-template>
 
-
 <ng-template #loading>
-    <!-- <div data-testid="loading-content">Lod</div> -->
     <app-loading></app-loading>
 </ng-template>

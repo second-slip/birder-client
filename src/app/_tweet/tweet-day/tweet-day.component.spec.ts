@@ -4,12 +4,12 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { TweetDayComponent } from './tweet-day.component';
 import { TweetDayService } from './tweet-day.service';
 
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { fakeITweet } from 'src/app/_unit-test-helpers/tweet-day-test-helper';
 import { By } from '@angular/platform-browser';
 
 describe('TweetDayComponent unit tests', () => {
-  
+
   describe('TweetDayComponent - opens loading placeholder by default', () => {
     let fixture: ComponentFixture<TweetDayComponent>;
     let debugElement: DebugElement;
@@ -178,6 +178,24 @@ describe('TweetDayComponent unit tests', () => {
       expect(compiled.querySelector('[data-testid="reload-button"]')?.textContent).toBeDefined();
       expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toContain('Whoops');
     });
+
+    // 
+    it('error reload button on click calls reload()', fakeAsync(() => {
+      // Arrange
+      const component = fixture.componentInstance;
+      const reloadMethod = spyOn(component, 'reload');
+      const incrementButton = debugElement.query(
+        By.css('[data-testid="reload-button"]')
+      );
+  
+      // Act
+      incrementButton.triggerEventHandler('click', null);
+  
+      tick();
+  
+      // Assert
+      expect(reloadMethod).toHaveBeenCalled();
+    }));
   });
 
 

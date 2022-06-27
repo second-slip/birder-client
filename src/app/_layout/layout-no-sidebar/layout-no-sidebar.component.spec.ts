@@ -10,7 +10,7 @@ describe('LayoutNoSidebarComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LayoutNoSidebarComponent ],
-      schemas:  [NO_ERRORS_SCHEMA]
+      schemas:  [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));

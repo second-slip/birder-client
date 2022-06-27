@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 
 describe('HomeComponent', () => {
@@ -27,6 +28,7 @@ describe('HomeComponent', () => {
         ])
       ],
       declarations: [HomeComponent],
+      schemas: [NO_ERRORS_SCHEMA],
       providers: [
         { provide: AuthenticationService, useValue: mockAuthenticationService }
       ]

@@ -11,7 +11,7 @@ describe('DeveloperComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DeveloperComponent],
-      //schemas: [NO_ERRORS_SCHEMA],
+      schemas: [NO_ERRORS_SCHEMA],
       imports: [NgbNavModule]
     })
       .compileComponents();

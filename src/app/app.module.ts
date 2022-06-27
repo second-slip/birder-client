@@ -66,8 +66,6 @@ import { ObservationReadComponent } from './_observation/observation-read/observ
 import { NavigationMenuComponent } from './_observation/navigation-menu/navigation-menu.component';
 import { ObservationDeleteComponent } from './_observation/observation-delete/observation-delete.component';
 import { ObservationUpdateComponent } from './_observation/observation-update/observation-update.component';
-import { ToastComponent } from './_toast/toast/toast.component';
-
 import { BirdIndexComponent } from './_bird/bird-index/bird-index.component';
 import { BirdDetailComponent } from './_bird/bird-detail/bird-detail.component';
 import { BirdInfoComponent } from './_bird/bird-info/bird-info.component';
@@ -137,7 +135,6 @@ import { PublicFeedComponent } from './_observationFeed/public-feed/public-feed.
     NavigationMenuComponent,
     ObservationDeleteComponent,
     ObservationUpdateComponent,
-    ToastComponent,
     LoadingComponent,
     BirdIndexComponent,
     BirdDetailComponent,

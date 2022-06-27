@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ObservationCountService } from 'src/app/_analysis/observation-count/observation-count.service';
-import { ToastService } from 'src/app/_toast/toast.service';
 import { LifeListService } from './life-list.service';
 
 @Component({

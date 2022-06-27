@@ -16,7 +16,7 @@ describe('TweetDayService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule ],
       providers: [TweetDayService],
     });
     service = TestBed.inject(TweetDayService);

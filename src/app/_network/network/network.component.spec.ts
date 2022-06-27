@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { NetworkComponent } from './network.component';
 
@@ -8,7 +9,8 @@ describe('NetworkComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NetworkComponent ]
+      declarations: [ NetworkComponent ],
+      imports: [ NgbNavModule ]
     })
     .compileComponents();
   });

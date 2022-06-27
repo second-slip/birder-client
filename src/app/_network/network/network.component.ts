@@ -6,7 +6,4 @@ import { Component, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./network.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class NetworkComponent {
-
-  constructor() { }
-}
+export class NetworkComponent { }

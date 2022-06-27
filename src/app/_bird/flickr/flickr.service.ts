@@ -14,7 +14,7 @@ export class FlickrService {
   private readonly baseUrl = `${this.apiUrl}?api_key=${this.apiKey}&format=json&nojsoncallback=1&method=flickr.photos.`;
   private readonly flickrPhotoSearch = `${this.baseUrl}search&per_page=20&tags=`;
 
-  constructor(private readonly _http: HttpClient, private token: TokenService) { }
+  constructor(private readonly _http: HttpClient) { }
 
   public getSearchResults(page: number, term: any = null, tagMode: any): Observable<FlickrUrlsViewModel[]> {
     return this._http.get(`${this.flickrPhotoSearch}${encodeURIComponent(term)}&page=${page}${tagMode}`)

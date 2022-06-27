@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { IBirdDetail } from '../bird-detail/i-bird-detail.dto';
 
 @Component({
@@ -7,7 +7,6 @@ import { IBirdDetail } from '../bird-detail/i-bird-detail.dto';
   styleUrls: ['./bird-info.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class BirdInfoComponent  {
+export class BirdInfoComponent {
   @Input() bird: IBirdDetail;
-
 }

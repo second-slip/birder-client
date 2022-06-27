@@ -10,7 +10,7 @@ import { TokenService } from 'src/app/_auth/token.service';
 })
 export class UsernameValidationService {
 
-  constructor(private http: HttpClient, private token: TokenService) { }
+  constructor(private http: HttpClient) { }
 
   checkIfUsernameExists(username: string): Observable<boolean | any> {
     const options = username ?

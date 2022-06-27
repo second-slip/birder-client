@@ -1,27 +1,28 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-// import { AboutComponent } from './about.component';
-// import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { AboutComponent } from './about.component';
 
-// describe('AboutComponent', () => {
-//   let component: AboutComponent;
-//   let fixture: ComponentFixture<AboutComponent>;
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
-//   beforeEach(async(() => {
-//     TestBed.configureTestingModule({
-//       declarations: [ AboutComponent ],
-//       schemas: [NO_ERRORS_SCHEMA]
-//     })
-//     .compileComponents();
-//   }));
+describe('AboutComponent', () => {
+  let component: AboutComponent;
+  let fixture: ComponentFixture<AboutComponent>;
 
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(AboutComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ AboutComponent ],
+      imports: [NgbNavModule]
+    })
+    .compileComponents();
+  }));
 
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AboutComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

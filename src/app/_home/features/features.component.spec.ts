@@ -1,39 +1,33 @@
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
-// import { FeaturesComponent } from './features.component';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { FeaturesComponent } from './features.component';
 
-// describe('FeaturesComponent', () => {
-//   let component: FeaturesComponent;
-//   let fixture: ComponentFixture<FeaturesComponent>;
+describe('FeaturesComponent', () => {
+    let fixture: ComponentFixture<FeaturesComponent>;
+    let debugElement: DebugElement;
 
-//   let title: HTMLElement;
-//   let cssTitle: HTMLElement;
+    beforeEach(async () => {
 
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       declarations: [ FeaturesComponent ]
-//     })
-//     .compileComponents();
-//   });
+        await TestBed.configureTestingModule({
+            declarations: [
+                FeaturesComponent
+            ],
+            schemas: [NO_ERRORS_SCHEMA],
+            imports: [NgbNavModule]
+        }).compileComponents();
 
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(FeaturesComponent);
-//     component = fixture.componentInstance;
-//     //fixture.detectChanges();
-//     title = fixture.nativeElement.querySelector('h4');
-//     cssTitle = fixture.nativeElement.querySelector('.main-title');
-//   });
+        fixture = TestBed.createComponent(FeaturesComponent);
+        debugElement = fixture.debugElement;
+    });
 
-//   it('should display title - selected by element', async () => {
-//     fixture.detectChanges();
-//     expect(title.textContent).toContain('The Features');
-//   });
+    it('should create the app', () => {
+        const component = fixture.componentInstance;
+        expect(component).toBeTruthy();
+    });
 
-//   it('should display title - selected by css', async () => {
-//     fixture.detectChanges();
-//     expect(cssTitle.textContent).toContain('The Features');
-//   });
-
-//   it('should create', async () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
+    it('should render title', () => {
+        const compiled = fixture.nativeElement as HTMLElement;
+        expect(compiled.querySelector('[data-testid="main-title"]')?.textContent).toContain('The Features');
+    });
+});

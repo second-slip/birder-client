@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ContactComponent } from './contact.component';
 
@@ -8,7 +9,8 @@ describe('ContactComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ContactComponent ]
+      declarations: [ ContactComponent ],
+      imports: [NgbNavModule]
     })
     .compileComponents();
   });

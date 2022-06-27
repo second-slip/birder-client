@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { FutureComponent } from './future.component';
 
@@ -8,7 +9,8 @@ describe('FutureComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FutureComponent ]
+      declarations: [ FutureComponent ],
+      imports: [NgbNavModule]
     })
     .compileComponents();
   });

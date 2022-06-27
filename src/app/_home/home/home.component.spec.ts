@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 
 import { of } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 describe('HomeComponent', () => {
@@ -20,17 +21,17 @@ describe('HomeComponent', () => {
     mockAuthenticationService = jasmine.createSpyObj(['checkIsAuthenticatedObservable']);
 
     TestBed.configureTestingModule({
-      imports: [
+      imports: [NgbNavModule,
         RouterTestingModule.withRoutes([
           // { path: 'login', component: DummyLoginLayoutComponent },
         ])
       ],
-      declarations: [ HomeComponent ],
+      declarations: [HomeComponent],
       providers: [
         { provide: AuthenticationService, useValue: mockAuthenticationService }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

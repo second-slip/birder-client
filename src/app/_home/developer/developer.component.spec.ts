@@ -1,4 +1,6 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { DeveloperComponent } from './developer.component';
 
@@ -8,9 +10,11 @@ describe('DeveloperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DeveloperComponent ]
+      declarations: [DeveloperComponent],
+      //schemas: [NO_ERRORS_SCHEMA],
+      imports: [NgbNavModule]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

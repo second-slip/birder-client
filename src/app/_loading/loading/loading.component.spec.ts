@@ -22,4 +22,10 @@ describe('LoadingComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should show loading text', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('[data-testid="loading-text"]')?.textContent).toBeDefined();
+    expect(compiled.querySelector('[data-testid="loading-text"]')?.textContent).toContain('Loading...');
+  })
 });

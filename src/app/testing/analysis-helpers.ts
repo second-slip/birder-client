@@ -24,25 +24,119 @@ export const fakeObservationCountResponse: any =
 }
 
 
-// export const fakeIObservationTopFive: IObservationTopFive = {
+export const fakeIObservationTopFive: IObservationTopFive = {
+    topObservations: [
+        {
+            "birdId": 1004,
+            "name": "Avocet",
+            "count": 1
+        },
+        {
+            "birdId": 1022,
+            "name": "Blue Tit",
+            "count": 1
+        },
+        {
+            "birdId": 1023,
+            "name": "Brambling",
+            "count": 1
+        },
+        {
+            "birdId": 1037,
+            "name": "Collared Dove",
+            "count": 1
+        },
+        {
+            "birdId": 1090,
+            "name": "Grey Heron",
+            "count": 1
+        }
+    ],
+    topMonthlyObservations: [
+        {
+            "birdId": 1022,
+            "name": "Blue Tit",
+            "count": 1
+        },
+        {
+            "birdId": 1037,
+            "name": "Collared Dove",
+            "count": 1
+        },
+        {
+            "birdId": 1090,
+            "name": "Grey Heron",
+            "count": 1
+        },
+        {
+            "birdId": 1143,
+            "name": "Mute Swan",
+            "count": 1
+        },
+        {
+            "birdId": 1225,
+            "name": "Tufted Duck",
+            "count": 1
+        }
+    ]
+}
 
-//     // topObservations: IObservationTopFiveRecord[];
-//     // topMonthlyObservations: IObservationTopFiveRecord[];
-// }
+
 
 export const fakeTopObservationsResponse: any =
 {
     "topObservations": [
         {
-            "birdId": 1002,
-            "name": "Arctic Skua",
+            "birdId": 1004,
+            "name": "Avocet",
             "count": 1
         },
         {
-            "birdId": 1006,
-            "name": "Barn Owl",
+            "birdId": 1022,
+            "name": "Blue Tit",
+            "count": 1
+        },
+        {
+            "birdId": 1023,
+            "name": "Brambling",
+            "count": 1
+        },
+        {
+            "birdId": 1037,
+            "name": "Collared Dove",
+            "count": 1
+        },
+        {
+            "birdId": 1090,
+            "name": "Grey Heron",
             "count": 1
         }
     ],
-    "topMonthlyObservations": []
+    "topMonthlyObservations": [
+        {
+            "birdId": 1022,
+            "name": "Blue Tit",
+            "count": 1
+        },
+        {
+            "birdId": 1037,
+            "name": "Collared Dove",
+            "count": 1
+        },
+        {
+            "birdId": 1090,
+            "name": "Grey Heron",
+            "count": 1
+        },
+        {
+            "birdId": 1143,
+            "name": "Mute Swan",
+            "count": 1
+        },
+        {
+            "birdId": 1225,
+            "name": "Tufted Duck",
+            "count": 1
+        }
+    ]
 }

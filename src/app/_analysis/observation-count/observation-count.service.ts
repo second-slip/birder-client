@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, finalize, Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, finalize, Observable, Subject, takeUntil } from 'rxjs';
 import { IObservationCount } from './i-observation-count.dto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ObservationCountService {
-
+export class ObservationCountService implements OnDestroy {
+  private _subscription = new Subject();
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private readonly _observationCount$: BehaviorSubject<IObservationCount | null> = new BehaviorSubject<IObservationCount | null>(null);
@@ -30,7 +30,7 @@ export class ObservationCountService {
     this._isLoading$.next(true);
 
     this._httpClient.get<IObservationCount>('api/ObservationAnalysis')
-      .pipe(finalize(() => { this._isLoading$.next(false); }))
+      .pipe(finalize(() => { this._isLoading$.next(false); }), takeUntil(this._subscription))
       .subscribe({
         next: (response) => {
           this._observationCount$.next(response);
@@ -42,5 +42,10 @@ export class ObservationCountService {
 
   private _handleError(error: any) {
     this._isError$.next(true);
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.next('');
+    this._subscription.complete();
   }
 }

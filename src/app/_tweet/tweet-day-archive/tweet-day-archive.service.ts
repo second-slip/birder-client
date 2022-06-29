@@ -30,7 +30,6 @@ export class TweetDayArchiveService implements OnDestroy  {
   }
 
   public getData(pageIndex: number, pageSize: number = 8): void {
-
     this._isLoading$.next(true);
 
     const parameters = new HttpParams()

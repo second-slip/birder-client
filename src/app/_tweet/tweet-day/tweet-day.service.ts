@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, finalize, Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, finalize, Observable, Subject, takeUntil } from 'rxjs';
 import { ITweet } from '../i-tweet.dto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TweetDayService {
+export class TweetDayService implements OnDestroy {
+  private _subscription = new Subject();
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private readonly _tweet$: BehaviorSubject<ITweet | null> = new BehaviorSubject<ITweet | null>(null);
@@ -30,7 +31,7 @@ export class TweetDayService {
     this._isLoading$.next(true);
 
     this._httpClient.get<ITweet>('api/Tweets')
-      .pipe(finalize(() => { this._isLoading$.next(false); }))
+      .pipe(finalize(() => { this._isLoading$.next(false); }), takeUntil(this._subscription))
       .subscribe({
         next: (response) => {
           this._tweet$.next(response);
@@ -42,5 +43,10 @@ export class TweetDayService {
 
   private _handleError(error: any) { // no need to send error to the component...
     this._isError$.next(true);
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.next('');
+    this._subscription.complete();
   }
 }

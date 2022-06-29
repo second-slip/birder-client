@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, finalize, Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, finalize, Observable, Subject, takeUntil } from 'rxjs';
 import { IObservationTopFive } from './i-observation-top-five.dto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ObservationTopFiveService {
-
+export class ObservationTopFiveService implements OnDestroy {
+  private _subscription = new Subject();
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private readonly _topObservations$: BehaviorSubject<IObservationTopFive | null> = new BehaviorSubject<IObservationTopFive | null>(null);
@@ -31,7 +31,7 @@ export class ObservationTopFiveService {
     this._isLoading$.next(true);
 
     this._httpClient.get<IObservationTopFive>('api/List/TopObservationsList')
-      .pipe(finalize(() => { this._isLoading$.next(false); }))
+      .pipe(finalize(() => { this._isLoading$.next(false); }), takeUntil(this._subscription))
       .subscribe({
         next: (response) => {
           this._topObservations$.next(response);
@@ -44,6 +44,11 @@ export class ObservationTopFiveService {
 
   private _handleError(error: any) { // no need to send error to the component...
     this._isError$.next(true);
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.next('');
+    this._subscription.complete();
   }
 }
 

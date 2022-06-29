@@ -1,7 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { findComponent } from './test-spec-helpers/element.spec-helper';
+import { findComponent } from './testing/element.spec-helper';
 
 describe('AppComponent', () => {
   beforeEach(async () => {

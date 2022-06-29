@@ -81,7 +81,11 @@ export const fakeIObservationTopFive: IObservationTopFive = {
     ]
 }
 
-
+export const fakeIObservationTopFiveEmpty: IObservationTopFive =
+{
+    topObservations: [],
+    topMonthlyObservations: []
+}
 
 export const fakeTopObservationsResponse: any =
 {

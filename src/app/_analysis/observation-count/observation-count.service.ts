@@ -27,7 +27,6 @@ export class ObservationCountService {
   }
 
   public getData(): void {
-
     this._isLoading$.next(true);
 
     this._httpClient.get<IObservationCount>('api/ObservationAnalysis')
@@ -41,8 +40,7 @@ export class ObservationCountService {
       })
   }
 
-  private _handleError(error: any) { // no need to send error to the component...
-    //console.log(error);
+  private _handleError(error: any) {
     this._isError$.next(true);
   }
 }

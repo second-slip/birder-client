@@ -1,15 +1,15 @@
 <ng-container *ngIf="(_service.getCount | async) as analysis; else loadingOrError">
 
-    <div *ngIf="analysis.totalObservationsCount">
-        <p class="analysis-text">You have spotted <span class="count-text">{{ analysis.uniqueSpeciesCount }}</span>
+    <div *ngIf="analysis.totalObservationsCount" data-testid="analysis-count-more-than-one">
+        <p class="analysis-text" data-testid="analysis-text">You have spotted <span class="count-text">{{ analysis.uniqueSpeciesCount }}</span>
             species <br>in
             <span class="count-text">{{ analysis.totalObservationsCount }}</span>
             {{ analysis.totalObservationsCount > 1 ? 'observations' : 'observation' }}
         </p>
     </div>
 
-    <div *ngIf="!analysis.totalObservationsCount">
-        <p>
+    <div *ngIf="!analysis.totalObservationsCount" data-testid="analysis-count-zero">
+        <p data-testid="analysis-zero-text">
             <ngb-alert type="warning" [dismissible]="false">
                 You have not yet logged any observations...<br>
                 <a routerLink="/observation/create">Click here</a> to add your first one
@@ -21,9 +21,9 @@
 
 <ng-template #loadingOrError>
     <ng-container *ngIf="(_service.isError | async); else loading">
-        <p>
+        <p data-testid="error-content">
             <strong>Whoops!</strong>&nbsp;An error occurred<br>
-            <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
+            <button type="button" data-testid="reload-button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
                 Again</button>
         </p>
     </ng-container>

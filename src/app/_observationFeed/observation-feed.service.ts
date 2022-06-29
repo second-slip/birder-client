@@ -62,7 +62,7 @@ export class ObservationFeedService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    //console.log('feed service destroyed...');
+    //alert('feed service destroyed...');
     this._subscription.next('');
     this._subscription.complete();
   }

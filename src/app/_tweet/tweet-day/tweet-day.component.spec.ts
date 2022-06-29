@@ -1,13 +1,12 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-
 import { TweetDayComponent } from './tweet-day.component';
 import { TweetDayService } from './tweet-day.service';
-
 import { of } from 'rxjs';
-import { fakeITweet } from 'src/app/_unit-test-helpers/tweet-day-test-helper';
 import { By } from '@angular/platform-browser';
-import { findComponent } from 'src/app/test-spec-helpers/element.spec-helper';
+import { findComponent } from 'src/app/testing/element.spec-helper'
+import { fakeITweet } from 'src/app/testing/tweet-day-test-helper';
+
 
 describe('TweetDayComponent unit tests', () => {
 

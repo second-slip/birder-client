@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
 import { ITweet } from '../i-tweet.dto';
 
-
 @Injectable({
   providedIn: 'root'
 })

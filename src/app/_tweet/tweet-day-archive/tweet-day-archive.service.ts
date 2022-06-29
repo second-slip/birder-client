@@ -1,10 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, finalize, Observable, Subject, takeUntil } from 'rxjs';
 import { ITweet } from '../i-tweet.dto';
 
 @Injectable()
-export class TweetDayArchiveService {
+export class TweetDayArchiveService implements OnDestroy  {
   private _subscription = new Subject();
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);

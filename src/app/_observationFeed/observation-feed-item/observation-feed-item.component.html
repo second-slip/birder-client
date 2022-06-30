@@ -8,7 +8,7 @@
                 <h4>
                     {{ observation.quantity > 1 ? observation.quantity : '' }} <a
                         routerLink="/bird/detail/{{observation.birdId}}">{{ observation.englishName }}</a>
-                    <span class="scientific-name"> {{observation.species}}</span>
+                    <span class="scientific-name" data-testid="species-name">{{observation.species}}</span>
                 </h4>
             </div>
 

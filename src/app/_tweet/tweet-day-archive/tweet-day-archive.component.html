@@ -4,7 +4,7 @@
 
     <ng-container *ngIf="!(_service.isError | async); else errorTemplate">
 
-        <table class="table table-striped">
+        <table class="table table-striped" data-testid="tweet-table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -34,7 +34,7 @@
             </tbody>
         </table>
 
-        <p *ngIf="(_service.allLoaded | async)" class="alert alert-info no-more-items">
+        <p *ngIf="(_service.allLoaded | async)" class="alert alert-info no-more-items" data-testid="all-loaded">
             <strong>No more Tweets</strong>&nbsp;You have reached the end of the archive...
         </p>
 
@@ -48,7 +48,7 @@
     </ng-container>
 
     <ng-template #errorTemplate>
-        <div class="alert alert-danger">
+        <div class="alert alert-danger" data-testid="error-content">
             <strong>Whoops!</strong>&nbsp;There was an error retrieving the data.<br>
             <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
                 Again</button>

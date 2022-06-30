@@ -43,7 +43,7 @@ export class ObservationFeedService implements OnDestroy {
         next: (items: IObservationFeed[]) => {
           this._observations$.next([...this._observations$.getValue(), ...items]); // or concat?
           this._moreToGet(pageSize, items.length);
-          //console.log(this._observations$.getValue().length);
+          console.log(this._observations$.getValue());
         },
         error: (e: any) => { this._handleError(e); },
         complete: () => { if (this._isError$) this._isError$.next(false); }
@@ -52,7 +52,7 @@ export class ObservationFeedService implements OnDestroy {
 
   private _moreToGet(pageSize: number, items: number): void {
     if (items < pageSize) {
-      console.log('no more available');
+      // console.log('no more available');
       this._allLoaded$.next(true);
     }
   }

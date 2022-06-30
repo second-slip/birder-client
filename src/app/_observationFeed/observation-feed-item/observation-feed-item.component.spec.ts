@@ -21,6 +21,19 @@ describe('ObservationFeedItemComponent', () => {
         defaultLocationLongitude: 0.88
     }
 
+    fakeAuthService = jasmine.createSpyObj<AuthenticationService>(
+        'AuthenticationService',
+        {
+            checkAuthStatus: undefined,
+            logout: undefined
+        },
+        {
+            isAuthorisedObservable: of(false),
+            isAuthorised: false,
+            getAuthUser: of(authUser)
+        }
+    );
+
     const fakeIObservationFeedSingleItem: IObservationFeed =
     {
         observationId: 10099,
@@ -39,19 +52,6 @@ describe('ObservationFeedItemComponent', () => {
         creationDate: "2021-11-28T17:02:45.1213198Z",
         lastUpdateDate: "2021-11-28T17:02:45.1213198Z"
     }
-
-    fakeAuthService = jasmine.createSpyObj<AuthenticationService>(
-        'AuthenticationService',
-        {
-            checkAuthStatus: undefined,
-            logout: undefined
-        },
-        {
-            isAuthorisedObservable: of(false),
-            isAuthorised: false,
-            getAuthUser: of(authUser)
-        }
-    );
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({

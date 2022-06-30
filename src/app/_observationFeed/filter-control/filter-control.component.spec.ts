@@ -1,25 +1,55 @@
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { IAuthUser } from 'src/app/_auth/i-auth-user.dto';
+import { of } from 'rxjs';
 
-// import { FilterControlComponent } from './filter-control.component';
+import { FilterControlComponent } from './filter-control.component';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
-// describe('FilterControlComponent', () => {
-//   let component: FilterControlComponent;
-//   let fixture: ComponentFixture<FilterControlComponent>;
+// ToDo: Test the template
 
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       declarations: [ FilterControlComponent ]
-//     })
-//     .compileComponents();
-//   });
+describe('FilterControlComponent', () => {
+  let component: FilterControlComponent;
+  let fixture: ComponentFixture<FilterControlComponent>;
 
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(FilterControlComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
+  let fakeAuthService: AuthenticationService;
 
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
+  const authUser: IAuthUser = {
+      userName: 'test',
+      avatar: 'testAvatar',
+      defaultLocationLatitude: 0.99,
+      defaultLocationLongitude: 0.88
+  }
+
+  fakeAuthService = jasmine.createSpyObj<AuthenticationService>(
+      'AuthenticationService',
+      {
+          checkAuthStatus: undefined,
+          logout: undefined
+      },
+      {
+          isAuthorisedObservable: of(false),
+          isAuthorised: false,
+          getAuthUser: of(authUser)
+      }
+  );
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ FilterControlComponent ],
+      imports: [ NgbDropdownModule ],
+      providers: [{ provide: AuthenticationService, useValue: fakeAuthService }]
+    })
+    .compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(FilterControlComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

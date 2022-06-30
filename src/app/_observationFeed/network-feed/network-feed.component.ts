@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { ObservationFeedService } from '../observation-feed.service';
 
 @Component({
@@ -15,8 +14,7 @@ export class NetworkFeedComponent implements OnInit {
 
   public title = 'Latest observations in your network';
 
-  constructor(readonly _service: ObservationFeedService
-    , readonly _authService: AuthenticationService) { }
+  constructor(readonly _service: ObservationFeedService) { }
 
   ngOnInit(): void {
     this._getData();

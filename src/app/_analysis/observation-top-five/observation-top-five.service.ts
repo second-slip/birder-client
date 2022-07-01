@@ -35,7 +35,7 @@ export class ObservationTopFiveService implements OnDestroy {
       .subscribe({
         next: (response) => {
           this._topObservations$.next(response);
-          console.log(response);
+          //console.log(response);
         },
         error: (e) => { this._handleError(e); },
         complete: () => { if (this._isError$) this._isError$.next(false); }

@@ -6,14 +6,14 @@
             <h2 class="card-title">Scientific classification</h2>
             <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
             <p class="classification">Class: <span class="bold">{{ bird.class }}</span></p>
-            <p class="classification" data-testid="order">Order: <span class="bold">{{ bird.order }}</span></p>
+            <p class="classification">Order: <span class="bold" data-testid="order">{{ bird.order }}</span></p>
             <p class="classification">Family: <span class="bold">{{ bird.family }}</span></p>
             <p class="classification">Genus: <span class="bold">{{ bird.genus }}</span></p>
             <p class="classification">Species: <span class="bold">{{ bird.species }}</span></p>
             <br>
             <h2 class="card-title">Common names</h2>
             <p class="classification">English name: <span class="bold">{{ bird.englishName }}</span></p>
-            <p class="classification" data-testid="international-name">International name: <span class="bold">{{ bird.internationalName == '' ? 'N/a' :
+            <p class="classification">International name: <span class="bold" data-testid="international-name">{{ bird.internationalName == '' ? 'N/a' :
                 bird.internationalName }}</span></p>
             <!-- totalItems > 1 ? 'times:' : 'time:' -->
             <!-- <p>Family: <span class="bold">{{ bird.family }}</span></p>  -->
@@ -26,7 +26,7 @@
         <div class="card">
           <div class="card-body">
             <h2 class="card-title">BTO status in the UK</h2>
-            <p data-testid="bto-status">BTO status (UK): <span class="bold">{{ bird.btoStatusInBritain }}</span></p>
+            <p>BTO status (UK): <span class="bold" data-testid="bto-status">{{ bird.btoStatusInBritain }}</span></p>
             <p>Population estimate (UK): <span class="bold">{{ bird.populationSize }}</span></p>
             <p>Birder category: <span class="bold">{{ bird.birderStatus }} species</span></p>
             <br>

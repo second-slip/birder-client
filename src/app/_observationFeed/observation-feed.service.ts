@@ -43,7 +43,7 @@ export class ObservationFeedService implements OnDestroy {
         next: (items: IObservationFeed[]) => {
           this._observations$.next([...this._observations$.getValue(), ...items]); // or concat?
           this._moreToGet(pageSize, items.length);
-          console.log(this._observations$.getValue());
+          // console.log(this._observations$.getValue());
         },
         error: (e: any) => { this._handleError(e); },
         complete: () => { if (this._isError$) this._isError$.next(false); }

@@ -1,12 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, finalize, Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, finalize, Observable, Subject, takeUntil } from 'rxjs';
 import { IBirdSummary } from '../i-bird-summary.dto';
 import { IBirdIndex } from './i-bird-index.dto';
 
 @Injectable()
-export class BirdIndexService {
-
+export class BirdIndexService implements OnDestroy {
+  private _subscription = new Subject();
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private readonly _totalItems$: BehaviorSubject<number> = new BehaviorSubject(0);
@@ -48,7 +48,7 @@ export class BirdIndexService {
       } : {};
 
     this._httpClient.get<IBirdIndex>('api/Birds', options)
-      .pipe(finalize(() => this._isLoading$.next(false)))
+      .pipe(finalize(() => this._isLoading$.next(false)), takeUntil(this._subscription))
       .subscribe({
         next: (response) => {
           this._birds$.next(response.items);
@@ -59,8 +59,12 @@ export class BirdIndexService {
       })
   }
 
-  private _handleError(error: any) { // no need to send error to the component...
-    //console.log(error);
+  private _handleError(error: any) {
     this._isError$.next(true);
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.next('');
+    this._subscription.complete();
   }
 }

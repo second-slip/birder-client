@@ -20,7 +20,7 @@
 
     <ng-container *ngIf="(_service.getBirds | async) as birds; else loadingOrError">
 
-        <div *ngIf="birds.length">
+        <div *ngIf="birds.length" data-testid="main-content">
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -73,7 +73,7 @@
         </div>
 
         <ng-container *ngIf="!birds.length">
-            <p class="alert alert-info">
+            <p class="alert alert-info" data-testid="error-content-zero">
                 <strong>Whoops!</strong>&nbsp;An error occurred<br>
                 <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
                     Again</button>
@@ -84,7 +84,7 @@
 
     <ng-template #loadingOrError>
         <ng-container *ngIf="(_service.isError | async); else loading">
-            <p class="centre">
+            <p class="centre" data-testid="error-content">
                 <strong>Whoops!</strong>&nbsp;An error occurred<br>
                 <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
                     Again</button>

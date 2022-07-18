@@ -28,7 +28,7 @@ describe('BirdInfoComponent', () => {
 
   it('renders the species information from the from the Input() object', () => {
     expectText(fixture, 'order', String(fakeIBirdDetail.order));
-    expectText(fixture, 'international-name', String(fakeIBirdDetail.internationalName));
+    expectText(fixture, 'international-name', String('N/a'));
     expectText(fixture, 'bto-status', String(fakeIBirdDetail.btoStatusInBritain));
   });
 });

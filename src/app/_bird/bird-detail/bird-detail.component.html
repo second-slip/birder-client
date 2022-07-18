@@ -2,7 +2,7 @@
 
     <ng-container *ngIf="(_service.getBird | async) as bird; else loadingOrError">
 
-        <h1>{{ bird.englishName }}<small><i> {{ bird.species }}</i></small></h1>
+        <h1 data-testid="main-title">{{ bird.englishName }}<small><i> {{ bird.species }}</i></small></h1>
 
         <hr>
 
@@ -55,7 +55,7 @@
 
     <ng-template #loadingOrError>
         <ng-container *ngIf="(_service.isError | async); else loading">
-            <p class="centre">
+            <p class="centre" data-testid="error-content">
                 <strong>Whoops!</strong>&nbsp;An error occurred<br>
                 <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
                     Again</button>

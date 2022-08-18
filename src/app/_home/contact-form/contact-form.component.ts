@@ -1,5 +1,5 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { throwError } from 'rxjs';
+import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { finalize, Subject, throwError, takeUntil } from 'rxjs';
 import { ContactFormModel } from './contact-form-model';
 import { ContactFormService } from './contact-form.service';
 
@@ -9,7 +9,8 @@ import { ContactFormService } from './contact-form.service';
   styleUrls: ['./contact-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ContactFormComponent {
+export class ContactFormComponent implements OnDestroy {
+  private _subscription = new Subject();
   public model: ContactFormModel;
   public requesting = false;
   public submitted = false;
@@ -27,16 +28,18 @@ export class ContactFormComponent {
     this.requesting = true;
 
     this.service.postMessage(this.model)
+      .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
       .subscribe({
-        next: () => {
-          this.submitted = true;
-          this.requesting = false;
-        },
+        next: () => { this.submitted = true; },
         error: (e: any) => {
           this.errorObject = e;
-          this.requesting = false;
           return throwError(() => e);
         }
       })
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.next('');
+    this._subscription.complete();
   }
 }

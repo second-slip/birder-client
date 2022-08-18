@@ -20,10 +20,6 @@ export class ContactFormComponent implements OnDestroy {
     this.model = new ContactFormModel('', '', '');
   }
 
-  public onReset(): void {
-    this.model = new ContactFormModel('', '', '');
-  }
-
   public onSubmit(): void {
     this.requesting = true;
 
@@ -36,6 +32,10 @@ export class ContactFormComponent implements OnDestroy {
           return throwError(() => e);
         }
       })
+  }
+
+  public onReset(): void {
+    this.model = new ContactFormModel('', '', '');
   }
 
   ngOnDestroy(): void {

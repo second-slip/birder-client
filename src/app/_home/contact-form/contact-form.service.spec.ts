@@ -2,9 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { messageData } from 'src/app/testing/contact-form-data';
-
 import { ContactFormModel } from './contact-form-model';
-
 import { ContactFormService } from './contact-form.service';
 
 describe('ContactFormService', () => {
@@ -13,8 +11,7 @@ describe('ContactFormService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule ]//,
-      //providers: [ContactFormService]
+      imports: [HttpClientTestingModule]
     });
     service = TestBed.inject(ContactFormService);
     controller = TestBed.inject(HttpTestingController);
@@ -25,7 +22,6 @@ describe('ContactFormService', () => {
   });
 
   it('sends contact message', () => {
-
     let result: ContactFormModel | undefined;
     service.postMessage(messageData).subscribe((otherResult) => {
       result = otherResult;
@@ -48,7 +44,6 @@ describe('ContactFormService', () => {
     };
 
     service.postMessage(messageData).subscribe(fail, recordError, fail);
-
     const status = 500;
     const statusText = 'Internal Server Error';
     const errorEvent = new ErrorEvent('API error');
@@ -65,7 +60,6 @@ describe('ContactFormService', () => {
       expect(error.statusText).toBe(statusText);
     });
   });
-
 
   it('should be created', () => {
     expect(service).toBeTruthy();

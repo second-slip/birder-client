@@ -10,31 +10,33 @@ import { ContactFormService } from './contact-form.service';
   encapsulation: ViewEncapsulation.None
 })
 export class ContactFormComponent {
-  model: ContactFormModel;
-  requesting = false;
-  submitted = false;
+  public model: ContactFormModel;
+  public requesting = false;
+  public submitted = false;
   public errorObject = null;
 
   constructor(private service: ContactFormService) {
     this.model = new ContactFormModel('', '', '');
   }
 
-  onReset(): void {
+  public onReset(): void {
     this.model = new ContactFormModel('', '', '');
   }
 
-  onSubmit(): void {
+  public onSubmit(): void {
     this.requesting = true;
 
     this.service.postMessage(this.model)
-      .subscribe(_ => {
-        this.submitted = true;
-        this.requesting = false;
-      },
-        (error: any) => {
-          this.errorObject = error
+      .subscribe({
+        next: () => {
+          this.submitted = true;
           this.requesting = false;
-          return throwError(error);
-        });
+        },
+        error: (e: any) => {
+          this.errorObject = e;
+          this.requesting = false;
+          return throwError(() => e);
+        }
+      })
   }
 }

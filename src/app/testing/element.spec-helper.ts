@@ -97,6 +97,22 @@ export function expectText<T>(
 
 /**
  * Expects that the element with the given `data-testid` attribute
+ * contains the given text content.
+ *
+ * @param fixture Component fixture
+ * @param testId Test id set by `data-testid`
+ * @param text Expected text
+ */
+ export function expectTextToContain<T>(
+  fixture: ComponentFixture<T>,
+  testId: string,
+  text: string,
+): void {
+  expect(getText(fixture, testId)).toContain(text);
+}
+
+/**
+ * Expects that the element with the given `data-testid` attribute
  * has the given text content.
  *
  * @param fixture Component fixture

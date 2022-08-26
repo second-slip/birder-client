@@ -13,8 +13,7 @@ export class ContactFormComponent implements OnDestroy {
   private _subscription = new Subject();
   public model: ContactFormModel;
   public requesting = false;
-  public submitted = false;
-  public errorObject = null;
+  public submitProgress: 'idle' | 'success' | 'error' = 'idle';
 
   constructor(private service: ContactFormService) {
     this.model = new ContactFormModel('', '', '');
@@ -26,16 +25,9 @@ export class ContactFormComponent implements OnDestroy {
     this.service.postMessage(this.model)
       .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
       .subscribe({
-        next: () => { this.submitted = true; },
-        error: (e: any) => {
-          this.errorObject = e;
-          return throwError(() => e);
-        }
+        next: () => { this.submitProgress = 'success'; },
+        error: (e: any) => { this.submitProgress = 'error'; }
       })
-  }
-
-  public onReset(): void {
-    this.model = new ContactFormModel('', '', '');
   }
 
   ngOnDestroy(): void {

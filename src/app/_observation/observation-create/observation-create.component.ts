@@ -58,9 +58,7 @@ export class ObservationCreateComponent implements OnInit {
         .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
         .subscribe({
           next: (r) => { this._router.navigate(['/observation/detail/' + r.observationId.toString()]); },
-          error: (e) => {
-            this.errorObject = e;
-          }
+          error: (e) => { this.errorObject = e; }
         });
 
     } catch (error) {

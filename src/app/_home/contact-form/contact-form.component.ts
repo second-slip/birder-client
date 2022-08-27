@@ -1,5 +1,5 @@
 import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { finalize, Subject, throwError, takeUntil } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { ContactFormModel } from './contact-form-model';
 import { ContactFormService } from './contact-form.service';
 
@@ -20,6 +20,9 @@ export class ContactFormComponent implements OnDestroy {
   }
 
   public onSubmit(): void {
+
+    if(!this.model.name || !this.model.email || !this.model.message) return;
+
     this.requesting = true;
 
     this.service.postMessage(this.model)

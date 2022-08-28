@@ -127,6 +127,19 @@ describe('ContactFormComponent', () => {
   }));
 
 
+  // This should not happen as the 'submit' button should be disabled, but:
+  it('does not submit an invalid form', fakeAsync(async () => {
+    await setup();
+  
+    // Wait for async validators
+    tick(1000);
+  
+    findEl(fixture, 'contactForm').triggerEventHandler('submit', {});
+  
+    expect(fakeContactFormService.postMessage).not.toHaveBeenCalled();
+  }));
+
+
   const requiredFields = [
     'name',
     'email',

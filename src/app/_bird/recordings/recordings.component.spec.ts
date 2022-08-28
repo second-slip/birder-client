@@ -1,6 +1,8 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RecordingsComponent } from './recordings.component';
+import { RecordingsService } from './recordings.service';
 
 describe('RecordingsComponent', () => {
   let component: RecordingsComponent;
@@ -8,9 +10,11 @@ describe('RecordingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RecordingsComponent ]
+      imports: [ HttpClientTestingModule ],
+      declarations: [RecordingsComponent],
+      providers: [RecordingsService]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

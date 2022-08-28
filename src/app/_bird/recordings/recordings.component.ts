@@ -28,6 +28,7 @@ export class RecordingsComponent implements OnInit, OnDestroy {
   // ToDo: refactor...into separate service...
   private _getRecordings(): void {
     this.recordings$ = this._service.getRecordings(this.species)
+    //.pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
     .pipe(share(), takeUntil(this._subscription),
     catchError(err => {
       this.errorObject = err;

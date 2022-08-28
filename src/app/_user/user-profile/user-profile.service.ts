@@ -38,9 +38,7 @@ export class UserProfileService {
     this._httpClient.get<IUserProfile>('api/UserProfile', options)
       .pipe(finalize(() => this._isLoading$.next(false)))
       .subscribe({
-        next: (response) => {
-          this._profile$.next(response);
-        },
+        next: (response) => { this._profile$.next(response); },
         error: (e) => { this._handleError(e); },
         complete: () => { if (this._isError$) this._isError$.next(false); }
       })

@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
-import { UsernameValidationService } from 'src/app/_account/account-registration/username-validation.service';
+import { AccountValidationService } from 'src/app/_account/account-validation.service';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { RestrictedNameValidator } from 'src/app/_validators';
 import { AccountManagerService } from '../account-manager.service';
@@ -16,7 +16,6 @@ import { IManageProfile } from './i-manage-profile.dto';
 })
 export class AccountManageProfileComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
-
   public requesting: boolean;
   public manageProfileForm: UntypedFormGroup;
   public errorObject: any = null;
@@ -24,7 +23,7 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
   constructor(private _formBuilder: UntypedFormBuilder
     , private readonly _service: AccountManagerService
     , private readonly _authService: AuthenticationService
-    , private readonly _usernameService: UsernameValidationService
+    , private _validation: AccountValidationService
     , private readonly _router: Router) { }
 
   ngOnInit(): void {
@@ -80,7 +79,8 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
             Validators.maxLength(20),
             Validators.pattern('^(?=.*[a-zA-Z])[a-zA-Z0-9]+$'), // ^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$
             RestrictedNameValidator(/birder/i)],
-          asyncValidators: [this._usernameService.usernameValidator()],
+          //asyncValidators: [this._usernameService.usernameValidator()],
+          asyncValidators: (control: AbstractControl) => this._validation.validateUsername(control.value),
           updateOn: 'blur'
         }
       ],
@@ -101,7 +101,8 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
       { type: 'maxlength', message: 'Username cannot be more than 25 characters long' },
       { type: 'pattern', message: 'Your username must be alphanumeric (no special characters) and must not contain spaces' },
       { type: 'restrictedName', message: 'Username may not contain the name "birder"' },
-      { type: 'usernameExists', message: 'Username is not available.  Please type another one...' },
+      // { type: 'usernameExists', message: 'Username is not available.  Please type another one...' },
+      { type: 'usernameTaken', message: 'Username is not available.  Please type another one...' },
       { type: 'serverError', message: 'Unable to connect to the server.  Please try again.' }
     ],
     'email': [

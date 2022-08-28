@@ -2,7 +2,7 @@
 
     <ng-container *ngIf="userRegisterForm; else loadingOrError">
 
-        <h1>New Account Registration Form</h1>
+        <h1>New Account Registration</h1>
 
         <form [formGroup]="userRegisterForm" novalidate (ngSubmit)="onSubmit(userRegisterForm.value)"
             autocomplete="off">
@@ -28,8 +28,12 @@
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input class="form-control" id="email" type="email" placeholder="Email" formControlName="email"
-                    required>
+                <div class="is-loading">
+                    <input class="form-control" id="email" type="email" placeholder="Email" formControlName="email"
+                        required>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                        *ngIf="(userRegisterForm.get('email')?.pending)" style="float: right; margin-left: 8px"></span>
+                </div>
                 <div *ngFor="let validation of userRegister_validation_messages.email">
                     <small class="text-danger"
                         *ngIf="userRegisterForm.get('email')?.hasError(validation.type) && (userRegisterForm.get('email')?.dirty || userRegisterForm.get('email')?.touched)">

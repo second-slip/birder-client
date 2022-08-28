@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { MatchOtherValidator, RestrictedNameValidator } from 'src/app/_validators';
 import { ValidatePassword } from 'src/app/_validators';
+import { AccountValidationService } from '../account-validation.service';
 import { AccountService } from '../account.service';
 import { IAccountRegistration } from './i-account-registration';
-import { UsernameValidationService } from './username-validation.service';
 
 @Component({
   selector: 'app-account-registration',
@@ -20,12 +20,10 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
   public invalidRegistration: boolean;
   public errorObject: any = null;
   public userRegisterForm: UntypedFormGroup;
-  // passwordGroup: FormGroup;
-  // parentErrorStateMatcher = new ParentErrorStateMatcher();
 
   constructor(private _formBuilder: UntypedFormBuilder
-    , private _usernameService: UsernameValidationService
     , private _service: AccountService
+    , private _validation: AccountValidationService
     , private _router: Router) { }
 
   ngOnInit() {
@@ -46,8 +44,9 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
       this._service.register(model)
         .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
         .subscribe({
-          next: (r) => { this._router.navigate(['/confirm-email']); },
+          next: () => { this._router.navigate(['/confirm-email']); },
           error: (e) => {
+            //todo: change implemtation
             this.errorObject = e;
             this.invalidRegistration = true;
           }
@@ -56,7 +55,6 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.log(error);
     }
-
   }
 
   private _createForms() {
@@ -69,15 +67,16 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
             Validators.maxLength(20),
             Validators.pattern('^(?=.*[a-zA-Z])[a-zA-Z0-9]+$'), // ^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$
             RestrictedNameValidator(/birder/i)],
-          asyncValidators: [this._usernameService.usernameValidator()],
+          asyncValidators: (control: AbstractControl) => this._validation.validateUsername(control.value),
           updateOn: 'blur'
         }
       ],
-      email: ['',
+      email: ['', // ToDo: use the alternative format????????
         {
           validators: [Validators.required,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')],
-          // updateOn: 'blur'
+          asyncValidators: (control: AbstractControl) => this._validation.validateEmail(control.value),
+          updateOn: 'blur'
         }
       ],
       passwordGroup: this._formBuilder.group({
@@ -104,12 +103,13 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
       { type: 'maxlength', message: 'Username cannot be more than 20 characters long' },
       { type: 'pattern', message: 'Your username must be alphanumeric (no special characters) and must not contain spaces' },
       { type: 'restrictedName', message: 'Username may not contain the name "birder"' },
-      { type: 'usernameExists', message: 'Username is not available.  Please type another one...' },
+      { type: 'usernameTaken', message: 'XXXXXXXX username is taken XXXXXXXXX' },
       { type: 'serverError', message: 'Unable to connect to the server.  Please try again.' }
     ],
     'email': [
       { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Enter a valid email' }
+      { type: 'pattern', message: 'Enter a valid email' },
+      { type: 'emailTaken', message: 'XXXXXXXX email is taken XXXXXXXXX' }
     ],
     'password': [
       { type: 'required', message: 'Password is required' },

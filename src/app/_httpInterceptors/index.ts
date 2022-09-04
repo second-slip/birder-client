@@ -15,15 +15,15 @@ import { RequestCache, RequestCacheWithMap } from './request-cache.service';
 
 /** Http interceptor providers in outside-in order */
 export const HttpInterceptorProviders = [
-//   { provide: HTTP_INTERCEPTORS, useClass: NoopInterceptor, multi: true },
+  //   { provide: HTTP_INTERCEPTORS, useClass: NoopInterceptor, multi: true },
 
-//   { provide: HTTP_INTERCEPTORS, useClass: EnsureHttpsInterceptor, multi: true },
-//   { provide: HTTP_INTERCEPTORS, useClass: TrimNameInterceptor, multi: true },
-   { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true, },
+  //   { provide: HTTP_INTERCEPTORS, useClass: EnsureHttpsInterceptor, multi: true },
+  //   { provide: HTTP_INTERCEPTORS, useClass: TrimNameInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true, },
   { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
 
-//   { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true },
-//   { provide: HTTP_INTERCEPTORS, useClass: UploadInterceptor, multi: true },
+  //   { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true },
+  //   { provide: HTTP_INTERCEPTORS, useClass: UploadInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true },
   { provide: RequestCache, useClass: RequestCacheWithMap }
   // { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },

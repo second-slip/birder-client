@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { IAccountRegistration } from './account-registration/i-account-registration';
 import { IUserEmail } from './i-user-email.dto';
+import { IUsername } from './i-username.dto';
 import { IResetPassword } from './reset-password/i-reset-password.dto';
 
 const httpOptions = {
@@ -20,25 +21,30 @@ export class AccountService {
     return this._http.post<IAccountRegistration>('api/Account/Register', model, httpOptions);
   }
 
-  public requestPasswordReset(model: IUserEmail): Observable<IUserEmail> { //todo: get rid of the stupid IUserEmail model
-    return this._http.post<IUserEmail>('api/Account/RequestPasswordReset', model, httpOptions);
+  public requestPasswordReset(model: IUserEmail): Observable<Boolean> {
+    return this._http.post<{ sucess: boolean }>('api/Account/request-password-reset', model, httpOptions)
+      .pipe(map((result) => result.sucess));
   }
 
-  public resendEmailConfirmation(model: IUserEmail): Observable<IUserEmail> { //todo: get rid of the stupid IUserEmail model
+  public resendEmailConfirmation(model: IUserEmail): Observable<IUserEmail> {
     return this._http.post<IUserEmail>('api/Account/ResendEmailConfirmation', model, httpOptions);
   }
 
-  public resetPassword(model: IResetPassword): Observable<IResetPassword> { //todo: get rid of the stupid IUserEmail model
+  public resetPassword(model: IResetPassword): Observable<IResetPassword> {
     return this._http.post<IResetPassword>('api/Account/ResetPassword', model, httpOptions);
   }
 
   public isUsernameTaken(username: string): Observable<boolean> {
-    return this._http.post<{ usernameTaken: boolean }>('api/Account/checkusername', { username })
+    const model = <IUsername>{ username: username };
+
+    return this._http.post<{ usernameTaken: boolean }>('api/Account/check-username', { model }, httpOptions) //are content type headers needed?
       .pipe(map((result) => result.usernameTaken));
   }
 
   public isEmailTaken(email: string): Observable<boolean> {
-    return this._http.post<{ emailTaken: boolean }>('api/Account/checkemail', { email })
+    const model = <IUserEmail>{ email: email };
+
+    return this._http.post<{ emailTaken: boolean }>('api/Account/check-email', { model }, httpOptions) //are content type headers needed?
       .pipe(map((result) => result.emailTaken));
   }
 }

@@ -2,8 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
-import { MatchOtherValidator, RestrictedNameValidator } from 'src/app/_validators';
-import { ValidatePassword } from 'src/app/_validators';
+import { MatchOtherValidator, RestrictedNameValidator, ValidatePassword } from 'src/app/_validators';
 import { AccountValidationService } from '../account-validation.service';
 import { AccountService } from '../account.service';
 import { IAccountRegistration } from './i-account-registration';
@@ -34,7 +33,7 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
     this.requesting = true;
 
     try {
-      const model = <IAccountRegistration>{
+      const model = <IAccountRegistration>{ //?????????????????????????????????????????????
         userName: value.username,
         email: value.email,
         password: value.passwordGroup.password,

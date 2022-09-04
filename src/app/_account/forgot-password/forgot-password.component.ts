@@ -26,22 +26,20 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   constructor(private _formBuilder: UntypedFormBuilder
     , private _service: AccountService) { }
-  
+
   ngOnInit(): void {
     this._createForms();
   }
 
-  public onSubmit(formData: IUserEmail): void {
+  public onSubmit(model: IUserEmail): void {
     this.requesting = true;
 
-    this._service.requestPasswordReset(formData)
-    .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
-    .subscribe({
-      next: (r) => { this.submitted = true; },
-      error: (e) => {
-        this.errorObject = e;
-      }
-    });
+    this._service.requestPasswordReset(model)
+      .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
+      .subscribe({
+        next: () => { this.submitted = true; },
+        error: (e) => { this.errorObject = e; }
+      });
   }
 
   private _createForms(): void {

@@ -33,7 +33,7 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
     this.requesting = true;
 
     try {
-      const model = <IAccountRegistration>{ //?????????????????????????????????????????????
+      const model = <IAccountRegistration>{
         userName: value.username,
         email: value.email,
         password: value.passwordGroup.password,
@@ -45,7 +45,7 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
         .subscribe({
           next: () => { this._router.navigate(['/confirm-email']); },
           error: (e) => {
-            //todo: change implemtation
+            //todo: change implementation...
             this.errorObject = e;
             this.invalidRegistration = true;
           }

@@ -70,7 +70,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
       this._service.resetPassword(model)
         .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
         .subscribe({
-          next: (r) => { this.submitted = true; },
+          next: () => { this.submitted = true; },
           error: (e) => { this.errorObject = e; }
         });
     }

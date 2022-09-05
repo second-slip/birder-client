@@ -17,21 +17,20 @@ export class AccountService {
 
   constructor(private readonly _http: HttpClient) { }
 
-  public register(model: IAccountRegistration): Observable<IAccountRegistration> {
-    return this._http.post<IAccountRegistration>('api/account/register', model, httpOptions);
+  public register(model: IAccountRegistration): Observable<{ success: true }> {
+    return this._http.post<{ success: true }>('api/account/register', model, httpOptions);
   }
 
-  public requestPasswordReset(model: IUserEmail): Observable<boolean> {
-    return this._http.post<{ success: boolean }>('api/account/request-password-reset', model, httpOptions)
-      .pipe(map((result) => result.success));
+  public requestPasswordReset(model: IUserEmail): Observable<{ success: true }> {
+    return this._http.post<{ success: true }>('api/account/request-password-reset', model, httpOptions);
   }
 
-  public resendEmailConfirmation(model: IUserEmail): Observable<IUserEmail> {
-    return this._http.post<IUserEmail>('api/account/resend-email-confirmation', model, httpOptions);
+  public resendEmailConfirmation(model: IUserEmail): Observable<{ success: true }> {
+    return this._http.post<{ success: true }>('api/account/resend-email-confirmation', model, httpOptions);
   }
 
-  public resetPassword(model: IResetPassword): Observable<IResetPassword> {
-    return this._http.post<IResetPassword>('api/account/reset-password', model, httpOptions);
+  public resetPassword(model: IResetPassword): Observable<{ success: true }> {
+    return this._http.post<{ success: true }>('api/account/reset-password', model, httpOptions);
   }
 
   public isUsernameTaken(username: string): Observable<boolean> {

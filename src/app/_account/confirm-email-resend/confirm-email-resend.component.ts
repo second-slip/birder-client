@@ -24,8 +24,7 @@ export class ConfirmEmailResendComponent implements OnInit, OnDestroy {
     ],
   };
 
-  constructor(private _formBuilder: UntypedFormBuilder
-    , private _service: AccountService) {}
+  constructor(private _formBuilder: UntypedFormBuilder, private _service: AccountService) {}
 
   ngOnInit(): void {
     this._createForms();
@@ -37,7 +36,7 @@ export class ConfirmEmailResendComponent implements OnInit, OnDestroy {
     this._service.resendEmailConfirmation(formData)
     .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
     .subscribe({
-      next: (r) => { this.submitted = true; },
+      next: () => { this.submitted = true; },
       error: (e) => {
         this.errorObject = e;
       }

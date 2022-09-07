@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { ObservationCountService } from '../_analysis/observation-count/observation-count.service';
+import { ObservationTopFiveService } from '../_analysis/observation-top-five/observation-top-five.service';
 import { IObservation } from './i-observation.dto';
 import { ICreateObservation } from './observation-create/i-create-observation.dto';
 
@@ -13,7 +15,9 @@ const httpOptions = {
 })
 export class ObservationCrudService {
 
-  constructor(private readonly _http: HttpClient) { }
+  constructor(private readonly _http: HttpClient,
+    private readonly _obsCountService: ObservationCountService,
+    private readonly _obstopFiveService: ObservationTopFiveService) { }
 
   public getObservation(id: string): Observable<IObservation> {
     const options = id ?
@@ -46,7 +50,7 @@ export class ObservationCrudService {
 
 
   private _onObservationsChanged(): void {
-    // this._service.getData();
-    // this._topService.getData();
+    this._obsCountService.getData();
+    this._obstopFiveService.getData();
   }
 }

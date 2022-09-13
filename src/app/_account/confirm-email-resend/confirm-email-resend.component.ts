@@ -13,34 +13,26 @@ import { IUserEmail } from '../i-user-email.dto';
 export class ConfirmEmailResendComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
   public requesting: boolean;
-  public submitted: boolean = false;
   public resendConfirmEmailForm: UntypedFormGroup;
-  public errorObject: any = null;
+  public submitProgress: 'idle' | 'success' | 'error' = 'idle';
 
-  resend_confirm_email_validation_messages = {
-    'email': [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Enter a valid email' }
-    ],
-  };
-
-  constructor(private _formBuilder: UntypedFormBuilder, private _service: AccountService) {}
+  constructor(private _formBuilder: UntypedFormBuilder, private _service: AccountService) { }
 
   ngOnInit(): void {
     this._createForms();
   }
 
   public onSubmit(formData: IUserEmail): void {
+    if (!this.resendConfirmEmailForm.valid) return;
+
     this.requesting = true;
 
     this._service.resendEmailConfirmation(formData)
-    .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
-    .subscribe({
-      next: () => { this.submitted = true; },
-      error: (e) => {
-        this.errorObject = e;
-      }
-    });
+      .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
+      .subscribe({
+        next: () => { this.submitProgress = 'success'; },
+        error: () => { this.submitProgress = 'error'; }
+      });
   }
 
   private _createForms(): void {
@@ -56,4 +48,11 @@ export class ConfirmEmailResendComponent implements OnInit, OnDestroy {
     this._subscription.next('');
     this._subscription.complete();
   }
+
+  resend_confirm_email_validation_messages = {
+    'email': [
+      { type: 'required', message: 'Email is required' },
+      { type: 'pattern', message: 'Enter a valid email' }
+    ]
+  };
 }

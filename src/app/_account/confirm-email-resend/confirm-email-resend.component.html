@@ -5,12 +5,12 @@
         <br>It is advised to check your 'spam' or 'junk' folder first.
     </p>
 
-    <div [hidden]="submitted">
-        <form [formGroup]="resendConfirmEmailForm" novalidate (ngSubmit)="onSubmit(resendConfirmEmailForm.value)">
+    <div *ngIf="submitProgress !== 'success'">
+        <form [formGroup]="resendConfirmEmailForm" novalidate (ngSubmit)="onSubmit(resendConfirmEmailForm.value)" data-testid="resendConfirmEmailForm">
 
             <div class="form-group">
-                <input class="form-control" type="email" placeholder="Email" formControlName="email" required>
-                <div *ngFor="let validation of resend_confirm_email_validation_messages.email">
+                <input class="form-control" type="email" placeholder="Email" data-testid="email" formControlName="email" required>
+                <div *ngFor="let validation of resend_confirm_email_validation_messages.email" data-testid="email-error">
                     <small class="text-danger"
                         *ngIf="resendConfirmEmailForm.get('email')?.hasError(validation.type) && (resendConfirmEmailForm.get('email')?.dirty || resendConfirmEmailForm.get('email')?.touched)">
                         {{validation.message}}</small>
@@ -18,7 +18,7 @@
             </div>
 
             <button *ngIf="!requesting" type="submit" class="btn btn-primary btn-sm"
-                [disabled]="!resendConfirmEmailForm.valid">
+                [disabled]="!resendConfirmEmailForm.valid" data-testid="submit">
                 Submit
             </button>
             <button *ngIf="requesting" class="btn btn-primary btn-sm" type="submit" disabled>
@@ -28,12 +28,11 @@
         </form>
     </div>
 
-    <div [hidden]="!errorObject" class="alert alert-danger">
-        An occurred. Please try again
+    <div *ngIf="submitProgress === 'error'" class="alert alert-danger" data-testid="error">
+        An error occurred. Please try again
     </div>
 
-    <div [hidden]="!submitted" class="alert alert-success">
+    <div *ngIf="submitProgress === 'success'" class="alert alert-success" data-testid="success">
         <strong>Success!</strong> An email confirmation has been sent to your inbox.
     </div>
-
 </div>

@@ -1,18 +1,12 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule, UntypedFormBuilder } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { dispatchFakeEvent, expectText, expectTextToContain, findEl, setFieldValue } from 'src/app/testing/element.spec-helper';
 import { AccountService } from '../account.service';
 import { DebugElement } from '@angular/core';
 import { ForgotPasswordComponent } from './forgot-password.component';
 import { of, throwError } from 'rxjs';
 import {
-  usernameModel,
-  registerModel,
-  resetPasswordModel,
-  username,
   emailModel,
-  password,
-  confirmPassword,
   email
 } from 'src/app/testing/account-tests-helpers';
 

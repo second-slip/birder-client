@@ -1,28 +1,17 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { IAccountRegistration } from './account-registration/i-account-registration';
-
 import { AccountService } from './account.service';
-import { IUserEmail } from './i-user-email.dto';
-import { IUsername } from './i-username.dto';
-import { IResetPassword } from './reset-password/i-reset-password.dto';
 
-const username = 'test-username';
-const email = 'test@email.net';
-const password = 'password';
-const confirmPassword = 'confirmPassword';
-const model = <IUserEmail>{ email: email };
-const usernameModel = <IUsername>{ username: username };
-const registerModel = <IAccountRegistration>{
-  userName: username, email: email, password: password, confirmPassword: confirmPassword
-};
-const resetPasswordModel = <IResetPassword>{
-  email: email,
-  password: password,
-  confirmPassword: confirmPassword,
-  code: ''
-};
+import {
+  registerModel,
+  resetPasswordModel,
+  username,
+  emailModel,
+  password,
+  confirmPassword,
+  email
+} from 'src/app/testing/account-tests-helpers';
 
 describe('AccountService', () => {
   let service: AccountService;
@@ -91,7 +80,7 @@ describe('AccountService', () => {
 
   it('checks the requestPasswordReset model is posted', () => {
     let result: { success: true } | undefined;
-    service.requestPasswordReset(model).subscribe((otherResult) => {
+    service.requestPasswordReset(emailModel).subscribe((otherResult) => {
       result = otherResult;
     });
 
@@ -107,7 +96,7 @@ describe('AccountService', () => {
 
   it('checks it resends email', () => {
     let result: { success: true } | undefined;
-    service.resendEmailConfirmation(model).subscribe((otherResult) => {
+    service.resendEmailConfirmation(emailModel).subscribe((otherResult) => {
       result = otherResult;
     });
 
@@ -115,7 +104,7 @@ describe('AccountService', () => {
       method: 'POST',
       url: 'api/account/resend-email-confirmation',
     });
-    expect(request.request.body).toEqual(model); // model is created by the service from string email parameter 
+    expect(request.request.body).toEqual(emailModel); // model is created by the service from string email parameter 
     request.flush({ success: true });
 
     expect(result).toEqual({ success: true });
@@ -146,8 +135,8 @@ describe('AccountService', () => {
     service.isUsernameTaken(username).subscribe(fail, recordError, fail);
     service.isEmailTaken(email).subscribe(fail, recordError, fail);
     service.register(registerModel).subscribe(fail, recordError, fail);
-    service.requestPasswordReset(model).subscribe(fail, recordError, fail);
-    service.resendEmailConfirmation(model).subscribe(fail, recordError, fail);
+    service.requestPasswordReset(emailModel).subscribe(fail, recordError, fail);
+    service.resendEmailConfirmation(emailModel).subscribe(fail, recordError, fail);
     service.resetPassword(resetPasswordModel).subscribe(fail, recordError, fail);
 
     const status = 500;

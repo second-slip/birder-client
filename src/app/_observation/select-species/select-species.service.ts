@@ -9,6 +9,7 @@ import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
 })
 export class SelectSpeciesService {
   private _dataValidUntil: number = 0;
+  //private _dataValidUntil = new Subject<number>();
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private readonly _birds$: BehaviorSubject<IBirdSummary[]> = new BehaviorSubject<IBirdSummary[]>([]);
@@ -30,11 +31,11 @@ export class SelectSpeciesService {
   public getData(): void {
 
     if (!this._isCacheExpired()) {
-      console.log('cached data are available');
+      //console.log('cached data are available');
       return;
-    } else {
-      console.log('cached data either not available or expired - proceed to data fetch');
-    }
+    } //else {
+    //console.log('cached data either not available or expired - proceed to data fetch');
+    //}
 
     this._isLoading$.next(true);
 

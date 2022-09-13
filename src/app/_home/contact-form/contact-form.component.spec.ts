@@ -1,6 +1,6 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { click, dispatchFakeEvent, expectText, expectTextToContain, findEl, setFieldValue } from 'src/app/testing/element.spec-helper';
+import { dispatchFakeEvent, expectText, expectTextToContain, findEl, setFieldValue } from 'src/app/testing/element.spec-helper';
 import {
   messageData,
   email,
@@ -10,8 +10,15 @@ import {
 
 import { ContactFormComponent } from './contact-form.component';
 import { ContactFormService } from './contact-form.service';
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { of, throwError } from 'rxjs';
+
+const requiredFields = [
+  'name',
+  'email',
+  'message'
+];
+
 
 describe('ContactFormComponent', () => {
   let fixture: ComponentFixture<ContactFormComponent>;
@@ -47,8 +54,7 @@ describe('ContactFormComponent', () => {
         ContactFormComponent
       ],
       imports: [FormsModule],
-      providers: [{ provide: ContactFormService, useValue: fakeContactFormService }]//,
-      //schemas: [NO_ERRORS_SCHEMA]
+      providers: [{ provide: ContactFormService, useValue: fakeContactFormService }]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ContactFormComponent);
@@ -139,13 +145,6 @@ describe('ContactFormComponent', () => {
     expect(fakeContactFormService.postMessage).not.toHaveBeenCalled();
   }));
 
-
-  const requiredFields = [
-    'name',
-    'email',
-    'message'
-  ];
-
   const markFieldAsTouched = (element: DebugElement) => {
     dispatchFakeEvent(element.nativeElement, 'blur');
   };
@@ -179,7 +178,5 @@ describe('ContactFormComponent', () => {
       // check error message is displayed
       expectTextToContain(fixture, `${testId}-error`, `Your ${testId} is required`);
     });
-
   });
-
 });

@@ -37,5 +37,4 @@ export class SelectSpeciesComponent implements OnInit  {
   }
 
   public formatter = (x: { englishName: string }) => x.englishName;
-
 }

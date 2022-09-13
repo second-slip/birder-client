@@ -152,7 +152,7 @@ describe('AccountService', () => {
 
     const status = 500;
     const statusText = 'Internal Server Error';
-    const errorEvent = new ErrorEvent('API error');
+    const errorEvent = new ProgressEvent('API error');
 
     const requests = controller.match(() => true);
     requests.forEach((request) => {

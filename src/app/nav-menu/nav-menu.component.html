@@ -12,8 +12,11 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
             <!-- authenticated -->
-            <ng-container *ngIf="(_service.isAuthorisedObservable | async)">
+            <ng-container *ngIf="(_service.isAuthorisedObservable | async) as authenticated; else notAuthenticated">
 
+                <!-- Todo -->
+                <!-- Might be better to simplify the isauthenticated method to return IUser | null/false -->
+                <!-- Or created a new object Authentication with yes/no plus user if yes-->
                 <ng-container *ngIf="(_service.getAuthUser | async) as authUser">
 
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -32,7 +35,7 @@
                         </li>
                     </ul>
 
-                    
+
                     <!--  -->
                     <div class="right-hand-menu">
                         <ul class="nav navbar-nav me-auto">
@@ -74,8 +77,7 @@
             </ng-container>
 
             <!-- not authenticated -->
-            <ng-container *ngIf="!(_service.isAuthorisedObservable | async)">
-
+            <ng-template #notAuthenticated>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link" [routerLink]='["/about/about"]'>About</a>
@@ -92,8 +94,7 @@
                         </li>
                     </ul>
                 </div>
-
-            </ng-container>
+            </ng-template>
         </div>
     </div>
 </nav>

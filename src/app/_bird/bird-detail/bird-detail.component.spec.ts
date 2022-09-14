@@ -59,7 +59,7 @@ describe('BirdDetailComponent unit tests', () => {
                     {
                         provide: ActivatedRoute,
                         useValue: {
-                            params: of({ id: 123 })
+                            paramMap: of({ id: 123 })
                         }
                     },
                     {
@@ -136,7 +136,7 @@ describe('BirdDetailComponent unit tests', () => {
                     {
                         provide: ActivatedRoute,
                         useValue: {
-                            params: of({ id: 123 })
+                            paramMap: of({ id: 123 })
                         }
                     },
                     {
@@ -152,7 +152,7 @@ describe('BirdDetailComponent unit tests', () => {
                             {
                                 provide: ActivatedRoute,
                                 useValue: {
-                                    params: of({ id: 123 })
+                                    paramMap: of({ id: 123 })
                                 }
                             }]
                         }
@@ -228,7 +228,7 @@ describe('BirdDetailComponent unit tests', () => {
                     {
                         provide: ActivatedRoute,
                         useValue: {
-                            params: of({ id: 123 })
+                            paramMap: of({ id: 123 })
                         }
                     },
                     {
@@ -317,7 +317,7 @@ describe('BirdDetailComponent unit tests', () => {
                     {
                         provide: ActivatedRoute,
                         useValue: {
-                            params: of({ id: 123 })
+                            paramMap: of({ id: 123 })
                         }
                     },
                     {

@@ -18,10 +18,8 @@ export class BirdDetailComponent implements OnInit {
     , private readonly _route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this._route.params.subscribe(_ => {
-      this._route.paramMap.subscribe(pmap => {
-        this._getData(pmap.get('id'));
-      })
+    this._route.paramMap.subscribe(pmap => {
+      this._getData(pmap.get('id'));
     });
   }
 

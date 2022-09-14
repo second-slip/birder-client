@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
-import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { ValidatePassword } from 'src/app/_validators';
 import { AccountService } from '../account.service';
 import { IResetPassword } from './i-reset-password.dto';
@@ -15,48 +14,23 @@ import { IResetPassword } from './i-reset-password.dto';
 })
 export class ResetPasswordComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
-  //
-  private _code: string;
-  //
   public requesting: boolean;
-  public submitted: boolean = false;
-  public resetPasswordForm: UntypedFormGroup;
-  public errorObject: any = null;
+  public resetPasswordForm: FormGroup;
+  public submitProgress: 'idle' | 'success' | 'error' = 'idle';
 
   constructor(readonly _service: AccountService
-    , private _formBuilder: UntypedFormBuilder
-    , private readonly _navigation: NavigationService
+    , private _formBuilder: FormBuilder
     , private readonly _route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this._route.params.subscribe(_ => {
-      this._route.paramMap.subscribe(pmap => {
-        this._getCode(pmap.get('code'));
-      })
+    this._route.paramMap.subscribe(pmap => {
+      this._createForms(pmap.get('code'));
     });
   }
 
-  private _getCode(code: string | null): void {
-    this._code = code ?? '';
-    this._createForms();
-    // if (code) {
-    //   this._code = code; // ?? '';
-    //   this._createForms();
-    // }
-    // else {
-    //   //this._redirect();
-    // }
-  }
-
-  // public reload(): void {
-  //   if (this._observationId) {
-  //     this._getData(this._observationId);
-  //   } else {
-  //     this._redirect();
-  //   }
-  // }
-
   public onSubmit(value: any): void {
+    if (!this.resetPasswordForm.valid) return;
+
     this.requesting = true;
 
     try {
@@ -64,14 +38,14 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         email: value.email,
         password: value.passwordGroup.password,
         confirmPassword: value.passwordGroup.confirmPassword,
-        code: this._code
+        code: value.code
       };
 
       this._service.resetPassword(model)
         .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
         .subscribe({
-          next: () => { this.submitted = true; },
-          error: (e) => { this.errorObject = e; }
+          next: () => { this.submitProgress = 'success'; },
+          error: () => { this.submitProgress = 'error'; }
         });
     }
     catch (error) {
@@ -84,12 +58,18 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     this._subscription.complete();
   }
 
-  private _createForms() {
+  private _createForms(code: string | null) {
+    console.log('create forms argument: ' + code)
     this.resetPasswordForm = this._formBuilder.group({
       email: ['',
         {
           validators: [Validators.required,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]
+        }
+      ],
+      code: [code,
+        {
+          validators: [Validators.required]
         }
       ],
       passwordGroup: this._formBuilder.group({
@@ -103,7 +83,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
           validators: [
             Validators.required]
         }],
-      }, { validator: ValidatePassword.passwordMatcher })
+      }, { validators: ValidatePassword.passwordMatcher })
     })
   }
 

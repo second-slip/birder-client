@@ -5,9 +5,9 @@ import { IResetPassword } from "../_account/reset-password/i-reset-password.dto"
 
 export const email = 'test@email.net';
 export const username = 'test-username';
-export const password = 'password';
-export const confirmPassword = 'confirmPassword';
-const code = 'sdjhceirufhcnfhvr4guhjkj3widj'
+export const password = 'hellothere1';
+export const confirmPassword = 'hellothere1';
+export const code = 'sdjhceirufhcnfhvr4guhjkj3widj'
 export const emailModel = <IUserEmail>{ email: email };
 export const usernameModel = <IUsername>{ username: username };
 export const registerModel = <IAccountRegistration>{

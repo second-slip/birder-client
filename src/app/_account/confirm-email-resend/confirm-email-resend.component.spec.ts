@@ -8,13 +8,7 @@ import { DebugElement } from '@angular/core';
 
 import { of, throwError } from 'rxjs';
 import {
-  usernameModel,
-  registerModel,
-  resetPasswordModel,
-  username,
   emailModel,
-  password,
-  confirmPassword,
   email
 } from 'src/app/testing/account-tests-helpers';
 
@@ -112,7 +106,7 @@ describe('ConfirmEmailResendComponent', () => {
   it('does not submit an invalid form', fakeAsync(async () => {
     await setup();
 
-    //tick(1000) bot async validators
+    //tick(1000) no async validators
 
     findEl(fixture, 'resendConfirmEmailForm').triggerEventHandler('submit', {});
 

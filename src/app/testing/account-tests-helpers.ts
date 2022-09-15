@@ -4,9 +4,9 @@ import { IUsername } from "../_account/i-username.dto";
 import { IResetPassword } from "../_account/reset-password/i-reset-password.dto";
 
 export const email = 'test@email.net';
-export const username = 'test-username';
-export const password = 'hellothere1';
-export const confirmPassword = 'hellothere1';
+export const username = 'testusername';
+export const password = 'yJwbgyieB4';
+export const confirmPassword = 'yJwbgyieB4';
 export const code = 'sdjhceirufhcnfhvr4guhjkj3widj'
 export const emailModel = <IUserEmail>{ email: email };
 export const usernameModel = <IUsername>{ username: username };

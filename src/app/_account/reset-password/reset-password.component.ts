@@ -59,7 +59,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   }
 
   private _createForms(code: string | null) {
-    console.log('create forms argument: ' + code)
     this.resetPasswordForm = this._formBuilder.group({
       email: ['',
         {

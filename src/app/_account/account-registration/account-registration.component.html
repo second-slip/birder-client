@@ -1,106 +1,96 @@
-<div class="register-container">
+<div class="register-container" *ngIf="userRegisterForm; else loading">
 
-    <ng-container *ngIf="userRegisterForm; else loadingOrError">
+    <h1>New Account Registration</h1>
 
-        <h1>New Account Registration</h1>
+    <form [formGroup]="userRegisterForm" novalidate (ngSubmit)="onSubmit(userRegisterForm.value)" autocomplete="off"
+        data-testid="userRegisterForm" *ngIf="submitProgress !== 'success'">
 
-        <form [formGroup]="userRegisterForm" novalidate (ngSubmit)="onSubmit(userRegisterForm.value)"
-            autocomplete="off">
-
-            <div class="form-group">
-                <label for="username">Username</label>
-                <div class="is-loading">
-                    <input class="form-control" id="username" type="text" placeholder="username"
-                        formControlName="username" required>
-                    <!-- <mat-icon *ngIf="(isUsernameAvailable) && (userRegisterForm.get('username').valid)" matSuffix color="primary" matTooltip="This username is available">check</mat-icon>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <div class="is-loading">
+                <input class="form-control" id="username" type="text" placeholder="username" formControlName="username"
+                    required data-testid="username">
+                <!-- <mat-icon *ngIf="(isUsernameAvailable) && (userRegisterForm.get('username').valid)" matSuffix color="primary" matTooltip="This username is available">check</mat-icon>
                       <mat-icon *ngIf="(!isUsernameAvailable) && (userRegisterForm.get('username').valid)" matSuffix color="warn" matTooltip="This username is taken">cancel</mat-icon> -->
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
-                        *ngIf="(userRegisterForm.get('username')?.pending)"
-                        style="float: right; margin-left: 8px"></span>
-                </div>
-                <div *ngFor="let validation of userRegister_validation_messages.username">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                    *ngIf="(userRegisterForm.get('username')?.pending)" style="float: right; margin-left: 8px"></span>
+            </div>
+            <div *ngFor="let validation of userRegister_validation_messages.username" data-testid="username-error">
+                <small class="text-danger"
+                    *ngIf="userRegisterForm.get('username')?.hasError(validation.type) && (userRegisterForm.get('username')?.dirty || userRegisterForm.get('username')?.touched)">
+                    {{validation.message}}
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <div class="is-loading">
+                <input class="form-control" id="email" type="email" placeholder="Email" formControlName="email" required
+                    data-testid="email" autocomplete="off">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                    *ngIf="(userRegisterForm.get('email')?.pending)" style="float: right; margin-left: 8px"></span>
+            </div>
+            <div *ngFor="let validation of userRegister_validation_messages.email" data-testid="email-error">
+                <small class="text-danger"
+                    *ngIf="userRegisterForm.get('email')?.hasError(validation.type) && (userRegisterForm.get('email')?.dirty || userRegisterForm.get('email')?.touched)">
+                    {{validation.message}}
+                </small>
+            </div>
+        </div>
+
+        <div class="password-group" formGroupName="passwordGroup">
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input class="form-control" id="password" type="password" placeholder="Password"
+                    formControlName="password" required data-testid="password">
+                <div *ngFor="let validation of userRegister_validation_messages.password" data-testid="password-error">
                     <small class="text-danger"
-                        *ngIf="userRegisterForm.get('username')?.hasError(validation.type) && (userRegisterForm.get('username')?.dirty || userRegisterForm.get('username')?.touched)">
+                        *ngIf="userRegisterForm.get('passwordGroup')?.get('password')?.hasError(validation.type) && (userRegisterForm.get('passwordGroup')?.get('password')?.dirty || userRegisterForm.get('passwordGroup')?.get('password')?.touched)">
                         {{validation.message}}
                     </small>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="email">Email</label>
-                <div class="is-loading">
-                    <input class="form-control" id="email" type="email" placeholder="Email" formControlName="email"
-                        required>
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
-                        *ngIf="(userRegisterForm.get('email')?.pending)" style="float: right; margin-left: 8px"></span>
-                </div>
-                <div *ngFor="let validation of userRegister_validation_messages.email">
+                <label for="confirmPassword">Confirm password</label>
+                <input class="form-control" id="confirmPassword" type="password" placeholder="Confirm Password"
+                    formControlName="confirmPassword" required data-testid="confirmPassword">
+
+                <div *ngFor="let validation of userRegister_validation_messages.confirmPassword"
+                    data-testid="confirmPassword-error">
                     <small class="text-danger"
-                        *ngIf="userRegisterForm.get('email')?.hasError(validation.type) && (userRegisterForm.get('email')?.dirty || userRegisterForm.get('email')?.touched)">
-                        {{validation.message}}
-                    </small>
+                        *ngIf="(userRegisterForm.get('passwordGroup')?.get('confirmPassword')?.hasError(validation.type) || userRegisterForm.get('passwordGroup')?.hasError(validation.type)) && (userRegisterForm.get('passwordGroup')?.get('confirmPassword')?.dirty || userRegisterForm.get('passwordGroup')?.get('confirmPassword')?.touched)">
+                        {{validation.message}}</small>
                 </div>
             </div>
+        </div>
 
-            <div class="password-group" formGroupName="passwordGroup">
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input class="form-control" id="password" type="password" placeholder="Password"
-                        formControlName="password" required>
-                    <div *ngFor="let validation of userRegister_validation_messages.password">
-                        <small class="text-danger"
-                            *ngIf="userRegisterForm.get('passwordGroup')?.get('password')?.hasError(validation.type) && (userRegisterForm.get('passwordGroup')?.get('password')?.dirty || userRegisterForm.get('passwordGroup')?.get('password')?.touched)">
-                            {{validation.message}}
-                        </small>
-                    </div>
-                </div>
+        <!-- <pre>{{userRegisterForm.value | json}}</pre> -->
 
-                <div class="form-group">
-                    <label for="confirmPassword">Confirm password</label>
-                    <input class="form-control" id="confirmPassword" type="password" placeholder="Confirm Password"
-                        formControlName="confirmPassword" required>
+        <button *ngIf="!requesting" type="submit" class="btn btn-primary" [disabled]="!userRegisterForm.valid"
+            data-testid="submit">
+            Register
+        </button>
+        <button *ngIf="requesting" class="btn btn-primary" type="button" disabled>
+            Registering...
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        </button>
 
-                    <div *ngFor="let validation of userRegister_validation_messages.confirmPassword">
-                        <small class="text-danger"
-                            *ngIf="(userRegisterForm.get('passwordGroup')?.get('confirmPassword')?.hasError(validation.type) || userRegisterForm.get('passwordGroup')?.hasError(validation.type)) && (userRegisterForm.get('passwordGroup')?.get('confirmPassword')?.dirty || userRegisterForm.get('passwordGroup')?.get('confirmPassword')?.touched)">
-                            {{validation.message}}</small>
-                    </div>
-                </div>
-            </div>
+    </form>
 
-            <!-- <pre>{{userRegisterForm.value | json}}</pre> -->
+    <div *ngIf="submitProgress === 'success'" class="alert alert-success" data-testid="success">
+        <strong>Success!</strong> You have successfully registered
+        <div>
+            <a type="button" class="btn btn-primary" [routerLink]='["/login"]'>Login</a>
+        </div>
+    </div>
 
-            <ng-container *ngIf="errorObject">
-                <p class="alert alert-info">
-                    An error occurred. Please check the form and try again.
-                </p>
-            </ng-container>
-
-            <button *ngIf="!requesting" type="submit" class="btn btn-primary" [disabled]="!userRegisterForm.valid">
-                Register
-            </button>
-            <button *ngIf="requesting" class="btn btn-primary" type="submit" disabled>
-                Registering...
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            </button>
-
-        </form>
-
-    </ng-container>
-
-    <ng-template #loadingOrError>
-        <ng-container *ngIf="errorObject; else loading">
-            <p class="centre">
-                <strong>Whoops!</strong>&nbsp;An error occurred<br>
-                <!-- ToDo: what's best here? -->
-                <!-- <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
-                Again</button> -->
-            </p>
-        </ng-container>
-    </ng-template>
-
-    <ng-template #loading>
-        <app-loading></app-loading>
-    </ng-template>
-
+    <div *ngIf="submitProgress === 'error'" class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> An error occurred. Please try again.<br>
+    </div>
 </div>
+
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>

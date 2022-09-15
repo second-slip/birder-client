@@ -1,17 +1,13 @@
 import { ResetPasswordComponent } from './reset-password.component';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { dispatchFakeEvent, expectText, expectTextToContain, findEl, setFieldValue } from 'src/app/testing/element.spec-helper';
+import { dispatchFakeEvent, expectText, findEl, setFieldValue } from 'src/app/testing/element.spec-helper';
 import { AccountService } from '../account.service';
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { DebugElement } from '@angular/core';
 
 import { of, throwError } from 'rxjs';
 import {
-  usernameModel,
-  registerModel,
   resetPasswordModel,
-  username,
-  emailModel,
   password,
   confirmPassword,
   email,
@@ -97,12 +93,15 @@ describe('ResetPasswordComponent', () => {
 
     findEl(fixture, 'resetPasswordForm').triggerEventHandler('submit', {});
 
-    tick(10000);
+    tick(1000);
     fixture.detectChanges();
 
     expectText(fixture, 'success', "Success! Your password was reset. Login");
 
     expect(fakeAccountService.resetPassword).toHaveBeenCalledWith(resetPasswordModel);
+
+    const isFormHidden = fixture.nativeElement as HTMLElement;
+    expect(isFormHidden.querySelector('[data-testid="resetPasswordForm"]')?.textContent).toBeUndefined();
   }));
 
   it('handles errors', fakeAsync(async () => {

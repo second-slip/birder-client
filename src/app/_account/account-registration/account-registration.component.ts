@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, AbstractControl } from '@angular/forms';
+import { Validators, AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { MatchOtherValidator, RestrictedNameValidator, ValidatePassword } from 'src/app/_validators';
@@ -16,11 +16,10 @@ import { IAccountRegistration } from './i-account-registration';
 export class AccountRegistrationComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
   public requesting: boolean;
-  public invalidRegistration: boolean;
-  public errorObject: any = null;
-  public userRegisterForm: UntypedFormGroup;
+  public userRegisterForm: FormGroup;
+  public submitProgress: 'idle' | 'success' | 'error' = 'idle';
 
-  constructor(private _formBuilder: UntypedFormBuilder
+  constructor(private _formBuilder: FormBuilder
     , private _service: AccountService
     , private _validation: AccountValidationService
     , private _router: Router) { }
@@ -30,6 +29,8 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(value: any): void {
+    if (!this.userRegisterForm.valid) return;
+
     this.requesting = true;
 
     try {
@@ -43,14 +44,12 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
       this._service.register(model)
         .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
         .subscribe({
-          next: () => { this._router.navigate(['/confirm-email']); },
-          error: (e) => {
-            //todo: change implementation...
-            this.errorObject = e;
-            this.invalidRegistration = true;
-          }
+          next: () => {
+            this.submitProgress = 'success';
+            this._router.navigate(['/confirm-email']);
+          },
+          error: () => { this.submitProgress = 'error'; }
         });
-
     } catch (error) {
       console.log(error);
     }
@@ -70,7 +69,7 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
           updateOn: 'blur'
         }
       ],
-      email: ['', // ToDo: use the alternative format????????
+      email: ['', // ToDo: use the alternative format?
         {
           validators: [Validators.required,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')],
@@ -91,7 +90,7 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
             MatchOtherValidator('password') // makes css ng-valid label invalid if not matching
           ]
         }],
-      }, { validator: ValidatePassword.passwordMatcher })
+      }, { validators: ValidatePassword.passwordMatcher })
     })
   }
 

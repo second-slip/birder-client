@@ -5,7 +5,7 @@ import { ConfirmEmailSuccessComponent } from "./_account/confirm-email-success/c
 import { ConfirmEmailComponent } from "./_account/confirm-email/confirm-email.component";
 import { ForgotPasswordComponent } from "./_account/forgot-password/forgot-password.component";
 import { ResetPasswordComponent } from "./_account/reset-password/reset-password.component";
-import { AccountManagerComponent } from "./_accountManage/account-manager/account-manager.component";
+import { AccountManagerComponent } from "./_account/account-manager/account-manager.component";
 import { AuthenticationGuardService } from "./_auth/authentication-guard.service";
 import { LoginComponent } from "./_auth/login/login.component";
 import { LogoutComponent } from "./_auth/logout/logout.component";

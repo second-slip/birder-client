@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
-import { AccountManagerService } from '../account-manager.service';
+import { AccountService } from '../account.service';
 import { IManageLocation } from './i-manage-location.dto';
 
 @Component({
@@ -21,7 +21,7 @@ export class AccountManageLocationComponent implements OnInit, OnDestroy {
   public errorObject: any = null;
 
   constructor(readonly _authService: AuthenticationService
-    , private readonly _service: AccountManagerService
+    , private readonly _service: AccountService
     , private readonly _router: Router) { }
 
   ngOnInit(): void { }

@@ -3,8 +3,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { MatchOtherValidator, ValidatePassword } from 'src/app/_validators';
-import { AccountManagerService } from '../account-manager.service';
-import { IConfirmEmail } from '../account-manage-profile/i-confirm-email.dto';
+import { AccountService } from '../account.service';
 import { IManagePassword } from './i-manage-password.dto';
 
 @Component({
@@ -20,7 +19,7 @@ export class AccountManagePasswordComponent implements OnInit, OnDestroy {
   public changePasswordForm: UntypedFormGroup;
 
   constructor(private _formBuilder: UntypedFormBuilder
-    , private _service: AccountManagerService
+    , private _service: AccountService
     , private _router: Router) { }
 
   ngOnInit(): void {

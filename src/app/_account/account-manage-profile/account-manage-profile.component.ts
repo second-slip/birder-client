@@ -1,12 +1,14 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { finalize, first, Subject, takeUntil } from 'rxjs';
-import { AccountValidationService } from 'src/app/_account/account-validation.service';
+import { finalize, first, Subject, takeUntil} from 'rxjs';
+
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { RestrictedNameValidator } from 'src/app/_validators';
-import { AccountManagerService } from '../account-manager.service';
+
+import { AccountService } from '../account.service';
 import { IManageProfile } from './i-manage-profile.dto';
+
 
 @Component({
   selector: 'app-account-manage-profile',
@@ -21,9 +23,8 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
   public errorObject: any = null;
 
   constructor(private _formBuilder: UntypedFormBuilder
-    , private readonly _service: AccountManagerService
+    , private readonly _service: AccountService
     , private readonly _authService: AuthenticationService
-    , private _validation: AccountValidationService
     , private readonly _router: Router) { }
 
   ngOnInit(): void {
@@ -80,7 +81,7 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
             Validators.pattern('^(?=.*[a-zA-Z])[a-zA-Z0-9]+$'), // ^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$
             RestrictedNameValidator(/birder/i)],
           //asyncValidators: [this._usernameService.usernameValidator()],
-          asyncValidators: (control: AbstractControl) => this._validation.validateUsername(control.value),
+          asyncValidators: (control: AbstractControl) => this._service.validateUsername(control.value),
           updateOn: 'blur'
         }
       ],

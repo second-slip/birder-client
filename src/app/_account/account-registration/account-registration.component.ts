@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Validators, AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, AbstractControl, FormBuilder, FormGroup, AsyncValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
-import { finalize, first, Subject, takeUntil } from 'rxjs';
+import { finalize, first, map, Subject, switchMap, takeUntil, timer } from 'rxjs';
+import { findInvalidControls } from 'src/app/testing/form-helpers';
 import { MatchOtherValidator, RestrictedNameValidator, ValidatePassword } from 'src/app/_validators';
-import { AccountValidationService } from '../account-validation.service';
 import { AccountService } from '../account.service';
 import { IAccountRegistration } from './i-account-registration';
 
@@ -21,7 +21,6 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
 
   constructor(private _formBuilder: FormBuilder
     , private _service: AccountService
-    , private _validation: AccountValidationService
     , private _router: Router) { }
 
   ngOnInit() {
@@ -29,6 +28,11 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(value: any): void {
+
+       console.log(findInvalidControls(this.userRegisterForm));
+      console.log(this.userRegisterForm.value);
+      console.log(this.userRegisterForm.valid);
+
     if (!this.userRegisterForm.valid) return;
 
     this.requesting = true;
@@ -65,7 +69,7 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
             Validators.maxLength(20),
             Validators.pattern('^(?=.*[a-zA-Z])[a-zA-Z0-9]+$'), // ^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$
             RestrictedNameValidator(/birder/i)],
-          asyncValidators: (control: AbstractControl) => this._validation.validateUsername(control.value),
+          asyncValidators: (control: AbstractControl) => this._service.validateUsername(control.value),
           updateOn: 'blur'
         }
       ],
@@ -73,7 +77,7 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
         {
           validators: [Validators.required,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')],
-          asyncValidators: (control: AbstractControl) => this._validation.validateEmail(control.value),
+          asyncValidators: (control: AbstractControl) => this._service.validateEmail(control.value),
           updateOn: 'blur'
         }
       ],
@@ -101,13 +105,13 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
       { type: 'maxlength', message: 'Username cannot be more than 20 characters long' },
       { type: 'pattern', message: 'Your username must be alphanumeric (no special characters) and must not contain spaces' },
       { type: 'restrictedName', message: 'Username may not contain the name "birder"' },
-      { type: 'usernameTaken', message: 'XXXXXXXX username is taken XXXXXXXXX' },
-      { type: 'serverError', message: 'Unable to connect to the server.  Please try again.' }
+      { type: 'usernameTaken', message: 'This username has been taken' } //,
+      // { type: 'serverError', message: 'Unable to connect to the server.  Please try again.' }
     ],
     'email': [
       { type: 'required', message: 'Email is required' },
       { type: 'pattern', message: 'Enter a valid email' },
-      { type: 'emailTaken', message: 'XXXXXXXX email is taken XXXXXXXXX' }
+      { type: 'emailTaken', message: 'There is already an account with this email' }
     ],
     'password': [
       { type: 'required', message: 'Password is required' },

@@ -14,9 +14,8 @@ import {
   email
 } from 'src/app/testing/account-tests-helpers';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AccountValidationService } from '../account-validation.service';
 import { ConfirmEmailComponent } from '../confirm-email/confirm-email.component';
-import { Router } from '@angular/router';
+
 
 const requiredFields = [
   'username',
@@ -28,37 +27,42 @@ const requiredFields = [
 describe('AccountRegistrationComponent', () => {
   let fixture: ComponentFixture<AccountRegistrationComponent>;
   let fakeAccountService: jasmine.SpyObj<AccountService>;
-  let fakeValidationService: jasmine.SpyObj<AccountValidationService>;
   let router = {
     navigate: jasmine.createSpy('navigate')
   }
 
   const setup = async (
     fakeAccountServiceReturnValues?: jasmine.SpyObjMethodNames<AccountService>,
-    fakeValidationReturnValues?: jasmine.SpyObjMethodNames<AccountValidationService>
+    //fakeValidationReturnValues?: jasmine.SpyObjMethodNames<AccountValidationService>
   ) => {
 
     fakeAccountService = jasmine.createSpyObj<AccountService>(
       'AccountService',
       {
-        isEmailTaken: undefined,
-        isUsernameTaken: undefined,
+        isEmailTaken: of(false),
+        isUsernameTaken: of(false),
         register: undefined,
         requestPasswordReset: undefined,
         resendEmailConfirmation: undefined,
         resetPassword: undefined,
+        getUserProfile: undefined,
+        postChangePassword: undefined,
+        postUpdateLocation: undefined,
+        postUpdateProfile: undefined,
+        validateEmail: of(null),
+        validateUsername: of(null),
         ...fakeAccountServiceReturnValues // Overwrite with given return values
       }
     );
 
-    fakeValidationService = jasmine.createSpyObj<AccountValidationService>(
-      'AccountValidationService',
-      {
-        validateEmail: undefined,
-        validateUsername: undefined,
-        ...fakeValidationReturnValues
-      }
-    );
+    // fakeValidationService = jasmine.createSpyObj<AccountValidationService>(
+    //   'AccountValidationService',
+    //   {
+    //     validateEmail: undefined,
+    //     validateUsername: undefined,
+    //     ...fakeValidationReturnValues
+    //   }
+    // );
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -69,7 +73,6 @@ describe('AccountRegistrationComponent', () => {
           { path: 'confirm-email', component: ConfirmEmailComponent },
         ])],
       providers: [
-        { provide: AccountValidationService, useValue: fakeValidationService },
         { provide: AccountService, useValue: fakeAccountService }]
     }).compileComponents();
 
@@ -88,12 +91,14 @@ describe('AccountRegistrationComponent', () => {
   it('submits the form successfully', fakeAsync(async () => {
     await setup(
       {
-        register: of({ success: true })
+        register: of({ success: true }),
+        isEmailTaken: of(false),
+        isUsernameTaken: of(false)
       },
-      {
-        validateEmail: of(null),
-        validateUsername: of(null)
-      }
+      // {
+      //   validateEmail: of(null),
+      //   validateUsername: of(null)
+      // }
     );
 
     expect(findEl(fixture, 'submit').properties.disabled).toBe(true);
@@ -117,8 +122,8 @@ describe('AccountRegistrationComponent', () => {
     fixture.detectChanges();
 
     expectText(fixture, 'success', "Success! You have successfully registered Login");
-    expect(fakeValidationService.validateEmail).toHaveBeenCalledWith(email);
-    expect(fakeValidationService.validateUsername).toHaveBeenCalledWith(username);
+    // expect(fakeValidationService.validateEmail).toHaveBeenCalledWith(email);
+    // expect(fakeValidationService.validateUsername).toHaveBeenCalledWith(username);
     expect(fakeAccountService.register).toHaveBeenCalledWith(registerModel);
     //expect(router.navigate).toHaveBeenCalledWith(['/confirm-email']);
 
@@ -130,20 +135,21 @@ describe('AccountRegistrationComponent', () => {
 
     await setup({
       // Let the API report a failure
-      register: throwError(() => new Error('test')) // throwError(new Error('Validation failed')),
+      register: throwError(() => new Error('test')), // throwError(new Error('Validation failed')),
     },
-      {
-        validateEmail: of(null),
-        validateUsername: of(null)
-      });
+      // {
+      //   validateEmail: of(null),
+      //   validateUsername: of(null)
+      // }
+    );
 
-      fillForm();
-      // Mark required fields as touched (update on blur)
-      requiredFields.forEach((testId) => {
-        markFieldAsTouched(findEl(fixture, testId));
-      });
-      fixture.detectChanges();
-      tick(10000);
+    fillForm();
+    // Mark required fields as touched (update on blur)
+    requiredFields.forEach((testId) => {
+      markFieldAsTouched(findEl(fixture, testId));
+    });
+    fixture.detectChanges();
+    tick(1000);
 
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
@@ -155,8 +161,8 @@ describe('AccountRegistrationComponent', () => {
     expectText(fixture, 'error', 'Whoops! An error occurred. Please try again.');
 
     expect(fakeAccountService.register).toHaveBeenCalledWith(registerModel);
-    expect(fakeValidationService.validateEmail).toHaveBeenCalledWith(email);
-    expect(fakeValidationService.validateUsername).toHaveBeenCalledWith(username);
+    // expect(fakeValidationService.validateEmail).toHaveBeenCalledWith(email);
+    // expect(fakeValidationService.validateUsername).toHaveBeenCalledWith(username);
   }));
 
 
@@ -209,4 +215,87 @@ describe('AccountRegistrationComponent', () => {
     expectText(fixture, `password-error`, ` Password is required `);
     expectText(fixture, `confirmPassword-error`, ` Confirm password is required`);
   });
+
+  it('X', fakeAsync(async () => {
+
+    await setup(
+      {
+        isUsernameTaken: of(true)
+      }
+    );
+    
+    //fillForm();
+    // Mark required fields as touched (update on blur)
+
+    setFieldValue(fixture, 'username', 'andrewstuart');
+    fixture.detectChanges();
+    tick(10000);
+
+    // requiredFields.forEach((testId) => {
+      markFieldAsTouched(findEl(fixture, 'username'));
+    // });
+    fixture.detectChanges();
+    tick(10000);
+
+    //findEl(fixture, 'userRegisterForm').triggerEventHandler('submit', {});
+
+    tick(1000);
+    fixture.detectChanges();
+    tick(10000);
+    
+    //requiredFields.forEach((testId) => {
+      console.log('XXXXXXXXXXXXXXXXXX');
+      const el = findEl(fixture, 'username');
+
+      console.log(el);
+      console.log(el.attributes);
+
+
+      console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYY');
+      const el1 = findEl(fixture, 'username-error');
+
+      console.log(el1);
+      console.log(el1.queryAll);
+
+
+      // Check aria-required attribute
+      // expect(el.attributes['required']).toBe(  //['aria-required']).toBe(
+      //   '',
+      //   `${testId} must be marked as aria-required`,
+      // );
+    //});
+
+    expect(fakeAccountService.isUsernameTaken).toHaveBeenCalled();
+    // check error message is displayed
+    tick(10000);
+    expectText(fixture, `username-error`, ` =Username is required `);
+  }));
+
+
+  const usernameValidationRules = [
+    { type: 'required', message: 'Username is required' },
+    { type: 'minlength', message: 'Username must be at least 5 characters long' },
+    { type: 'maxlength', message: 'Username cannot be more than 20 characters long' },
+    { type: 'pattern', message: 'Your username must be alphanumeric (no special characters) and must not contain spaces' },
+    { type: 'restrictedName', message: 'Username may not contain the name "birder"' },
+    { type: 'usernameTaken', message: 'This username has been taken' }
+  ];
+
+  const emailValidationRules = [
+    { type: 'required', message: 'Email is required' },
+    { type: 'pattern', message: 'Enter a valid email' },
+    { type: 'emailTaken', message: 'There is already an account with this email' }
+  ];
+
+  const passwordValidationRules = [
+    { type: 'required', message: 'Password is required' },
+    { type: 'minlength', message: 'Password must be at least 8 characters long' },
+    { type: 'pattern', message: 'Your password must contain at least one number and one letter' }
+  ];
+
+  const confirmPasswordValidationRules = [
+    { type: 'required', message: 'Confirm password is required' },
+    { type: 'match', message: 'Passwords do not match' }
+  ];
+
 });

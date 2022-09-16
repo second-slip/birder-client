@@ -78,11 +78,11 @@ import { ConfirmEmailSuccessComponent } from './_account/confirm-email-success/c
 import { ForgotPasswordComponent } from './_account/forgot-password/forgot-password.component';
 import { LoadingComponent } from './_loading/loading/loading.component';
 import { ResetPasswordComponent } from './_account/reset-password/reset-password.component';
-import { AccountManageAvatarComponent } from './_accountManage/account-manage-avatar/account-manage-avatar.component';
-import { AccountManageLocationComponent } from './_accountManage/account-manage-location/account-manage-location.component';
-import { AccountManagePasswordComponent } from './_accountManage/account-manage-password/account-manage-password.component';
-import { AccountManageProfileComponent } from './_accountManage/account-manage-profile/account-manage-profile.component';
-import { AccountManagerComponent } from './_accountManage/account-manager/account-manager.component';
+import { AccountManageAvatarComponent } from './_account/account-manage-avatar/account-manage-avatar.component';
+import { AccountManageLocationComponent } from './_account/account-manage-location/account-manage-location.component';
+import { AccountManagePasswordComponent } from './_account/account-manage-password/account-manage-password.component';
+import { AccountManageProfileComponent } from './_account/account-manage-profile/account-manage-profile.component';
+import { AccountManagerComponent } from './_account/account-manager/account-manager.component';
 import { FilterControlComponent } from './_observationFeed/filter-control/filter-control.component';
 import { NetworkFeedComponent } from './_observationFeed/network-feed/network-feed.component';
 import { PublicFeedComponent } from './_observationFeed/public-feed/public-feed.component';

@@ -10,7 +10,9 @@ import {
   emailModel,
   password,
   confirmPassword,
-  email
+  email,
+  changePasswordModel,
+  locationModel
 } from 'src/app/testing/account-tests-helpers';
 
 describe('AccountService', () => {
@@ -138,6 +140,9 @@ describe('AccountService', () => {
     service.requestPasswordReset(emailModel).subscribe(fail, recordError, fail);
     service.resendEmailConfirmation(emailModel).subscribe(fail, recordError, fail);
     service.resetPassword(resetPasswordModel).subscribe(fail, recordError, fail);
+    //
+    service.postChangePassword(changePasswordModel).subscribe(fail, recordError, fail);
+    service.postUpdateLocation(locationModel).subscribe(fail, recordError, fail);
 
     const status = 500;
     const statusText = 'Internal Server Error';
@@ -148,7 +153,7 @@ describe('AccountService', () => {
       request.error(errorEvent, { status, statusText });
     });
 
-    expect(errors.length).toBe(6);
+    expect(errors.length).toBe(8);
     errors.forEach((error) => {
       expect(error.error).toBe(errorEvent);
       expect(error.status).toBe(status);

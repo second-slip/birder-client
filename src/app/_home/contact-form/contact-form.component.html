@@ -25,7 +25,8 @@
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" required [(ngModel)]="model.email" name="email"
-                    #email="ngModel" placeholder="Type your email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" data-testid="email">
+                    #email="ngModel" placeholder="Type your email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                    data-testid="email">
                 <small [hidden]="email.valid || email.pristine" class="text-danger" data-testid="email-error">
                     Your email is required, and must be a valid email
                 </small>
@@ -35,18 +36,20 @@
                 <label for="message">Message</label>
                 <textarea placeholder="Type your message" type="text" class="form-control" id="message" required
                     [(ngModel)]="model.message" name="message" #message="ngModel" data-testid="message"></textarea>
-                <small [hidden]="message.valid || message.pristine || message.untouched" class="text-danger" data-testid="message-error">
+                <small [hidden]="message.valid || message.pristine || message.untouched" class="text-danger"
+                    data-testid="message-error">
                     Your message is required
                 </small>
             </div>
 
-            <button *ngIf="!requesting" type="submit" class="btn btn-success"
-                [disabled]="!contactForm.form.valid" data-testid="submit">Submit</button>
+            <button *ngIf="!requesting" type="submit" class="btn btn-success" [disabled]="!contactForm.form.valid"
+                data-testid="submit">Submit</button>
             <button *ngIf="requesting" class="btn btn-success" type="button" disabled>
                 Sending message...
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             </button>
-            <button type="button" class="btn btn-default" (click)="contactForm.reset()" data-testid="reset-button">Reset Form</button>
+            <button type="button" class="btn btn-default" (click)="contactForm.reset()" data-testid="reset-button">Reset
+                Form</button>
 
             <!-- <pre>{{contactForm.value | json}}</pre> -->
         </form>

@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Validators, AbstractControl, FormBuilder, FormGroup, AsyncValidatorFn } from '@angular/forms';
+import { Validators, AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { finalize, first, map, Subject, switchMap, takeUntil, timer } from 'rxjs';
+import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { findInvalidControls } from 'src/app/testing/form-helpers';
 import { MatchOtherValidator, RestrictedNameValidator, ValidatePassword } from 'src/app/_validators';
+import { AccountValidationService } from '../account-validation.service';
 import { AccountService } from '../account.service';
 import { IAccountRegistration } from './i-account-registration';
 
@@ -19,9 +20,10 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
   public userRegisterForm: FormGroup;
   public submitProgress: 'idle' | 'success' | 'error' = 'idle';
 
-  constructor(private _formBuilder: FormBuilder
-    , private _service: AccountService
-    , private _router: Router) { }
+  constructor(private readonly _formBuilder: FormBuilder
+    , private readonly _service: AccountService
+    , readonly _validation: AccountValidationService
+    , private readonly _router: Router) { }
 
   ngOnInit() {
     this._createForms();
@@ -29,9 +31,9 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
 
   public onSubmit(value: any): void {
 
-       console.log(findInvalidControls(this.userRegisterForm));
-      console.log(this.userRegisterForm.value);
-      console.log(this.userRegisterForm.valid);
+    // console.log(findInvalidControls(this.userRegisterForm));
+    // console.log(this.userRegisterForm.value);
+    // console.log(this.userRegisterForm.valid);
 
     if (!this.userRegisterForm.valid) return;
 
@@ -69,7 +71,7 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
             Validators.maxLength(20),
             Validators.pattern('^(?=.*[a-zA-Z])[a-zA-Z0-9]+$'), // ^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$
             RestrictedNameValidator(/birder/i)],
-          asyncValidators: (control: AbstractControl) => this._service.validateUsername(control.value),
+          asyncValidators: (control: AbstractControl) => this._validation.validateUsername(control.value),
           updateOn: 'blur'
         }
       ],
@@ -77,7 +79,7 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
         {
           validators: [Validators.required,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')],
-          asyncValidators: (control: AbstractControl) => this._service.validateEmail(control.value),
+          asyncValidators: (control: AbstractControl) => this._validation.validateEmail(control.value),
           updateOn: 'blur'
         }
       ],
@@ -97,33 +99,6 @@ export class AccountRegistrationComponent implements OnInit, OnDestroy {
       }, { validators: ValidatePassword.passwordMatcher })
     })
   }
-
-  userRegister_validation_messages = {
-    'username': [
-      { type: 'required', message: 'Username is required' },
-      { type: 'minlength', message: 'Username must be at least 5 characters long' },
-      { type: 'maxlength', message: 'Username cannot be more than 20 characters long' },
-      { type: 'pattern', message: 'Your username must be alphanumeric (no special characters) and must not contain spaces' },
-      { type: 'restrictedName', message: 'Username may not contain the name "birder"' },
-      { type: 'usernameTaken', message: 'This username has been taken' } //,
-      // { type: 'serverError', message: 'Unable to connect to the server.  Please try again.' }
-    ],
-    'email': [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Enter a valid email' },
-      { type: 'emailTaken', message: 'There is already an account with this email' }
-    ],
-    'password': [
-      { type: 'required', message: 'Password is required' },
-      { type: 'minlength', message: 'Password must be at least 8 characters long' },
-      { type: 'pattern', message: 'Your password must contain at least one number and one letter' }
-      // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
-    ],
-    'confirmPassword': [
-      { type: 'required', message: 'Confirm password is required' },
-      { type: 'match', message: 'Passwords do not match' }
-    ]
-  };
 
   ngOnDestroy(): void {
     this._subscription.next('');

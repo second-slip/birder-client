@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-account-manager',
@@ -6,10 +6,6 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./account-manager.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AccountManagerComponent implements OnInit {
-
+export class AccountManagerComponent {
   constructor() { }
-
-  ngOnInit(): void {}
-
 }

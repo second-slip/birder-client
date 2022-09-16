@@ -11,10 +11,12 @@ import {
   username,
   password,
   confirmPassword,
-  email
+  email,
+  account_validation_messages
 } from 'src/app/testing/account-tests-helpers';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ConfirmEmailComponent } from '../confirm-email/confirm-email.component';
+import { AccountValidationService } from '../account-validation.service';
 
 
 const requiredFields = [
@@ -27,13 +29,14 @@ const requiredFields = [
 describe('AccountRegistrationComponent', () => {
   let fixture: ComponentFixture<AccountRegistrationComponent>;
   let fakeAccountService: jasmine.SpyObj<AccountService>;
+  let fakeValidationService: jasmine.SpyObj<AccountValidationService>;
   let router = {
     navigate: jasmine.createSpy('navigate')
   }
 
   const setup = async (
     fakeAccountServiceReturnValues?: jasmine.SpyObjMethodNames<AccountService>,
-    //fakeValidationReturnValues?: jasmine.SpyObjMethodNames<AccountValidationService>
+    fakeValidationReturnValues?: jasmine.SpyObjMethodNames<AccountValidationService>
   ) => {
 
     fakeAccountService = jasmine.createSpyObj<AccountService>(
@@ -49,20 +52,19 @@ describe('AccountRegistrationComponent', () => {
         postChangePassword: undefined,
         postUpdateLocation: undefined,
         postUpdateProfile: undefined,
-        validateEmail: of(null),
-        validateUsername: of(null),
         ...fakeAccountServiceReturnValues // Overwrite with given return values
       }
     );
 
-    // fakeValidationService = jasmine.createSpyObj<AccountValidationService>(
-    //   'AccountValidationService',
-    //   {
-    //     validateEmail: undefined,
-    //     validateUsername: undefined,
-    //     ...fakeValidationReturnValues
-    //   }
-    // );
+    fakeValidationService = jasmine.createSpyObj<AccountValidationService>(
+      'AccountValidationService',
+      {
+        validateEmail: of(null),
+        validateUsername: of(null),
+        account_validation_messages: account_validation_messages,
+        ...fakeValidationReturnValues
+      }
+    );
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -73,6 +75,7 @@ describe('AccountRegistrationComponent', () => {
           { path: 'confirm-email', component: ConfirmEmailComponent },
         ])],
       providers: [
+        { provide: AccountValidationService, useValue: fakeValidationService },
         { provide: AccountService, useValue: fakeAccountService }]
     }).compileComponents();
 
@@ -92,13 +95,11 @@ describe('AccountRegistrationComponent', () => {
     await setup(
       {
         register: of({ success: true }),
-        isEmailTaken: of(false),
-        isUsernameTaken: of(false)
       },
-      // {
-      //   validateEmail: of(null),
-      //   validateUsername: of(null)
-      // }
+      {
+        validateEmail: of(null),
+        validateUsername: of(null)
+      }
     );
 
     expect(findEl(fixture, 'submit').properties.disabled).toBe(true);
@@ -137,10 +138,10 @@ describe('AccountRegistrationComponent', () => {
       // Let the API report a failure
       register: throwError(() => new Error('test')), // throwError(new Error('Validation failed')),
     },
-      // {
-      //   validateEmail: of(null),
-      //   validateUsername: of(null)
-      // }
+      {
+        validateEmail: of(null),
+        validateUsername: of(null)
+      }
     );
 
     fillForm();
@@ -199,7 +200,7 @@ describe('AccountRegistrationComponent', () => {
       const el = findEl(fixture, testId);
 
       // console.log(el);
-      // console.log(el.attributes);
+      //console.log(el.attributes);
 
       // Check aria-required attribute
       expect(el.attributes['required']).toBe(  //['aria-required']).toBe(
@@ -208,6 +209,7 @@ describe('AccountRegistrationComponent', () => {
       );
 
     });
+
 
     // check error message is displayed
     expectText(fixture, `username-error`, ` Username is required `);
@@ -227,12 +229,12 @@ describe('AccountRegistrationComponent', () => {
     //fillForm();
     // Mark required fields as touched (update on blur)
 
-    setFieldValue(fixture, 'username', 'andrewstuart');
+    setFieldValue(fixture, 'username', '');
     fixture.detectChanges();
     tick(10000);
 
     // requiredFields.forEach((testId) => {
-      markFieldAsTouched(findEl(fixture, 'username'));
+    markFieldAsTouched(findEl(fixture, 'username'));
     // });
     fixture.detectChanges();
     tick(10000);
@@ -244,18 +246,18 @@ describe('AccountRegistrationComponent', () => {
     tick(10000);
     
     //requiredFields.forEach((testId) => {
-      console.log('XXXXXXXXXXXXXXXXXX');
+      //console.log('XXXXXXXXXXXXXXXXXX');
       const el = findEl(fixture, 'username');
 
-      console.log(el);
-      console.log(el.attributes);
+      //console.log(el);
+      //console.log(el.attributes);
 
 
-      console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYY');
+    //  console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYY');
       const el1 = findEl(fixture, 'username-error');
 
-      console.log(el1);
-      console.log(el1.queryAll);
+    //  console.log(el1);
+
 
 
       // Check aria-required attribute

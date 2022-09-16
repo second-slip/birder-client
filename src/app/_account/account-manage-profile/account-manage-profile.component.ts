@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { finalize, first, Subject, takeUntil} from 'rxjs';
+import { finalize, first, Subject, takeUntil } from 'rxjs';
 
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { RestrictedNameValidator } from 'src/app/_validators';
+import { AccountValidationService } from '../account-validation.service';
 
 import { AccountService } from '../account.service';
 import { IManageProfile } from './i-manage-profile.dto';
@@ -24,6 +25,7 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
 
   constructor(private _formBuilder: UntypedFormBuilder
     , private readonly _service: AccountService
+    , readonly _validation: AccountValidationService
     , private readonly _authService: AuthenticationService
     , private readonly _router: Router) { }
 
@@ -38,7 +40,7 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
       this._service.postUpdateProfile(model)
         .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
         .subscribe({
-          next: (r) => { this._redirect(r.isEmailConfirmationRequired); },
+          next: (r) => { this._redirect(r); },
           error: (e) => {
             this.errorObject = e;
           }
@@ -72,7 +74,7 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
   private _createForm(user: IManageProfile): UntypedFormGroup {
     return this._formBuilder.group({
       userName: [
-        user.userName,
+        user.username, // ************** change to username ***************
         {
           validators: [
             Validators.required,
@@ -81,7 +83,7 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
             Validators.pattern('^(?=.*[a-zA-Z])[a-zA-Z0-9]+$'), // ^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$
             RestrictedNameValidator(/birder/i)],
           //asyncValidators: [this._usernameService.usernameValidator()],
-          asyncValidators: (control: AbstractControl) => this._service.validateUsername(control.value),
+          asyncValidators: (control: AbstractControl) => this._validation.validateUsername(control.value),
           updateOn: 'blur'
         }
       ],
@@ -94,23 +96,6 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
       ]
     });
   }
-
-  profile_validation_messages = {
-    'userName': [
-      { type: 'required', message: 'Username is required' },
-      { type: 'minlength', message: 'Username must be at least 5 characters long' },
-      { type: 'maxlength', message: 'Username cannot be more than 25 characters long' },
-      { type: 'pattern', message: 'Your username must be alphanumeric (no special characters) and must not contain spaces' },
-      { type: 'restrictedName', message: 'Username may not contain the name "birder"' },
-      // { type: 'usernameExists', message: 'Username is not available.  Please type another one...' },
-      { type: 'usernameTaken', message: 'Username is not available.  Please type another one...' },
-      { type: 'serverError', message: 'Unable to connect to the server.  Please try again.' }
-    ],
-    'email': [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Enter a valid email' }
-    ]
-  };
 
   ngOnDestroy(): void {
     this._subscription.next('');

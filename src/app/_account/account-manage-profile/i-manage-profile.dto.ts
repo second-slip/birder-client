@@ -1,5 +1,5 @@
 export interface IManageProfile {
-    userName: string;
+    username: string;
     emailConfirmationRequired: boolean;
     email: string;
 }

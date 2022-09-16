@@ -15,7 +15,7 @@
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
                     *ngIf="(userRegisterForm.get('username')?.pending)" style="float: right; margin-left: 8px"></span>
             </div>
-            <div *ngFor="let validation of userRegister_validation_messages.username" data-testid="username-error">
+            <div *ngFor="let validation of _validation.account_validation_messages.username" data-testid="username-error">
                 <small class="text-danger"
                     *ngIf="userRegisterForm.get('username')?.hasError(validation.type) && (userRegisterForm.get('username')?.dirty || userRegisterForm.get('username')?.touched)">
                     {{validation.message}}
@@ -31,7 +31,7 @@
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
                     *ngIf="(userRegisterForm.get('email')?.pending)" style="float: right; margin-left: 8px"></span>
             </div>
-            <div *ngFor="let validation of userRegister_validation_messages.email" data-testid="email-error">
+            <div *ngFor="let validation of _validation.account_validation_messages.email" data-testid="email-error">
                 <small class="text-danger"
                     *ngIf="userRegisterForm.get('email')?.hasError(validation.type) && (userRegisterForm.get('email')?.dirty || userRegisterForm.get('email')?.touched)">
                     {{validation.message}}
@@ -44,7 +44,7 @@
                 <label for="password">Password</label>
                 <input class="form-control" id="password" type="password" placeholder="Password"
                     formControlName="password" required data-testid="password">
-                <div *ngFor="let validation of userRegister_validation_messages.password" data-testid="password-error">
+                <div *ngFor="let validation of _validation.account_validation_messages.password" data-testid="password-error">
                     <small class="text-danger"
                         *ngIf="userRegisterForm.get('passwordGroup')?.get('password')?.hasError(validation.type) && (userRegisterForm.get('passwordGroup')?.get('password')?.dirty || userRegisterForm.get('passwordGroup')?.get('password')?.touched)">
                         {{validation.message}}
@@ -57,7 +57,7 @@
                 <input class="form-control" id="confirmPassword" type="password" placeholder="Confirm Password"
                     formControlName="confirmPassword" required data-testid="confirmPassword">
 
-                <div *ngFor="let validation of userRegister_validation_messages.confirmPassword"
+                <div *ngFor="let validation of _validation.account_validation_messages.confirmPassword"
                     data-testid="confirmPassword-error">
                     <small class="text-danger"
                         *ngIf="(userRegisterForm.get('passwordGroup')?.get('confirmPassword')?.hasError(validation.type) || userRegisterForm.get('passwordGroup')?.hasError(validation.type)) && (userRegisterForm.get('passwordGroup')?.get('confirmPassword')?.dirty || userRegisterForm.get('passwordGroup')?.get('confirmPassword')?.touched)">

@@ -12,14 +12,14 @@
                 <label for="username">Username</label>
                 <div class="is-loading">
                     <input class="form-control" id="username" type="text" placeholder="username"
-                        formControlName="userName" required>
+                        formControlName="username" required>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
-                        *ngIf="(manageProfileForm.get('userName')?.pending)"
+                        *ngIf="(manageProfileForm.get('username')?.pending)"
                         style="float: right; margin-left: 8px"></span>
                 </div>
-                <div *ngFor="let validation of profile_validation_messages.userName">
+                <div *ngFor="let validation of _validation.account_validation_messages.username">
                     <small class="text-danger"
-                        *ngIf="manageProfileForm.get('userName')?.hasError(validation.type) && (manageProfileForm.get('userName')?.dirty || manageProfileForm.get('userName')?.touched)">
+                        *ngIf="manageProfileForm.get('username')?.hasError(validation.type) && (manageProfileForm.get('username')?.dirty || manageProfileForm.get('username')?.touched)">
                         {{validation.message}}
                     </small>
                 </div>
@@ -29,7 +29,7 @@
                 <label for="email">Email</label>
                 <input class="form-control" id="email" type="email" placeholder="Email" formControlName="email"
                     required>
-                <div *ngFor="let validation of profile_validation_messages.email">
+                <div *ngFor="let validation of _validation.account_validation_messages.email">
                     <small class="text-danger"
                         *ngIf="manageProfileForm.get('email')?.hasError(validation.type) && (manageProfileForm.get('email')?.dirty || manageProfileForm.get('email')?.touched)">
                         {{validation.message}}

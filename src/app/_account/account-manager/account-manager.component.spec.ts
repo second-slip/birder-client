@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AccountManagerComponent } from './account-manager.component';
 
@@ -8,6 +9,7 @@ describe('AccountManagerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [ NgbNavModule ],
       declarations: [ AccountManagerComponent ]
     })
     .compileComponents();

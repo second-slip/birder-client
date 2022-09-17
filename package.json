@@ -29,6 +29,7 @@
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.0",
     "moment": "^2.29.3",
+    "ng-mocks": "^14.2.1",
     "rxjs": "^7.5.6",
     "tslib": "^2.4.0",
     "zone.js": "^0.11.8"

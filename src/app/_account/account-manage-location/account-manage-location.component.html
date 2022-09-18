@@ -12,13 +12,18 @@
         <strong>Information</strong>&nbsp;If you change your default location you will need to login again.
     </p>
 
-    <ng-container *ngIf="errorObject">
-        <p class="alert alert-warning">
-            An error occurred. Please try again.
-        </p>
-    </ng-container>
+    <div *ngIf="submitProgress === 'success'" class="alert alert-success" data-testid="success">
+        <strong>Success!</strong> You have updated your default location
+        <div>
+            <a type="button" class="btn btn-primary" [routerLink]='["/login"]'>Login</a>
+        </div>
+    </div>
 
-    <button *ngIf="!requesting" type="button" class="btn btn-primary" (click)="updateLocation()">Save</button>
+    <div *ngIf="submitProgress === 'error'" class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> An error occurred. Please try again.<br>
+    </div>
+
+    <button *ngIf="!requesting" type="button" class="btn btn-primary save" (click)="updateLocation()" data-testid="save">Save</button>
     <button *ngIf="requesting" class="btn btn-primary" type="button" disabled>
         Saving...
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

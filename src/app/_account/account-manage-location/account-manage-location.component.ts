@@ -16,9 +16,8 @@ export class AccountManageLocationComponent implements OnInit, OnDestroy {
   @ViewChild(ReadWriteMapComponent)
   private _mapComponent: ReadWriteMapComponent;
   private _subscription = new Subject();
-
+  public submitProgress: 'idle' | 'success' | 'error' = 'idle';
   public requesting: boolean;
-  public errorObject: any = null;
 
   constructor(readonly _authService: AuthenticationService
     , private readonly _service: AccountService
@@ -35,15 +34,18 @@ export class AccountManageLocationComponent implements OnInit, OnDestroy {
     };
 
     this._service.postUpdateLocation(model)
-    .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
-    .subscribe({
-      next: (r) => { this._redirect(); },
-      error: (e) => { this.errorObject = e; }
-    });
+      .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
+      .subscribe({
+        next: () => {
+          this.submitProgress = 'success';
+          this._redirect();
+        },
+        error: () => { this.submitProgress = 'error'; }
+      });
   }
 
   private _redirect(): void {
-      this._router.navigate(['/login']);
+    this._router.navigate(['/login']);
   }
 
   ngOnDestroy(): void {

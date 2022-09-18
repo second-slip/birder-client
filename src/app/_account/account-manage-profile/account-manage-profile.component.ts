@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 
@@ -9,7 +9,6 @@ import { AccountValidationService } from '../account-validation.service';
 
 import { AccountService } from '../account.service';
 import { IManageProfile } from './i-manage-profile.dto';
-
 
 @Component({
   selector: 'app-account-manage-profile',
@@ -23,7 +22,7 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
   public manageProfileForm: UntypedFormGroup;
   public errorObject: any = null;
 
-  constructor(private _formBuilder: UntypedFormBuilder
+  constructor(private _formBuilder: FormBuilder
     , private readonly _service: AccountService
     , readonly _validation: AccountValidationService
     , private readonly _authService: AuthenticationService
@@ -71,10 +70,10 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _createForm(user: IManageProfile): UntypedFormGroup {
+  private _createForm(user: IManageProfile): FormGroup {
     return this._formBuilder.group({
       userName: [
-        user.username, // ************** change to username ***************
+        user.username,
         {
           validators: [
             Validators.required,
@@ -82,7 +81,6 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
             Validators.maxLength(20),
             Validators.pattern('^(?=.*[a-zA-Z])[a-zA-Z0-9]+$'), // ^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$
             RestrictedNameValidator(/birder/i)],
-          //asyncValidators: [this._usernameService.usernameValidator()],
           asyncValidators: (control: AbstractControl) => this._validation.validateUsername(control.value),
           updateOn: 'blur'
         }

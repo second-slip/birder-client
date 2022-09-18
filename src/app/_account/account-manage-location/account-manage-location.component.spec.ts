@@ -34,7 +34,11 @@ describe('AccountManageLocationComponent (child with ng-mocks)', () => {
     let fakeAuthService: jasmine.SpyObj<AuthenticationService>;
     let fakeAccountService: jasmine.SpyObj<AccountService>;
 
-    beforeEach(async () => {
+    //beforeEach(async () => {
+    const setup = async (
+        fakeAccountServiceReturnValues?: jasmine.SpyObjMethodNames<AccountService>,
+        //fakeValidationReturnValues?: jasmine.SpyObjMethodNames<AccountValidationService>
+    ) => {
 
         fakeAccountService = jasmine.createSpyObj<AccountService>(
             'AccountService',
@@ -49,7 +53,7 @@ describe('AccountManageLocationComponent (child with ng-mocks)', () => {
                 postChangePassword: undefined,
                 postUpdateLocation: undefined,
                 postUpdateProfile: undefined,
-                //...fakeAccountServiceReturnValues // Overwrite with given return values
+                ...fakeAccountServiceReturnValues // Overwrite with given return values
             }
         );
 
@@ -69,6 +73,10 @@ describe('AccountManageLocationComponent (child with ng-mocks)', () => {
         )
 
         await TestBed.configureTestingModule({
+            imports: [FormsModule, ReactiveFormsModule,
+                RouterTestingModule.withRoutes([
+                  { path: 'login', component: ConfirmEmailComponent },
+                ])],
             declarations: [AccountManageLocationComponent, MockComponent(ReadWriteMapComponent)],
             providers: [{ provide: AccountService, useValue: fakeAccountService },
             { provide: AuthenticationService, useValue: fakeAuthService }],
@@ -81,44 +89,54 @@ describe('AccountManageLocationComponent (child with ng-mocks)', () => {
 
         const mapEl = fixture.debugElement.query(By.directive(ReadWriteMapComponent));
         map = mapEl.componentInstance;
-    });
+    };
 
-    it('should create', () => {
+    it('should create parent and child', fakeAsync(async () => {
+        await setup();
         expect(component).toBeTruthy();
-    });
-
-    it('renders an independent counter', () => {
         expect(map).toBeTruthy();
-    });
-
-    it('passes a start count', () => {
         expect(map.latitude).toBe(originalLatitude);
         expect(map.longitude).toBe(originalLongitude);
-    });
+    }));
 
-
-    it('passes a start count', () => {
-        expect(map.latitude).toBe(originalLatitude);
-        expect(map.longitude).toBe(originalLongitude);
+    it('submits the form successfully', fakeAsync(async () => {
+        await setup(
+            {
+                postUpdateLocation:  of({ success: true })
+            }
+        );
+        
+        // update child component with location marker
+        // (location marker is set at initialisation, but does not run in this mock/fake/stub)
+        // that logic is tested in map component unit tests
+        map.locationMarker = newAccountLocationMapMarker;
 
         const compiled = fixture.nativeElement as HTMLElement;
         expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
 
+        fixture.debugElement.query(By.css('button')).triggerEventHandler('click', null);
+        fixture.detectChanges();
+
+        expect(fakeAccountService.postUpdateLocation).toHaveBeenCalledWith(locationModel);
+        expect(component.submitProgress).toBe('success');
+        expectText(fixture, 'success', 'Success! You have updated your default location Login');
+    }));
+
+    it('reacts to errors', fakeAsync(async () => {
+        await setup({
+            postUpdateLocation: throwError(() => new Error('location update error'))
+        })
+
         map.locationMarker = newAccountLocationMapMarker;
 
-        fixture.detectChanges();
-        // let btn = fixture.debugElement.query(By.css('btn'));
-        // btn.triggerEventHandler('click', null);
-        // fixture.detectChanges();
+        const compiled = fixture.nativeElement as HTMLElement;
+        expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
 
-        // findEl(fixture, 'save').triggerEventHandler('click', null);
-
-        // let button = fixture.debugElement.nativeElement.querySelector('btn');
-        // button.click(); 
         fixture.debugElement.query(By.css('button')).triggerEventHandler('click', null);
+        fixture.detectChanges();
 
-        //tick(1000);
-        // fixture.detectChanges();
         expect(fakeAccountService.postUpdateLocation).toHaveBeenCalledWith(locationModel);
-    });
+        expect(component.submitProgress).toBe('error');
+        expectText(fixture, 'error', 'Whoops! An error occurred. Please try again.');
+    }));
 });

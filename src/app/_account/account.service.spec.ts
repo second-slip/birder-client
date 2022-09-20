@@ -12,8 +12,10 @@ import {
   confirmPassword,
   email,
   changePasswordModel,
-  locationModel
+  locationModel,
+  manageProfileModel
 } from 'src/app/testing/account-tests-helpers';
+import { IManageProfile } from './account-manage-profile/i-manage-profile.dto';
 
 describe('AccountService', () => {
   let service: AccountService;
@@ -62,7 +64,6 @@ describe('AccountService', () => {
 
     expect(result).toBe(true);
   });
-
 
   it('check it registers', () => {
     let result: { success: true } | undefined;
@@ -128,6 +129,66 @@ describe('AccountService', () => {
     expect(result).toEqual({ success: true });
   });
 
+  it('checks it gets the profile', () => {
+    let result: IManageProfile | null | undefined;
+    service.getUserProfile()
+      .subscribe((otherResult) => {
+        result = otherResult;
+        console.log(result);
+      });
+
+    controller.expectOne('api/manage').flush(manageProfileModel);
+    expect(result).toEqual(manageProfileModel);
+  });
+
+  it('checks it updates the profile', () => {
+    let result: boolean | undefined;
+    service.postUpdateProfile(manageProfileModel).subscribe((otherResult) => {
+      result = otherResult;
+    });
+
+    const request = controller.expectOne({
+      method: 'POST',
+      url: 'api/manage/profile',
+    });
+    expect(request.request.body).toEqual(manageProfileModel);
+    request.flush({ emailConfirmationRequired: true });
+
+    expect(result).toEqual(true);
+  });
+
+  it('checks it updates the password', () => {
+    let result: { success: true } | undefined;
+    service.postChangePassword(changePasswordModel).subscribe((otherResult) => {
+      result = otherResult;
+    });
+
+    const request = controller.expectOne({
+      method: 'POST',
+      url: 'api/manage/password',
+    });
+    expect(request.request.body).toEqual(changePasswordModel);
+    request.flush({ success: true });
+
+    expect(result).toEqual({ success: true });
+  });
+
+  it('checks it updates the location', () => {
+    let result: { success: true } | undefined;
+    service.postUpdateLocation(locationModel).subscribe((otherResult) => {
+      result = otherResult;
+    });
+
+    const request = controller.expectOne({
+      method: 'POST',
+      url: 'api/manage/location',
+    });
+    expect(request.request.body).toEqual(locationModel);
+    request.flush({ success: true });
+
+    expect(result).toEqual({ success: true });
+  });
+
   it('passes the errors through', () => {
     const errors: HttpErrorResponse[] = [];
     const recordError = (error: HttpErrorResponse) => {
@@ -140,9 +201,10 @@ describe('AccountService', () => {
     service.requestPasswordReset(emailModel).subscribe(fail, recordError, fail);
     service.resendEmailConfirmation(emailModel).subscribe(fail, recordError, fail);
     service.resetPassword(resetPasswordModel).subscribe(fail, recordError, fail);
-    //
     service.postChangePassword(changePasswordModel).subscribe(fail, recordError, fail);
     service.postUpdateLocation(locationModel).subscribe(fail, recordError, fail);
+    service.getUserProfile().subscribe(fail, recordError, fail);
+    service.postUpdateProfile(manageProfileModel).subscribe(fail, recordError, fail);
 
     const status = 500;
     const statusText = 'Internal Server Error';
@@ -153,7 +215,7 @@ describe('AccountService', () => {
       request.error(errorEvent, { status, statusText });
     });
 
-    expect(errors.length).toBe(8);
+    expect(errors.length).toBe(10);
     errors.forEach((error) => {
       expect(error.error).toBe(errorEvent);
       expect(error.status).toBe(status);

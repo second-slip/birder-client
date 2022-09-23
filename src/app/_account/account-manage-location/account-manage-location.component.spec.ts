@@ -1,26 +1,17 @@
 import { AccountManageLocationComponent } from './account-manage-location.component';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { dispatchFakeEvent, expectText, findComponent, findEl, setFieldValue } from 'src/app/testing/element.spec-helper';
+import { expectText } from 'src/app/testing/element.spec-helper';
 import { AccountService } from '../account.service';
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ConfirmEmailComponent } from '../confirm-email/confirm-email.component';
-import { AccountValidationService } from '../account-validation.service';
 import { of, throwError } from 'rxjs';
-import { Mock, MockComponent, MockRender } from 'ng-mocks';
+import { MockComponent } from 'ng-mocks';
 import {
-    registerModel,
-    username,
-    password,
-    confirmPassword,
-    email,
-    newLatitude,
-    newLongitude,
     locationModel,
     newAccountLocationMapMarker
 } from 'src/app/testing/account-tests-helpers';
-import { LoginComponent } from 'src/app/_auth/login/login.component';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
 import { originalLatitude, originalLongitude, userModel } from 'src/app/testing/auth-test-helpers';
@@ -34,11 +25,8 @@ describe('AccountManageLocationComponent (child with ng-mocks)', () => {
     let fakeAuthService: jasmine.SpyObj<AuthenticationService>;
     let fakeAccountService: jasmine.SpyObj<AccountService>;
 
-    //beforeEach(async () => {
     const setup = async (
-        fakeAccountServiceReturnValues?: jasmine.SpyObjMethodNames<AccountService>,
-        //fakeValidationReturnValues?: jasmine.SpyObjMethodNames<AccountValidationService>
-    ) => {
+        fakeAccountServiceReturnValues?: jasmine.SpyObjMethodNames<AccountService>) => {
 
         fakeAccountService = jasmine.createSpyObj<AccountService>(
             'AccountService',
@@ -102,7 +90,7 @@ describe('AccountManageLocationComponent (child with ng-mocks)', () => {
     it('submits the form successfully', fakeAsync(async () => {
         await setup(
             {
-                postUpdateLocation:  of({ success: true })
+                postUpdateLocation: of({ success: true })
             }
         );
         

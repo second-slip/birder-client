@@ -4,13 +4,13 @@
 
         <p class="location">
             <mat-icon>location_on</mat-icon>
-            <span>{{ position?.formattedAddress }}</span>
+            <span>{{ position.formattedAddress }}</span>
         </p>
 
         <google-map height="300px" width="100%" [center]="locationMarker?.position" [options]="options">
             <map-marker #markerElement="mapMarker" [position]="locationMarker?.position"
                 [options]="locationMarker?.options" (mapClick)="openInfoWindow(markerElement)">
-                <map-info-window>{{ position?.formattedAddress }}</map-info-window>
+                <map-info-window>{{ position.formattedAddress }}</map-info-window>
             </map-marker>
         </google-map>
 

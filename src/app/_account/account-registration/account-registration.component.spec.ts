@@ -7,7 +7,6 @@ import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ConfirmEmailComponent } from '../confirm-email/confirm-email.component';
 import { AccountValidationService } from '../account-validation.service';
-
 import { of, throwError } from 'rxjs';
 import {
   registerModel,

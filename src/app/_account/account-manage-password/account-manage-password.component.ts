@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { MatchOtherValidator, ValidatePassword } from 'src/app/_validators';
+import { AccountValidationService } from '../account-validation.service';
 import { AccountService } from '../account.service';
 import { IManagePassword } from './i-manage-password.dto';
 
@@ -15,12 +16,13 @@ import { IManagePassword } from './i-manage-password.dto';
 export class AccountManagePasswordComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
   public requesting: boolean;
-  public errorObject: any = null;
-  public changePasswordForm: UntypedFormGroup;
+  public submitProgress: 'idle' | 'success' | 'error' = 'idle';
+  public changePasswordForm: FormGroup;
 
-  constructor(private _formBuilder: UntypedFormBuilder
-    , private _service: AccountService
-    , private _router: Router) { }
+  constructor(private readonly _formBuilder: FormBuilder
+    , readonly _validation: AccountValidationService
+    , private readonly _service: AccountService
+    , private readonly _router: Router) { }
 
   ngOnInit(): void {
     this._createForms();
@@ -38,8 +40,11 @@ export class AccountManagePasswordComponent implements OnInit, OnDestroy {
     this._service.postChangePassword(model)
       .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
       .subscribe({
-        next: (r) => { this._redirect(); },
-        error: (e) => { this.errorObject = e; }
+        next: () => {
+          this.submitProgress = 'success';
+          this._redirect();
+        },
+        error: () => { this.submitProgress = 'error'; }
       });
   }
 
@@ -63,24 +68,9 @@ export class AccountManagePasswordComponent implements OnInit, OnDestroy {
             MatchOtherValidator('password') // makes css ng-valid label invalid if not matching
           ]
         }],
-      }, { validator: ValidatePassword.passwordMatcher })
+      }, { validators: ValidatePassword.passwordMatcher })
     })
   }
-
-  changePassword_validation_messages = {
-    'oldPassword': [
-      { type: 'required', message: 'Your current password required' },
-    ],
-    'password': [
-      { type: 'required', message: 'Your new password is required' },
-      { type: 'minlength', message: 'Password must be at least 8 characters long' },
-      { type: 'pattern', message: 'Your password must contain at least one number and one letter' }
-    ],
-    'confirmPassword': [
-      { type: 'required', message: 'You must confirm your new password' },
-      { type: 'match', message: 'Password mismatch' }
-    ]
-  };
 
   ngOnDestroy(): void {
     this._subscription.next('');

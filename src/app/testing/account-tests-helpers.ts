@@ -8,8 +8,10 @@ import { IResetPassword } from "../_account/reset-password/i-reset-password.dto"
 
 export const email = 'test@email.net';
 export const username = 'testusername';
+export const oldPassword = 'fotkmm7smJJ';
 export const password = 'yJwbgyieB4';
 export const confirmPassword = 'yJwbgyieB4';
+export const newPassword = 'kdNf4rhfrbvbnfv';
 export const code = 'sdjhceirufhcnfhvr4guhjkj3widj'
 export const emailModel = <IUserEmail>{ email: email };
 export const usernameModel = <IUsername>{ username: username };
@@ -32,9 +34,9 @@ export const manageProfileModel = <IManageProfile>{
 }
 
 export const changePasswordModel = <IManagePassword>{
-  oldPassword: password,
-  newPassword: 'kdNf4rhfrbvbnfv',
-  confirmPassword: 'kdNf4rhfrbvbnfv'
+  oldPassword: oldPassword,
+  newPassword: newPassword,
+  confirmPassword: confirmPassword
 }
 
 // export const latitude = 1.000;

@@ -6,6 +6,4 @@ import { Component, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./account-manager.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AccountManagerComponent {
-  constructor() { }
-}
+export class AccountManagerComponent { }

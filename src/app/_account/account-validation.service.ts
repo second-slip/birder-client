@@ -50,6 +50,9 @@ export class AccountValidationService {
     'confirmPassword': [
       { type: 'required', message: 'Confirm password is required' },
       { type: 'match', message: 'Passwords do not match' }
+    ],
+    'oldPassword': [
+      { type: 'required', message: 'Your current password required' },
     ]
   };
 }

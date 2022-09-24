@@ -1,11 +1,6 @@
 <div class="main-container">
     <h1>Account Manager</h1>
 
-    <p>
-        You should use <code>class="nav-pills"</code> if you need pills and the <code>[orientation]</code> input
-        to change nav orientation
-    </p>
-
     <div class="d-flex">
         <ul ngbNav #nav="ngbNav" class="nav-pills" orientation="vertical">
             <li ngbNavItem="0">
@@ -35,7 +30,5 @@
         </ul>
 
         <div [ngbNavOutlet]="nav" class="p-2 flex-fill"></div>
-        <!-- class="ms-4" -->
     </div>
-
 </div>

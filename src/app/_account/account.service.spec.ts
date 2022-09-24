@@ -134,7 +134,6 @@ describe('AccountService', () => {
     service.getUserProfile()
       .subscribe((otherResult) => {
         result = otherResult;
-        console.log(result);
       });
 
     controller.expectOne('api/manage').flush(manageProfileModel);

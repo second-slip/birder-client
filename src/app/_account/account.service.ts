@@ -66,8 +66,4 @@ export class AccountService {
   public postUpdateLocation(viewModel: IManageLocation): Observable<{ success: true }> {
     return this._http.post<{ success: true }>('api/manage/location', viewModel, httpOptions);
   }
-
-  // postAvatar(formData: FormData): Observable<any> {
-  //   return this._http.post('api/Manage/Avatar', formData, { reportProgress: true, observe: 'events' });
-  // }
 }

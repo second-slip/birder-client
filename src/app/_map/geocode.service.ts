@@ -23,7 +23,7 @@ export class GeocodeService {
   }
 
 
-  //ToDo: consider writing a function to process the 'formatted_address' from the response
+  //ToDo: write a function to process the 'formatted_address' from the response
 
   /**
  * Get the value for a given key in address_components

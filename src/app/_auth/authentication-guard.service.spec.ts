@@ -1,16 +1,16 @@
-// import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-// import { AuthenticationGuardService } from './authentication-guard.service';
+import { AuthenticationGuardService } from './authentication-guard.service';
 
-// describe('AuthenticationGuardService', () => {
-//   let service: AuthenticationGuardService;
+describe('AuthenticationGuardService', () => {
+  let service: AuthenticationGuardService;
 
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({});
-//     service = TestBed.inject(AuthenticationGuardService);
-//   });
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(AuthenticationGuardService);
+  });
 
-//   it('should be created', () => {
-//     expect(service).toBeTruthy();
-//   });
-// });
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});

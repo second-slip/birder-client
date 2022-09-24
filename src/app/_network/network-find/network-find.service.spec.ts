@@ -1,16 +1,16 @@
-// import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-// import { NetworkFindService } from './network-find.service';
+import { NetworkFindService } from './network-find.service';
 
-// describe('NetworkFindService', () => {
-//   let service: NetworkFindService;
+describe('NetworkFindService', () => {
+  let service: NetworkFindService;
 
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({});
-//     service = TestBed.inject(NetworkFindService);
-//   });
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(NetworkFindService);
+  });
 
-//   it('should be created', () => {
-//     expect(service).toBeTruthy();
-//   });
-// });
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});

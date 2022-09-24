@@ -1,16 +1,16 @@
-// import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-// import { NetworkUserService } from './network-user.service';
+import { NetworkUserService } from './network-user.service';
 
-// describe('NetworkUserService', () => {
-//   let service: NetworkUserService;
+describe('NetworkUserService', () => {
+  let service: NetworkUserService;
 
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({});
-//     service = TestBed.inject(NetworkUserService);
-//   });
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(NetworkUserService);
+  });
 
-//   it('should be created', () => {
-//     expect(service).toBeTruthy();
-//   });
-// });
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});

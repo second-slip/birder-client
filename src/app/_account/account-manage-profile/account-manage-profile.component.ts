@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 
@@ -19,8 +19,8 @@ import { IManageProfile } from './i-manage-profile.dto';
 export class AccountManageProfileComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
   public requesting: boolean;
-  public manageProfileForm: UntypedFormGroup;
-  public errorObject: any = null;
+  public manageProfileForm: FormGroup;
+  public submitProgress: 'idle' | 'success' | 'error' = 'idle';
 
   constructor(private _formBuilder: FormBuilder
     , private readonly _service: AccountService
@@ -32,17 +32,25 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
     this._getProfile();
   }
 
-  public onSubmit(model: IManageProfile): void {
+  public onSubmit(formValue: IManageProfile): void {
     this.requesting = true;
 
     try {
+
+      const model = <IManageProfile>{
+        username: formValue.username,
+        email: formValue.email,
+        emailConfirmationRequired: true
+      };
+
       this._service.postUpdateProfile(model)
         .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
         .subscribe({
-          next: (r) => { this._redirect(r); },
-          error: (e) => {
-            this.errorObject = e;
-          }
+          next: (r) => {
+            this.submitProgress = 'success';
+            this._redirect(r);
+          },
+          error: () => { this.submitProgress = 'error'; }
         });
     }
     catch (error) {
@@ -66,13 +74,13 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
         next: (r) => {
           this.manageProfileForm = this._createForm(r);
         },
-        error: (e) => { this.errorObject = e; }
+        error: () => { this.submitProgress = 'error'; }
       });
   }
 
   private _createForm(user: IManageProfile): FormGroup {
     return this._formBuilder.group({
-      userName: [
+      username: [
         user.username,
         {
           validators: [
@@ -89,7 +97,9 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
         user.email,
         {
           validators: [Validators.required,
-          Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]
+          Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')],
+          asyncValidators: (control: AbstractControl) => this._validation.validateEmail(control.value),
+          updateOn: 'blur'
         }
       ]
     });

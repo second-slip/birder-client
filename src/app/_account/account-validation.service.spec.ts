@@ -11,8 +11,7 @@ import { AccountService } from './account.service';
 describe('AccountValidationService', () => {
   let service: AccountValidationService;
   let fakeAccountService: jasmine.SpyObj<AccountService>;
-
-
+  
   const setup = async (
     fakeAccountServiceReturnValues?: jasmine.SpyObjMethodNames<AccountService>) => {
 

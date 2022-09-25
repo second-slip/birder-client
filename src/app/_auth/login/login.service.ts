@@ -21,7 +21,10 @@ export class LoginService {
 
   public login(viewModel: Ilogin): Observable<IAuthenticationResult> {
     return this._http.post<IAuthenticationResult>('api/authentication/login', viewModel, httpOptions)
-      .pipe(tap(response => this._handleSuccess(response)))
+      .pipe(tap({
+        next: (response) => this._handleSuccess(response) // only process success response
+      }));
+    // .pipe(tap(response => this._handleSuccess(response)) // previous way
   }
 
   private _handleSuccess(response: IAuthenticationResult): void {

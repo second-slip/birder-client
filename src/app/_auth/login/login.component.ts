@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from '../authentication.service';
@@ -17,23 +17,13 @@ import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 export class LoginComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
   public requesting: boolean;
-  public loginForm: UntypedFormGroup;
-  public errorObject = null;
-
-  login_validation_messages = {
-    'username': [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Enter a valid email' }
-    ],
-    'password': [
-      { type: 'required', message: 'Password is required' }
-    ]
-  };
+  public loginForm: FormGroup;
+  public submitProgress: 'idle' | 'success' | 'error' = 'idle';
 
   constructor(private readonly _service: LoginService
     , private readonly _authService: AuthenticationService
     , private readonly _router: Router
-    , private readonly _formBuilder: UntypedFormBuilder
+    , private readonly _formBuilder: FormBuilder
     , private readonly _navigation: NavigationService) { }
 
   ngOnInit(): void {
@@ -41,18 +31,31 @@ export class LoginComponent implements OnInit, OnDestroy {
     this._authService.logout();
   }
 
-  public onSubmit(formData: Ilogin): void {
+  public onSubmit(formData: any): void {
+    if (!this.loginForm.valid) return;
     this.requesting = true;
-    this.loginForm.disable();
-    if (this.errorObject) this.errorObject = null;
+    const model = this._mapFormToModel(formData)
 
-    this._service.login(formData)
-      .pipe(finalize(() => { this.requesting = false; this.loginForm.enable(); }), takeUntil(this._subscription))
+    this._service.login(model)
+      .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
       .subscribe({
-        next: (r) => { this._navigation.back(); },
-        error: (e) => { this.errorObject = e; this._handleError(e); },
-        complete: () => { }
+        next: () => {
+          this.submitProgress = 'success';
+          this._navigation.back();
+        },
+        error: (e) => {
+          this.submitProgress = 'error';
+          this._handleError(e);
+        }
       })
+  }
+
+  private _mapFormToModel(formData: any): Ilogin {
+    return <Ilogin>{
+      userName: formData.username,
+      password: formData.password,
+      rememberMe: formData.rememberMe
+    }
   }
 
   // ToDo: decide on the best approach.
@@ -60,13 +63,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   private _handleError(error: AuthenticationFailureReason): void {
     switch (error) {
       case AuthenticationFailureReason.EmailConfirmationRequired: {
-        // this.toast.info('You must confirm your email address before you can login.', 'Confirm your email', {
-        //   timeOut: 8000
-        // });
         this._router.navigate(['/confirm-email']);
         break;
       }
       case AuthenticationFailureReason.LockedOut: {
+        // todo: built component with message to contact admin
         break;
       }
       default: {
@@ -77,14 +78,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private _createForm(): void {
     this.loginForm = this._formBuilder.group({
-      username: new UntypedFormControl('', Validators.compose([
+      username: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
-      password: new UntypedFormControl('', Validators.compose([
+      password: new FormControl('', Validators.compose([
         Validators.required,
       ])),
-      rememberMe: new UntypedFormControl(false)
+      rememberMe: new FormControl(false)
     });
   }
 
@@ -92,4 +93,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this._subscription.next('');
     this._subscription.complete();
   }
+
+  get username() { return this.loginForm.get('username'); }
+
+  get password() { return this.loginForm.get('password'); }
 }

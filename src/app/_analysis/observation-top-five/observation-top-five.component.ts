@@ -27,11 +27,11 @@ export class ObservationTopFiveComponent implements OnInit {
   }
 
   // ??????????
-  private _setActiveTab(qtyThisMonth: number): void {
-    if (qtyThisMonth) {
-      this.active = 1;
-    } else {
-      this.active = 2;
-    }
-  }
+  // private _setActiveTab(qtyThisMonth: number): void {
+  //   if (qtyThisMonth) {
+  //     this.active = 1;
+  //   } else {
+  //     this.active = 2;
+  //   }
+  // }
 }

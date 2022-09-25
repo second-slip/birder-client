@@ -20,7 +20,7 @@ export class LoginService {
     , private readonly _authService: AuthenticationService) { }
 
   public login(viewModel: Ilogin): Observable<IAuthenticationResult> {
-    return this._http.post<any>('api/authentication/login', viewModel, httpOptions)
+    return this._http.post<IAuthenticationResult>('api/authentication/login', viewModel, httpOptions)
       .pipe(tap(response => this._handleSuccess(response)))
   }
 

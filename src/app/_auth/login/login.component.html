@@ -1,54 +1,97 @@
-<div class="login-container">
+<div class="login-container" *ngIf="loginForm; else loading">
 
-    <h1 class="header">Login</h1>
+    <h1>Login</h1>
 
-    <div *ngIf="errorObject" class="alert alert-danger">
-        <h4>Login failed</h4>
-        <p>There was an error logging in. Make sure you have typed the correct email and password.
-            <br>If you have forgotten your password, you can <a [routerLink]='["/forgot-password"]'>reset it</a>.
-        </p>
+    <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit(loginForm.value)" data-testid="form"
+        *ngIf="submitProgress !== 'success'">
+
+        <div class="form-group">
+            <label for="username">Email</label>
+            <input class="form-control" type="email" id="username" placeholder="Email" formControlName="username"
+                required aria-describedby="email-description" data-testid="username">
+            <!-- <div class="field-info">
+                <p class="field-description" id="email-description">
+                    Example: abc@example.org
+                </p>
+            </div> -->
+            <div *ngIf="username?.invalid && (username?.dirty || username?.touched)" class="text-danger">
+                <small *ngIf="username?.errors?.['required']">
+                    Email is required
+                </small>
+                <small *ngIf="username?.errors?.['pattern']">
+                    Enter a valid email
+                </small>
+            </div>
+            <!-- <app-control-errors controlName="email" id="email-errors">
+                    <ng-template let-errors>
+                        <ng-container *ngIf="errors.required"> Email must be given. </ng-container>
+                        <ng-container *ngIf="errors.email"> Not a valid email address. </ng-container>
+                        <ng-container *ngIf="errors.maxlength">
+                            Email must have less then 100 characters.
+                        </ng-container>
+                        <ng-container *ngIf="errors.taken">
+                            Email is already taken. Please choose another one.
+                        </ng-container>
+                    </ng-template>
+                </app-control-errors> -->
+            <!-- </div> -->
+
+
+            <!-- <div *ngFor="let validation of login_validation_messages.username">
+                <small
+                    *ngIf="loginForm.get('username')?.hasError(validation.type) && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)"
+                    class="text-danger">
+                    {{validation.message}}</small>
+            </div> -->
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" id="password" placeholder="Password" formControlName="password"
+                required data-testid="password">
+            <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="text-danger">
+                <small *ngIf="password?.errors?.['required']">
+                    Password is required
+                </small>
+            </div>
+            <!-- <div *ngFor="let validation of login_validation_messages.password">
+                <small
+                    *ngIf="loginForm.get('password')?.hasError(validation.type) && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)"
+                    class="text-danger">
+                    {{validation.message}}</small>
+            </div> -->
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="rememberMe" formControlName="rememberMe" /> Keep me
+            logged in
+        </div>
+
+        <button *ngIf="!requesting" type="submit" class="btn btn-primary" [disabled]="!loginForm.valid"
+            data-testid="submit">
+            Login
+        </button>
+        <button *ngIf="requesting" class="btn btn-primary" type="button" disabled>
+            Checking your credentials...
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        </button>
+
+        <a class="btn btn-link" [routerLink]='["/forgot-password"]'>Forgot password?</a>
+
+    </form>
+
+    <div *ngIf="submitProgress === 'success'" class="alert alert-success" data-testid="success">
+        <strong>Success!</strong> You have successfully signed in
     </div>
 
-    <div *ngIf="loginForm">
-        <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit(loginForm.value)">
-
-            <div class="form-group">
-                <label for="username">Email</label>
-                <input class="form-control" type="email" id="username" placeholder="Email" formControlName="username"
-                    required>
-                <div *ngFor="let validation of login_validation_messages.username">
-                    <small *ngIf="loginForm.get('username')?.hasError(validation.type) && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)"
-                        class="text-danger">
-                        {{validation.message}}</small>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input class="form-control" type="password" id="password" placeholder="Password"
-                    formControlName="password" required>
-                <div *ngFor="let validation of login_validation_messages.password">
-                    <small *ngIf="loginForm.get('password')?.hasError(validation.type) && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)"
-                        class="text-danger">
-                        {{validation.message}}</small>
-                </div>
-            </div>
-
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="remember" formControlName="rememberMe" /> Keep me
-                logged in
-            </div>
-
-            <button *ngIf="!requesting" type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">
-                Login
-            </button>
-            <button *ngIf="requesting" class="btn btn-primary" type="submit" disabled>
-                Checking your credentials...
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            </button>
-
-            <a class="btn btn-link" [routerLink]='["/forgot-password"]'>Forgot password?</a>
-
-        </form>
+    <div *ngIf="submitProgress === 'error'" class="alert alert-danger" data-testid="error">
+        <strong>Sign in failed</strong> There was an error logging in. Make sure you have typed the correct email and
+        password.
+        <br>If you have forgotten your password, you can <a [routerLink]='["/forgot-password"]'>reset it</a>.
     </div>
+
 </div>
+
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>

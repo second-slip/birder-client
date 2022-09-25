@@ -156,7 +156,7 @@ describe('AccountManagePasswordComponent', () => {
 
     findEl(fixture, 'changePasswordForm').triggerEventHandler('submit', {});
 
-    expect(fakeAccountService.register).not.toHaveBeenCalled();
+    expect(fakeAccountService.postChangePassword).not.toHaveBeenCalled();
   }));
 
   it('marks fields as required', async () => {

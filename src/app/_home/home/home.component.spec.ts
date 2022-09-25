@@ -16,9 +16,9 @@ describe('HomeComponent', () => {
   let router: Router;
   let mockAuthenticationService;
 
-  let isAuthenticated: Boolean;
+  let isAuthenticated: boolean;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     mockAuthenticationService = jasmine.createSpyObj(['checkIsAuthenticatedObservable']);
 
     TestBed.configureTestingModule({
@@ -34,7 +34,7 @@ describe('HomeComponent', () => {
       ]
     })
       .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);

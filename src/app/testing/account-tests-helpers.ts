@@ -35,7 +35,7 @@ export const manageProfileModel = <IManageProfile>{
 
 export const changePasswordModel = <IManagePassword>{
   oldPassword: oldPassword,
-  newPassword: newPassword,
+  newPassword: password,
   confirmPassword: confirmPassword
 }
 

@@ -11,7 +11,8 @@ import {
   confirmPassword,
   oldPassword,
   changePasswordModel,
-  newPassword
+  newPassword,
+  password
 } from 'src/app/testing/account-tests-helpers';
 import { dispatchFakeEvent, expectText, findEl, setFieldValue } from 'src/app/testing/element.spec-helper';
 
@@ -88,7 +89,7 @@ describe('AccountManagePasswordComponent', () => {
 
   const fillForm = () => {
     setFieldValue(fixture, 'oldPassword', oldPassword)
-    setFieldValue(fixture, 'password', newPassword);
+    setFieldValue(fixture, 'password', password);
     setFieldValue(fixture, 'confirmPassword', confirmPassword);
   };
 

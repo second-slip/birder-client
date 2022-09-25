@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
+import { findInvalidControls } from 'src/app/testing/form-helpers';
 import { MatchOtherValidator, ValidatePassword } from 'src/app/_validators';
 import { AccountValidationService } from '../account-validation.service';
 import { AccountService } from '../account.service';
@@ -29,6 +30,8 @@ export class AccountManagePasswordComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(formValue: any): void {
+    console.log(findInvalidControls(this.changePasswordForm))
+    if (!this.changePasswordForm.valid) return;
     this.requesting = true;
 
     const model = <IManagePassword>{

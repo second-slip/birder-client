@@ -7,10 +7,9 @@ import { AuthenticationService } from './authentication.service';
 })
 export class AuthenticationGuardService implements CanActivate, CanActivateChild {
 
-  constructor(private readonly _router: Router, private readonly _authenticationService: AuthenticationService) { }
+  constructor(private readonly _router: Router
+    , private readonly _authenticationService: AuthenticationService) { }
 
-  // *****
-  // not sure if this initialisation line is required
   ngOnInit(): void {
     this._getAuthStatus();
   }
@@ -18,26 +17,25 @@ export class AuthenticationGuardService implements CanActivate, CanActivateChild
   private _getAuthStatus(): void {
     this._authenticationService.checkAuthStatus();
   }
-  // *****
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate() { //route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     this._getAuthStatus();
 
     if (this._authenticationService.isAuthorised) {
       return true;
     } else {
-      this._router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+      this._router.navigate(['/login']); //, { queryParams: { returnUrl: state.url } });
       return false;
     }
   }
 
-  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivateChild() { //route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     this._getAuthStatus();
 
     if (this._authenticationService.isAuthorised) {
       return true;
     } else {
-      this._router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+      this._router.navigate(['/login']); //, { queryParams: { returnUrl: state.url } });
       return false;
     }
   }

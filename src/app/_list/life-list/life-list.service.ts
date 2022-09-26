@@ -8,7 +8,7 @@ export class LifeListService implements OnDestroy {
   private _subscription = new Subject();
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  private readonly _suggestions$: BehaviorSubject<ILifeList[]> = new BehaviorSubject<ILifeList[]>([]);
+  private readonly _lifeList$: BehaviorSubject<ILifeList[]> = new BehaviorSubject<ILifeList[]>([]);
 
   constructor(private readonly _httpClient: HttpClient) { }
 
@@ -21,13 +21,10 @@ export class LifeListService implements OnDestroy {
   }
 
   public get getLifeList(): Observable<ILifeList[]> {
-    return this._suggestions$.asObservable();
+    return this._lifeList$.asObservable();
   }
 
-  public getData(username: string = ''): void {
-
-    // const options = username ?
-    //   { params: new HttpParams().set('requestedUsername', username) } : {};
+  public getData(): void {
 
     this._isLoading$.next(true);
 
@@ -35,7 +32,7 @@ export class LifeListService implements OnDestroy {
       .pipe(finalize(() => this._isLoading$.next(false)), takeUntil(this._subscription))
       .subscribe({
         next: (response) => {
-          this._suggestions$.next(response);
+          this._lifeList$.next(response);
         },
         error: (e) => { this._handleError(e); },
         complete: () => { if (this._isError$) this._isError$.next(false); }

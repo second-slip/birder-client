@@ -6,11 +6,12 @@ import { Ilogin } from "../_auth/login/ilogin.dto";
 
 export const originalLatitude = 1.23;
 export const originalLongitude = -1.11;
+export const avatar = 'https://www.website.com'
 
 
 export const userModel = <IAuthUser>{
     userName: 'vilas',
-    avatar: '',
+    avatar: avatar,
     defaultLocationLatitude: originalLatitude,
     defaultLocationLongitude: originalLongitude
 }

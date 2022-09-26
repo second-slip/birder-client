@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { authFailResult, authSuccessResult, loginModel } from 'src/app/testing/auth-test-helpers';
+import { authSuccessResult, loginModel } from 'src/app/testing/auth-test-helpers';
 import { AuthenticationService } from '../authentication.service';
 import { IAuthenticationResult } from '../i-authentication-result.dto';
 import { TokenService } from '../token.service';
@@ -82,12 +82,7 @@ describe('LoginService', () => {
       errors.push(error);
     };
 
-    let y: any;
-    service.login(loginModel).subscribe(fail
-    //   (x) => {
-    //   y = x
-    // }
-    , recordError, fail);
+    service.login(loginModel).subscribe(fail, recordError, fail);
 
     const status = 500;
     const statusText = 'Internal Server Error';
@@ -100,13 +95,12 @@ describe('LoginService', () => {
 
 
     expect(errors.length).toBe(1);
+
     errors.forEach((error) => {
       expect(error.error).toBe(errorEvent);
       expect(error.status).toBe(status);
       expect(error.statusText).toBe(statusText);
     });
-
-    //expect(y).toBe(authSuccessResult);
     expect(fakeTokenService.addToken).not.toHaveBeenCalled();
     expect(fakeAuthService.checkAuthStatus).not.toHaveBeenCalled();
   });

@@ -63,7 +63,7 @@ describe('AccountManageLocationComponent (child with ng-mocks)', () => {
         await TestBed.configureTestingModule({
             imports: [FormsModule, ReactiveFormsModule,
                 RouterTestingModule.withRoutes([
-                  { path: 'login', component: ConfirmEmailComponent },
+                    { path: 'login', component: ConfirmEmailComponent },
                 ])],
             declarations: [AccountManageLocationComponent, MockComponent(ReadWriteMapComponent)],
             providers: [{ provide: AccountService, useValue: fakeAccountService },
@@ -93,7 +93,7 @@ describe('AccountManageLocationComponent (child with ng-mocks)', () => {
                 postUpdateLocation: of({ success: true })
             }
         );
-        
+
         // update child component with location marker
         // (location marker is set at initialisation, but does not run in this mock/fake/stub)
         // that logic is tested in map component unit tests

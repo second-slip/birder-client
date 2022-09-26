@@ -35,15 +35,16 @@ export class AuthenticationService {
   public logout(): void {
     this._token.removeToken();
     this.checkAuthStatus();
+    this._updateUser();
   }
 
   private _checkAuthStatus(): void {
-    // const status = this._token.IsTokenValid();
-    this._isAuthenticated$.next(this._token.isTokenValid());
+    const status = this._token.isTokenValid();
+    this._isAuthenticated$.next(status);
   }
 
   private _updateUser(): void {
-    // const user = this._token.GetUser();
-    this._authenticatedUser$.next(this._token.getUser());
+    const user = this._token.getUser();
+    this._authenticatedUser$.next(user);
   }
 }

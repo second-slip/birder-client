@@ -21,14 +21,13 @@ export class LoginService {
 
   public login(viewModel: Ilogin): Observable<IAuthenticationResult> {
     return this._http.post<IAuthenticationResult>('api/authentication/login', viewModel, httpOptions)
-      .pipe(tap({
-        next: (response) => this._handleSuccess(response) // only process success response
-      }));
-    // .pipe(tap(response => this._handleSuccess(response)) // previous way
+      .pipe(tap(response => this._handleSuccess(response)));
   }
 
   private _handleSuccess(response: IAuthenticationResult): void {
-    this._token.addToken(response.authenticationToken);
-    this._authService.checkAuthStatus();
+    if (response.authenticationToken) {
+      this._token.addToken(response.authenticationToken);
+      this._authService.checkAuthStatus();
+    }
   }
 }

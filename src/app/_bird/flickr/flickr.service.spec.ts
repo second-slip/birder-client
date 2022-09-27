@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { flickrResponse, flickrUrl, photoUrlsArray, species } from 'src/app/testing/flickrApi-tests-helper';
+import { flickrResponse, flickrUrl, photoUrlsArray, species } from 'src/app/testing/flickr-recordings-api-tests-helper';
 import { FlickrService } from './flickr.service';
 
 describe('FlickrService', () => {

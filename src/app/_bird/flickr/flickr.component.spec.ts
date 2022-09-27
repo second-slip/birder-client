@@ -2,7 +2,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { expectText } from 'src/app/testing/element.spec-helper';
-import { photoUrlsArray, species } from 'src/app/testing/flickrApi-tests-helper';
+import { photoUrlsArray, species } from 'src/app/testing/flickr-recordings-api-tests-helper';
 import { FlickrComponent } from './flickr.component';
 import { FlickrService } from './flickr.service';
 

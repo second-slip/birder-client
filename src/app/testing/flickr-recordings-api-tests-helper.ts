@@ -56,3 +56,31 @@ export const flickrResponse =
         ]
     }
 }
+
+export const recordingsResponse =
+[
+  {
+    "id": 0,
+    "url": "//xeno-canto.org/sounds/uploaded/POUECYRDLL/XC691581-arctic skua 0613.mp3"
+  },
+  {
+    "id": 1,
+    "url": "//xeno-canto.org/sounds/uploaded/POUECYRDLL/XC674548-pair arctic skua alarm calling 270521 0050.mp3"
+  },
+  {
+    "id": 2,
+    "url": "//xeno-canto.org/sounds/uploaded/SDPCHKOHRH/XC432780-2018-08-03 Husey - Borgafjordur 180803 Labbe parasite divers cris.mp3"
+  },
+  {
+    "id": 3,
+    "url": "//xeno-canto.org/sounds/uploaded/TLPLNAINFU/XC428823-20180727_006_TYVJO_CALL_RISVIK.mp3"
+  },
+  {
+    "id": 4,
+    "url": "//xeno-canto.org/sounds/uploaded/TLPLNAINFU/XC318713-160527-001831tyvjo_brholm.mp3"
+  },
+  {
+    "id": 5,
+    "url": "//xeno-canto.org/sounds/uploaded/CDTGHVBGZP/XC203457-Parasitic Jaeger_chase2014-6-28-6.mp3"
+  }
+]

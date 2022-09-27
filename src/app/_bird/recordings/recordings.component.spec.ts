@@ -8,6 +8,8 @@ describe('RecordingsComponent', () => {
   let component: RecordingsComponent;
   let fixture: ComponentFixture<RecordingsComponent>;
 
+  // use of([]) to test empty response case
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],

@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { catchError, Observable, share, Subject, takeUntil, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
+import { IRecording } from './i-recording.dto';
 import { RecordingsService } from './recordings.service';
-import { IRecording } from './xeno-canto.service';
 
 @Component({
   selector: 'app-recordings',
@@ -13,27 +13,32 @@ export class RecordingsComponent implements OnInit, OnDestroy {
   @Input() species: string;
 
   private _subscription = new Subject();
-  
-  public recordings$: Observable<IRecording[]>;
-  public errorObject = null;
+  private readonly _recordings$: BehaviorSubject<Array<IRecording> | null> = new BehaviorSubject<Array<IRecording> |null>(null);
+  public fetchStatus: 'success' | 'loading' | 'error' = 'loading';
   public page: number = 1;
   public pageSize = 10;
 
   constructor(private _service: RecordingsService) { }
 
+  public get getRecordings(): Observable<Array<IRecording> | null> {
+    return this._recordings$.asObservable();
+  }
+
+  // todo: refresh button in case of fetch error
+
   ngOnInit(): void {
     this._getRecordings();
   }
 
-  // ToDo: refactor...into separate service...
   private _getRecordings(): void {
-    this.recordings$ = this._service.getRecordings(this.species)
-    //.pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
-    .pipe(share(), takeUntil(this._subscription),
-    catchError(err => {
-      this.errorObject = err;
-      return throwError(err);
-    }));
+    this._service.getRecordings(this.species)
+      .pipe(takeUntil(this._subscription))
+      .subscribe({
+        next: (r: Array<IRecording>) => {
+          this._recordings$.next(r);
+        },
+        error: () => { this.fetchStatus = 'error'; }
+      });
   }
 
   ngOnDestroy(): void {

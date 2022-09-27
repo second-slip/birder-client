@@ -1,30 +1,22 @@
-<div class="container">
+<div class="container" *ngIf="fetchStatus !== 'loading'; else loading">
 
-    <ng-container *ngIf="images$ | async as images; else loadingOrError">
-
-        <ngb-carousel>
-            <ng-template ngbSlide *ngFor="let image of images">
-                <div class="img-wrapper">
-                    <img class="img-fluid" [src]="image.url" alt="error">
-                </div>
-                <div class="carousel-caption">
-                </div>
-            </ng-template>
-        </ngb-carousel>
-
-        <div class="photos-info">These photos are from Flickr</div>
-
-    </ng-container>
-
-    <ng-template #loadingOrError>
-        <ng-container *ngIf="errorObject; else loading">
-            <!-- <app-error-display [error]="errorObject"></app-error-display> -->
-        </ng-container>
-    </ng-template>
+    <ngb-carousel *ngIf="getImages | async as images" data-testid="carousel">
+        <ng-template ngbSlide *ngFor="let image of images">
+            <div class="img-wrapper">
+                <img class="img-fluid" [src]="image.url" alt="error">
+            </div>
+            <div class="carousel-caption"></div>
+        </ng-template>
+    </ngb-carousel>
+    <div class="photos-info">These photos are from Flickr</div>
 
 
-    <ng-template #loading>
-        <app-loading></app-loading>
-    </ng-template>
+    <div *ngIf="fetchStatus === 'error'" class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> An error occurred. Please try again.
+    </div>
 
 </div>
+
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>

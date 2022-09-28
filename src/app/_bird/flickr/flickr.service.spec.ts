@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { flickrResponse, flickrUrl, photoUrlsArray, species } from 'src/app/testing/flickr-recordings-api-tests-helper';
@@ -11,6 +10,7 @@ describe('FlickrService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
+      providers: [FlickrService]
     });
     service = TestBed.inject(FlickrService);
     controller = TestBed.inject(HttpTestingController);
@@ -24,40 +24,54 @@ describe('FlickrService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('check it registers', () => {
-    let result: Array<{ url: string }> | undefined;
+  it('fetches data', () => {
+    let actualImagesState: Array<{ url: string }> | null | undefined;
+    let actualErrorState: boolean | undefined;
 
-    service.getSearchResults(species, undefined, undefined).subscribe((otherResult) => {
-      result = otherResult;
+    service.getData(species);
+
+    service.images.subscribe((otherResult) => {
+      actualImagesState = otherResult;
     });
+
+    service.isError
+      .subscribe((error) => {
+        actualErrorState = error;
+      });
 
     controller.expectOne(flickrUrl).flush(flickrResponse);
 
-    expect(result).toEqual(photoUrlsArray);
+    expect(actualImagesState).toEqual(photoUrlsArray);
+    expect(actualErrorState).toBeFalse();
+  });
+
+  it('#getData should use GET to retrieve data', () => {
+    service.getData(species);
+    const testRequest = controller.expectOne(flickrUrl);
+    expect(testRequest.request.method).toEqual('GET');
   });
 
   it('passes the errors through', () => {
-    const errors: HttpErrorResponse[] = [];
-    const recordError = (error: HttpErrorResponse) => {
-      errors.push(error);
-    };
-
-    service.getSearchResults(species, undefined, undefined).subscribe(fail, recordError, fail);
+    let actualImagesState: Array<{ url: string }> | null | undefined;
+    let actualErrorState: boolean | undefined;
 
     const status = 500;
     const statusText = 'Internal Server Error';
     const errorEvent = new ProgressEvent('API error');
 
-    const requests = controller.match(() => true);
-    requests.forEach((request) => {
-      request.error(errorEvent, { status, statusText });
+    service.getData(species);
+
+    service.images.subscribe((otherResult) => {
+      actualImagesState = otherResult;
     });
 
-    expect(errors.length).toBe(1);
-    errors.forEach((error) => {
-      expect(error.error).toBe(errorEvent);
-      expect(error.status).toBe(status);
-      expect(error.statusText).toBe(statusText);
+    service.isError.subscribe((error) => {
+      actualErrorState = error;
     });
+
+    controller.expectOne(flickrUrl).error(errorEvent, { status, statusText });
+
+    expect(actualImagesState).toEqual(null);
+    expect(actualErrorState).toBeTrue();
   });
 });

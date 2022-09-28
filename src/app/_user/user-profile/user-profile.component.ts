@@ -23,11 +23,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     , private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this._route.params.subscribe(_ => {
-      this._route.paramMap.subscribe(pmap => {
-        this._username = pmap.get('username');
-        this._getData();
-      })
+    this._route.paramMap.subscribe(pmap => {
+      this._username = pmap.get('username');
+      this._getData();
     });
   }
 
@@ -47,14 +45,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this._networkService.postFollowUser(user)
         .pipe(first(), takeUntil(this._subscription))
         .subscribe({
-          next: _ => {
-            //this.user = data;
-            element.innerText = 'Unfollow';
-            // this.toast.info('You have followed ' + data.userName, 'Success');
-          },
+          next: _ => { element.innerText = 'Unfollow'; },
+          // this.toast.info('You have followed ' + data.userName, 'Success');
           error: ((error: any) => {
             // ToDo: write proper error actions
-            // this.toast.error(error.friendlyMessage, 'An error occurred');
           })
         });
       return;
@@ -62,14 +56,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this._networkService.postUnfollowUser(user)
         .pipe(first(), takeUntil(this._subscription))
         .subscribe({
-          next: _ => {
-            element.innerText = 'Follow';
-            // this.toast.info('You have unfollowed ' + data.userName, 'Success');
-            // this.user = data;
-          },
+          next: _ => { element.innerText = 'Follow'; }, // this.user = data;
           error: ((error: any) => {
             // ToDo: write proper error actions
-            // this.toast.error(error.friendlyMessage, 'An error occurred');
           })
         });
       return;

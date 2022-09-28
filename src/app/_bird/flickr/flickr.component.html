@@ -1,6 +1,6 @@
-<div class="container" *ngIf="fetchStatus !== 'loading'; else loading">
+<div class="container" *ngIf="_service.images | async as images; else loadingOrError">
 
-    <ngb-carousel *ngIf="getImages | async as images" data-testid="carousel">
+    <ngb-carousel *ngIf="images.length; else noImages" data-testid="carousel">
         <ng-template ngbSlide *ngFor="let image of images">
             <div class="img-wrapper">
                 <img class="img-fluid" [src]="image.url" alt="error">
@@ -11,11 +11,21 @@
     <div class="photos-info">These photos are from Flickr</div>
 
 
-    <div *ngIf="fetchStatus === 'error'" class="alert alert-danger" data-testid="error">
-        <strong>Whoops!</strong> An error occurred. Please try again.
-    </div>
+    <ng-template #noImages>
+        <p data-testid="no-images">
+            <ngb-alert type="info" [dismissible]="false">
+                <strong>We're sorry!</strong> There are no recordings available for this species
+            </ngb-alert>
+        </p>
+    </ng-template>
 
 </div>
+
+<ng-template #loadingOrError>
+    <div *ngIf="_service.isError | async; else loading" class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> An error occurred. Please try again.
+    </div>
+</ng-template>
 
 <ng-template #loading>
     <app-loading></app-loading>

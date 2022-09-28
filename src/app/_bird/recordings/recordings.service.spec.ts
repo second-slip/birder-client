@@ -57,7 +57,7 @@ describe('RecordingsService', () => {
   it('passes the errors through', () => {
     let actualRecordingsState: Array<IRecording> | null | undefined;
     let actualErrorState: boolean | undefined;
-    
+
     const status = 500;
     const statusText = 'Internal Server Error';
     const errorEvent = new ProgressEvent('API error');
@@ -68,8 +68,7 @@ describe('RecordingsService', () => {
         actualRecordingsState = otherResult;
     });
 
-    service.isError
-    .subscribe((error) => {
+    service.isError.subscribe((error) => {
         actualErrorState = error;
     });
 

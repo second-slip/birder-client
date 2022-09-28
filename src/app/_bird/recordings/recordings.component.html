@@ -1,10 +1,10 @@
-<div class="container" *ngIf="getRecordings | async as recordings; else loadingOrError">
+<div class="container" *ngIf="_service.recordings | async as recordings; else loadingOrError">
 
     <h2>Bird song recordings</h2>
 
-    <div *ngIf="recordings.length">
+    <div *ngIf="recordings.length; else noRecordings">
 
-        <div *ngFor="let item of recordings | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+        <div *ngFor="let item of recordings | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i" data-testid="recordings">
             <div>
                 <audio controls>
                     <source src="{{item.url}}" type="audio/mpeg">
@@ -26,23 +26,22 @@
 
     </div>
 
-    <div *ngIf="!recordings.length">
-        <p>
+    <ng-template #noRecordings>
+        <p data-testid="no-recordings">
             <ngb-alert type="info" [dismissible]="false">
                 <strong>We're sorry!</strong> There are no recordings available for this species
             </ngb-alert>
         </p>
-    </div>
+    </ng-template>
 
 </div>
 
 
 <ng-template #loadingOrError>
-    <div *ngIf="fetchStatus === 'error'; else loading" class="alert alert-danger" data-testid="error">
+    <div *ngIf="_service.isError | async; else loading" class="alert alert-danger" data-testid="error">
         <strong>Whoops!</strong> An error occurred. Please try again.
     </div>
 </ng-template>
-
 
 <ng-template #loading>
     <app-loading></app-loading>

@@ -16,7 +16,7 @@ describe('ObservationFeedService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [ObservationFeedService],
+            providers: [ObservationFeedService]
         });
         service = TestBed.inject(ObservationFeedService);
         controller = TestBed.inject(HttpTestingController);

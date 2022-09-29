@@ -3,11 +3,11 @@
         <button class="btn btn-outline-primary btn-sm me-2" id="dropdownManual" ngbDropdownAnchor
             (focus)="myDrop.open()">Filter</button>
         <div ngbDropdownMenu aria-labelledby="dropdownManual">
-            <a [hidden]="currentFilter === 'Network'" ngbDropdownItem [routerLink]='["/feed/my-network"]'>Only my
+            <a [hidden]="currentFilter === 'network'" ngbDropdownItem [routerLink]='["/feed-n/network"]'>Only my
                 network</a>
             <a ngbDropdownItem routerLink="/user/{{authUser.userName}}">Only
                 mine</a>
-            <a [hidden]="currentFilter === 'Public'" ngbDropdownItem [routerLink]='["/feed/public"]'>All public</a>
+            <a [hidden]="currentFilter === 'public'" ngbDropdownItem [routerLink]='["/feed-p/public"]'>All public</a>
         </div>
     </div>
 </ng-container>

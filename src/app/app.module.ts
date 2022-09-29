@@ -84,8 +84,7 @@ import { AccountManagePasswordComponent } from './_account/account-manage-passwo
 import { AccountManageProfileComponent } from './_account/account-manage-profile/account-manage-profile.component';
 import { AccountManagerComponent } from './_account/account-manager/account-manager.component';
 import { FilterControlComponent } from './_observationFeed/filter-control/filter-control.component';
-import { NetworkFeedComponent } from './_observationFeed/network-feed/network-feed.component';
-import { PublicFeedComponent } from './_observationFeed/public-feed/public-feed.component';
+import { ObservationFeedComponent } from './_observationFeed/observation-feed/observation-feed.component';
 
 @NgModule({
   declarations: [
@@ -153,8 +152,7 @@ import { PublicFeedComponent } from './_observationFeed/public-feed/public-feed.
     AccountManageLocationComponent,
     AccountManageAvatarComponent,
     FilterControlComponent,
-    NetworkFeedComponent,
-    PublicFeedComponent,
+    ObservationFeedComponent,
   ],
   imports: [
     AppRoutingModule,

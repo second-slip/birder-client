@@ -60,7 +60,7 @@ export class ObservationDeleteComponent implements OnInit, OnDestroy {
     this._observationCrudService.deleteObservation(id)
       .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
       .subscribe({
-        next: (r) => { this._router.navigate(['/feed/public']); },
+        next: (r) => { this._router.navigate(['/feed-p/public']); },
         error: (e) => {
           // this.errorObject = e; this._handleError(e); 
         }//,

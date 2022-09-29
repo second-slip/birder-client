@@ -27,10 +27,9 @@ import { ObservationCreateComponent } from "./_observation/observation-create/ob
 import { ObservationDeleteComponent } from "./_observation/observation-delete/observation-delete.component";
 import { ObservationReadComponent } from "./_observation/observation-read/observation-read.component";
 import { ObservationUpdateComponent } from "./_observation/observation-update/observation-update.component";
-import { NetworkFeedComponent } from "./_observationFeed/network-feed/network-feed.component";
-import { PublicFeedComponent } from "./_observationFeed/public-feed/public-feed.component";
 import { TweetDayArchiveComponent } from "./_tweet/tweet-day-archive/tweet-day-archive.component";
 import { UserProfileComponent } from "./_user/user-profile/user-profile.component";
+import { ObservationFeedComponent } from "./_observationFeed/observation-feed/observation-feed.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
@@ -67,8 +66,11 @@ const routes: Routes = [
         canActivateChild: [AuthenticationGuardService],
         children: [
           { path: '', component: HomeComponent, pathMatch: 'full' },
-          { path: 'feed/public', component: PublicFeedComponent },
-          { path: 'feed/my-network', component: NetworkFeedComponent },
+          // Currently components are reused only when only route parameters change while staying on the same route.
+          // If the route is changed, event when the new route adds the same component, the component is recreated.
+          { path: 'feed-n/:filter', component: ObservationFeedComponent },
+          { path: 'feed-p/:filter', component: ObservationFeedComponent },
+          //
           { path: 'observation/detail/:id', component: ObservationReadComponent },
           { path: 'observation/delete/:id', component: ObservationDeleteComponent },
           { path: 'observation/create', component: ObservationCreateComponent, },

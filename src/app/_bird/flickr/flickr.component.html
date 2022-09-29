@@ -1,6 +1,6 @@
 <div class="container" *ngIf="_service.images | async as images; else loadingOrError">
 
-    <ngb-carousel *ngIf="images.length; else noImages" data-testid="carousel">
+    <ngb-carousel *ngIf="images.length; else noImages" data-testid="images">
         <ng-template ngbSlide *ngFor="let image of images">
             <div class="img-wrapper">
                 <img class="img-fluid" [src]="image.url" alt="error">

@@ -1,34 +1,37 @@
 <div class="feed-container">
 
     <div class="d-flex justify-content-between">
-        <h1>{{ title }}</h1>
+        <h1 data-testid="title">{{ title }}</h1>
         <app-filter-control [currentFilter]="filter"></app-filter-control>
     </div>
 
-    <ng-container *ngIf="(_service.getObservations | async) as observations; else loadingOrError">
+    <ng-container *ngIf="(_service.observations | async) as observations; else loadingOrError">
 
         <app-infinite-scroll (scrolled)="onScroll()">
 
             <app-observation-feed-item *ngFor="let item of observations" [observation]="item">
             </app-observation-feed-item>
 
-            <p *ngIf="(_service.allLoaded | async)" class="alert alert-info no-more-items" data-testid="all-loaded">
-                <strong>No more items</strong>&nbsp;You have reached the end of the feed.
-            </p>
+            <div *ngIf="(_service.allLoaded | async)" class="alert alert-info no-more-items" data-testid="all-loaded">
+                <strong>No more items</strong> You have reached the end of the feed.
+                <p *ngIf="filter === 'network'">
+                    Switch to the <a [routerLink]='["/feed-p/public"]'>public feed</a> to view more observations.
+                </p>
+            </div>
 
             <!-- info: keep this to show loading when MORE items are added to the infinite scroll feed-->
-            <p *ngIf="_service.isLoading | async">
+            <div *ngIf="_service.isLoading | async">
                 <app-loading></app-loading>
-            </p>
+            </div>
 
         </app-infinite-scroll>
 
     </ng-container>
 
     <ng-template #loadingOrError>
-        <div *ngIf="_service.isError | async; else loading" class="alert alert-danger" data-testid="error-content">
-            <strong>Whoops!</strong>&nbsp;There was an error retrieving the data.<br>
-            <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
+        <div *ngIf="_service.isError | async; else loading" class="alert alert-danger" data-testid="error">
+            <strong>Whoops!</strong> There was an error retrieving the data.<br>
+            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button" (click)="reload()">Try
                 Again</button>
         </div>
     </ng-template>

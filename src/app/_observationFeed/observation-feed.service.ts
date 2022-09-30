@@ -25,11 +25,11 @@ export class ObservationFeedService implements OnDestroy {
     return this._isLoading$.asObservable();
   }
 
-  public get getObservations(): Observable<IObservationFeed[] | null> {
+  public get observations(): Observable<IObservationFeed[] | null> {
     return this._observations$.asObservable();
   }
 
-  public getData(pageIndex: number, pageSize: number = 10, url: string): void {
+  public getData(pageIndex: number, url: string, pageSize: number = 10): void {
 
     this._isLoading$.next(true);
 
@@ -41,8 +41,7 @@ export class ObservationFeedService implements OnDestroy {
       .pipe(finalize(() => { this._isLoading$.next(false) }), takeUntil(this._subscription))
       .subscribe({
         next: (items: IObservationFeed[]) => {
-          //this._observations$.getValue()?.concat(items)
-          this._observations$.next([...this._observations$.getValue() || [], ...items]); // or concat?
+          this._observations$.next([...this._observations$.getValue() || [], ...items]); // spread syntax, or concat?
           this._moreToGet(pageSize, items.length);
         },
         error: (e: any) => { this._handleError(e); },

@@ -35,10 +35,10 @@ describe('ObservationFeedService', () => {
         let actualAllLoadedState: boolean | undefined;
 
         // Act
-        service.getData(_pageIndex); // call http request method
+        service.getData(_pageIndex, 'api/ObservationFeed'); // call http request method
 
         // We expect that the Observable emits an array that equals to the one from the API response:
-        service.getObservations.subscribe((observationFeedObservable) => {
+        service.observations.subscribe((observationFeedObservable) => {
             actualobservationFeed = observationFeedObservable
         });
 
@@ -69,7 +69,7 @@ describe('ObservationFeedService', () => {
     });
 
     it('#getData should use GET to retrieve data', () => {
-        service.getData(1);
+        service.getData(1, 'api/ObservationFeed');
         const testRequest = controller.expectOne(_apiUrl);
         expect(testRequest.request.method).toEqual('GET');
     });
@@ -84,7 +84,7 @@ describe('ObservationFeedService', () => {
         let actualAllLoadedState: boolean | undefined;
 
         // Act & Assert
-        service.getData(_pageIndex); // call http request method
+        service.getData(_pageIndex, 'api/ObservationFeed'); // call http request method
 
         service.isError.pipe(skip(1)) // skip first, default 'false' value emitted...
             .subscribe((error) => {
@@ -119,10 +119,10 @@ describe('ObservationFeedService', () => {
         let actualAllLoadedState: boolean | undefined;
 
         // Act
-        service.getData(_pageIndex); // call http request method
+        service.getData(_pageIndex, 'api/ObservationFeed'); // call http request method
 
         // We expect that the Observable emits an array that equals to the one from the API response:
-        service.getObservations.subscribe((observationFeedObservable) => {
+        service.observations.subscribe((observationFeedObservable) => {
             actualobservationFeed = observationFeedObservable
         });
 

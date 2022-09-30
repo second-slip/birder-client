@@ -10,17 +10,17 @@ import { ObservationFeedService } from '../observation-feed.service';
   encapsulation: ViewEncapsulation.None
 })
 export class ObservationFeedComponent implements OnInit {
-  private _url: string = 'api/ObservationFeed';
+  private _url: string = '';
   private _page: number = 1;
 
-  public title = 'Latest observations in your network';
+  public title = 'Latest observations';
   public filter: string = '';
 
   constructor(readonly _service: ObservationFeedService, private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this._route.params.subscribe(pmap => {
-      this._setup(pmap['filter']);
+    this._route.paramMap.subscribe(pmap => {
+      this._setup(pmap.get('filter'));
       this._getData();
     });
   }
@@ -36,7 +36,7 @@ export class ObservationFeedComponent implements OnInit {
   }
 
   private _getData(): void {
-    this._service.getData(this._page, undefined, this._url);
+    this._service.getData(this._page, this._url);
   }
 
   private _setup(filter: string | null): void {

@@ -30,7 +30,7 @@ export class TweetDayService implements OnDestroy {
 
     this._isLoading$.next(true);
 
-    this._httpClient.get<ITweet>('api/Tweets')
+    this._httpClient.get<ITweet>('api/tweets')
       .pipe(finalize(() => { this._isLoading$.next(false); }), takeUntil(this._subscription))
       .subscribe({
         next: (response) => {

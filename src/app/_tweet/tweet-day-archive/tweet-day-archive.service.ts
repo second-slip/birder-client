@@ -36,7 +36,7 @@ export class TweetDayArchiveService implements OnDestroy  {
       .set('pageIndex', pageIndex.toString())
       .set('pageSize', pageSize.toString());
 
-    this._httpClient.get<ITweet[]>('api/Tweets/Archive', { params: parameters })
+    this._httpClient.get<ITweet[]>('api/tweets/archive', { params: parameters })
       .pipe(finalize(() => { this._isLoading$.next(false) }), takeUntil(this._subscription))
       .subscribe({
         next: (items: ITweet[]) => {

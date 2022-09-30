@@ -5,7 +5,7 @@ import { fakeITweet, fakeTweetResponse } from 'src/app/testing/tweet-day-test-he
 import { ITweet } from '../i-tweet.dto';
 import { TweetDayService } from './tweet-day.service';
 
-const _apiUrl = 'api/Tweets';
+const _apiUrl = 'api/tweets';
 
 describe('TweetDayService', () => {
   let controller: HttpTestingController;

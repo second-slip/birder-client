@@ -6,7 +6,7 @@ import { ITweet } from '../i-tweet.dto';
 import { fakeTweetArchiveArray, fakeTweetArchiveResponse } from 'src/app/testing/tweet-day-test-helper';
 
 const _pageIndex = 1;
-const _apiUrl = `api/Tweets/Archive?pageIndex=${_pageIndex}&pageSize=8`;
+const _apiUrl = `api/tweets/archive?pageIndex=${_pageIndex}&pageSize=8`;
 
 describe('TweetDayArchiveService', () => {
   let controller: HttpTestingController;

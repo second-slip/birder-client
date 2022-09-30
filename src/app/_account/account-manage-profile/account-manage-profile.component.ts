@@ -32,13 +32,13 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
     this._getProfile();
   }
 
-  public onSubmit(formValue: IManageProfile): void {
+  public onSubmit(formValue: any): void {
     this.requesting = true;
 
     try {
 
       const model = <IManageProfile>{
-        username: formValue.username,
+        userName: formValue.username,
         email: formValue.email,
         emailConfirmationRequired: true
       };
@@ -81,7 +81,7 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
   private _createForm(user: IManageProfile): FormGroup {
     return this._formBuilder.group({
       username: [
-        user.username,
+        user.userName,
         {
           validators: [
             Validators.required,

@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
 import { IObservation } from './i-observation.dto';
 
 @Injectable()
@@ -32,7 +32,7 @@ export class ObservationReadService implements OnDestroy {
     this._httpClient.get<IObservation>('api/observation', options)
       .pipe(takeUntil(this._subscription))
       .subscribe({
-        next: (response) => {
+        next: (response: IObservation) => {
           this._observation$.next(response);
         },
         error: (e) => { this._handleError(e); },

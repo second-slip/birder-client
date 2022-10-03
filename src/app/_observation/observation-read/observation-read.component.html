@@ -6,7 +6,7 @@
 
             <h1>Observation Report</h1>
 
-            <p><a routerLink="/user/{{observation.user.userName}}">
+            <p data-testid="observation-title"><a routerLink="/user/{{observation.user.userName}}">
                     {{ observation.user.userName === authUser.userName ? 'You' : observation.user.userName }}
                 </a> observed {{ observation.quantity }} <a routerLink="/bird/detail/{{observation.bird.birdId}}">
                     {{ observation.bird.englishName }}
@@ -14,7 +14,7 @@
                 on {{ observation.observationDateTime | date: 'EEEE, d MMMM yyyy \'at\' HH:mm' }}.
             </p>
 
-            <ul ngbNav #nav="ngbNav" class="nav-tabs">
+            <ul ngbNav #nav="ngbNav" class="nav-tabs" data-testid="observation">
                 <li [ngbNavItem]="1">
                     <a ngbNavLink>Map</a>
                     <ng-template ngbNavContent>
@@ -103,13 +103,11 @@
     </ng-container>
 
     <ng-template #loadingOrError>
-        <ng-container *ngIf="(_service.isError | async); else loading">
-            <p class="centre">
-                <strong>Whoops!</strong>&nbsp;An error occurred<br>
-                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
-                    Again</button>
-            </p>
-        </ng-container>
+        <div *ngIf="_service.isError | async; else loading" class="alert alert-danger" data-testid="error">
+            <strong>Whoops!</strong> There was an error retrieving the data.<br>
+            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button" (click)="reload()">Try
+                Again</button>
+        </div>
     </ng-template>
 
 

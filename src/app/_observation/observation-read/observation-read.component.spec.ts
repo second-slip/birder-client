@@ -2,13 +2,18 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { of } from 'rxjs';
 import { userModel } from 'src/app/testing/auth-test-helpers';
+import { expectText, expectTextToContain, findComponent } from 'src/app/testing/element.spec-helper';
+import { singleObservation, singleObservationAuthUser } from 'src/app/testing/observation-test-helpers';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { ObservationReadService } from '../observation-read.service';
 
 import { ObservationReadComponent } from './observation-read.component';
+
+// todo: test different tab contents....
 
 describe('ObservationReadComponent', () => {
   let component: ObservationReadComponent;
@@ -25,16 +30,14 @@ describe('ObservationReadComponent', () => {
   );
 
   const setup = async (
-    fakeMethodValues?: jasmine.SpyObjMethodNames<ObservationReadService>,
     fakePropertyValues?: jasmine.SpyObjPropertyNames<ObservationReadService>,
-    fakeRouteArgument?: string,
-    fakeAuthPropertyValues?: jasmine.SpyObjPropertyNames<AuthenticationService>) => {
+    fakeAuthPropertyValues?: jasmine.SpyObjPropertyNames<AuthenticationService>,
+    fakeRouteArgument?: string) => {
 
     fakeObservationReadService = jasmine.createSpyObj<ObservationReadService>(
       'ObservationReadService',
       {
-        getData: undefined,
-        ...fakeMethodValues
+        getData: undefined
       },
       {
         isError: of(false),
@@ -50,14 +53,15 @@ describe('ObservationReadComponent', () => {
         logout: undefined
       },
       {
-        isAuthorisedObservable: of(false),
-        isAuthorised: false,
-        getAuthUser: of(userModel),
+        isAuthorisedObservable: undefined,
+        isAuthorised: undefined,
+        getAuthUser: of(null),
         ...fakeAuthPropertyValues
       }
     );
 
     await TestBed.configureTestingModule({
+      imports: [NgbNavModule],
       declarations: [
         ObservationReadComponent
       ],
@@ -89,16 +93,7 @@ describe('ObservationReadComponent', () => {
   describe('when component is created', () => {
 
     it('should be created and show the loading placeloader', fakeAsync(async () => {
-      await setup({}, {}, '10', {});
-
-      expect(component).toBeTruthy();
-      const { debugElement } = fixture;
-      const loading = debugElement.query(By.css('app-loading'));
-      expect(loading).toBeTruthy();
-    }));
-
-    it('should be created and show the loading placeloader', fakeAsync(async () => {
-      await setup({}, {}, '10', {});
+      await setup({}, {}, '');
 
       expect(component).toBeTruthy();
       const { debugElement } = fixture;
@@ -109,7 +104,7 @@ describe('ObservationReadComponent', () => {
     it('should get the id from the route and call data fetch', fakeAsync(async () => {
       const expectedRouteArgument = '10';
 
-      await setup({}, {}, expectedRouteArgument, {});
+      await setup({}, {}, expectedRouteArgument);
 
       expect(fakeObservationReadService.getData).toHaveBeenCalledOnceWith(expectedRouteArgument);
     }));
@@ -117,7 +112,7 @@ describe('ObservationReadComponent', () => {
     it('should redirect when route argument is null', fakeAsync(async () => {
       const expectedRouteArgument = '';
 
-      await setup({}, {}, expectedRouteArgument, {});
+      await setup({}, {}, expectedRouteArgument);
 
       expect(fakeObservationReadService.getData).not.toHaveBeenCalled();
       expect(fakeNavService.back).toHaveBeenCalled();
@@ -126,6 +121,210 @@ describe('ObservationReadComponent', () => {
 
 
 
+  describe('successful data fetch', () => {
 
-  
+    it('calls data fetch', fakeAsync(async () => {
+      await setup(
+        {
+          isError: of(false),
+          observation: of(singleObservation)
+        },
+        {
+          getAuthUser: of(userModel),
+        },
+        '10'
+      );
+      expect(fakeObservationReadService.getData).toHaveBeenCalledOnceWith('10');
+    }));
+
+    it('shows the observation', fakeAsync(async () => {
+      await setup(
+        {
+          isError: of(false),
+          observation: of(singleObservation)
+        },
+        {
+          getAuthUser: of(userModel),
+        },
+        '10'
+      );
+
+      const map = findComponent(fixture, 'app-read-only-map');
+      expect(map).toBeTruthy();
+
+      const menu = findComponent(fixture, 'app-navigation-menu');
+      expect(menu).toBeTruthy();
+    }));
+
+    it('renders the correct title when is NOT the record owner', fakeAsync(async () => {
+      await setup(
+        {
+          isError: of(false),
+          observation: of(singleObservation)
+        },
+        {
+          getAuthUser: of(userModel),
+        },
+        '10'
+      );
+
+      const expectedTitle = ` ${singleObservation.user.userName}  observed ${singleObservation.quantity}  ${singleObservation.bird.englishName}  ${singleObservation.bird.species}  on `
+
+      expectTextToContain(fixture, 'observation-title', expectedTitle);
+    }));
+
+    it('renders the correct title when is the record owner', fakeAsync(async () => {
+      await setup(
+        {
+          isError: of(false),
+          observation: of(singleObservationAuthUser)
+        },
+        {
+          getAuthUser: of(userModel),
+        },
+        '10'
+      );
+
+      const p = ` You  observed ${singleObservation.quantity}  ${singleObservation.bird.englishName}  ${singleObservation.bird.species}  on `
+
+      expectTextToContain(fixture, 'observation-title', p);
+    }));
+
+    it('does not show error section', fakeAsync(async () => {
+      await setup(
+        {
+          isError: of(false),
+          observation: of(singleObservation)
+        },
+        {
+          getAuthUser: of(userModel),
+        },
+        '10'
+      );
+      const error = fixture.nativeElement as HTMLElement;
+      expect(error.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
+    }));
+
+    it('does not show loading section', fakeAsync(async () => {
+      await setup(
+        {
+          isError: of(false),
+          observation: of(singleObservation)
+        },
+        {
+          getAuthUser: of(userModel),
+        },
+        '10'
+      );
+      const { debugElement } = fixture;
+      const loading = debugElement.query(By.css('app-loading'));
+      expect(loading).toBeNull();
+    }));
+
+
+    describe('when error fetching data', () => {
+
+      it('shows error content', fakeAsync(async () => {
+        await setup(
+          {
+            isError: of(true),
+            observation: of(null)
+          },
+          {
+            getAuthUser: of(userModel),
+          },
+          '10'
+        );
+
+        const compiled = fixture.nativeElement as HTMLElement;
+        expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeDefined();
+        expect(compiled.querySelector('[data-testid="reload-button"]')?.textContent).toBeDefined();
+        expectText(fixture, 'error', 'Whoops! There was an error retrieving the data.Try Again');
+      }));
+
+      it('tries data fetch again on user button click', fakeAsync(async () => {
+        await setup(
+          {
+            isError: of(true),
+            observation: of(null)
+          },
+          {
+            getAuthUser: of(userModel),
+          },
+          '10'
+        );
+
+        fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
+
+        expect(fakeObservationReadService.getData).toHaveBeenCalledWith('10');
+      }));
+
+      it('redirects on retry if id is null or empty', fakeAsync(async () => {
+        await setup(
+          {
+            isError: of(true),
+            observation: of(null)
+          },
+          {
+            getAuthUser: of(userModel),
+          },
+          ''
+        );
+
+        fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
+
+        expect(fakeObservationReadService.getData).not.toHaveBeenCalled();
+        expect(fakeNavService.back).toHaveBeenCalled();
+      }));
+
+      it('hides main content', fakeAsync(async () => {
+        await setup(
+          {
+            isError: of(true),
+            observation: of(null)
+          },
+          {
+            getAuthUser: of(userModel),
+          },
+          '10'
+        );
+
+        const title = fixture.nativeElement as HTMLElement;
+        expect(title.querySelector('[data-testid="observationtiitle"]')?.textContent).toBeUndefined();
+
+        const compiled = fixture.nativeElement as HTMLElement;
+        expect(compiled.querySelector('[data-testid="observation"]')?.textContent).toBeUndefined();
+      }));
+
+      it('does not show loading section', fakeAsync(async () => {
+        await setup(
+          {
+            isError: of(true),
+            observation: of(null)
+          },
+          {
+            getAuthUser: of(userModel),
+          },
+          '10'
+        );
+
+        const { debugElement } = fixture;
+        const loading = debugElement.query(By.css('app-loading'));
+        expect(loading).toBeNull();
+      }));
+
+    });
+
+
+
+
+
+  });
+
+
+
+
+
+
+
 });

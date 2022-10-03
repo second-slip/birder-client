@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IObservationNote } from '../i-observation-note.dto';
 
 @Component({
@@ -6,6 +6,6 @@ import { IObservationNote } from '../i-observation-note.dto';
   templateUrl: './view-only-notes.component.html',
   styleUrls: ['./view-only-notes.component.scss']
 })
-export class ViewOnlyNotesComponent {
+export class ViewOnlyNotesComponent   {
   @Input() notes: IObservationNote[];
 }

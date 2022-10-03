@@ -4,7 +4,7 @@ import { finalize, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { ObservationCrudService } from '../observation-crud.service';
-import { ObservationReadService } from '../observation-read/observation-read.service';
+import { ObservationReadService } from '../observation-read.service';
 
 @Component({
   selector: 'app-observation-delete',
@@ -25,10 +25,8 @@ export class ObservationDeleteComponent implements OnInit, OnDestroy {
     , private readonly _observationCrudService: ObservationCrudService) { }
 
   ngOnInit(): void {
-    this._route.params.subscribe(_ => {
-      this._route.paramMap.subscribe(pmap => {
-        this._getData(pmap.get('id'));
-      })
+    this._route.paramMap.subscribe(pmap => {
+      this._getData(pmap.get('id'));
     });
   }
 
@@ -51,7 +49,7 @@ export class ObservationDeleteComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._service.reset();
+    // this._service.reset();
     this._subscription.next('');
     this._subscription.complete();
   }

@@ -50,11 +50,9 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
     , private readonly _formBuilder: UntypedFormBuilder) { }
 
   ngOnInit(): void {
-    this._route.params.subscribe(_ => {
       this._route.paramMap.subscribe(pmap => {
         this._getData(pmap.get('id'));
-      })
-    });
+      });
   }
 
   private _getData(id: string | null): void {

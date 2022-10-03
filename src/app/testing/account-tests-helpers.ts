@@ -28,7 +28,7 @@ export const resetPasswordModel = <IResetPassword>{
 // Manage account objects
 
 export const manageProfileModel = <IManageProfile>{
-  username: username,
+  userName: username,
   emailConfirmationRequired: true, //???
   email: email
 }

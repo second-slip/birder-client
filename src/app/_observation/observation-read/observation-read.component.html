@@ -1,11 +1,11 @@
 <div class="observation-detail-container">
 
-    <ng-container *ngIf="(_service.getObservation | async) as observation; else loadingOrError">
+    <ng-container *ngIf="(_service.observation | async) as observation; else loadingOrError">
 
         <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
 
             <h1>Observation Report</h1>
-            
+
             <p><a routerLink="/user/{{observation.user.userName}}">
                     {{ observation.user.userName === authUser.userName ? 'You' : observation.user.userName }}
                 </a> observed {{ observation.quantity }} <a routerLink="/bird/detail/{{observation.bird.birdId}}">
@@ -97,7 +97,6 @@
 
             <app-navigation-menu [observationId]="observation.observationId"
                 [isRecordOwner]="observation.user.userName===authUser.userName"></app-navigation-menu>
-
 
         </ng-container>
 

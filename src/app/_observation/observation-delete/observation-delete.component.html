@@ -1,6 +1,6 @@
 <div class="observation-delete-container">
 
-    <ng-container *ngIf="(_service.getObservation | async) as observation; else loadingOrError">
+    <ng-container *ngIf="(_service.observation | async) as observation; else loadingOrError">
 
         <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
 

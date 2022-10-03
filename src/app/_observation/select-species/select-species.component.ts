@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, merge, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { SelectSpeciesService } from './select-species.service';
   encapsulation: ViewEncapsulation.None
 })
 export class SelectSpeciesComponent implements OnInit  {
-  @Input() selectSpeciesForm: UntypedFormGroup;
+  @Input() selectSpeciesForm: FormGroup;
   
   @ViewChild('instance', { static: true }) instance: NgbTypeahead;
   focus$ = new Subject<string>();

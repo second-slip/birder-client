@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment'; // ToDo: Replace moment with alternative
@@ -23,8 +23,8 @@ import { ICreateObservation } from './i-create-observation.dto';
 export class ObservationCreateComponent implements OnInit {
   private _subscription = new Subject();
   public requesting: boolean;
-  public selectSpeciesForm: UntypedFormGroup;
-  public addObservationForm: UntypedFormGroup;
+  public selectSpeciesForm: FormGroup;
+  public addObservationForm: FormGroup;
   public errorObject: any = null;
 
   @ViewChild(ReadWriteMapComponent)
@@ -39,7 +39,7 @@ export class ObservationCreateComponent implements OnInit {
   public color: ThemePalette = 'primary';
 
   constructor(private readonly _router: Router
-    , private readonly _formBuilder: UntypedFormBuilder
+    , private readonly _formBuilder: FormBuilder
     , private readonly _service: ObservationCrudService
     , readonly _authService: AuthenticationService) { }
 
@@ -101,19 +101,19 @@ export class ObservationCreateComponent implements OnInit {
   private _createForms(): void {
 
     this.selectSpeciesForm = this._formBuilder.group({
-      bird: new UntypedFormControl('', Validators.compose([
+      bird: new FormControl('', Validators.compose([
         Validators.required,
         BirdsListValidator()
       ]))
     });
 
     this.addObservationForm = this._formBuilder.group({
-      quantity: new UntypedFormControl(1, Validators.compose([
+      quantity: new FormControl(1, Validators.compose([
         Validators.required,
         Validators.min(1),
         Validators.max(1000)
       ])),
-      observationDateTime: new UntypedFormControl((moment()), Validators.compose([
+      observationDateTime: new FormControl((moment()), Validators.compose([
         Validators.required
       ])),
     });

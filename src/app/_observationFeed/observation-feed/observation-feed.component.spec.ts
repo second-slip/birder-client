@@ -85,7 +85,7 @@ describe('ObservationFeedComponent', () => {
     }));
 
 
-    
+
     describe('when data fetch returns observations', () => {
 
         it('calls data fetch', fakeAsync(async () => {

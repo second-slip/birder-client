@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { EditNoteDialogComponent } from './edit-note-dialog.component';
 
@@ -8,7 +10,15 @@ describe('EditNoteDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditNoteDialogComponent ]
+      declarations: [ EditNoteDialogComponent ],
+      imports: [MatDialogModule, FormsModule],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        {
+          provide: MatDialogRef,
+          useValue: {}
+        }
+     ]
     })
     .compileComponents();
   });

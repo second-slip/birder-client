@@ -63,7 +63,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   private _handleSuccess(response: IAuthenticationResult): void {
-    console.log('_handleSuccess');
     this._token.addToken(response.authenticationToken);
     this._authService.checkAuthStatus();
   }

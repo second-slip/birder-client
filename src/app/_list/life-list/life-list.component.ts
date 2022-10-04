@@ -21,7 +21,7 @@ export class LifeListComponent implements OnInit {
   }
 
   private _getData(): void {
-    this._service.getData(); // ToDo implement username
+    this._service.getData(); // ToDo: implement username
   }
 
   public reload(): void {

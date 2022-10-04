@@ -8,7 +8,7 @@ import { dispatchFakeEvent, expectText, findEl, setFieldValue } from 'src/app/te
 import { ConfirmEmailComponent } from 'src/app/_account/confirm-email/confirm-email.component';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { AuthenticationService } from '../authentication.service';
-
+import { TokenService } from '../token.service';
 import { LoginComponent } from './login.component';
 import { LoginService } from './login.service';
 
@@ -18,6 +18,7 @@ describe('LoginComponent', () => {
   let fakeLoginService: jasmine.SpyObj<LoginService>;
   let fakeAuthService: jasmine.SpyObj<AuthenticationService>;
   let fakeNavService: NavigationService;
+  let fakeTokenService: jasmine.SpyObj<TokenService>;
 
   fakeNavService = jasmine.createSpyObj<NavigationService>(
     'NavigationService',
@@ -36,6 +37,17 @@ describe('LoginComponent', () => {
       isAuthorisedObservable: of(false),
       isAuthorised: false,
       getAuthUser: undefined,
+    }
+  );
+
+  fakeTokenService = jasmine.createSpyObj<TokenService>(
+    'TokenService',
+    {
+      addToken: undefined,
+      getToken: undefined,
+      getUser: undefined,
+      isTokenValid: undefined,
+      removeToken: undefined,
     }
   );
 
@@ -59,6 +71,7 @@ describe('LoginComponent', () => {
           { path: 'confirm-email', component: ConfirmEmailComponent }
         ])],
       providers: [
+        { provide: TokenService, useValue: fakeTokenService },
         { provide: NavigationService, useValue: fakeNavService },
         { provide: LoginService, useValue: fakeLoginService },
         { provide: AuthenticationService, useValue: fakeAuthService }]
@@ -111,9 +124,11 @@ describe('LoginComponent', () => {
 
     expectText(fixture, 'success', 'Success! You have successfully signed in ');
     expect(fakeLoginService.login).toHaveBeenCalledWith(loginModel);
+    expect(fakeTokenService.addToken).toHaveBeenCalledOnceWith(authSuccessResult.authenticationToken);
+    expect(fakeAuthService.checkAuthStatus).toHaveBeenCalledTimes(1);
 
     const isFormHidden = fixture.nativeElement as HTMLElement;
-    expect(isFormHidden.querySelector('[data-testid="loginorm"]')?.textContent).toBeUndefined();
+    expect(isFormHidden.querySelector('[data-testid="loginForm"]')?.textContent).toBeUndefined();
   }));
 
   it('handles errors', fakeAsync(async () => {
@@ -137,7 +152,9 @@ describe('LoginComponent', () => {
 
     expectText(fixture, 'error', 'Sign in failed There was an error logging in. Make sure you have typed the correct email and password. If you have forgotten your password, you can reset it. ');
     expect(fakeLoginService.login).toHaveBeenCalledWith(loginModel);
-        // expect router to be called with redirect to confirm email
+    expect(fakeTokenService.addToken).not.toHaveBeenCalled();
+    expect(fakeAuthService.checkAuthStatus).not.toHaveBeenCalled();
+    // expect router to be called with redirect to confirm email
   }));
 
   it('does not submit an invalid form', fakeAsync(async () => {

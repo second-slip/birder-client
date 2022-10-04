@@ -1,4 +1,4 @@
-<ng-container *ngIf="(_service.getCount | async) as analysis; else loadingOrError">
+<ng-container *ngIf="(_service.count | async) as analysis; else loadingOrError">
 
     <div *ngIf="analysis.totalObservationsCount" data-testid="analysis-count-more-than-one">
         <p class="analysis-text" data-testid="analysis-text">You have spotted <span class="count-text">{{

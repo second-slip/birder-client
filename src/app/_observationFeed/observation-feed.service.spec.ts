@@ -57,7 +57,10 @@ describe('ObservationFeedService', () => {
                 actualAllLoadedState = loaded;
             });
 
-        const request = controller.expectOne(_apiUrl);
+        const request = controller.expectOne({
+            method: 'GET',
+            url: _apiUrl
+        });
         // Answer the request so the Observable emits a value.
         request.flush(fakeObservationFeedResponse); // also paste the response object in with {}
 
@@ -66,12 +69,6 @@ describe('ObservationFeedService', () => {
         expect(actualErrorState).toBeFalse();
         expect(finalLoadingState).toBeFalse();
         expect(actualAllLoadedState).toBeFalse();
-    });
-
-    it('#getData should use GET to retrieve data', () => {
-        service.getData(1, 'api/ObservationFeed');
-        const testRequest = controller.expectOne(_apiUrl);
-        expect(testRequest.request.method).toEqual('GET');
     });
 
     it('passes through errors', () => {

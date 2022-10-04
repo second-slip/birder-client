@@ -1,9 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
-import { AuthenticationService } from '../authentication.service';
+import { Observable } from 'rxjs';
 import { IAuthenticationResult } from '../i-authentication-result.dto';
-import { TokenService } from '../token.service';
 import { Ilogin } from './ilogin.dto';
 
 const httpOptions = {

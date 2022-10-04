@@ -2,81 +2,72 @@
 
     <h1>Your Life List</h1>
 
-    <ng-container *ngIf="!(_service.isError | async); else errorTemplate">
+    <ng-container *ngIf="(_analysisService.getCount | async) as analysis">
+        <p>You have spotted {{ analysis.uniqueSpeciesCount }} species:</p>
+    </ng-container>
 
-        <ng-container *ngIf="(_service.getLifeList | async) as list">
+    <ng-container *ngIf="(_service.lifeList | async) as list; else loadingOrError">
 
-            <p *ngIf="(_service.isLoading | async)">
-                <app-loading></app-loading>
-            </p>
+        <p *ngIf="!list.length">
+            <ngb-alert type="warning" [dismissible]="false">
+                <strong>Nothing yet to show</strong><br>
+                You have not yet logged any observations...<br>
+                Why not <a routerLink="/observation/create">click here</a> to add your first one?
+            </ngb-alert>
+        </p>
 
-            <ng-container *ngIf="!(_service.isLoading | async)">
+        <table class="table table-striped" *ngIf="list.length">
+            <thead>
+                <tr>
+                    <!-- <th scope="col">#</th> -->
+                    <th scope="col">Count</th>
+                    <th scope="col">Species</th>
+                    <th class="hide-small" scope="col">Status / Population</th>
+                    <th scope="col">Risk Flag</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="let record of list | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                    <!-- better adding rank on the server! -->
+                    <!-- add equal rank positions too -->
+                    <!-- <th scope="row">{{ i + 1 }}</th> -->
+                    <td>{{ record.count | number }}</td>
+                    <td><a routerLink="/bird/detail/{{record.birdId}}">{{ record.englishName }}</a>
+                        <br><small><em>{{ record.species }}</em></small>
+                    </td>
+                    <td class="hide-small"><small>{{ record.btoStatusInBritain }} <br> {{
+                            record.populationSize
+                            }}</small></td>
+                    <td [style.color]="record.conservationListColourCode"><small>{{
+                            record.conservationStatus
+                            }}</small>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-                <ng-container *ngIf="(_analysisService.getCount | async) as analysis">
-                    <p>You have spotted {{ analysis.uniqueSpeciesCount }} species:</p>
-                </ng-container>
+        <hr>
 
-                <p *ngIf="!list.length">
-                    <ngb-alert type="warning" [dismissible]="false">
-                        <strong>Nothing yet to show</strong><br>
-                        You have not yet logged any observations...<br>
-                        Why not <a routerLink="/observation/create">click here</a> to add your first one?
-                    </ngb-alert>
-                </p>
-
-                <table class="table table-striped" *ngIf="list.length">
-                    <thead>
-                        <tr>
-                            <!-- <th scope="col">#</th> -->
-                            <th scope="col">Count</th>
-                            <th scope="col">Species</th>
-                            <th class="hide-small" scope="col">Status / Population</th>
-                            <th scope="col">Risk Flag</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr
-                            *ngFor="let record of list | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
-                            <!-- better adding rank on the server! -->
-                            <!-- add equal rank positions too -->
-                            <!-- <th scope="row">{{ i + 1 }}</th> -->
-                            <td>{{ record.count | number }}</td>
-                            <td><a routerLink="/bird/detail/{{record.birdId}}">{{ record.englishName }}</a>
-                                <br><small><em>{{ record.species }}</em></small>
-                            </td>
-                            <td class="hide-small"><small>{{ record.btoStatusInBritain }} <br> {{
-                                    record.populationSize
-                                    }}</small></td>
-                            <td [style.color]="record.conservationListColourCode"><small>{{
-                                    record.conservationStatus
-                                    }}</small>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <hr>
-
-                <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="list.length"
-                    class="d-flex justify-content-center" size="sm" [maxSize]="9" [rotate]="true" [boundaryLinks]="true"
-                    (pageChange)="changePage()">
-                </ngb-pagination>
-
-            </ng-container>
-
-        </ng-container>
+        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="list.length"
+            class="d-flex justify-content-center" size="sm" [maxSize]="9" [rotate]="true" [boundaryLinks]="true"
+            (pageChange)="changePage()">
+        </ngb-pagination>
 
     </ng-container>
 
 
-    <ng-template #errorTemplate>
-        <ngb-alert [dismissible]="false" type="danger">
-            <strong>Whoops!</strong>&nbsp;There was an error retrieving the data.
-            <div>
-                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button"
-                    (click)="reload()">Try Again</button>
-            </div>
-        </ngb-alert>
+    <ng-template #loadingOrError>
+        <div *ngIf="_service.isError | async; else loading" class="alert alert-danger" data-testid="error">
+            <strong>Whoops!</strong> There was an error retrieving the data.<br>
+            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+                (click)="reload()">Try
+                Again</button>
+        </div>
+    </ng-template>
+
+    <ng-template #loading>
+        <app-loading></app-loading>
     </ng-template>
 
 </div>

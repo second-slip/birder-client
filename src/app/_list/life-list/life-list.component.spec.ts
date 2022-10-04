@@ -3,8 +3,6 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { ObservationCountService } from 'src/app/_analysis/observation-count/observation-count.service';
-
-
 import { LifeListComponent } from './life-list.component';
 import { LifeListService } from './life-list.service';
 

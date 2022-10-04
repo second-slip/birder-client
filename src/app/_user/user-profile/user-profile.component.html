@@ -24,7 +24,7 @@
                 </p>
 
                 <ng-container *ngIf="profile.isOwnProfile">
-                    <p class="summary" *ngIf="(_analysisService.getCount | async) as analysis">
+                    <p class="summary" *ngIf="(_analysisService.count | async) as analysis">
                         {{ analysis.uniqueSpeciesCount }} species in {{ analysis.totalObservationsCount }}
                         observations
                     </p>

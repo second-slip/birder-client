@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
 import { fakeIObservationFeed } from 'src/app/testing/observation-feed-helper';
-import { ObservationFeedService } from '../observation-feed.service';
+import { ObservationFeedService } from '../../_observation-feed/observation-feed.service';
 import { ObservationFeedComponent } from './observation-feed.component';
 
 describe('ObservationFeedComponent', () => {

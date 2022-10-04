@@ -2,7 +2,7 @@
 
     <h1>Your Life List</h1>
 
-    <ng-container *ngIf="(_analysisService.getCount | async) as analysis">
+    <ng-container *ngIf="(_analysisService.count | async) as analysis">
         <p>You have spotted {{ analysis.uniqueSpeciesCount }} species:</p>
     </ng-container>
 

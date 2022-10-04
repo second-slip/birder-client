@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ObservationFeedService } from '../observation-feed.service';
+import { ObservationFeedService } from '../../_observation-feed/observation-feed.service';
 
 @Component({
   selector: 'app-observation-feed',

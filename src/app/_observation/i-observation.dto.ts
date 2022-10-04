@@ -1,7 +1,7 @@
 import { IAuthUser } from "../_auth/i-auth-user.dto";
 import { IBirdSummary } from "../_bird/i-bird-summary.dto";
 import { IObservationPosition } from "../_map/i-observation-position.dto";
-import { IObservationNote } from "../_observationNotes/i-observation-note.dto";
+import { IObservationNote } from "../_observation-note/i-observation-note.dto";
 
 export interface IObservation {
     observationId: number;

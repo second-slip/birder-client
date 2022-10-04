@@ -33,7 +33,7 @@ import { LogoutComponent } from './_auth/logout/logout.component';
 import { HttpInterceptorProviders } from './_httpInterceptors';
 import { SideMenuComponent } from './_layout/side-menu/side-menu.component';
 import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.component';
-import { ObservationFeedItemComponent } from './_observationFeed/observation-feed-item/observation-feed-item.component';
+import { ObservationFeedItemComponent } from './_observation-feed/observation-feed-item/observation-feed-item.component';
 import { ObservationCountComponent } from './_analysis/observation-count/observation-count.component';
 import { ObservationTopFiveComponent } from './_analysis/observation-top-five/observation-top-five.component';
 import { TweetDayComponent } from './_tweet/tweet-day/tweet-day.component';
@@ -56,11 +56,11 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { ReadOnlyMapComponent } from './_map/read-only-map/read-only-map.component';
 import { ReadWriteMapComponent } from './_map/read-write-map/read-write-map.component';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { AddNoteDialogComponent } from './_observationNotes/add-note-dialog/add-note-dialog.component';
-import { AddNotesComponent } from './_observationNotes/add-notes/add-notes.component';
-import { EditNoteDialogComponent } from './_observationNotes/edit-note-dialog/edit-note-dialog.component';
-import { EditNotesComponent } from './_observationNotes/edit-notes/edit-notes.component';
-import { ViewOnlyNotesComponent } from './_observationNotes/view-notes/view-only-notes.component';
+import { AddNoteDialogComponent } from './_observation-note/add-note-dialog/add-note-dialog.component';
+import { AddNotesComponent } from './_observation-note/add-notes/add-notes.component';
+import { EditNoteDialogComponent } from './_observation-note/edit-note-dialog/edit-note-dialog.component';
+import { EditNotesComponent } from './_observation-note/edit-notes/edit-notes.component';
+import { ViewOnlyNotesComponent } from './_observation-note/view-notes/view-only-notes.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ObservationReadComponent } from './_observation/observation-read/observation-read.component';
 import { NavigationMenuComponent } from './_observation/navigation-menu/navigation-menu.component';
@@ -83,8 +83,8 @@ import { AccountManageLocationComponent } from './_account/account-manage-locati
 import { AccountManagePasswordComponent } from './_account/account-manage-password/account-manage-password.component';
 import { AccountManageProfileComponent } from './_account/account-manage-profile/account-manage-profile.component';
 import { AccountManagerComponent } from './_account/account-manager/account-manager.component';
-import { FilterControlComponent } from './_observationFeed/filter-control/filter-control.component';
-import { ObservationFeedComponent } from './_observationFeed/observation-feed/observation-feed.component';
+import { FilterControlComponent } from './_observation-feed/filter-control/filter-control.component';
+import { ObservationFeedComponent } from './_observation-feed/observation-feed/observation-feed.component';
 
 @NgModule({
   declarations: [

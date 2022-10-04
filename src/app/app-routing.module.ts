@@ -29,7 +29,7 @@ import { ObservationReadComponent } from "./_observation/observation-read/observ
 import { ObservationUpdateComponent } from "./_observation/observation-update/observation-update.component";
 import { TweetDayArchiveComponent } from "./_tweet/tweet-day-archive/tweet-day-archive.component";
 import { UserProfileComponent } from "./_user/user-profile/user-profile.component";
-import { ObservationFeedComponent } from "./_observationFeed/observation-feed/observation-feed.component";
+import { ObservationFeedComponent } from "./_observation-feed/observation-feed/observation-feed.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },

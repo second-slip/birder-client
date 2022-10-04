@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { createObservationModel, singleObservation } from '../testing/observation-test-helpers';
+import { createObservationModel, observationId, singleObservation, singleObservationResponse, updateObservationModel } from '../testing/observation-test-helpers';
 import { IObservation } from './i-observation.dto';
 import { ObservationCrudService } from './observation-crud.service';
 
@@ -25,6 +25,22 @@ describe('ObservationCrudService', () => {
     expect(service).toBeTruthy();
   });
 
+  it('checks it gets the observation', () => {
+    let result: IObservation | null | undefined;
+    service.getObservation(observationId.toString())
+      .subscribe((otherResult) => {
+        result = otherResult;
+      });
+
+    const request = controller.expectOne({
+      method: 'GET',
+      url: `api/observation?id=${observationId}`
+    });
+    request.flush(singleObservationResponse);
+
+    expect(result).toEqual(singleObservation);
+  });
+
   it('check it adds the observation', () => {
     let result: IObservation | null | undefined;
 
@@ -42,20 +58,36 @@ describe('ObservationCrudService', () => {
     expect(result).toEqual(singleObservation);
   });
 
+  it('check it updates the observation', () => {
+    let result: IObservation | null | undefined;
+    service.updateObservation(observationId.toString(), updateObservationModel).subscribe((otherResult) => {
+      result = otherResult;
+    });
+
+    const request = controller.expectOne({
+      method: 'PUT',
+      url: `api/observation/update?id=${observationId}`,
+    });
+
+    request.flush(singleObservationResponse);
+
+    expect(result).toEqual(singleObservation);
+  });
+
   it('check it deletes the observation', () => {
     let result: number | undefined;
-    service.deleteObservation(1).subscribe((otherResult) => {
+    service.deleteObservation(observationId).subscribe((otherResult) => {
       result = otherResult;
     });
 
     const request = controller.expectOne({
       method: 'DELETE',
-      url: 'api/observation/delete?id=1',
+      url: `api/observation/delete?id=${observationId}`,
     });
 
-    request.flush(1);
+    request.flush(observationId);
 
-    expect(result).toEqual(1);
+    expect(result).toEqual(observationId);
   });
 
   it('passes the errors through', () => {
@@ -69,15 +101,16 @@ describe('ObservationCrudService', () => {
     const errorEvent = new ProgressEvent('API error');
 
     service.addObservation(createObservationModel).subscribe({ next: fail, error: recordError, complete: fail, });
-    service.deleteObservation(1).subscribe({ next: fail, error: recordError, complete: fail, });
-
+    service.deleteObservation(observationId).subscribe({ next: fail, error: recordError, complete: fail, });
+    service.getObservation(observationId.toString()).subscribe({ next: fail, error: recordError, complete: fail, });
+    service.updateObservation(observationId.toString(), updateObservationModel).subscribe({ next: fail, error: recordError, complete: fail, });
 
     const requests = controller.match(() => true);
     requests.forEach((request) => {
       request.error(errorEvent, { status, statusText });
     });
 
-    expect(errors.length).toBe(2);
+    expect(errors.length).toBe(4);
     errors.forEach((error) => {
       expect(error.error).toBe(errorEvent);
       expect(error.status).toBe(status);

@@ -1,12 +1,14 @@
 import { IObservationPosition } from "../_map/i-observation-position.dto";
 import { IObservation } from "../_observation/i-observation.dto";
 import { ICreateObservation } from "../_observation/observation-create/i-create-observation.dto";
+import { IUpdateObservation } from "../_observation/observation-update/i-update-observation.dto";
 import { IObservationNote } from "../_observationNotes/i-observation-note.dto";
 import { ObservationNoteType } from "../_observationNotes/observation-note-type";
-import { authUserName } from "./auth-test-helpers";
+import { authUserName, userModel } from "./auth-test-helpers";
 import { fakeIBirdSummary } from "./tweet-day-test-helper";
 
-
+export const observationId = 10090;
+export const quantity = 5;
 export const observationDateTime = new Date('Tue Oct 04 2022 09:38:50 GMT+0100');
 export const observationPosition: IObservationPosition = {
   observationPositionId: 1,
@@ -29,9 +31,19 @@ export const notes: IObservationNote[] = [
 ];
 
 export const createObservationModel: ICreateObservation = {
-  quantity: 1,
+  quantity: quantity,
   observationDateTime: observationDateTime, //| string; --> not when posting to the server...
   bird: fakeIBirdSummary,
+  position: observationPosition,
+  notes: notes
+}
+
+export const updateObservationModel: IUpdateObservation = {
+  observationId: observationId,
+  quantity: quantity,
+  observationDateTime: observationDateTime, //| string, --> not when posting to the server...
+  bird: fakeIBirdSummary,
+  user: userModel,
   position: observationPosition,
   notes: notes
 }

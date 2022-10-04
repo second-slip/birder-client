@@ -25,6 +25,7 @@ export class NetworkUserService {
       .pipe(tap(_ => { this._onNetworkChanged(); }));
   }
 
+  // todo: move to AnnounceChangesService...
   private _onNetworkChanged(): void {
     this._service.getData();
   }

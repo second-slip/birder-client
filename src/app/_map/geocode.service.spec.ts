@@ -53,8 +53,8 @@ describe('GeocodeService', () => {
       errors.push(error);
     };
 
-    service.geocode(searchTerm).subscribe(fail, recordError, fail);
-    service.reverseGeocode(latitude, longitude).subscribe(fail, recordError, fail);
+    service.geocode(searchTerm).subscribe({next: fail, error: recordError,complete: fail,});
+    service.reverseGeocode(latitude, longitude).subscribe({next: fail, error: recordError,complete: fail,});
 
 
     const status = 500;

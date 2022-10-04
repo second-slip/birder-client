@@ -15,19 +15,9 @@ const httpOptions = {
 })
 export class LoginService {
 
-  constructor(private readonly _http: HttpClient
-    , private readonly _token: TokenService
-    , private readonly _authService: AuthenticationService) { }
+  constructor(private readonly _http: HttpClient) { }
 
   public login(viewModel: Ilogin): Observable<IAuthenticationResult> {
-    return this._http.post<IAuthenticationResult>('api/authentication/login', viewModel, httpOptions)
-      .pipe(tap(response => this._handleSuccess(response)));
-  }
-
-  private _handleSuccess(response: IAuthenticationResult): void {
-    if (response.authenticationToken) {
-      this._token.addToken(response.authenticationToken);
-      this._authService.checkAuthStatus();
-    }
+    return this._http.post<IAuthenticationResult>('api/authentication/login', viewModel, httpOptions);
   }
 }

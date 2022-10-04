@@ -10,6 +10,7 @@ import { IObservationPosition } from 'src/app/_map/i-observation-position.dto';
 import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
 import { EditNotesComponent } from 'src/app/_observationNotes/edit-notes/edit-notes.component';
 import { IObservationNote } from 'src/app/_observationNotes/i-observation-note.dto';
+import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { BirdsListValidator } from 'src/app/_validators';
 import { IObservation } from '../i-observation.dto';
@@ -46,13 +47,14 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
     , private readonly _router: Router
     , private readonly _route: ActivatedRoute
     , private readonly _navigation: NavigationService
+    , private readonly _announcement: AnnounceChangesService
     , private readonly _observationCrudService: ObservationCrudService
     , private readonly _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-      this._route.paramMap.subscribe(pmap => {
-        this._getData(pmap.get('id'));
-      });
+    this._route.paramMap.subscribe(pmap => {
+      this._getData(pmap.get('id'));
+    });
   }
 
   private _getData(id: string | null): void {
@@ -122,7 +124,10 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
       this._observationCrudService.updateObservation(this._observationId, model)
         .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
         .subscribe({
-          next: (r) => { this._router.navigate(['/observation/detail/' + r.observationId.toString()]); },
+          next: (r) => {
+            this._announcement.announceObservationsChanged();
+            this._router.navigate([`/observation/detail/${r.observationId}`]); // + r.observationId.toString()]);
+          },
           error: (e) => { this.errorObject = e; }
         });
     }

@@ -7,6 +7,8 @@ import { Ilogin } from './ilogin.dto';
 import { LoginService } from './login.service';
 import { AuthenticationFailureReason } from '../authentication-failure-reason';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
+import { TokenService } from '../token.service';
+import { IAuthenticationResult } from '../i-authentication-result.dto';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +24,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(private readonly _service: LoginService
     , private readonly _authService: AuthenticationService
+    , private readonly _token: TokenService
     , private readonly _router: Router
     , private readonly _formBuilder: FormBuilder
     , private readonly _navigation: NavigationService) { }
@@ -39,8 +42,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this._service.login(model)
       .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
       .subscribe({
-        next: () => {
+        next: (r) => {
           this.submitProgress = 'success';
+          this._handleSuccess(r);
           this._navigation.back();
         },
         error: (e) => {
@@ -56,6 +60,12 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: formData.password,
       rememberMe: formData.rememberMe
     }
+  }
+
+  private _handleSuccess(response: IAuthenticationResult): void {
+    console.log('_handleSuccess');
+    this._token.addToken(response.authenticationToken);
+    this._authService.checkAuthStatus();
   }
 
   // ToDo: decide on the best approach.

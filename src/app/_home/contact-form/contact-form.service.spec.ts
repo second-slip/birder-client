@@ -43,7 +43,7 @@ describe('ContactFormService', () => {
       errors.push(error);
     };
 
-    service.postMessage(messageData).subscribe(fail, recordError, fail);
+    service.postMessage(messageData).subscribe({next: fail, error: recordError,complete: fail,});
     const status = 500;
     const statusText = 'Internal Server Error';
     const errorEvent = new ErrorEvent('API error');

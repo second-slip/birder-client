@@ -194,16 +194,16 @@ describe('AccountService', () => {
       errors.push(error);
     };
 
-    service.isUsernameTaken(username).subscribe(fail, recordError, fail);
-    service.isEmailTaken(email).subscribe(fail, recordError, fail);
-    service.register(registerModel).subscribe(fail, recordError, fail);
-    service.requestPasswordReset(emailModel).subscribe(fail, recordError, fail);
-    service.resendEmailConfirmation(emailModel).subscribe(fail, recordError, fail);
-    service.resetPassword(resetPasswordModel).subscribe(fail, recordError, fail);
-    service.postChangePassword(changePasswordModel).subscribe(fail, recordError, fail);
-    service.postUpdateLocation(locationModel).subscribe(fail, recordError, fail);
-    service.getUserProfile().subscribe(fail, recordError, fail);
-    service.postUpdateProfile(manageProfileModel).subscribe(fail, recordError, fail);
+    service.isUsernameTaken(username).subscribe({ next: fail, error: recordError, complete: fail, });
+    service.isEmailTaken(email).subscribe({ next: fail, error: recordError, complete: fail, });
+    service.register(registerModel).subscribe({ next: fail, error: recordError, complete: fail, });
+    service.requestPasswordReset(emailModel).subscribe({ next: fail, error: recordError, complete: fail, });
+    service.resendEmailConfirmation(emailModel).subscribe({ next: fail, error: recordError, complete: fail, });
+    service.resetPassword(resetPasswordModel).subscribe({ next: fail, error: recordError, complete: fail, });
+    service.postChangePassword(changePasswordModel).subscribe({ next: fail, error: recordError, complete: fail, });
+    service.postUpdateLocation(locationModel).subscribe({ next: fail, error: recordError, complete: fail, });
+    service.getUserProfile().subscribe({ next: fail, error: recordError, complete: fail, });
+    service.postUpdateProfile(manageProfileModel).subscribe({ next: fail, error: recordError, complete: fail, });
 
     const status = 500;
     const statusText = 'Internal Server Error';

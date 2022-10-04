@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { ObservationCrudService } from '../observation-crud.service';
 import { ObservationReadService } from '../observation-read.service';
@@ -10,6 +11,7 @@ import { ObservationReadService } from '../observation-read.service';
   selector: 'app-observation-delete',
   templateUrl: './observation-delete.component.html',
   styleUrls: ['./observation-delete.component.scss'],
+  providers: [ObservationReadService],
   encapsulation: ViewEncapsulation.None
 })
 export class ObservationDeleteComponent implements OnInit, OnDestroy {
@@ -22,6 +24,7 @@ export class ObservationDeleteComponent implements OnInit, OnDestroy {
     , private readonly _router: Router
     , private readonly _route: ActivatedRoute
     , private readonly _navigation: NavigationService
+    , private readonly _announcement: AnnounceChangesService
     , private readonly _observationCrudService: ObservationCrudService) { }
 
   ngOnInit(): void {
@@ -49,7 +52,6 @@ export class ObservationDeleteComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this._service.reset();
     this._subscription.next('');
     this._subscription.complete();
   }
@@ -58,8 +60,12 @@ export class ObservationDeleteComponent implements OnInit, OnDestroy {
     this._observationCrudService.deleteObservation(id)
       .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
       .subscribe({
-        next: (r) => { this._router.navigate(['/feed-p/public']); },
+        next: (r) => { 
+          this._announcement.announceObservationsChanged();
+          this._router.navigate(['/feed-p/public']);
+         },
         error: (e) => {
+          console.log('error');
           // this.errorObject = e; this._handleError(e); 
         }//,
         //complete: () => { }

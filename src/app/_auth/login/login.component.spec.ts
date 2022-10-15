@@ -119,7 +119,7 @@ describe('LoginComponent', () => {
 
     findEl(fixture, 'form').triggerEventHandler('submit', {});
 
-    tick(1000);
+    // tick(1000);
     fixture.detectChanges();
 
     expectText(fixture, 'success', 'Success! You have successfully signed in ');
@@ -131,31 +131,35 @@ describe('LoginComponent', () => {
     expect(isFormHidden.querySelector('[data-testid="loginForm"]')?.textContent).toBeUndefined();
   }));
 
-  it('handles errors', fakeAsync(async () => {
+  describe('', () => {
+    it('handles errors', fakeAsync(async () => {
 
-    await setup({
-      login: throwError(() => authFailResult)
-    });
+      await setup({
+        login: throwError(() => authFailResult)
+      });
 
-    fillForm();
+      tick(1000);
 
-    requiredFields.forEach((testId) => {
-      markFieldAsTouched(findEl(fixture, testId));
-    });
+      fillForm();
 
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
+      requiredFields.forEach((testId) => {
+        markFieldAsTouched(findEl(fixture, testId));
+      });
 
-    findEl(fixture, 'form').triggerEventHandler('submit', {});
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
 
-    fixture.detectChanges();
+      findEl(fixture, 'form').triggerEventHandler('submit', {});
 
-    expectText(fixture, 'error', 'Sign in failed There was an error logging in. Make sure you have typed the correct email and password. If you have forgotten your password, you can reset it. ');
-    expect(fakeLoginService.login).toHaveBeenCalledWith(loginModel);
-    expect(fakeTokenService.addToken).not.toHaveBeenCalled();
-    expect(fakeAuthService.checkAuthStatus).not.toHaveBeenCalled();
-    // expect router to be called with redirect to confirm email
-  }));
+      fixture.detectChanges();
+
+      expectText(fixture, 'error', 'Sign in failed There was an error logging in. Make sure you have typed the correct email and password. If you have forgotten your password, you can reset it. ');
+      expect(fakeLoginService.login).toHaveBeenCalledWith(loginModel);
+      expect(fakeTokenService.addToken).not.toHaveBeenCalled();
+      expect(fakeAuthService.checkAuthStatus).not.toHaveBeenCalled();
+      // expect router to be called with redirect to confirm email
+    }));
+  });
 
   it('does not submit an invalid form', fakeAsync(async () => {
     await setup();

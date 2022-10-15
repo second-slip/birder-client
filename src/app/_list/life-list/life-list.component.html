@@ -8,7 +8,7 @@
 
     <ng-container *ngIf="(_service.lifeList | async) as list; else loadingOrError">
 
-        <p *ngIf="!list.length">
+        <p *ngIf="!list.length" data-testid="no-items">
             <ngb-alert type="warning" [dismissible]="false">
                 <strong>Nothing yet to show</strong><br>
                 You have not yet logged any observations...<br>
@@ -16,7 +16,7 @@
             </ngb-alert>
         </p>
 
-        <table class="table table-striped" *ngIf="list.length">
+        <table class="table table-striped" *ngIf="list.length" data-testid="life-list-table">
             <thead>
                 <tr>
                     <!-- <th scope="col">#</th> -->

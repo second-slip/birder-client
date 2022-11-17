@@ -8,12 +8,11 @@ app-select-species {
         border-left: 5px solid #a94442; /* red */
     }
 
+    .dropdown-menu {
+      max-height: 200px;
+      overflow-y: scroll;
+  }
 
-    ngb-typeahead-window {
-        max-height: 200px;
-        overflow-y: auto;
-        //overflow-x: hidden;
-      }
 
       @media only screen and (max-width: 768px) { }
     

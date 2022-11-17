@@ -4,8 +4,8 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* Importing Bootstrap SCSS file. */
-// @import 'bootstrap/scss/bootstrap';
+@import "../node_modules/bootstrap/scss/bootstrap";
 
-// @import 'bootstrap/scss/functions';
-// @import 'bootstrap/scss/variables';
-// @import 'bootstrap/scss/mixins';
+// @use '../node_modules/bootstrap/scss/functions';
+// @use '../node_modules/bootstrap/scss/variables';
+// @use '../node_modules/bootstrap/scss/mixins';

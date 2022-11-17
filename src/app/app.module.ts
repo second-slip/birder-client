@@ -13,7 +13,7 @@ import { FeaturesComponent } from './_home/features/features.component';
 import { FutureComponent } from './_home/future/future.component';
 import { HomeComponent } from './_home/home/home.component';
 import { TechnologyComponent } from './_home/technology/technology.component';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -61,7 +61,7 @@ import { AddNotesComponent } from './_observation-note/add-notes/add-notes.compo
 import { EditNoteDialogComponent } from './_observation-note/edit-note-dialog/edit-note-dialog.component';
 import { EditNotesComponent } from './_observation-note/edit-notes/edit-notes.component';
 import { ViewOnlyNotesComponent } from './_observation-note/view-notes/view-only-notes.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { ObservationReadComponent } from './_observation/observation-read/observation-read.component';
 import { NavigationMenuComponent } from './_observation/navigation-menu/navigation-menu.component';
 import { ObservationDeleteComponent } from './_observation/observation-delete/observation-delete.component';

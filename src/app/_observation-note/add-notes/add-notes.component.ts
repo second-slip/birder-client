@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { AddNoteDialogComponent } from '../add-note-dialog/add-note-dialog.component';
 import { EditNoteDialogComponent } from '../edit-note-dialog/edit-note-dialog.component';
 import { ObservationNote } from '../observation-note';

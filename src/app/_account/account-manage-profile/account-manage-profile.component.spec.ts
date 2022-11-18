@@ -70,7 +70,6 @@ describe('AccountManageProfileComponent', () => {
       },
       {
         isAuthorisedObservable: of(false),
-        isAuthorised: false,
         getAuthUser: of(userModel),
         // ...fakeAuthPropertyValues
       },

@@ -35,8 +35,7 @@ describe('LoginComponent', () => {
     },
     {
       isAuthorisedObservable: of(false),
-      isAuthorised: false,
-      getAuthUser: undefined,
+      getAuthUser: undefined
     }
   );
 

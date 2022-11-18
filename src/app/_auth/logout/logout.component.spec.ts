@@ -28,7 +28,6 @@ describe('LogoutComponent', () => {
     },
     {
       isAuthorisedObservable: of(false),
-      isAuthorised: false,
       getAuthUser: undefined,
     }
   );

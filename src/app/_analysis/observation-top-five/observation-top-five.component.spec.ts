@@ -21,7 +21,6 @@ describe('ObservationTopFiveComponent unit tests', () => {
     },
     {
       isAuthorisedObservable: of(false),
-      isAuthorised: false,
       getAuthUser: of(null)
     }
   )

@@ -54,7 +54,6 @@ describe('ObservationReadComponent', () => {
       },
       {
         isAuthorisedObservable: undefined,
-        isAuthorised: undefined,
         getAuthUser: of(null),
         ...fakeAuthPropertyValues
       }

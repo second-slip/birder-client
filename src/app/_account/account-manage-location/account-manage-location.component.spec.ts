@@ -54,7 +54,6 @@ describe('AccountManageLocationComponent (child with ng-mocks)', () => {
             },
             {
                 isAuthorisedObservable: of(false),
-                isAuthorised: false,
                 getAuthUser: of(userModel),
                 // ...fakeAuthPropertyValues
             },

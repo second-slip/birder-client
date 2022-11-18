@@ -29,7 +29,6 @@ describe('FilterControlComponent', () => {
       },
       {
           isAuthorisedObservable: of(false),
-          isAuthorised: false,
           getAuthUser: of(authUser)
       }
   );

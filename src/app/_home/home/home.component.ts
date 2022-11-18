@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
-
+import { TokenService } from 'src/app/_auth/token.service';
 
 @Component({
   selector: 'app-home',
@@ -11,13 +10,11 @@ import { AuthenticationService } from 'src/app/_auth/authentication.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _router: Router, private _authenticationService: AuthenticationService) { }
+  constructor(private _router: Router,
+    private _token: TokenService) { }
 
   ngOnInit(): void {
-    //if (this.authenticationService.checkIsAuthenticated()) {
-    //  this.router.navigate(['/observation-feed']);
-    //}
-    if (this._authenticationService.isAuthorised)
+    if (this._token.isTokenValid())
       this._router.navigate(['/feed-p/public']);
   }
 }

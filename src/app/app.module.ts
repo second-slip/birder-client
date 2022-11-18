@@ -28,7 +28,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TokenService } from './_auth/token.service';
 import { LoginComponent } from './_auth/login/login.component';
-import { AuthenticationGuardService } from './_auth/authentication-guard.service';
 import { LogoutComponent } from './_auth/logout/logout.component';
 import { HttpInterceptorProviders } from './_httpInterceptors';
 import { SideMenuComponent } from './_layout/side-menu/side-menu.component';
@@ -185,7 +184,7 @@ import { ObservationFeedComponent } from './_observation-feed/observation-feed/o
     }),
   ],
   providers: [
-    AuthenticationService, TokenService, AuthenticationGuardService, HttpInterceptorProviders,
+    AuthenticationService, TokenService, HttpInterceptorProviders,
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: LOCALE_ID, useValue: 'en-GB' },
     { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } }

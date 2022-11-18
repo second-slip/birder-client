@@ -1,7 +1,9 @@
 import { fakeAsync, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { userModel } from '../testing/auth-test-helpers';
 import { AuthenticationService } from './authentication.service';
 import { IAuthUser } from './i-auth-user.dto';
+import { LoginComponent } from './login/login.component';
 import { TokenService } from './token.service';
 
 describe('AuthenticationService', () => {
@@ -23,6 +25,9 @@ describe('AuthenticationService', () => {
         );
 
         await TestBed.configureTestingModule({
+            imports: [RouterTestingModule.withRoutes([
+                { path: 'login', component: LoginComponent },
+            ])],
             providers: [AuthenticationService,
                 { provide: TokenService, useValue: fakeTokenService }]
         })
@@ -95,6 +100,51 @@ describe('AuthenticationService', () => {
             expect(fakeTokenService.isTokenValid).toHaveBeenCalled();
             expect(fakeTokenService.getUser).toHaveBeenCalled();
         }));
+    });
+
+    describe('IsLoggedIn method ', () => {
+
+        //TODO: Test if router is called / not called
+
+        it('returns false and redirects to login when token is invalid', fakeAsync(async () => {
+            await setup({
+                removeToken: undefined,
+                isTokenValid: false,
+                getUser: null
+            })
+
+            let actualIsAuthenticatedObsState: boolean | undefined;
+
+            service.isLoggedIn();
+
+            service.isAuthorisedObservable.subscribe((obs) => {
+                actualIsAuthenticatedObsState = obs
+            })
+
+            expect(actualIsAuthenticatedObsState).toBeFalse();
+            expect(fakeTokenService.isTokenValid).toHaveBeenCalled();
+        }));
+
+
+        it('returns authentication status when token is valid', fakeAsync(async () => {
+            await setup({
+                removeToken: undefined,
+                isTokenValid: true,
+                getUser: null
+            })
+
+            let actualIsAuthenticatedObsState: boolean | undefined;
+
+            service.isLoggedIn();
+
+            service.isAuthorisedObservable.subscribe((obs) => {
+                actualIsAuthenticatedObsState = obs
+            })
+
+            expect(actualIsAuthenticatedObsState).toBeFalse();
+            expect(fakeTokenService.isTokenValid).toHaveBeenCalled();
+        }));
+
     });
 
     describe('logs out - logout()', () => {

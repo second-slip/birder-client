@@ -43,15 +43,15 @@ export class LoginComponent implements OnInit, OnDestroy {
       .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
       .subscribe({
         next: (r) => {
-          console.log('next');
-          console.log(r);
+          // console.log('next');
+          // console.log(r);
           this.submitProgress = 'success';
           this._handleSuccess(r);
           this._navigation.back();
         },
         error: (e) => {
-          console.log('error');
-          console.log(e);
+          // console.log('error');
+          // console.log(e);
           this.submitProgress = 'error';
           this._handleError(e);
         }

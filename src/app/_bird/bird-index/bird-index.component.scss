@@ -7,17 +7,7 @@ app-bird-index {
       th {
         width: auto;
       }
-      /*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
-      .mat-button-toggle-label-content {
-        line-height: 32px !important; //<-- set the height here
-      }
-    
-      .example-button-container {
-        display: flex;
-        justify-content: center;
-        width: 120px;
-      }
-    
+       
       /* Small devices (portrait tablets and large phones, 600px and up) */
       // @media only screen and (min-width: 600px) {
       //     // th.stat, td.stat {

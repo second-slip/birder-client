@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, BehaviorSubject, of } from 'rxjs';
 import { IAuthUser } from './i-auth-user.dto';
 import { TokenService } from './token.service';
 
@@ -12,7 +13,7 @@ export class AuthenticationService {
   private readonly _authenticatedUser$: BehaviorSubject<IAuthUser | null> = new BehaviorSubject<IAuthUser | null>(null);
   // OLD implementation:  isAuthenticated$: Observable<boolean> = this._isAuthenticated$.asObservable();
 
-  constructor(private _token: TokenService) { }
+  constructor(private _token: TokenService, private readonly _router: Router) { }
 
   public get isAuthorisedObservable(): Observable<boolean> {
     return this._isAuthenticated$.asObservable();
@@ -25,6 +26,17 @@ export class AuthenticationService {
 
   public get getAuthUser(): Observable<IAuthUser | null> {
     return this._authenticatedUser$.asObservable();
+  }
+
+  // This method is used by the Route guards
+  public isLoggedIn(): Observable<boolean> {
+
+    if (!this._token.isTokenValid()) {
+      this._router.navigate(['/login']);
+      return of(false);
+    }
+
+    return this._isAuthenticated$.asObservable();
   }
 
   public checkAuthStatus(): void {

@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { inject, NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AccountRegistrationComponent } from "./_account/account-registration/account-registration.component";
 import { ConfirmEmailSuccessComponent } from "./_account/confirm-email-success/confirm-email-success.component";
@@ -6,7 +6,6 @@ import { ConfirmEmailComponent } from "./_account/confirm-email/confirm-email.co
 import { ForgotPasswordComponent } from "./_account/forgot-password/forgot-password.component";
 import { ResetPasswordComponent } from "./_account/reset-password/reset-password.component";
 import { AccountManagerComponent } from "./_account/account-manager/account-manager.component";
-import { AuthenticationGuardService } from "./_auth/authentication-guard.service";
 import { LoginComponent } from "./_auth/login/login.component";
 import { LogoutComponent } from "./_auth/logout/logout.component";
 import { BirdDetailComponent } from "./_bird/bird-detail/bird-detail.component";
@@ -30,6 +29,7 @@ import { ObservationUpdateComponent } from "./_observation/observation-update/ob
 import { TweetDayArchiveComponent } from "./_tweet/tweet-day-archive/tweet-day-archive.component";
 import { UserProfileComponent } from "./_user/user-profile/user-profile.component";
 import { ObservationFeedComponent } from "./_observation-feed/observation-feed/observation-feed.component";
+import { AuthenticationService } from "./_auth/authentication.service";
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
@@ -59,11 +59,11 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutSidebarComponent,
-    canActivate: [AuthenticationGuardService],
+    canActivate: [() => inject(AuthenticationService).isLoggedIn()],
     children: [
       {
         path: '',
-        canActivateChild: [AuthenticationGuardService],
+        canActivateChild: [() => inject(AuthenticationService).isLoggedIn()],
         children: [
           { path: '', component: HomeComponent, pathMatch: 'full' },
           // Currently components are reused only when only route parameters change while staying on the same route.
@@ -93,6 +93,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
+    //enableTracing: true,
     scrollPositionRestoration: 'top'
   })],
   exports: [RouterModule]

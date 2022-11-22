@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, BehaviorSubject, of } from 'rxjs';
+import { Router, UrlTree } from '@angular/router';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { IAuthUser } from './i-auth-user.dto';
 import { TokenService } from './token.service';
 
@@ -11,7 +11,6 @@ import { TokenService } from './token.service';
 export class AuthenticationService {
   private readonly _isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _authenticatedUser$: BehaviorSubject<IAuthUser | null> = new BehaviorSubject<IAuthUser | null>(null);
-  // OLD implementation:  isAuthenticated$: Observable<boolean> = this._isAuthenticated$.asObservable();
 
   constructor(private _token: TokenService, private readonly _router: Router) { }
 
@@ -28,29 +27,30 @@ export class AuthenticationService {
     return this._authenticatedUser$.asObservable();
   }
 
-  // This method is used by the Route guards
-  public isLoggedIn(): Observable<boolean> {
-
+  // This method is used by the route guards
+  public isLoggedIn():
+    boolean
+    | UrlTree
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree> {
     if (!this._token.isTokenValid()) {
-      this._router.navigate(['/login']);
-      return of(false);
+      return this._router.navigate(['/login']);
     }
-
-    return this._isAuthenticated$.asObservable();
+    return true;
   }
 
   public checkAuthStatus(): void {
-    this._checkAuthStatus();
+    this._updateAuthStatus();
     this._updateUser();
   }
 
   public logout(): void {
     this._token.removeToken();
-    this.checkAuthStatus();
+    this._updateAuthStatus();
     this._updateUser();
   }
 
-  private _checkAuthStatus(): void {
+  private _updateAuthStatus(): void {
     const status = this._token.isTokenValid();
     this._isAuthenticated$.next(status);
   }

@@ -30,8 +30,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     , private readonly _navigation: NavigationService) { }
 
   ngOnInit(): void {
-    this._createForm();
     this._authService.logout();
+    this._createForm();
   }
 
   public onSubmit(formData: any): void {
@@ -43,15 +43,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
       .subscribe({
         next: (r) => {
-          // console.log('next');
-          // console.log(r);
           this.submitProgress = 'success';
           this._handleSuccess(r);
           this._navigation.back();
         },
         error: (e) => {
-          // console.log('error');
-          // console.log(e);
           this.submitProgress = 'error';
           this._handleError(e);
         }
@@ -96,7 +92,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
       password: new FormControl('', Validators.compose([
-        Validators.required,
+        Validators.required
       ])),
       rememberMe: new FormControl(false)
     });

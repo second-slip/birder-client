@@ -1,14 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, map, Observable, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class FlickrService implements OnDestroy {
-  private readonly apiKey = environment.photoKey;
-  private readonly apiUrl = 'https://api.flickr.com/services/rest/';
-  private readonly baseUrl = `${this.apiUrl}?api_key=${this.apiKey}&format=json&nojsoncallback=1&method=flickr.photos.`;
-  private readonly flickrPhotoSearch = `${this.baseUrl}search&per_page=20&tags=`;
   private _subscription = new Subject();
   private readonly _images$: BehaviorSubject<Array<{ url: string }> | null> = new BehaviorSubject<Array<{ url: string }> | null>(null);
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -23,8 +19,10 @@ export class FlickrService implements OnDestroy {
     return this._isError$.asObservable();
   }
 
-  public getData(searchTerm: string, page: number = 1, tagMode: any = ''): void {
-    this._http.get<Array<{ url: string }>>(`${this.flickrPhotoSearch}${encodeURIComponent(searchTerm)}&page=${page}${tagMode}`)
+  public getData(searchTerm: string, page: string = '1'): void {
+    const url = this._createUrl(searchTerm, page);
+
+    this._http.get<Array<{ url: string }>>(url)
       .pipe(takeUntil(this._subscription))
       .subscribe({
         next: (response: Array<{ url: string }>) => {
@@ -33,6 +31,20 @@ export class FlickrService implements OnDestroy {
         error: (e: any) => { this._handleError(e); },
         complete: () => { if (this._isError$) this._isError$.next(false); }
       })
+  }
+
+  private _createUrl(searchTerm: string, page: string): string {
+    const url = new URL('https://api.flickr.com/services/rest');
+
+    url.searchParams.set('api_key', environment.photoKey);
+    url.searchParams.set('format', 'json');
+    url.searchParams.set('nojsoncallback', '1');
+    url.searchParams.set('method', 'flickr.photos.search');
+    url.searchParams.set('per_page', '20');
+    url.searchParams.set('tags', searchTerm);
+    url.searchParams.set('page', page);
+
+    return url.toString();
   }
 
   private _mapResponse(obj: any): Array<{ url: string }> {

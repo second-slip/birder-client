@@ -18,6 +18,6 @@ export class FlickrComponent implements OnInit {
   }
 
   private _getImages(): void {
-    this._service.getData(this.species, undefined, undefined);
+    this._service.getData(this.species, undefined);
   }
 }

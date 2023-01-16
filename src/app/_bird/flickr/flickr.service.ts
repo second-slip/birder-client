@@ -41,7 +41,7 @@ export class FlickrService implements OnDestroy {
     url.searchParams.set('nojsoncallback', '1');
     url.searchParams.set('method', 'flickr.photos.search');
     url.searchParams.set('per_page', '20');
-    url.searchParams.set('tags', searchTerm);
+    url.searchParams.set('text', searchTerm); //.set('tags', searchTerm);
     url.searchParams.set('page', page);
 
     return url.toString();

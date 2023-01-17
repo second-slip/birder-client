@@ -20,35 +20,6 @@ describe('LoginComponent', () => {
   let fakeNavService: NavigationService;
   let fakeTokenService: jasmine.SpyObj<TokenService>;
 
-  fakeNavService = jasmine.createSpyObj<NavigationService>(
-    'NavigationService',
-    {
-      back: undefined
-    }
-  );
-
-  fakeAuthService = jasmine.createSpyObj<AuthenticationService>(
-    'AuthenticationService',
-    {
-      checkAuthStatus: undefined,
-      logout: undefined,
-    },
-    {
-      isAuthorisedObservable: of(false),
-      getAuthUser: undefined
-    }
-  );
-
-  fakeTokenService = jasmine.createSpyObj<TokenService>(
-    'TokenService',
-    {
-      addToken: undefined,
-      getToken: undefined,
-      getUser: undefined,
-      isTokenValid: undefined,
-      removeToken: undefined,
-    }
-  );
 
   const setup = async (
     fakeLoginServiceReturnValues?: jasmine.SpyObjMethodNames<LoginService>) => {
@@ -58,6 +29,36 @@ describe('LoginComponent', () => {
       {
         login: undefined,
         ...fakeLoginServiceReturnValues
+      }
+    );
+
+    fakeNavService = jasmine.createSpyObj<NavigationService>(
+      'NavigationService',
+      {
+        back: undefined
+      }
+    );
+  
+    fakeAuthService = jasmine.createSpyObj<AuthenticationService>(
+      'AuthenticationService',
+      {
+        checkAuthStatus: undefined,
+        logout: undefined,
+      },
+      {
+        isAuthorisedObservable: of(false),
+        getAuthUser: undefined
+      }
+    );
+  
+    fakeTokenService = jasmine.createSpyObj<TokenService>(
+      'TokenService',
+      {
+        addToken: undefined,
+        getToken: undefined,
+        getUser: undefined,
+        isTokenValid: undefined,
+        removeToken: undefined,
       }
     );
 
@@ -130,7 +131,8 @@ describe('LoginComponent', () => {
     expect(isFormHidden.querySelector('[data-testid="loginForm"]')?.textContent).toBeUndefined();
   }));
 
-  describe('', () => {
+  describe('on login error', () => {
+    
     it('handles errors', fakeAsync(async () => {
 
       await setup({
@@ -156,7 +158,6 @@ describe('LoginComponent', () => {
       expect(fakeLoginService.login).toHaveBeenCalledWith(loginModel);
       expect(fakeTokenService.addToken).not.toHaveBeenCalled();
       expect(fakeAuthService.checkAuthStatus).not.toHaveBeenCalled();
-      // expect router to be called with redirect to confirm email
     }));
   });
 

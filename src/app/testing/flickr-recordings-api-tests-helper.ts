@@ -2,9 +2,9 @@ import { environment } from "src/environments/environment";
 
 export const species = 'dipper';
 const apiKey = environment.photoKey;
-const apiUrl = 'https://api.flickr.com/services/rest/';
+const apiUrl = 'https://api.flickr.com/services/rest';
 const baseUrl = `${apiUrl}?api_key=${apiKey}&format=json&nojsoncallback=1&method=flickr.photos.`;
-const flickrPhotoSearch = `${baseUrl}search&per_page=20&tags=`;
+const flickrPhotoSearch = `${baseUrl}search&per_page=20&text=`;
 export const flickrUrl = `${flickrPhotoSearch}${encodeURIComponent(species)}&page=${1}`
 
 export const photoUrlsArray = Array<{ url: string }>(

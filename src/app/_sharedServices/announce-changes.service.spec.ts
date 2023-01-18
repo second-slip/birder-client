@@ -28,7 +28,7 @@ describe('AnnounceChangesService', () => {
     {
       getTop: undefined,
       isError: undefined,
-      isLoading: undefined
+      // isLoading: undefined
     });
 
   fakeNetworkService = jasmine.createSpyObj<NetworkSummaryService>(

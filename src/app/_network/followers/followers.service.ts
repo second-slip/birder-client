@@ -1,23 +1,18 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, finalize, Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
 import { INetworkUser } from '../i-network-user.dto';
 
 @Injectable()
-export class FollowersService {
-
+export class FollowersService implements OnDestroy {
+  private _subscription = new Subject();
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private readonly _followers$: BehaviorSubject<INetworkUser[] | null> = new BehaviorSubject<INetworkUser[] | null>(null);
 
   constructor(private readonly _httpClient: HttpClient) { }
 
   public get isError(): Observable<boolean> {
     return this._isError$.asObservable();
-  }
-
-  public get isLoading(): Observable<boolean> {
-    return this._isLoading$.asObservable();
   }
 
   public get getFollowers(): Observable<INetworkUser[] | null> {
@@ -31,13 +26,11 @@ export class FollowersService {
       return;
     }
 
-    this._isLoading$.next(true);
-
     const options = username ?
       { params: new HttpParams().set('requestedUsername', username) } : {};
 
-    this._httpClient.get<INetworkUser[]>('api/Network/Followers', options)
-      .pipe(finalize(() => this._isLoading$.next(false)))
+    this._httpClient.get<INetworkUser[]>('api/network/followers', options)
+      .pipe(takeUntil(this._subscription))
       .subscribe({
         next: (response) => {
           this._followers$.next(response);
@@ -47,8 +40,12 @@ export class FollowersService {
       })
   }
 
-  private _handleError(error: any) { // no need to send error to the component...
-    //console.log(error);
+  private _handleError(error: any):void { // no need to send error to the component...
     this._isError$.next(true);
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.next('');
+    this._subscription.complete();
   }
 }

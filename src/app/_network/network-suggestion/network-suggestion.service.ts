@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, finalize, Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
 import { INetworkUser } from '../i-network-user.dto';
 
 @Injectable()
-export class NetworkSuggestionService {
 
+export class NetworkSuggestionService implements OnDestroy {
+  private _subscription = new Subject();
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private readonly _suggestions$: BehaviorSubject<INetworkUser[] | null> = new BehaviorSubject<INetworkUser[] | null>(null);
 
   constructor(private readonly _httpClient: HttpClient) { }
@@ -16,20 +16,14 @@ export class NetworkSuggestionService {
     return this._isError$.asObservable();
   }
 
-  public get isLoading(): Observable<boolean> {
-    return this._isLoading$.asObservable();
-  }
-
   public get getNetworkSuggestions(): Observable<INetworkUser[] | null> {
     return this._suggestions$.asObservable();
   }
 
   public getData(): void {
 
-    this._isLoading$.next(true);
-
-    this._httpClient.get<INetworkUser[]>('api/Network/Suggestions')
-      .pipe(finalize(() => this._isLoading$.next(false)))
+    this._httpClient.get<INetworkUser[]>('api/network/suggestions')
+    .pipe(takeUntil(this._subscription))
       .subscribe({
         next: (response) => {
           this._suggestions$.next(response);
@@ -42,5 +36,10 @@ export class NetworkSuggestionService {
   private _handleError(error: any) { // no need to send error to the component...
     //console.log(error);
     this._isError$.next(true);
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.next('');
+    this._subscription.complete();
   }
 }

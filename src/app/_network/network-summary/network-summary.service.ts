@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, finalize, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
 import { INetworkSummary } from '../i-network-summary.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NetworkSummaryService {
-
+  private _subscription = new Subject();
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private readonly _summary$: BehaviorSubject<INetworkSummary | null> = new BehaviorSubject<INetworkSummary | null>(null);
 
   constructor(private readonly _httpClient: HttpClient) { }
@@ -18,20 +17,13 @@ export class NetworkSummaryService {
     return this._isError$.asObservable();
   }
 
-  public get isLoading(): Observable<boolean> {
-    return this._isLoading$.asObservable();
-  }
-
   public get getSummary(): Observable<INetworkSummary | null> {
     return this._summary$.asObservable();
   }
 
   public getData(): void {
-
-    this._isLoading$.next(true);
-
-    this._httpClient.get<INetworkSummary>('api/Network')
-      .pipe(finalize(() => this._isLoading$.next(false)))
+    this._httpClient.get<INetworkSummary>('api/network')
+    .pipe(takeUntil(this._subscription))
       .subscribe({
         next: (response) => {
           this._summary$.next(response);
@@ -41,8 +33,7 @@ export class NetworkSummaryService {
       })
   }
 
-  private _handleError(error: any) { // no need to send error to the component...
-    //console.log(error);
+  private _handleError(error: any) {
     this._isError$.next(true);
   }
 }

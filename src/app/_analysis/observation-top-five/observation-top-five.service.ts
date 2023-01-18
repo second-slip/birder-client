@@ -22,8 +22,7 @@ export class ObservationTopFiveService implements OnDestroy {
   }
 
   public getData(): void {
-
-    this._httpClient.get<IObservationTopFive>('api/list/topObservationsList')
+    this._httpClient.get<IObservationTopFive>('api/list/top')
       .pipe(takeUntil(this._subscription))
       .subscribe({
         next: (response) => {

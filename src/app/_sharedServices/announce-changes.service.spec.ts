@@ -38,8 +38,7 @@ describe('AnnounceChangesService', () => {
     },
     {
       getSummary: undefined,
-      isError: undefined,
-      isLoading: undefined
+      isError: undefined
     });
 
   beforeEach(() => {

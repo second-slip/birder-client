@@ -50,9 +50,9 @@ function isCachable(request: HttpRequest<any>) {
     && request.url.indexOf('api/ObservationFeed') !== 0
     && request.url.indexOf('api/Observation') !== 0
     && request.url.indexOf('api/ObservationAnalysis') !== 0  // do not cache requests containing 'api/ObservationAnalysis'
-    && request.url.indexOf('api/List/TopObservationsList') !== 0
+    && request.url.indexOf('api/list/top') !== 0
     && request.url.indexOf('api/UserProfile') !== 0
-    && request.url.indexOf('api/Network') !== 0
+    && request.url.indexOf('api/network') !== 0
     && request.url.indexOf('api/Manage') !== 0
     && request.url.indexOf('api/Account/IsUsernameAvailable') !== 0;
   }

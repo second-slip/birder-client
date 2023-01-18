@@ -16,12 +16,12 @@ export class NetworkUserService {
   constructor(private readonly _http: HttpClient, private readonly _service: NetworkSummaryService) { }
 
   postFollowUser(viewModel: INetworkUser): Observable<INetworkUser> {
-    return this._http.post<INetworkUser>('api/Network/Follow', viewModel, httpOptions)
+    return this._http.post<INetworkUser>('api/network/follow', viewModel, httpOptions)
       .pipe(tap(_ => { this._onNetworkChanged(); }));
   }
 
   postUnfollowUser(viewModel: INetworkUser): Observable<INetworkUser> {
-    return this._http.post<INetworkUser>('api/Network/Unfollow', viewModel, httpOptions)
+    return this._http.post<INetworkUser>('api/network/unfollow', viewModel, httpOptions)
       .pipe(tap(_ => { this._onNetworkChanged(); }));
   }
 

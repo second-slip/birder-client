@@ -38,7 +38,7 @@ describe('ObservationTopFiveComponent unit tests', () => {
           getData: undefined,
         },
         {
-          isLoading: of(false),
+          // isLoading: of(false),
           isError: of(false),
           getTop: undefined
         }
@@ -92,7 +92,7 @@ describe('ObservationTopFiveComponent unit tests', () => {
           getData: undefined,
         },
         {
-          isLoading: of(false),
+          // isLoading: of(false),
           isError: of(false),
           getTop: of(fakeIObservationTopFive)
         }
@@ -157,7 +157,7 @@ describe('ObservationTopFiveComponent unit tests', () => {
           getData: undefined,
         },
         {
-          isLoading: of(false),
+          // isLoading: of(false),
           isError: of(false),
           getTop: of(fakeIObservationTopFiveEmpty)
         }
@@ -221,7 +221,7 @@ describe('ObservationTopFiveComponent unit tests', () => {
           getData: undefined,
         },
         {
-          isLoading: of(false),
+          // isLoading: of(false),
           isError: of(true),
           getTop: undefined //of(fakeITweet)
         }
@@ -295,7 +295,7 @@ describe('ObservationTopFiveComponent unit tests', () => {
           getData: undefined,
         },
         {
-          isLoading: of(true),
+          // isLoading: of(true),
           isError: of(false),
           getTop: undefined //of(fakeITweet)
         }

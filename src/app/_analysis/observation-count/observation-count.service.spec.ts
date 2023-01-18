@@ -72,7 +72,6 @@ describe('ObservationCountService', () => {
         const statusText = 'Internal Server Error';
         const errorEvent = new ErrorEvent('API error');
         let actualErrorState: boolean | undefined;
-        let finalLoadingState: boolean | undefined;;
 
         // Act & Assert
         service.getData(); // call http request method

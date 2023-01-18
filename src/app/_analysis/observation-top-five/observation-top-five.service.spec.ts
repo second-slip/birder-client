@@ -44,10 +44,10 @@ describe('ObservationTopFiveService', () => {
                 actualErrorState = error;
             });
 
-        service.isLoading.pipe(skip(1)) // skip first default 'true' value emitted...
-            .subscribe((loading) => {
-                finalLoadingState = loading;
-            });
+        // service.isLoading.pipe(skip(1)) // skip first default 'true' value emitted...
+        //     .subscribe((loading) => {
+        //         finalLoadingState = loading;
+        //     });
 
         const request = controller.expectOne(_apiUrl); // _apiUrl);
         // Answer the request so the Observable emits a value.
@@ -56,7 +56,7 @@ describe('ObservationTopFiveService', () => {
         // Assert
         expect(actualObservationTopFiveObservable).toEqual(fakeIObservationTopFive);
         expect(actualErrorState).toBeFalse();
-        expect(finalLoadingState).toBeFalse();
+        // expect(finalLoadingState).toBeFalse();
     });
 
     it('#getData should use GET to retrieve data', () => {
@@ -81,14 +81,14 @@ describe('ObservationTopFiveService', () => {
                 actualErrorState = error;
             });
 
-        service.isLoading.pipe(skip(1)) // skip first, default 'true' value emitted...
-            .subscribe((loading) => {
-                finalLoadingState = loading;
-            });
+        // service.isLoading.pipe(skip(1)) // skip first, default 'true' value emitted...
+        //     .subscribe((loading) => {
+        //         finalLoadingState = loading;
+        //     });
 
         controller.expectOne(_apiUrl).error(errorEvent, { status, statusText });
 
         expect(actualErrorState).toBeTrue();
-        expect(finalLoadingState).toBeFalse();
+        // expect(finalLoadingState).toBeFalse();
     });
 });

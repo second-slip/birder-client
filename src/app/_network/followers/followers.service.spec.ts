@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { skip } from 'rxjs';
-import { apiNetworkUserArrayResponse, fakeNetworkUserModel } from 'src/app/testing/network-test-helpers';
+import { apiNetworkUserArrayResponse, fakeNetworkUserModelArray } from 'src/app/testing/network-test-helpers';
 import { INetworkUser } from '../i-network-user.dto';
 
 import { FollowersService } from './followers.service';
@@ -56,7 +56,7 @@ describe('FollowersService', () => {
     request.flush(apiNetworkUserArrayResponse); // also paste the response object in with {}
 
     // Assert
-    expect(actualFollowers).toEqual(fakeNetworkUserModel);
+    expect(actualFollowers).toEqual(fakeNetworkUserModelArray);
     expect(actualErrorState).toBeFalse();
   });
 

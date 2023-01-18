@@ -30,7 +30,6 @@ export class AccountManagePasswordComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(formValue: any): void {
-    console.log(findInvalidControls(this.changePasswordForm))
     if (!this.changePasswordForm.valid) return;
     this.requesting = true;
 

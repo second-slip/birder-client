@@ -11,20 +11,16 @@ import { FollowersService } from './followers.service';
   encapsulation: ViewEncapsulation.None
 })
 export class FollowersComponent implements OnInit {
-
-  active =2;
-  public username: string | null;
+  public username: string | null = '';
 
   constructor(readonly _service: FollowersService
     , private _route: ActivatedRoute
     , readonly _authService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this._route.params.subscribe(_ => {
-      this._route.paramMap.subscribe(pmap => {
-        this.username = pmap.get('username');
-        this._getData();
-      })
+    this._route.paramMap.subscribe(pmap => {
+      this.username = pmap.get('username');
+      this._getData();
     });
   }
 

@@ -2,9 +2,9 @@
 
     <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
 
-        <h1>{{ authUser.userName === username ? 'Your followers' : username + '\&#39;s followers' }}</h1>
+        <h1 data-testid="title">{{ authUser.userName === username ? 'Your followers' : username + '\&#39;s followers' }}</h1>
 
-        <ul ngbNav #nav="ngbNav" [activeId]="2" class="nav-tabs nav-justified">
+        <ul ngbNav #nav="ngbNav" [activeId]="2" class="nav-tabs nav-justified" data-testid="nav-menu">
             <li [ngbNavItem]="1">
                 <a ngbNavLink routerLink="/following/{{username}}">Following</a>
             </li>
@@ -16,13 +16,13 @@
     </ng-container>
 
     <ng-container *ngIf="(_service.getFollowers | async) as followers; else loadingOrError">
-        <div *ngIf="followers.length">
+        <div *ngIf="followers.length" data-testid="followers-list">
             <div *ngFor="let user of followers">
                 <app-network-user [user]="user"></app-network-user>
             </div>
         </div>
 
-        <div *ngIf="!followers.length">
+        <div *ngIf="!followers.length" data-testid="followers-list-is-zero">
             <ngb-alert [dismissible]="false" class="d-block mt-3" type="info">
                 You don't yet have any followers
             </ngb-alert>
@@ -31,13 +31,11 @@
     </ng-container>
 
     <ng-template #loadingOrError>
-        <ng-container *ngIf="(_service.isError | async); else loading">
-            <p class="centre">
-                <strong>Whoops!</strong>&nbsp;An error occurred<br>
-                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
-                    Again</button>
-            </p>
-        </ng-container>
+        <div *ngIf="_service.isError | async; else loading" class="alert alert-danger" data-testid="error">
+            <strong>Whoops!</strong> There was an error retrieving the data.<br>
+            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button" (click)="reload()">Try
+                Again</button>
+        </div>
     </ng-template>
 
 

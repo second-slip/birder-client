@@ -5,7 +5,7 @@ import { fakeIObservationTopFive, fakeTopObservationsResponse } from 'src/app/te
 import { IObservationTopFive } from './i-observation-top-five.dto';
 import { ObservationTopFiveService } from './observation-top-five.service';
 
-const _apiUrl = 'api/List/TopObservationsList';
+const _apiUrl = 'api/list/topObservationsList';
 
 describe('ObservationTopFiveService', () => {
     let controller: HttpTestingController;

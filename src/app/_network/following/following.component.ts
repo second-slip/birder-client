@@ -11,7 +11,6 @@ import { FollowingService } from './following.service';
   encapsulation: ViewEncapsulation.None
 })
 export class FollowingComponent implements OnInit {
-
   public username: string | null;
 
   constructor(readonly _service: FollowingService
@@ -19,11 +18,9 @@ export class FollowingComponent implements OnInit {
     , readonly _authService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this._route.params.subscribe(_ => {
-      this._route.paramMap.subscribe(pmap => {
-        this.username = pmap.get('username');
-        this._getData();
-      })
+    this._route.paramMap.subscribe(pmap => {
+      this.username = pmap.get('username');
+      this._getData();
     });
   }
 

@@ -2,9 +2,9 @@
 
     <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
 
-        <h1>{{ authUser.userName === username ? 'You follow' : username + ' follows' }}</h1>
+        <h1 data-testid="title">{{ authUser.userName === username ? 'You follow' : username + ' follows' }}</h1>
 
-        <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs nav-justified">
+        <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs nav-justified" data-testid="nav-menu">
             <li [ngbNavItem]="1">
                 <a ngbNavLink>Following</a>
             </li>
@@ -17,13 +17,13 @@
 
     <ng-container *ngIf="(_service.getFollowing | async) as following; else loadingOrError">
 
-        <div *ngIf="following.length">
+        <div *ngIf="following.length" data-testid="following-list">
             <div *ngFor="let user of following">
                 <app-network-user [user]="user"></app-network-user>
             </div>
         </div>
 
-        <div *ngIf="!following.length">
+        <div *ngIf="!following.length" data-testid="following-list-is-zero">
             <ngb-alert [dismissible]="false" class="d-block mt-3" type="info">
                 You don't yet follow any <i>Birders</i>
             </ngb-alert>
@@ -32,13 +32,11 @@
     </ng-container>
 
     <ng-template #loadingOrError>
-        <ng-container *ngIf="(_service.isError | async); else loading">
-            <p class="centre">
-                <strong>Whoops!</strong>&nbsp;An error occurred<br>
-                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
-                    Again</button>
-            </p>
-        </ng-container>
+        <div *ngIf="_service.isError | async; else loading" class="alert alert-danger" data-testid="error">
+            <strong>Whoops!</strong> There was an error retrieving the data.<br>
+            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button" (click)="reload()">Try
+                Again</button>
+        </div>
     </ng-template>
 
 

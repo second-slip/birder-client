@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { first, Subject, takeUntil } from 'rxjs';
+import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 import { INetworkUser } from '../i-network-user.dto';
 import { NetworkUserService } from './network-user.service';
 
@@ -14,7 +15,8 @@ export class NetworkUserComponent implements OnDestroy {
 
   private _subscription = new Subject();
 
-  constructor(private readonly _service: NetworkUserService) { }
+  constructor(private readonly _service: NetworkUserService,
+    private readonly _announce: AnnounceChangesService) { }
 
   public followOrUnfollow(): void {
 
@@ -24,6 +26,7 @@ export class NetworkUserComponent implements OnDestroy {
         .subscribe({
           next: (data: INetworkUser) => {
             this.user = data;
+            this._announce.announceNetworkChanged();
             // this.toast.info('You have followed ' + data.userName, 'Success');
           },
           error: ((error: any) => {
@@ -39,6 +42,7 @@ export class NetworkUserComponent implements OnDestroy {
           next: (data: INetworkUser) => {
             // this.toast.info('You have unfollowed ' + data.userName, 'Success');
             this.user = data;
+            this._announce.announceNetworkChanged();
           },
           error: ((error: any) => {
             // ToDo: write proper error actions

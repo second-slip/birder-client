@@ -4,6 +4,7 @@ import { first, Subject, takeUntil } from 'rxjs';
 import { ObservationCountService } from 'src/app/_analysis/observation-count/observation-count.service';
 import { INetworkUser } from 'src/app/_network/i-network-user.dto';
 import { NetworkUserService } from 'src/app/_network/network-user/network-user.service';
+import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 import { UserProfileService } from './user-profile.service';
 
 @Component({
@@ -20,6 +21,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   constructor(readonly _service: UserProfileService
     , readonly _analysisService: ObservationCountService
     , private readonly _networkService: NetworkUserService
+    , private readonly _announce: AnnounceChangesService
     , private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -45,7 +47,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this._networkService.postFollowUser(user)
         .pipe(first(), takeUntil(this._subscription))
         .subscribe({
-          next: _ => { element.innerText = 'Unfollow'; },
+          next: _ => {
+            element.innerText = 'Unfollow';
+            this._announce.announceNetworkChanged();
+          },
           // this.toast.info('You have followed ' + data.userName, 'Success');
           error: ((error: any) => {
             // ToDo: write proper error actions
@@ -56,7 +61,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this._networkService.postUnfollowUser(user)
         .pipe(first(), takeUntil(this._subscription))
         .subscribe({
-          next: _ => { element.innerText = 'Follow'; }, // this.user = data;
+          next: _ => {
+            element.innerText = 'Follow';
+            this._announce.announceNetworkChanged();
+          }, // this.user = data;
           error: ((error: any) => {
             // ToDo: write proper error actions
           })

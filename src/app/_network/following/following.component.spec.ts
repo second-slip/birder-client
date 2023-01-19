@@ -81,12 +81,6 @@ describe('FollowingComponent', () => {
     fixture.detectChanges();
   };
 
-
-  //TEST AUTH SECTION
-  // SUPPLY ROUTE ARGUMENT AND CHECK IT IS IN THE TEMPLATE
-
-
-
   it('"SMOKE TEST": should be created and show the loading placeloader', fakeAsync(async () => {
     await setup({}, {});
 

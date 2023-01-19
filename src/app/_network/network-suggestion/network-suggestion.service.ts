@@ -23,7 +23,7 @@ export class NetworkSuggestionService implements OnDestroy {
   public getData(): void {
 
     this._httpClient.get<INetworkUser[]>('api/network/suggestions')
-    .pipe(takeUntil(this._subscription))
+      .pipe(takeUntil(this._subscription))
       .subscribe({
         next: (response) => {
           this._suggestions$.next(response);
@@ -33,8 +33,7 @@ export class NetworkSuggestionService implements OnDestroy {
       })
   }
 
-  private _handleError(error: any) { // no need to send error to the component...
-    //console.log(error);
+  private _handleError(error: any) {
     this._isError$.next(true);
   }
 

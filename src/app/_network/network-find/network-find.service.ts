@@ -26,7 +26,7 @@ export class NetworkFindService implements OnDestroy {
       { params: new HttpParams().set('searchCriterion', searchCriterion) } : {};
 
     this._httpClient.get<INetworkUser[]>('api/network/search', options)
-    .pipe(takeUntil(this._subscription))
+      .pipe(takeUntil(this._subscription))
       .subscribe({
         next: (response) => {
           this._searchResults$.next(response);
@@ -36,8 +36,7 @@ export class NetworkFindService implements OnDestroy {
       })
   }
 
-  private _handleError(error: any) { // no need to send error to the component...
-    //console.log(error);
+  private _handleError(error: any) {
     this._isError$.next(true);
   }
 

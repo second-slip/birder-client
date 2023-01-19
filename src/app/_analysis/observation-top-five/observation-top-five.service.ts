@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
 import { IObservationTopFive } from './i-observation-top-five.dto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' // must be a singleton.  Updated when observations are changed, for example
 })
 export class ObservationTopFiveService implements OnDestroy {
   private _subscription = new Subject();

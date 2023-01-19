@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
 import { INetworkSummary } from '../i-network-summary.dto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' // must be a singleton.  Updated from multiple components
 })
 export class NetworkSummaryService {
   private _subscription = new Subject();

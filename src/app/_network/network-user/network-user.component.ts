@@ -19,7 +19,6 @@ export class NetworkUserComponent implements OnDestroy {
     private readonly _announce: AnnounceChangesService) { }
 
   public followOrUnfollow(): void {
-
     if (this.user.isFollowing === false) {
       this._service.postFollowUser(this.user)
         .pipe(first(), takeUntil(this._subscription))
@@ -34,7 +33,7 @@ export class NetworkUserComponent implements OnDestroy {
             // this.toast.error(error.friendlyMessage, 'An error occurred');
           })
         });
-      return;
+      // return;
     } else {
       this._service.postUnfollowUser(this.user)
         .pipe(first(), takeUntil(this._subscription))
@@ -49,7 +48,7 @@ export class NetworkUserComponent implements OnDestroy {
             // this.toast.error(error.friendlyMessage, 'An error occurred');
           })
         });
-      return;
+      // return;
     }
   }
 

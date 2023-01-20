@@ -1,12 +1,10 @@
 import { IObservationCount } from "src/app/_analysis/observation-count/i-observation-count.dto";
+import { INetworkUser } from "src/app/_network/i-network-user.dto";
 
 export interface IUserProfile {
-    userName: string;
-    avatar: string;
+    user: INetworkUser;
     registrationDate: Date | string;
-    isOwnProfile: boolean;
     observationCount: IObservationCount;
     followersCount: number;
     followingCount: number;
-    isFollowing: boolean;
 }

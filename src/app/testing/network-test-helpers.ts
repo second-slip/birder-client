@@ -1,4 +1,4 @@
-import { INetworkSummary } from "../_network/i-network-summary.dto";
+import { INetworkSummary } from "../_network/network-summary/i-network-summary.dto";
 import { INetworkUser } from "../_network/i-network-user.dto";
 
 export const userName = "follower 1"

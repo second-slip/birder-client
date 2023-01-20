@@ -2,7 +2,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 import { skip } from 'rxjs';
 import { apiNetworkSummaryResponse, fakeNetworkSummary } from 'src/app/testing/network-test-helpers';
-import { INetworkSummary } from '../i-network-summary.dto';
+import { INetworkSummary } from './i-network-summary.dto';
 import { NetworkSummaryService } from './network-summary.service';
 
 const _apiUrl = 'api/network';

@@ -4,35 +4,33 @@
 
         <div class="flex-container">
 
-            <img class="avatar" src="{{profile.avatar}}"
+            <img class="avatar" src="{{profile.user.avatar}}"
                 onerror="this.src='https://img.icons8.com/color/96/000000/user.png';" alt="Smiley face" height="126"
                 width="126">
 
             <div>
+
                 <div class="flex-container">
-                    <h1>{{ profile.userName }}</h1>
-                    <div *ngIf="!profile.isOwnProfile" class="follow-button"><button class="btn btn-link btn-sm"
-                            (click)="followOrUnfollow($event.target, profile)">
-                            {{ profile.isFollowing === true ? 'Unfollow' : 'Follow' }}
-                        </button></div>
+                    <h1>{{ profile.user.userName }}</h1>
+                    <app-follow-command [user]="profile.user"></app-follow-command>
                 </div>
 
-                <p class="summary"><a routerLink="/followers/{{profile.userName}}">{{ profile.followersCount }} {{
+                <p class="summary"><a routerLink="/followers/{{profile.user.userName}}">{{ profile.followersCount }} {{
                         profile.followersCount > 1 ? 'followers' : 'follower' }}</a>
                     /
-                    <a routerLink="/following/{{profile.userName}}">{{ profile.followingCount }} following</a>
+                    <a routerLink="/following/{{profile.user.userName}}">{{ profile.followingCount }} following</a>
                 </p>
 
-                <ng-container *ngIf="profile.isOwnProfile">
+                <ng-container *ngIf="profile.user.isOwnProfile">
                     <p class="summary" *ngIf="(_analysisService.count | async) as analysis">
                         {{ analysis.uniqueSpeciesCount }} species in {{ analysis.totalObservationsCount }}
                         observations
                     </p>
                 </ng-container>
-                <ng-container *ngIf="!profile.isOwnProfile">
+                <ng-container *ngIf="!profile.user.isOwnProfile">
                     <p class="summary">
-                        {{ profile.observationCount.uniqueSpeciesCount }} species in {{
-                        profile.observationCount.totalObservationsCount }}
+                        {{ profile?.observationCount?.uniqueSpeciesCount }} species in {{
+                        profile?.observationCount?.totalObservationsCount }}
                         observations
                     </p>
                 </ng-container>

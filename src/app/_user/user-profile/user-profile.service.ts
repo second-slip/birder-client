@@ -7,7 +7,6 @@ import { IUserProfile } from '../user-profile/i-user-profile.dto';
 export class UserProfileService implements OnDestroy {
   private _subscription = new Subject();
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  // private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private readonly _profile$: BehaviorSubject<IUserProfile | null> = new BehaviorSubject<IUserProfile | null>(null);
 
   constructor(private readonly _httpClient: HttpClient) { }
@@ -15,10 +14,6 @@ export class UserProfileService implements OnDestroy {
   public get isError(): Observable<boolean> {
     return this._isError$.asObservable();
   }
-
-  // public get isLoading(): Observable<boolean> {
-  //   return this._isLoading$.asObservable();
-  // }
 
   public get getUserProfile(): Observable<IUserProfile | null> {
     return this._profile$.asObservable();
@@ -35,7 +30,7 @@ export class UserProfileService implements OnDestroy {
       { params: new HttpParams().set('requestedUsername', username) } : {};
 
     this._httpClient.get<IUserProfile>('api/UserProfile', options)
-      .pipe(takeUntil(this._subscription)) //finalize(() => this._isLoading$.next(false)))
+      .pipe(takeUntil(this._subscription))
       .subscribe({
         next: (response) => { this._profile$.next(response); },
         error: (e) => { this._handleError(e); },

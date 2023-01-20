@@ -84,6 +84,7 @@ import { AccountManageProfileComponent } from './_account/account-manage-profile
 import { AccountManagerComponent } from './_account/account-manager/account-manager.component';
 import { FilterControlComponent } from './_observation-feed/filter-control/filter-control.component';
 import { ObservationFeedComponent } from './_observation-feed/observation-feed/observation-feed.component';
+import { FollowCommandComponent } from './_network/follow-command/follow-command.component';
 
 @NgModule({
   declarations: [
@@ -152,6 +153,7 @@ import { ObservationFeedComponent } from './_observation-feed/observation-feed/o
     AccountManageAvatarComponent,
     FilterControlComponent,
     ObservationFeedComponent,
+    FollowCommandComponent,
   ],
   imports: [
     AppRoutingModule,

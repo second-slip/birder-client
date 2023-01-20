@@ -3,17 +3,18 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 import { fakeNetworkUserModel } from 'src/app/testing/network-test-helpers';
 import { INetworkUser } from '../i-network-user.dto';
-import { NetworkUserService } from './network-user.service';
 
-describe('NetworkUserService', () => {
-  let service: NetworkUserService;
+import { FollowCommandService } from './follow-command.service';
+
+describe('FollowCommandService', () => {
+  let service: FollowCommandService;
   let controller: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
     });
-    service = TestBed.inject(NetworkUserService);
+    service = TestBed.inject(FollowCommandService);
     controller = TestBed.inject(HttpTestingController);
   });
 

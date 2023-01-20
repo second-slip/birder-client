@@ -1,0 +1,4 @@
+<p *ngIf="user.isOwnProfile === false">
+    <button class="btn btn-link btn-sm align-top btn-follow" (click)="followOrUnfollow()" data-testId="follow-button">
+        {{ user.isFollowing == true ? 'Unfollow' : 'Follow' }}</button>
+</p>

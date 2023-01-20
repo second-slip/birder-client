@@ -10,7 +10,7 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class NetworkUserService {
+export class FollowCommandService {
 
   constructor(private readonly _http: HttpClient) { }
 

@@ -22,7 +22,7 @@
 </div>
 
 <ng-template #loadingOrError>
-    <div *ngIf="_service.isError | async; else loading" class="alert alert-danger" data-testid="error">
+    <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
         <strong>Whoops!</strong> An error occurred. Please try again.
     </div>
 </ng-template>

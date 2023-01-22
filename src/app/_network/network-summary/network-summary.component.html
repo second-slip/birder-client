@@ -2,10 +2,10 @@
 
   <ng-container *ngIf="(_service.getSummary | async) as summary; else loadingOrError">
 
-    <h1 *ngIf="showTitle">Your Birder Network</h1>
+    <h1 data-testid="h1-title" *ngIf="showTitle">Your Birder Network</h1>
 
     <ng-container class="summary network" *ngIf="(_authService.getAuthUser | async) as authUser">
-      <p><a routerLink="/followers/{{authUser.userName}}">{{ summary.followersCount }} {{
+      <p data-testid="summary"><a routerLink="/followers/{{authUser.userName}}">{{ summary.followersCount }} {{
           summary.followersCount > 1 ? 'followers' : 'follower' }}</a>
         /
         <a routerLink="/following/{{authUser.userName}}">{{ summary.followingCount }} following</a>
@@ -15,7 +15,7 @@
   </ng-container>
 
   <ng-template #loadingOrError>
-    <div *ngIf="_service.isError | async; else loading" class="alert alert-danger" data-testid="error">
+    <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
       <strong>Whoops!</strong> There was an error retrieving the data.<br>
       <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
         (click)="reload()">Try

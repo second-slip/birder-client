@@ -57,3 +57,5 @@ export const fakeNetworkSummary: INetworkSummary = {
   followersCount: 5,
   followingCount: 7
 }
+
+export const networkSearchTerm = 'test-search-term';

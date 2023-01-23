@@ -2,11 +2,15 @@
 
     <h2>Find users in the network</h2>
 
-    <form id="searchForm" class="form-inline controls" novalidate #searchForm="ngForm" (ngSubmit)="searchNetwork()">
-        <!-- <label for="searchTerm" class="sr-only">Password</label> -->
+    <!-- todo: this form needs tidying up -->
+    <!-- validation message, etc -->
+
+    <form id="searchForm" class="form-inline controls" #searchForm="ngForm" (ngSubmit)="searchNetwork()"
+        data-testid="search-form">
+        <label for="searchTerm" class="sr-only">Search</label>
         <input type="text" class="form-control" id="searchTerm" name="searchTerm" placeholder="type search criterion"
-            [(ngModel)]="searchTerm" required>
-        <button type="submit" class="btn btn-primary" [disabled]="!searchForm.valid">Search</button>
+            [(ngModel)]="searchTerm" required data-testid="searchTerm">
+        <button type="submit" class="btn btn-primary" [disabled]="!searchForm.valid" data-testid="submit">Search</button>
         <!-- <button *ngIf="(searching)" class="btn btn-primary" type="submit" disabled>
       Searching the Birder network
       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -15,36 +19,34 @@
 
     <hr>
 
-    <div *ngIf="(_service.getSearchResults | async) as results; else loadingOrError">
+    <ng-container *ngIf="(_service.getSearchResults | async) as results; else loadingOrError">
 
         <h3>Search results</h3>
 
-        <div *ngIf="results.length">
+        <div *ngIf="results.length" data-testid="search-results">
             <div *ngFor="let user of results">
                 <app-network-user [user]="user"></app-network-user>
             </div>
         </div>
 
-        <div *ngIf="!results.length">
+        <div *ngIf="!results.length" data-testid="no-search-results">
             <ngb-alert [dismissible]="false" class="d-block mt-3" type="info">
                 No results...
             </ngb-alert>
         </div>
-
-    </div>
-
-
+    </ng-container>
 
     <ng-template #loadingOrError>
-        <div *ngIf="_service.isError | async; else loading" class="alert alert-danger" data-testid="error">
+        <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
             <strong>Whoops!</strong> There was an error retrieving the data.<br>
-            <!-- <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button" (click)="reload()">Try
-                Again</button> -->
+            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+                (click)="reload()" [disabled]="!searchForm.valid">Try
+                Again</button>
         </div>
     </ng-template>
 
     <ng-template #loading>
-            <app-loading></app-loading>
+        <app-loading *ngIf="searchRequested"></app-loading>
     </ng-template>
 
 </div>

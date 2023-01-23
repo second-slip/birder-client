@@ -4,7 +4,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { fakeIObservationTopFive, fakeIObservationTopFiveEmpty } from 'src/app/testing/analysis-helpers';
-import { findComponent } from 'src/app/testing/element.spec-helper';
+import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
 
 import { ObservationTopFiveComponent } from './observation-top-five.component';
 import { ObservationTopFiveService } from './observation-top-five.service';
@@ -139,7 +139,7 @@ describe('ObservationTopFiveComponent unit tests', () => {
 
     it('should not show error content', () => {
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toBeUndefined();
+      expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
     });
   });
 
@@ -203,7 +203,7 @@ describe('ObservationTopFiveComponent unit tests', () => {
 
     it('should not show error content', () => {
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toBeUndefined();
+      expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
     });
   });
 
@@ -257,28 +257,15 @@ describe('ObservationTopFiveComponent unit tests', () => {
 
     it('shows error content', () => {
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toBeDefined();
+      expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeDefined();
       expect(compiled.querySelector('[data-testid="reload-button"]')?.textContent).toBeDefined();
-      expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toContain('Whoops');
+      expectText(fixture, 'error', 'Whoops! There was an error retrieving the data.Try Again');
     });
 
-    // 
-    it('error reload button on click calls reload()', fakeAsync(() => {
-      // Arrange
-      const component = fixture.componentInstance;
-      const reloadMethod = spyOn(component, 'reload');
-      const incrementButton = debugElement.query(
-        By.css('[data-testid="reload-button"]')
-      );
-
-      // Act
-      incrementButton.triggerEventHandler('click', null);
-
-      tick();
-
-      // Assert
-      expect(reloadMethod).toHaveBeenCalled();
-    }));
+    it('tries data fetch again on retry button click', fakeAsync(async () => {
+      fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
+      expect(fakeObservationTopFiveService.getData).toHaveBeenCalled();
+  }));
   });
 
 
@@ -331,7 +318,7 @@ describe('ObservationTopFiveComponent unit tests', () => {
 
     it('should not show error content', () => {
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toBeUndefined();
+      expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
     });
   });
 });

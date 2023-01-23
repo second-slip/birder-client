@@ -80,4 +80,46 @@ describe('FollowingService', () => {
 
     expect(actualErrorState).toBeTrue();
   });
+
+  it('returns error if username argument is null', () => {
+    const username = null;
+    let actualFollowingState: INetworkUser[] | null | undefined;
+    let actualErrorState: boolean | undefined;
+
+    service.getData(username);
+
+    service.getFollowing.subscribe((otherResult) => {
+      actualFollowingState = otherResult;
+    });
+
+    service.isError.subscribe((error) => {
+      actualErrorState = error;
+    });
+
+    controller.expectNone(`api/network/following?requestedUsername=${username}`);
+
+    expect(actualFollowingState).toEqual(null);
+    expect(actualErrorState).toBeTrue();
+  });
+
+  it('returns error if username argument is empty string', () => {
+    const username = '';
+    let actualFollowingState: INetworkUser[] | null | undefined;
+    let actualErrorState: boolean | undefined;
+
+    service.getData(username);
+
+    service.getFollowing.subscribe((otherResult) => {
+      actualFollowingState = otherResult;
+    });
+
+    service.isError.subscribe((error) => {
+      actualErrorState = error;
+    });
+
+    controller.expectNone(`api/network/following?requestedUsername=${username}`);
+
+    expect(actualFollowingState).toEqual(null);
+    expect(actualErrorState).toBeTrue();
+  });
 });

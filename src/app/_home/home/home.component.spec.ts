@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { HomeComponent } from './home.component';
@@ -9,45 +9,73 @@ import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TokenService } from 'src/app/_auth/token.service';
+import { ObservationFeedComponent } from 'src/app/_observation-feed/observation-feed/observation-feed.component';
 
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let router: Router;
-  let mockAuthenticationService;
 
-  let isAuthenticated: boolean;
+  let fakeTokenService: jasmine.SpyObj<TokenService>;
 
-  beforeEach(async () => {
-    mockAuthenticationService = jasmine.createSpyObj(['checkIsAuthenticatedObservable']);
 
-    TestBed.configureTestingModule({
-      imports: [NgbNavModule,
-        RouterTestingModule.withRoutes([
-          // { path: 'login', component: DummyLoginLayoutComponent },
-        ])
+  const setup = async (
+    fakeTokenServiceReturnValues?: jasmine.SpyObjMethodNames<TokenService>) => {
+
+    fakeTokenService = jasmine.createSpyObj<TokenService>(
+      'TokenService',
+      {
+        addToken: undefined,
+        getToken: undefined,
+        getUser: undefined,
+        isTokenValid: undefined,
+        removeToken: undefined,
+        ...fakeTokenServiceReturnValues
+      }
+    );
+
+    await TestBed.configureTestingModule({
+      declarations: [
+        HomeComponent
       ],
-      declarations: [HomeComponent],
-      schemas: [NO_ERRORS_SCHEMA],
+      imports: [
+        RouterTestingModule.withRoutes([
+          { path: 'feed-p/public', component: ObservationFeedComponent }
+        ])],
       providers: [
-        { provide: TokenService, useValue: mockAuthenticationService }
-      ]
-    })
-      .compileComponents();
-  });
+        { provide: TokenService, useValue: fakeTokenService }]
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
-    router = TestBed.inject(Router);
     component = fixture.componentInstance;
-    // mockAuthenticationService.checkIsAuthenticatedObservable.and.returnValue(of(isAuthenticated));
-    // fixture.detectChanges();
+    fixture.detectChanges();
+  };
+
+  it('should create', fakeAsync(async () => {
+    await setup();
+    expect(component).toBeTruthy();
+  }));
+
+  describe('when token is not valid', () => {
+
+    it('should create', fakeAsync(async () => {
+      await setup({
+        isTokenValid: false
+      });
+      expect(component).toBeTruthy();
+    }));
+
   });
 
-  it('should create', () => {
-    // isAuthenticated = true;
-    // fixture.detectChanges();
-    expect(component).toBeTruthy();
+  describe('when token is valid', () => {
+
+    it('should create', fakeAsync(async () => {
+      await setup({
+        isTokenValid: true
+      });
+      expect(component).toBeTruthy();
+    }));
+
   });
 });

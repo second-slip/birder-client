@@ -4,7 +4,7 @@ import { TweetDayComponent } from './tweet-day.component';
 import { TweetDayService } from './tweet-day.service';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { findComponent } from 'src/app/testing/element.spec-helper'
+import { expectText, findComponent } from 'src/app/testing/element.spec-helper'
 import { fakeITweet } from 'src/app/testing/tweet-day-test-helper';
 
 
@@ -180,27 +180,17 @@ describe('TweetDayComponent unit tests', () => {
 
         it('shows error content', () => {
             const compiled = fixture.nativeElement as HTMLElement;
-            expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toBeDefined();
+            expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeDefined();
             expect(compiled.querySelector('[data-testid="reload-button"]')?.textContent).toBeDefined();
-            expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toContain('Whoops');
+            expectText(fixture, 'error', 'Whoops! There was an error retrieving the data.Try Again');
         });
 
-        // 
-        it('error reload button on click calls reload()', fakeAsync(() => {
-            // Arrange
-            const component = fixture.componentInstance;
-            const reloadMethod = spyOn(component, 'reload');
-            const incrementButton = debugElement.query(
-                By.css('[data-testid="reload-button"]')
-            );
+        it('tries data fetch again on retry button click', fakeAsync(async () => {
 
-            // Act
-            incrementButton.triggerEventHandler('click', null);
 
-            tick();
+            fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
 
-            // Assert
-            expect(reloadMethod).toHaveBeenCalled();
+            expect(fakeTweetDayService.getData).toHaveBeenCalled();
         }));
     });
 

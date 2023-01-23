@@ -48,7 +48,7 @@ describe('FollowingComponent', () => {
         getAuthUser: of(userModel),
         //...fakeAuthPropertyValues
       },
-    )
+    );
 
     await TestBed.configureTestingModule({
       declarations: [

@@ -200,7 +200,6 @@ describe('FollowingComponent', () => {
         const compiled = fixture.nativeElement as HTMLElement;
         expect(compiled.querySelector('[data-testid="following-list"]')?.textContent).toBeUndefined();
         expect(compiled.querySelector('[data-testid="following-list-is-zero"]')?.textContent).toBeUndefined();
-
       }));
 
       it('does not show loading section', fakeAsync(async () => {

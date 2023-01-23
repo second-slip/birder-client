@@ -30,7 +30,6 @@ describe('BirdIndexService', () => {
     // Arrange
     let actualBirdsObservable: IBirdSummary[] | null | undefined; // undefined initial state to check if Observable emits
     let actualErrorState: boolean | undefined;
-    let finalLoadingState: boolean | undefined;
     let actualTotalItems: number | undefined;
 
     // Act
@@ -46,11 +45,6 @@ describe('BirdIndexService', () => {
         actualErrorState = error;
       });
 
-    service.isLoading.pipe(skip(1)) // skip first default 'true' value emitted...
-      .subscribe((loading) => {
-        finalLoadingState = loading;
-      });
-
       service.getTotalItems.pipe()
       .subscribe((total) => {
         actualTotalItems = total;
@@ -63,7 +57,6 @@ describe('BirdIndexService', () => {
     // Assert
     expect(actualBirdsObservable).toEqual(fakeIBirdArray);
     expect(actualErrorState).toBeFalse();
-    expect(finalLoadingState).toBeFalse();
     expect(actualTotalItems).toBe(fakeBirdIndexResponse.totalItems);
   });
 
@@ -79,7 +72,6 @@ describe('BirdIndexService', () => {
     const statusText = 'Internal Server Error';
     const errorEvent = new ErrorEvent('API error');
     let actualErrorState: boolean | undefined;
-    let finalLoadingState: boolean | undefined;
 
     // Act & Assert
     service.getData(_pageIndex, 30, '0'); // call http request method
@@ -89,14 +81,8 @@ describe('BirdIndexService', () => {
         actualErrorState = error;
       });
 
-    service.isLoading.pipe(skip(1)) // skip first, default 'true' value emitted...
-      .subscribe((loading) => {
-        finalLoadingState = loading;
-      });
-
     controller.expectOne(_apiUrl).error(errorEvent, { status, statusText });
 
     expect(actualErrorState).toBeTrue();
-    expect(finalLoadingState).toBeFalse();
   });
 });

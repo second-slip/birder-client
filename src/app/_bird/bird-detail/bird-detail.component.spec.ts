@@ -44,7 +44,6 @@ describe('BirdDetailComponent unit tests', () => {
                     getData: undefined,
                 },
                 {
-                    isLoading: of(false),
                     isError: of(false),
                     getBird: undefined //of(fakeITweet)
                 }
@@ -120,7 +119,6 @@ describe('BirdDetailComponent unit tests', () => {
                     getData: undefined,
                 },
                 {
-                    isLoading: of(false),
                     isError: of(false),
                     getBird: of(fakeIBirdDetail)
                 }
@@ -213,7 +211,6 @@ describe('BirdDetailComponent unit tests', () => {
                     getData: undefined,
                 },
                 {
-                    isLoading: of(false),
                     isError: of(true),
                     getBird: undefined
                 }
@@ -302,7 +299,6 @@ describe('BirdDetailComponent unit tests', () => {
                     getData: undefined,
                 },
                 {
-                    isLoading: of(true),
                     isError: of(false),
                     getBird: undefined
                 }

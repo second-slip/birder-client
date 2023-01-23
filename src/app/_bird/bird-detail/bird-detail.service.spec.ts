@@ -15,7 +15,7 @@ describe('BirdDetailService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule ],
+      imports: [HttpClientTestingModule],
       providers: [BirdDetailService],
     });
     service = TestBed.inject(BirdDetailService);
@@ -31,7 +31,6 @@ describe('BirdDetailService', () => {
     // Arrange
     let actualBird: IBirdDetail | null | undefined; // undefined initial state to check if Observable emits
     let actualErrorState: boolean | undefined;
-    let finalLoadingState: boolean | undefined;
 
     // Act
     service.getData(_birdId); // call http request method
@@ -46,10 +45,6 @@ describe('BirdDetailService', () => {
         actualErrorState = error;
       });
 
-    service.isLoading.pipe(skip(1)) // skip first default 'true' value emitted...
-      .subscribe((loading) => {
-        finalLoadingState = loading;
-      });
 
     const request = controller.expectOne(_apiUrl); // _apiUrl);
     // Answer the request so the Observable emits a value.
@@ -58,7 +53,6 @@ describe('BirdDetailService', () => {
     // Assert
     expect(actualBird).toEqual(fakeIBirdDetail);
     expect(actualErrorState).toBeFalse();
-    expect(finalLoadingState).toBeFalse();
   });
 
   it('#getData should use GET to retrieve data', () => {
@@ -73,7 +67,6 @@ describe('BirdDetailService', () => {
     const statusText = 'Internal Server Error';
     const errorEvent = new ErrorEvent('API error');
     let actualErrorState: boolean | undefined;
-    let finalLoadingState: boolean | undefined;;
 
     // Act & Assert
     service.getData(_birdId); // call http request method
@@ -83,14 +76,9 @@ describe('BirdDetailService', () => {
         actualErrorState = error;
       });
 
-    service.isLoading.pipe(skip(1)) // skip first, default 'true' value emitted...
-      .subscribe((loading) => {
-        finalLoadingState = loading;
-      });
 
     controller.expectOne(_apiUrl).error(errorEvent, { status, statusText });
 
     expect(actualErrorState).toBeTrue();
-    expect(finalLoadingState).toBeFalse();
   });
 });

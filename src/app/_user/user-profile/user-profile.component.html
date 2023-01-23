@@ -2,37 +2,40 @@
 
     <ng-container *ngIf="(_service.getUserProfile | async) as profile; else loadingOrError">
 
-        <div class="flex-container">
+        <div class="flex-container" data-testid="user-profile">
 
             <img class="avatar" src="{{profile.user.avatar}}"
                 onerror="this.src='https://img.icons8.com/color/96/000000/user.png';" alt="Smiley face" height="126"
                 width="126">
-
             <div>
 
                 <div class="flex-container">
-                    <h1>{{ profile.user.userName }}</h1>
+                    <h1 data-testid="h1-user-name">{{ profile.user.userName }}</h1>
                     <app-follow-command [user]="profile.user"></app-follow-command>
                 </div>
 
-                <p class="summary"><a routerLink="/followers/{{profile.user.userName}}">{{ profile.followersCount }} {{
+                <!-- network summary -->
+                <p class="summary" data-testid="network-summary"><a routerLink="/followers/{{profile.user.userName}}">{{
+                        profile.followersCount }} {{
                         profile.followersCount > 1 ? 'followers' : 'follower' }}</a>
                     /
                     <a routerLink="/following/{{profile.user.userName}}">{{ profile.followingCount }} following</a>
                 </p>
 
+                <!-- observations summary (own profile) -->
                 <ng-container *ngIf="profile.user.isOwnProfile">
-                    <p class="summary" *ngIf="(_analysisService.count | async) as analysis">
-                        {{ analysis.uniqueSpeciesCount }} species in {{ analysis.totalObservationsCount }}
-                        observations
-                    </p>
+                    <p class="summary" *ngIf="(_analysisService.count | async) as analysis"
+                        data-testid="obs-summary-own">{{ analysis.uniqueSpeciesCount }} species in {{
+                        analysis.totalObservationsCount }}
+                        observations</p>
                 </ng-container>
+
+                <!-- observations summary (other profile) -->
                 <ng-container *ngIf="!profile.user.isOwnProfile">
-                    <p class="summary">
-                        {{ profile?.observationCount?.uniqueSpeciesCount }} species in {{
+                    <p class="summary" data-testid="obs-summary-other">{{ profile?.observationCount?.uniqueSpeciesCount
+                        }} species in {{
                         profile?.observationCount?.totalObservationsCount }}
-                        observations
-                    </p>
+                        observations</p>
                 </ng-container>
 
                 <p class="register-large summary">Joined on {{ profile.registrationDate | date: 'EEEE, d MMMM yyyy'}}
@@ -51,6 +54,7 @@
                 <ng-template ngbNavContent>
                     <!-- Keep content! -->
                     <!-- <app-user-feed></app-user-feed> -->
+
                 </ng-template>
             </li>
             <li [ngbNavItem]="2">
@@ -73,20 +77,7 @@
                         sapien malesuada mauris tristique, eget porttitor lectus porttitor. Fusce in laoreet massa.
                         Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
                         egestas.
-                        Nullam in ipsum blandit, malesuada velit eget, bibendum purus.
-
-                        Etiam quis suscipit ante. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                        mollis
-                        mauris turpis, sit amet luctus libero vulputate volutpat. In ipsum tellus, vehicula eu
-                        efficitur
-                        eget, cursus non ante. Sed hendrerit auctor nisi, eget auctor dui viverra quis. Phasellus
-                        pulvinar pretium justo vitae maximus. Integer pellentesque cursus rhoncus. Morbi sapien
-                        turpis,
-                        volutpat ornare ultricies a, ultrices eu lectus. Praesent at vulputate lorem. Quisque
-                        tincidunt
-                        imperdiet molestie. Sed sed volutpat velit, a eleifend leo. Pellentesque imperdiet tempor
-                        massa.
-                        Nunc et tellus pellentesque leo gravida hendrerit.</p>
+                        Nullam in ipsum blandit, malesuada velit eget, bibendum purus.</p>
                 </ng-template>
             </li>
             <li [ngbNavItem]="3">
@@ -120,22 +111,17 @@
 
 
     <ng-template #loadingOrError>
-        <ng-container *ngIf="(_service.isError | async); else loading">
-            <p class="centre">
-                <strong>Whoops!</strong>&nbsp;An error occurred<br>
-                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
-                    Again</button>
-            </p>
-        </ng-container>
+        <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
+            <strong>Whoops!</strong> There was an error retrieving the data.<br>
+            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+                (click)="reload()">Try
+                Again</button>
+        </div>
     </ng-template>
 
 
     <ng-template #loading>
-        <p class="centre">
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            <strong>&nbsp;Loading</strong>
-        </p>
+        <app-loading></app-loading>
     </ng-template>
-
 
 </div>

@@ -5,11 +5,11 @@ export const username = 'testusername';
 export const userProfileModel: IUserProfile = {
     user: {
         avatar: "",
-        userName: "",
+        userName: username,
         isFollowing: true,
         isOwnProfile: true
     },
-    registrationDate: 'Date | string',
+    registrationDate: new Date,
     observationCount: {
         totalObservationsCount: 8,
         uniqueSpeciesCount: 5

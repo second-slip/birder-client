@@ -77,4 +77,46 @@ describe('UserProfileService', () => {
     expect(actualRecordingsState).toEqual(null);
     expect(actualErrorState).toBeTrue();
   });
+
+  it('returns error if username argument is null', () => {
+    const username = null;
+    let actualRecordingsState: IUserProfile | null | undefined;
+    let actualErrorState: boolean | undefined;
+
+    service.getData(username);
+
+    service.getUserProfile.subscribe((otherResult) => {
+      actualRecordingsState = otherResult;
+    });
+
+    service.isError.subscribe((error) => {
+      actualErrorState = error;
+    });
+
+    controller.expectNone(`api/UserProfile?requestedUsername=${username}`);
+
+    expect(actualRecordingsState).toEqual(null);
+    expect(actualErrorState).toBeTrue();
+  });
+
+  it('returns error if username argument is empty string', () => {
+    const username = '';
+    let actualRecordingsState: IUserProfile | null | undefined;
+    let actualErrorState: boolean | undefined;
+
+    service.getData(username);
+
+    service.getUserProfile.subscribe((otherResult) => {
+      actualRecordingsState = otherResult;
+    });
+
+    service.isError.subscribe((error) => {
+      actualErrorState = error;
+    });
+
+    controller.expectNone(`api/UserProfile?requestedUsername=${username}`);
+
+    expect(actualRecordingsState).toEqual(null);
+    expect(actualErrorState).toBeTrue();
+  });
 });

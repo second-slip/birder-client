@@ -4,12 +4,12 @@ import { BehaviorSubject, finalize, Observable, Subject, takeUntil } from 'rxjs'
 import { ITweet } from '../i-tweet.dto';
 
 @Injectable()
-export class TweetDayArchiveService implements OnDestroy  {
+export class TweetDayArchiveService implements OnDestroy {
   private _subscription = new Subject();
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private readonly _allLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private readonly _tweets$: BehaviorSubject<ITweet[]> = new BehaviorSubject<ITweet[]>([]);
+  private readonly _tweets$: BehaviorSubject<ITweet[] | null> = new BehaviorSubject<ITweet[] | null>(null);
 
   constructor(private _httpClient: HttpClient) { }
 
@@ -25,7 +25,7 @@ export class TweetDayArchiveService implements OnDestroy  {
     return this._isLoading$.asObservable();
   }
 
-  public get getTweets(): Observable<ITweet[]> {
+  public get getTweets(): Observable<ITweet[] | null> {
     return this._tweets$.asObservable();
   }
 
@@ -40,7 +40,7 @@ export class TweetDayArchiveService implements OnDestroy  {
       .pipe(finalize(() => { this._isLoading$.next(false) }), takeUntil(this._subscription))
       .subscribe({
         next: (items: ITweet[]) => {
-          this._tweets$.next([...this._tweets$.getValue(), ...items]); // or concat?
+          this._tweets$.next([...this._tweets$.getValue() || [], ...items]); // or concat?
           this._moreToGet(pageSize, items.length);
         },
         error: (e: any) => { this._handleError(e); },

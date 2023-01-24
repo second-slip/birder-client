@@ -29,7 +29,6 @@ describe('TweetDayService', () => {
     // Arrange
     let actualTweet: ITweet | null | undefined; // undefined initial state to check if Observable emits
     let actualErrorState: boolean | undefined;
-    let finalLoadingState: boolean | undefined;
 
     // Act
     service.getData(); // call http request method
@@ -44,11 +43,6 @@ describe('TweetDayService', () => {
         actualErrorState = error;
       });
 
-    service.isLoading.pipe(skip(1)) // skip first default 'true' value emitted...
-      .subscribe((loading) => {
-        finalLoadingState = loading;
-      });
-
     const request = controller.expectOne(_apiUrl); // _apiUrl);
     // Answer the request so the Observable emits a value.
     request.flush(fakeTweetResponse); // also paste the response object in with {}
@@ -56,7 +50,6 @@ describe('TweetDayService', () => {
     // Assert
     expect(actualTweet).toEqual(fakeITweet);
     expect(actualErrorState).toBeFalse();
-    expect(finalLoadingState).toBeFalse();
   });
 
   it('#getData should use GET to retrieve data', () => {
@@ -71,7 +64,6 @@ describe('TweetDayService', () => {
     const statusText = 'Internal Server Error';
     const errorEvent = new ErrorEvent('API error');
     let actualErrorState: boolean | undefined;
-    let finalLoadingState: boolean | undefined;;
 
     // Act & Assert
     service.getData(); // call http request method
@@ -81,15 +73,8 @@ describe('TweetDayService', () => {
         actualErrorState = error;
       });
 
-    service.isLoading.pipe(skip(1)) // skip first, default 'true' value emitted...
-      .subscribe((loading) => {
-        finalLoadingState = loading;
-      });
-
     controller.expectOne(_apiUrl).error(errorEvent, { status, statusText });
 
     expect(actualErrorState).toBeTrue();
-    expect(finalLoadingState).toBeFalse();
   });
-
 });

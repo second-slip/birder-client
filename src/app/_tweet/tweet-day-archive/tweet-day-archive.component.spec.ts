@@ -2,7 +2,7 @@ import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { findComponent } from 'src/app/testing/element.spec-helper';
+import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
 import { fakeTweetArchiveArray } from 'src/app/testing/tweet-day-test-helper';
 import { TweetDayArchiveComponent } from './tweet-day-archive.component';
 import { TweetDayArchiveService } from './tweet-day-archive.service';
@@ -41,7 +41,6 @@ describe('TweetDayArchiveComponent', () => {
               providers: [{ provide: TweetDayArchiveService, useValue: fakeTweetDayArchiveService }]
             }
           })
-
         .compileComponents();
 
       fixture = TestBed.createComponent(TweetDayArchiveComponent);
@@ -251,28 +250,16 @@ describe('TweetDayArchiveComponent', () => {
 
     it('shows error content', () => {
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toBeDefined();
+      expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeDefined();
       expect(compiled.querySelector('[data-testid="reload-button"]')?.textContent).toBeDefined();
-      expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toContain('Whoops');
+      expectText(fixture, 'error', 'Whoops! There was an error retrieving the data.Try Again');
     });
 
-    // 
-    it('error reload button on click calls reload()', fakeAsync(() => {
-      // Arrange
-      const component = fixture.componentInstance;
-      const reloadMethod = spyOn(component, 'reload');
-      const incrementButton = debugElement.query(
-        By.css('[data-testid="reload-button"]')
-      );
+    it('tries data fetch again on retry button click', fakeAsync(async () => {
+      fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
 
-      // Act
-      incrementButton.triggerEventHandler('click', null);
-
-      tick();
-
-      // Assert
-      expect(reloadMethod).toHaveBeenCalled();
-    }));
+      expect(fakeTweetDayArchiveService.getData).toHaveBeenCalled();
+  }));
   });
 });
 

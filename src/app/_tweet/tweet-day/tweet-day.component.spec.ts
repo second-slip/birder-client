@@ -23,7 +23,6 @@ describe('TweetDayComponent unit tests', () => {
                     getData: undefined,
                 },
                 {
-                    isLoading: of(false),
                     isError: of(false),
                     getTweet: undefined //of(fakeITweet)
                 }
@@ -83,7 +82,6 @@ describe('TweetDayComponent unit tests', () => {
                     getData: undefined,
                 },
                 {
-                    isLoading: of(false),
                     isError: of(false),
                     getTweet: of(fakeITweet)
                 }
@@ -146,7 +144,6 @@ describe('TweetDayComponent unit tests', () => {
                     getData: undefined,
                 },
                 {
-                    isLoading: of(false),
                     isError: of(true),
                     getTweet: undefined //of(fakeITweet)
                 }
@@ -186,8 +183,6 @@ describe('TweetDayComponent unit tests', () => {
         });
 
         it('tries data fetch again on retry button click', fakeAsync(async () => {
-
-
             fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
 
             expect(fakeTweetDayService.getData).toHaveBeenCalled();
@@ -208,7 +203,6 @@ describe('TweetDayComponent unit tests', () => {
                     getData: undefined,
                 },
                 {
-                    isLoading: of(true),
                     isError: of(false),
                     getTweet: undefined //of(fakeITweet)
                 }

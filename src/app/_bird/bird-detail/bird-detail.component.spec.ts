@@ -3,7 +3,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { findComponent } from 'src/app/testing/element.spec-helper'
+import { expectText, findComponent } from 'src/app/testing/element.spec-helper'
 
 import { BirdDetailComponent } from './bird-detail.component';
 import { BirdDetailService } from './bird-detail.service';
@@ -13,7 +13,10 @@ import { fakeIBirdDetail } from 'src/app/testing/birds-helpers';
 import { ActivatedRoute } from '@angular/router';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
-describe('BirdDetailComponent unit tests', () => {
+describe('BirdDetailComponent', () => {
+    let component: BirdDetailComponent;
+    let fixture: ComponentFixture<BirdDetailComponent>;
+    let fakeService: jasmine.SpyObj<BirdDetailService>;
     let fakeNavService: NavigationService;
 
     fakeNavService = jasmine.createSpyObj<NavigationService>(
@@ -23,333 +26,185 @@ describe('BirdDetailComponent unit tests', () => {
         }
     );
 
-    describe('BirdDetailComponent - opens loading placeholder by default', () => {
-        let fixture: ComponentFixture<BirdDetailComponent>;
-        let debugElement: DebugElement;
-        let fakeBirdDetailService: BirdDetailService;
-        // let fakeNavService: NavigationService;
+    const setup = async (fakeRouteArgument: string,
+        fakePropertyValues?: jasmine.SpyObjPropertyNames<BirdDetailService>) => {
 
-        beforeEach(async () => {
+        fakeService = jasmine.createSpyObj<BirdDetailService>(
+            'BirdDetailService',
+            {
+                getData: undefined,
+            },
+            {
+                isError: of(false),
+                getBird: of(null),
+                ...fakePropertyValues
+            }
+        );
 
-            // fakeNavService = jasmine.createSpyObj<NavigationService>(
-            //     'NavigationService',
-            //     {
-            //         back: undefined
-            //     }
-            // );
-
-            fakeBirdDetailService = jasmine.createSpyObj<BirdDetailService>(
-                'BirdDetailService',
-                {
-                    getData: undefined,
-                },
-                {
-                    isError: of(false),
-                    getBird: undefined //of(fakeITweet)
+        await TestBed.configureTestingModule({
+            declarations: [
+                BirdDetailComponent
+            ],
+            providers: [{ provide: NavigationService, useValue: fakeNavService }, {
+                provide: ActivatedRoute,
+                useValue: {
+                    paramMap: of(new Map(Object.entries({
+                        id: fakeRouteArgument
+                    })))
+                    // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
+                    // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
                 }
-            );
-
-            await TestBed.configureTestingModule({
-                declarations: [
-                    BirdDetailComponent
-                ],
-                schemas: [NO_ERRORS_SCHEMA],
-                providers: [
-                    {
-                        provide: ActivatedRoute,
-                        useValue: {
-                            paramMap: of({ id: 123 })
-                        }
-                    },
-                    {
-                        provide: NavigationService,
-                        useValue: fakeNavService
-                    }
-                ]
-            })
-                .overrideComponent(BirdDetailComponent,
-                    {
-                        set: {
-                            providers: [{ provide: BirdDetailService, useValue: fakeBirdDetailService }]
-                        }
-                    })
-                .compileComponents();
-
-            fixture = TestBed.createComponent(BirdDetailComponent);
-            //fixture.detectChanges();
-            debugElement = fixture.debugElement;
-        });
-
-
-        it('should create the app', () => {
-            const component = fixture.componentInstance;
-            expect(component).toBeTruthy();
-        });
-
-
-        it('should show loading child component', () => {
-            fixture.detectChanges();
-
-            // Test without the helper
-            const { debugElement } = fixture;
-            const loading = debugElement.query(By.css('app-loading'));
-            expect(loading).toBeTruthy();
-
-            // Test using the spec-helper function
-            const loading1 = findComponent(fixture, 'app-loading');
-            expect(loading1).toBeTruthy();
-        });
-    });
-
-    describe('BirdDetailComponent service is called successfully', () => {
-
-        // beforeEach(() => {
-        //   fixture.detectChanges();
-        // });
-
-        let fixture: ComponentFixture<BirdDetailComponent>;
-        let debugElement: DebugElement;
-        let fakeBirdDetailService: BirdDetailService;
-
-        beforeEach(async () => {
-
-            fakeBirdDetailService = jasmine.createSpyObj<BirdDetailService>(
-                'BirdDetailService',
-                {
-                    getData: undefined,
-                },
-                {
-                    isError: of(false),
-                    getBird: of(fakeIBirdDetail)
+            }],
+            imports: [NgbNavModule],
+            schemas: [NO_ERRORS_SCHEMA]
+        }).overrideComponent(BirdDetailComponent,
+            {
+                set: {
+                    providers: [
+                        { provide: BirdDetailService, useValue: fakeService },
+                    ]
                 }
-            );
+            }).compileComponents();
 
-            await TestBed.configureTestingModule({
-                imports: [NgbNavModule],
-                declarations: [
-                    BirdDetailComponent
-                ],
-                schemas: [NO_ERRORS_SCHEMA],
-                providers: [
-                    {
-                        provide: ActivatedRoute,
-                        useValue: {
-                            paramMap: of({ id: 123 })
-                        }
-                    },
-                    {
-                        provide: NavigationService,
-                        useValue: fakeNavService
-                    }
-                ]
-            })
-                .overrideComponent(BirdDetailComponent,
-                    {
-                        set: {
-                            providers: [{ provide: BirdDetailService, useValue: fakeBirdDetailService },
-                            {
-                                provide: ActivatedRoute,
-                                useValue: {
-                                    paramMap: of({ id: 123 })
-                                }
-                            }]
-                        }
-                    })
+        fixture = TestBed.createComponent(BirdDetailComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    };
+
+    it('"SMOKE TEST": should be created and show the loading placeloader', fakeAsync(async () => {
+        await setup(fakeIBirdDetail.birdId.toString(), {});
+
+        expect(component).toBeTruthy();
+        const { debugElement } = fixture;
+        const loading = debugElement.query(By.css('app-loading'));
+        expect(loading).toBeTruthy();
+    }));
 
 
-                .compileComponents();
+    describe('when data fetch is successful', () => {
 
-            fixture = TestBed.createComponent(BirdDetailComponent);
-            fixture.detectChanges();
-            debugElement = fixture.debugElement;
-        });
+        it('should call getData on init', fakeAsync(async () => {
+            await setup(fakeIBirdDetail.birdId.toString(), {});
+            expect(fakeService.getData).toHaveBeenCalledOnceWith(fakeIBirdDetail.birdId.toString());
+        }));
 
-        // ToDo: not called due to guard?
-        
-        // it('should call getData on init', () => {
-        //     expect(fakeBirdDetailService.getData).toHaveBeenCalled();
-        //     expect(fakeBirdDetailService.getData).toHaveBeenCalledTimes(1);
-        // });
+        it('should render the Bird', fakeAsync(async () => {
+            await setup(fakeIBirdDetail.birdId.toString(), {
+                isError: of(false),
+                getBird: of(fakeIBirdDetail)
+            });
 
-        it('should render the Bird', fakeAsync(() => {
             const compiled = fixture.nativeElement as HTMLElement;
-            tick();
-
             expect(compiled.querySelector('[data-testid="main-title"]')?.textContent).toBeDefined();
-            expect(compiled.querySelector('[data-testid="main-title"]')?.textContent).toContain('Black Guillemot Cepphus grylle');
+            const title = `${fakeIBirdDetail.englishName} ${fakeIBirdDetail.species}`;
+            expectText(fixture, 'main-title', title);
         }));
 
-        it('should render the Bird child component', fakeAsync(() => {
-            const feed = findComponent(fixture, 'app-bird-info');
-            expect(feed).toBeTruthy();
-        }));
+        it('should render the Bird child component', fakeAsync(async () => {
+            await setup(fakeIBirdDetail.birdId.toString(), {
+                isError: of(false),
+                getBird: of(fakeIBirdDetail)
+            });
 
-
-        it('should not show loading child component', () => {
             const { debugElement } = fixture;
-            const loading = debugElement.query(By.css('app-loading'));
-            expect(loading).toBeFalsy();
-        });
-
-        it('should not show error content', () => {
-            const compiled = fixture.nativeElement as HTMLElement;
-            expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toBeUndefined();
-        });
-    });
-
-
-    describe('BirdDetailComponent - test when error', () => {
-        let fixture: ComponentFixture<BirdDetailComponent>;
-        let debugElement: DebugElement;
-        let fakeBirdDetailService: BirdDetailService;
-
-        beforeEach(async () => {
-
-            fakeBirdDetailService = jasmine.createSpyObj<BirdDetailService>(
-                'BirdDetailService',
-                {
-                    getData: undefined,
-                },
-                {
-                    isError: of(true),
-                    getBird: undefined
-                }
-            );
-
-            await TestBed.configureTestingModule({
-                declarations: [
-                    BirdDetailComponent
-                ],
-                schemas: [NO_ERRORS_SCHEMA],
-                providers: [
-                    {
-                        provide: ActivatedRoute,
-                        useValue: {
-                            paramMap: of({ id: 123 })
-                        }
-                    },
-                    {
-                        provide: NavigationService,
-                        useValue: fakeNavService
-                    }
-                ]
-            })
-                .overrideComponent(BirdDetailComponent,
-                    {
-                        set: {
-                            providers: [{ provide: BirdDetailService, useValue: fakeBirdDetailService }]
-                        }
-                    })
-
-                .compileComponents();
-
-            fixture = TestBed.createComponent(BirdDetailComponent);
-            fixture.detectChanges();
-            debugElement = fixture.debugElement;
-        });
-
-        it('hides loading content', () => {
-            const { debugElement } = fixture;
-            const loading = debugElement.query(By.css('app-loading'));
-            expect(loading).toBeFalsy();
-        });
-
-        it('hides main content', () => {
-            const compiled = fixture.nativeElement as HTMLElement;
-            expect(compiled.querySelector('[data-testid="main-title"]')?.textContent).toBeUndefined();
-        });
-
-        it('shows error content', () => {
-            const compiled = fixture.nativeElement as HTMLElement;
-            expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toBeDefined();
-            expect(compiled.querySelector('[data-testid="reload-button"]')?.textContent).toBeDefined();
-            expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toContain('Whoops');
-        });
-
-        // 
-        it('error reload button on click calls reload()', fakeAsync(() => {
-            // Arrange
-            const component = fixture.componentInstance;
-            const reloadMethod = spyOn(component, 'reload');
-            const incrementButton = debugElement.query(
-                By.css('[data-testid="reload-button"]')
-            );
-
-            // Act
-            incrementButton.triggerEventHandler('click', null);
-
-            tick();
-
-            // Assert
-            expect(reloadMethod).toHaveBeenCalled();
-        }));
-    });
-
-
-    describe('BirdDetailComponent - test loading placeholder', () => {
-        let fixture: ComponentFixture<BirdDetailComponent>;
-        let debugElement: DebugElement;
-        let fakeBirdDetailService: BirdDetailService;
-
-        beforeEach(async () => {
-
-            fakeBirdDetailService = jasmine.createSpyObj<BirdDetailService>(
-                'BirdDetailService',
-                {
-                    getData: undefined,
-                },
-                {
-                    isError: of(false),
-                    getBird: undefined
-                }
-            );
-
-            await TestBed.configureTestingModule({
-                declarations: [
-                    BirdDetailComponent
-                ],
-                schemas: [NO_ERRORS_SCHEMA],
-                providers: [
-                    {
-                        provide: ActivatedRoute,
-                        useValue: {
-                            paramMap: of({ id: 123 })
-                        }
-                    },
-                    {
-                        provide: NavigationService,
-                        useValue: fakeNavService
-                    }
-                ]
-            })
-                .overrideComponent(BirdDetailComponent,
-                    {
-                        set: {
-                            providers: [{ provide: BirdDetailService, useValue: fakeBirdDetailService }]
-                        }
-                    })
-
-                .compileComponents();
-
-            fixture = TestBed.createComponent(BirdDetailComponent);
-            fixture.detectChanges();
-            debugElement = fixture.debugElement;
-        });
-
-
-        it('shows loading content', () => {
-            const loading = findComponent(fixture, 'app-loading');
+            const loading = debugElement.query(By.css('app-bird-info'));
             expect(loading).toBeTruthy();
-        });
+        }));
 
-        it('should not show main content', () => {
-            const compiled = fixture.nativeElement as HTMLElement;
-            expect(compiled.querySelector('[data-testid="main-title"]')?.textContent).toBeUndefined();
-        });
+        // **** INFO: lazy rendered so not in template UNTIL tab 2 is active
 
-        it('should not show error content', () => {
+        // it('should render the Flickr child component', fakeAsync(async () => {
+        //     await setup(fakeIBirdDetail.birdId.toString(), {
+        //         isError: of(false),
+        //         getBird: of(fakeIBirdDetail)
+        //     });
+
+        //     const { debugElement } = fixture;
+        //     const flickr = debugElement.query(By.css('app-flickr'));
+        //     expect(flickr).toBeTruthy();
+        // }));
+
+        // **** INFO: lazy rendered so not in template UNTIL tab 3 is active
+
+
+        // it('should render the Recordings child component', fakeAsync(async () => {
+        //     await setup(fakeIBirdDetail.birdId.toString(), {
+        //         isError: of(false),
+        //         getBird: of(fakeIBirdDetail)
+        //     });
+
+        //     const { debugElement } = fixture;
+        //     const loading = debugElement.query(By.css('app-recordings'));
+        //     expect(loading).toBeTruthy();
+        // }));
+    });
+
+    describe('when response is unsuccessful', () => {
+
+        it('shows error content', fakeAsync(async () => {
+            await setup(fakeIBirdDetail.birdId.toString(), {
+                isError: of(true),
+                getBird: of(null)
+            });
+
             const compiled = fixture.nativeElement as HTMLElement;
-            expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toBeUndefined();
-        });
+            expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeDefined();
+            expect(compiled.querySelector('[data-testid="reload-button"]')?.textContent).toBeDefined();
+            expectText(fixture, 'error', 'Whoops! There was an error retrieving the data.Try Again');
+        }));
+
+        it('tries data fetch again on retry button click', fakeAsync(async () => {
+            await setup(fakeIBirdDetail.birdId.toString(), {
+                isError: of(true),
+                getBird: of(null)
+            });
+
+            fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
+
+            expect(fakeService.getData).toHaveBeenCalledWith(fakeIBirdDetail.birdId.toString());
+        }));
+
+        it('tries redirects on retry button click when id is null or empty', fakeAsync(async () => {
+            await setup('', {
+                isError: of(true),
+                getBird: of(null)
+            });
+
+            fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
+
+            expect(fakeNavService.back).toHaveBeenCalled();
+            expect(fakeService.getData).not.toHaveBeenCalled();
+        }));
+
+        it('does not show success content', fakeAsync(async () => {
+            await setup(fakeIBirdDetail.birdId.toString(), {
+                isError: of(true),
+                getBird: of(null)
+            });
+
+            const compiled = fixture.nativeElement as HTMLElement;
+            expect(compiled.querySelector('[data-testid="bird-detail-tabs"]')?.textContent).toBeUndefined();
+        }));
+
+        it('does not show loading section', fakeAsync(async () => {
+            await setup(fakeIBirdDetail.birdId.toString(), {
+                isError: of(true),
+                getBird: of(null)
+            });
+
+            const { debugElement } = fixture;
+            const loading = debugElement.query(By.css('app-loading'));
+            expect(loading).toBeNull();
+        }));
+    });
+
+    describe('when route argument is null or empty', () => {
+
+        it('it redirects on init', fakeAsync(async () => {
+            await setup('', {});
+
+            expect(fakeNavService.back).toHaveBeenCalled();
+            expect(fakeService.getData).not.toHaveBeenCalled();
+        }));
     });
 });

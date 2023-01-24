@@ -6,7 +6,7 @@
 
         <hr>
 
-        <ul ngbNav #nav="ngbNav" class="nav-tabs">
+        <ul ngbNav #nav="ngbNav" class="nav-tabs" data-testid="bird-detail-tabs">
             <li [ngbNavItem]="1">
                 <a ngbNavLink>Information</a>
                 <ng-template ngbNavContent>
@@ -52,16 +52,15 @@
 
     </ng-container>
 
-
     <ng-template #loadingOrError>
-        <ng-container *ngIf="(_service.isError | async); else loading">
-            <p class="centre" data-testid="error-content">
-                <strong>Whoops!</strong>&nbsp;An error occurred<br>
-                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
-                    Again</button>
-            </p>
-        </ng-container>
+        <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
+            <strong>Whoops!</strong> There was an error retrieving the data.<br>
+            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+                (click)="reload()">Try
+                Again</button>
+        </div>
     </ng-template>
+
 
     <ng-template #loading>
         <app-loading></app-loading>

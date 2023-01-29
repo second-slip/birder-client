@@ -12,7 +12,6 @@ import { ObservationFeedService } from '../../_observation-feed/observation-feed
 export class ObservationFeedComponent implements OnInit {
   private _url: string = '';
   private _page: number = 1;
-
   public title = 'Latest observations';
   public filter: string = '';
 
@@ -42,13 +41,13 @@ export class ObservationFeedComponent implements OnInit {
   private _setup(filter: string | null): void {
     switch (filter) {
       case 'network': {
-        this._url = 'api/ObservationFeed/NetworkFeed';
+        this._url = 'api/observationfeed/network';
         this.filter = filter;
         this.title = 'Latest observations in your network';
         break;
       }
       default: {
-        this._url = 'api/ObservationFeed';
+        this._url = 'api/observationfeed';
         this.filter = 'public';
         this.title = 'Latest observations';
         break;

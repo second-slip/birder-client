@@ -72,14 +72,14 @@ describe('ObservationFeedComponent', () => {
     it('should setup the "public" feed', fakeAsync(async () => {
         await setup({}, {}, 'public');
 
-        expect(fakeObservationFeedService.getData).toHaveBeenCalledOnceWith(1, 'api/ObservationFeed');
+        expect(fakeObservationFeedService.getData).toHaveBeenCalledOnceWith(1, 'api/observationfeed');
         expectText(fixture, 'title', "Latest observations");
     }));
 
     it('should setup the "network" feed', fakeAsync(async () => {
         await setup({}, {}, 'network');
 
-        expect(fakeObservationFeedService.getData).toHaveBeenCalledWith(1, 'api/ObservationFeed/NetworkFeed');
+        expect(fakeObservationFeedService.getData).toHaveBeenCalledWith(1, 'api/observationfeed/network');
         expect(fakeObservationFeedService.getData).toHaveBeenCalledTimes(1);
         expectText(fixture, 'title', "Latest observations in your network");
     }));
@@ -97,7 +97,7 @@ describe('ObservationFeedComponent', () => {
                     observations: of(fakeIObservationFeed)
                 },
                 'public');
-            expect(fakeObservationFeedService.getData).toHaveBeenCalledOnceWith(1, 'api/ObservationFeed');
+            expect(fakeObservationFeedService.getData).toHaveBeenCalledOnceWith(1, 'api/observationfeed');
         }));
 
         it('shows the observations', fakeAsync(async () => {
@@ -298,7 +298,7 @@ describe('ObservationFeedComponent', () => {
 
             fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
 
-            expect(fakeObservationFeedService.getData).toHaveBeenCalledWith(1, 'api/ObservationFeed');
+            expect(fakeObservationFeedService.getData).toHaveBeenCalledWith(1, 'api/observationfeed');
         }));
 
         it('hides main content', fakeAsync(async () => {

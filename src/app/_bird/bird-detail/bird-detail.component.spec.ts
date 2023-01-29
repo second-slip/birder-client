@@ -1,9 +1,9 @@
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { expectText, findComponent } from 'src/app/testing/element.spec-helper'
+import { expectText } from 'src/app/testing/element.spec-helper'
 
 import { BirdDetailComponent } from './bird-detail.component';
 import { BirdDetailService } from './bird-detail.service';
@@ -160,7 +160,6 @@ describe('BirdDetailComponent', () => {
             });
 
             fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
-
             expect(fakeService.getData).toHaveBeenCalledWith(fakeIBirdDetail.birdId.toString());
         }));
 
@@ -171,7 +170,6 @@ describe('BirdDetailComponent', () => {
             });
 
             fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
-
             expect(fakeNavService.back).toHaveBeenCalled();
             expect(fakeService.getData).not.toHaveBeenCalled();
         }));
@@ -202,7 +200,6 @@ describe('BirdDetailComponent', () => {
 
         it('it redirects on init', fakeAsync(async () => {
             await setup('', {});
-
             expect(fakeNavService.back).toHaveBeenCalled();
             expect(fakeService.getData).not.toHaveBeenCalled();
         }));

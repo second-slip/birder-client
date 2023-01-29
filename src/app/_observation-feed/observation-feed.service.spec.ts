@@ -6,7 +6,7 @@ import { IObservationFeed } from './i-observation-feed.dto';
 import { fakeIObservationFeed, fakeIObservationFeedWithOneElement, fakeObservationFeedResponse, fakeObservationFeedResponseWithOneElement } from '../testing/observation-feed-helper';
 
 const _pageIndex = 1;
-const _apiUrl = `api/ObservationFeed?pageIndex=${_pageIndex}&pageSize=10`;
+const _apiUrl = `api/observationfeed?pageIndex=${_pageIndex}&pageSize=10`;
 
 
 describe('ObservationFeedService', () => {
@@ -35,7 +35,7 @@ describe('ObservationFeedService', () => {
         let actualAllLoadedState: boolean | undefined;
 
         // Act
-        service.getData(_pageIndex, 'api/ObservationFeed'); // call http request method
+        service.getData(_pageIndex, 'api/observationfeed'); // call http request method
 
         // We expect that the Observable emits an array that equals to the one from the API response:
         service.observations.subscribe((observationFeedObservable) => {
@@ -81,7 +81,7 @@ describe('ObservationFeedService', () => {
         let actualAllLoadedState: boolean | undefined;
 
         // Act & Assert
-        service.getData(_pageIndex, 'api/ObservationFeed'); // call http request method
+        service.getData(_pageIndex, 'api/observationfeed'); // call http request method
 
         service.isError.pipe(skip(1)) // skip first, default 'false' value emitted...
             .subscribe((error) => {
@@ -116,7 +116,7 @@ describe('ObservationFeedService', () => {
         let actualAllLoadedState: boolean | undefined;
 
         // Act
-        service.getData(_pageIndex, 'api/ObservationFeed'); // call http request method
+        service.getData(_pageIndex, 'api/observationfeed'); // call http request method
 
         // We expect that the Observable emits an array that equals to the one from the API response:
         service.observations.subscribe((observationFeedObservable) => {

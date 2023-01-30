@@ -1,19 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LayoutSidebarComponent } from './layout-sidebar.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+
+import { By } from '@angular/platform-browser';
 
 describe('LayoutSidebarComponent', () => {
   let component: LayoutSidebarComponent;
   let fixture: ComponentFixture<LayoutSidebarComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
-      declarations: [ LayoutSidebarComponent ],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      declarations: [ LayoutSidebarComponent ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LayoutSidebarComponent);
@@ -23,5 +22,17 @@ describe('LayoutSidebarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should show router outlet', () => {
+    const { debugElement } = fixture;
+    const loading = debugElement.query(By.css('router-outlet'));
+    expect(loading).toBeTruthy();
+  });
+
+  it('should show the side menu', () => {
+    const { debugElement } = fixture;
+    const loading = debugElement.query(By.css('app-side-menu'));
+    expect(loading).toBeTruthy();
   });
 });

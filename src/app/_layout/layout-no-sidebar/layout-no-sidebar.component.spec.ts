@@ -1,19 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LayoutNoSidebarComponent } from './layout-no-sidebar.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 describe('LayoutNoSidebarComponent', () => {
   let component: LayoutNoSidebarComponent;
   let fixture: ComponentFixture<LayoutNoSidebarComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
-      declarations: [ LayoutNoSidebarComponent ],
-      schemas:  [ NO_ERRORS_SCHEMA ]
+      declarations: [LayoutNoSidebarComponent]
     })
-    .compileComponents();
-  }));
+      .compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LayoutNoSidebarComponent);
@@ -23,5 +21,11 @@ describe('LayoutNoSidebarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should show router outlet', () => {
+    const { debugElement } = fixture;
+    const loading = debugElement.query(By.css('router-outlet'));
+    expect(loading).toBeTruthy();
   });
 });

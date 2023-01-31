@@ -7,8 +7,8 @@ import { Ilogin } from './ilogin.dto';
 import { LoginService } from './login.service';
 import { AuthenticationFailureReason } from '../authentication-failure-reason';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
-import { TokenService } from '../token.service';
 import { IAuthenticationResult } from '../i-authentication-result.dto';
+import { TokenService } from '../token.service';
 
 @Component({
   selector: 'app-login',
@@ -23,8 +23,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   public submitProgress: 'idle' | 'success' | 'error' = 'idle';
 
   constructor(private readonly _service: LoginService
-    , private readonly _authService: AuthenticationService
     , private readonly _token: TokenService
+    , private readonly _authService: AuthenticationService
     , private readonly _router: Router
     , private readonly _formBuilder: FormBuilder
     , private readonly _navigation: NavigationService) { }

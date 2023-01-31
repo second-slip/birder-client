@@ -1,26 +1,42 @@
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { Router } from '@angular/router';
-import { TokenService } from 'src/app/_auth/token.service';
+import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { of } from 'rxjs';
+
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  let fakeTokenService: jasmine.SpyObj<TokenService>;
+  let fakeService: jasmine.SpyObj<AuthenticationService>;
   let routerStub: any;
 
   const setup = async (
-    fakeTokenServiceReturnValues?: jasmine.SpyObjMethodNames<TokenService>) => {
+    fakeServiceReturnValues?: jasmine.SpyObjMethodNames<AuthenticationService>) => {
 
-    fakeTokenService = jasmine.createSpyObj<TokenService>(
-      'TokenService',
+    // fakeTokenService = jasmine.createSpyObj<TokenService>(
+    //   'TokenService',
+    //   {
+    //     addToken: undefined,
+    //     getToken: undefined,
+    //     getUser: undefined,
+    //     isTokenValid: undefined,
+    //     removeToken: undefined,
+    //     ...fakeTokenServiceReturnValues
+    //   }
+    // );
+
+    fakeService = jasmine.createSpyObj<AuthenticationService>(
+      'AuthenticationService',
       {
-        addToken: undefined,
-        getToken: undefined,
-        getUser: undefined,
-        isTokenValid: undefined,
-        removeToken: undefined,
-        ...fakeTokenServiceReturnValues
+        isLoggedIn: undefined,
+        checkAuthStatus: undefined,
+        logout: undefined,
+        ...fakeServiceReturnValues
+      },
+      {
+        isAuthorisedObservable: of(false),
+        getAuthUser: undefined
       }
     );
 
@@ -33,7 +49,7 @@ describe('HomeComponent', () => {
         HomeComponent
       ],
       providers: [
-        { provide: TokenService, useValue: fakeTokenService },
+        { provide: AuthenticationService, useValue: fakeService },
         { provide: Router, useValue: routerStub }
       ]
     }).compileComponents();
@@ -53,7 +69,8 @@ describe('HomeComponent', () => {
 
     it('should create', fakeAsync(async () => {
       await setup({
-        isTokenValid: false
+        isLoggedIn: false
+        // isTokenValid: false
       });
 
       expect(routerStub.navigate).not.toHaveBeenCalledWith(['/feed-p/public']);
@@ -65,7 +82,7 @@ describe('HomeComponent', () => {
 
     it('should redirect to the ObservationFeed', fakeAsync(async () => {
       await setup({
-        isTokenValid: true
+        isLoggedIn: true
       });
 
       expect(routerStub.navigate).toHaveBeenCalledWith(['/feed-p/public']);

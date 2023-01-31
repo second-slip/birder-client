@@ -17,6 +17,17 @@ export const userModel = <IAuthUser>{
     defaultLocationLongitude: originalLongitude
 }
 
+export const fakeDecodedToken = {
+    unique_name: authUserName,
+    ImageUrl: avatar,
+    Lat: originalLatitude,
+    Lng: originalLongitude,
+    // jti: "", 
+    // exp: 1677338360, 
+    // iss: "https://birderweb.com", 
+    // aud: "https://birderweb.com"
+}
+
 export const authSuccessResult = <IAuthenticationResult>{
     authenticationToken: 'sdneukfhbuor3fnmjkusx84hnf',
     failureReason: AuthenticationFailureReason.None
@@ -32,7 +43,7 @@ export const password = 'mkeof&Tgh1p';
 export const rememberMe = false;
 
 
-export const loginModel = <Ilogin> {
+export const loginModel = <Ilogin>{
     password: password,
     rememberMe: rememberMe,
     userName: username

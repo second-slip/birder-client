@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-
 import { TokenService } from '../_auth/token.service';
-
-
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
 
-  constructor(private _token: TokenService) {}
+  constructor(private readonly _token: TokenService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
 
@@ -16,7 +13,6 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
     // Get the auth token from the service.
     const authToken = this._token.getToken();
-
 
     /*
     * The verbose way:
@@ -27,15 +23,14 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     });
     */
     // Clone the request and set the new header in one step.
-    const authReq = req.clone({ setHeaders: { Authorization: 'bearer ' + authToken } });
+    const authReq = req.clone({ setHeaders: { Authorization: `bearer ${authToken}` } });
 
     // send cloned request with header to the next handler.
     return next.handle(authReq);
   }
-
 }
 
 function isExcluded(request: HttpRequest<any>) {
   return request.method === 'GET'
     && request.url.indexOf('maps.google.com/') !== 0
-  }
+}

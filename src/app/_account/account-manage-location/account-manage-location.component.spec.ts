@@ -49,7 +49,7 @@ describe('AccountManageLocationComponent (child with ng-mocks)', () => {
             'AuthenticationService',
             {
                 checkAuthStatus: undefined,
-                logout: undefined,
+                logout: undefined
                 // ...fakeAuthReturnValues
             },
             {

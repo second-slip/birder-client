@@ -26,7 +26,6 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { TokenService } from './_auth/token.service';
 import { LoginComponent } from './_auth/login/login.component';
 import { LogoutComponent } from './_auth/logout/logout.component';
 import { HttpInterceptorProviders } from './_httpInterceptors';
@@ -186,7 +185,7 @@ import { FollowCommandComponent } from './_network/follow-command/follow-command
     }),
   ],
   providers: [
-    AuthenticationService, TokenService, HttpInterceptorProviders,
+    AuthenticationService, HttpInterceptorProviders,
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: LOCALE_ID, useValue: 'en-GB' },
     { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } }

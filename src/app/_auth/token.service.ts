@@ -1,35 +1,19 @@
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { IAuthUser } from './i-auth-user.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
+  private TOKEN_KEY = 'jwt';
 
-  constructor(private _jwtHelper: JwtHelperService) { }
-
-  public isTokenValid(): boolean {
-    return this._isValidToken();
-  }
-
-  private _isValidToken(): boolean {
-    const token = this._getToken();
-
-    if (token && !this._jwtHelper.isTokenExpired(token)) {
-      return true;
-    } else {
-      this._removeToken();
-      return false;
-    }
-  }
+  constructor() { }
 
   public getToken(): string | null {
     return this._getToken();
   }
 
   private _getToken(): string | null {
-    return localStorage.getItem('jwt');
+    return localStorage.getItem(this.TOKEN_KEY);
   }
 
   public removeToken(): void {
@@ -37,32 +21,14 @@ export class TokenService {
   }
 
   private _removeToken(): void {
-    localStorage.removeItem('jwt');
+    localStorage.removeItem(this.TOKEN_KEY);
   }
 
-  // ToDo: if token is invalid?
-  public addToken(token: string): void { // maybe boolean true (valid token) or false (invalid token)
-    if (token && !this._jwtHelper.isTokenExpired(token)) {
-      localStorage.setItem('jwt', token);
-    }
+  public addToken(token: string): void {
+    this._addToken(token);
   }
 
-  public getUser(): IAuthUser | null {
-    const token = this._getToken();
-
-    if (token && !this._jwtHelper.isTokenExpired(token)) {
-
-      const tokenDecoded = this._jwtHelper.decodeToken(token);
-
-      return <IAuthUser>{
-        userName: tokenDecoded.unique_name, //
-        avatar: tokenDecoded.ImageUrl,
-        defaultLocationLatitude: Number(tokenDecoded.Lat),
-        defaultLocationLongitude: Number(tokenDecoded.Lng)
-      };
-
-    } else {
-      return null;
-    }
+  private _addToken(token: string): void {
+    localStorage.setItem(this.TOKEN_KEY, token);
   }
 }

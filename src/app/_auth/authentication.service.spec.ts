@@ -1,4 +1,5 @@
-import { fakeAsync, TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { of } from 'rxjs';
@@ -9,11 +10,11 @@ import { LoginComponent } from './login/login.component';
 import { TokenService } from './token.service';
 
 
-
 describe('AuthenticationService', () => {
     let service: AuthenticationService;
     let fakeJwtService: jasmine.SpyObj<JwtHelperService>;
     let fakeTokenService: jasmine.SpyObj<TokenService>;
+    let routerStub: any;
 
     const setup = async (fakeJwtReturnValues?: jasmine.SpyObjMethodNames<JwtHelperService>,
         fakeTokenServicereturnValues?: jasmine.SpyObjMethodNames<TokenService>) => {
@@ -41,6 +42,10 @@ describe('AuthenticationService', () => {
             }
         );
 
+        routerStub = {
+            navigate: jasmine.createSpy('navigate'),
+        };
+
         await TestBed.configureTestingModule({
             imports: [RouterTestingModule.withRoutes([
                 { path: 'login', component: LoginComponent },
@@ -48,6 +53,7 @@ describe('AuthenticationService', () => {
             providers: [AuthenticationService,
                 { provide: JwtHelperService, useValue: fakeJwtService },
                 { provide: TokenService, useValue: fakeTokenService },
+                { provide: Router, useValue: routerStub }
             ]
         })
         service = TestBed.inject(AuthenticationService);
@@ -58,8 +64,7 @@ describe('AuthenticationService', () => {
         expect(service).toBeTruthy();
     }));
 
-    // todo: change describe and it names...................................................
-    describe('checks authentication status - checkAuthStatus()', () => {
+    describe('when checkAuthStatus()', () => {
 
         it('gets user and true status when authenticated', fakeAsync(async () => {
             await setup({
@@ -87,116 +92,97 @@ describe('AuthenticationService', () => {
             expect(fakeJwtService.decodeToken).toHaveBeenCalled();
         }));
 
-        //     it('gets null and false status when not authenticated', fakeAsync(async () => {
-        //         await setup({
-        //             isTokenValid: false,
-        //             getUser: null
-        //         })
+        it('gets null and false status when not authenticated', fakeAsync(async () => {
+            await setup({}, {
+                getToken: null
+            });
 
-        //         let actualIsAuthenticatedObsState: boolean | undefined;
-        //         //let actualIsAuthenticatedState: boolean | undefined;
-        //         let actualAuthenicatedUserState: IAuthUser | null | undefined;
+            let actualIsAuthenticatedObsState: boolean | undefined;
+            let actualAuthenicatedUserState: IAuthUser | null | undefined;
 
-        //         service.checkAuthStatus();
+            service.checkAuthStatus();
 
-        //         service.getAuthUser.subscribe((obs) => {
-        //             actualAuthenicatedUserState = obs
-        //         });
+            service.getAuthUser.subscribe((obs) => {
+                actualAuthenicatedUserState = obs
+            });
 
-        //         service.isAuthorisedObservable.subscribe((obs) => {
-        //             actualIsAuthenticatedObsState = obs
-        //         })
+            service.isAuthorisedObservable.subscribe((obs) => {
+                actualIsAuthenticatedObsState = obs
+            })
 
-        //         //actua//lIsAuthenticatedState = service.isAuthorised;
-
-        //         expect(actualAuthenicatedUserState).toBeNull();
-        //         expect(actualIsAuthenticatedObsState).toBeFalse();
-        //         //(actualIsAuthenticatedState).toBeFalse();
-
-        //         expect(fakeTokenService.isTokenValid).toHaveBeenCalled();
-        //         expect(fakeTokenService.getUser).toHaveBeenCalled();
-        //     }));
+            expect(actualAuthenicatedUserState).toBeNull();
+            expect(actualIsAuthenticatedObsState).toBeFalse();
+            expect(fakeTokenService.removeToken).toHaveBeenCalled();
+            //not called because short circuit as token is falsy (null or '')
+            expect(fakeJwtService.isTokenExpired).not.toHaveBeenCalled();
+            expect(fakeJwtService.decodeToken).not.toHaveBeenCalled();
+        }));
     });
 
-    // describe('IsLoggedIn method ', () => {
-
-    //     //TODO: Test if router is called / not called
-
-    //     it('returns false and redirects to login when token is invalid', fakeAsync(async () => {
-    //         await setup({
-    //             removeToken: undefined,
-    //             isTokenValid: false,
-    //             getUser: null
-    //         })
-
-    //         let actualIsAuthenticatedObsState: boolean | undefined;
-
-    //         service.isLoggedIn();
-
-    //         service.isAuthorisedObservable.subscribe((obs) => {
-    //             actualIsAuthenticatedObsState = obs
-    //         })
-
-    //         expect(actualIsAuthenticatedObsState).toBeFalse();
-    //         expect(fakeTokenService.isTokenValid).toHaveBeenCalled();
-    //     }));
 
 
-    //     it('returns authentication status when token is valid', fakeAsync(async () => {
-    //         await setup({
-    //             removeToken: undefined,
-    //             isTokenValid: true,
-    //             getUser: null
-    //         })
+    describe('when IsLoggedIn() is called ', () => {
 
-    //         let actualIsAuthenticatedObsState: boolean | undefined;
+        it('should return false and redirect to login when token is invalid', fakeAsync(async () => {
+            await setup({}, {
+                getToken: ''
+            });
 
-    //         service.isLoggedIn();
+            const result = service.isLoggedIn();
 
-    //         service.isAuthorisedObservable.subscribe((obs) => {
-    //             actualIsAuthenticatedObsState = obs
-    //         })
+            expect(fakeTokenService.getToken).toHaveBeenCalled();
+            expect(fakeTokenService.removeToken).toHaveBeenCalled();
 
-    //         expect(actualIsAuthenticatedObsState).toBeFalse();
-    //         expect(fakeTokenService.isTokenValid).toHaveBeenCalled();
-    //     }));
-
-    // });
-
-    // describe('logs out - logout()', () => {
-
-    //     it('gets user and true status when authenticated', fakeAsync(async () => {
-    //         await setup({
-    //             removeToken: undefined,
-    //             isTokenValid: false,
-    //             getUser: null
-    //         })
-
-    //         let actualIsAuthenticatedObsState: boolean | undefined;
-    //         //let actualIsAuthenticatedState: boolean | undefined;
-    //         let actualAuthenicatedUserState: IAuthUser | null | undefined;
-
-    //         service.logout();
-
-    //         service.getAuthUser.subscribe((obs) => {
-    //             actualAuthenicatedUserState = obs
-    //         });
-
-    //         service.isAuthorisedObservable.subscribe((obs) => {
-    //             actualIsAuthenticatedObsState = obs
-    //         })
-
-    //         //actualIsAuthenticatedState = service.isAuthorised;
+            //not called because short circuit as token is falsy (null or '')
+            expect(fakeJwtService.isTokenExpired).not.toHaveBeenCalled();
+            expect(routerStub.navigate).toHaveBeenCalledWith(['/login']);
+        }));
 
 
-    //         expect(actualAuthenicatedUserState).toBeNull();
-    //         expect(actualIsAuthenticatedObsState).toBeFalse();
-    //         //expect(actualIsAuthenticatedState).toBeFalse();
+        it('should return true when token is valid', fakeAsync(async () => {
+            await setup({}, {
+                getToken: 'token'
+            });
 
-    //         expect(fakeTokenService.removeToken).toHaveBeenCalled();
-    //         expect(fakeTokenService.isTokenValid).toHaveBeenCalled();
-    //         expect(fakeTokenService.getUser).toHaveBeenCalled();
-    //     }));
-    // });
+            const result = service.isLoggedIn();
 
+            expect(result).toBeTrue();
+            expect(fakeTokenService.getToken).toHaveBeenCalled();
+            expect(fakeTokenService.removeToken).not.toHaveBeenCalled();
+
+            //not called because short circuit as token is falsy (null or '')
+            expect(fakeJwtService.isTokenExpired).toHaveBeenCalled();
+
+            expect(routerStub.navigate).not.toHaveBeenCalledWith(['/login']);
+        }));
+
+    });
+
+    describe('when logout() is called', () => {
+
+        it('should remove the toekn and update auth status', fakeAsync(async () => {
+            await setup({}, {
+                getToken: null
+            });
+
+            let actualIsAuthenticatedObsState: boolean | undefined;
+            let actualAuthenicatedUserState: IAuthUser | null | undefined;
+
+            service.logout();
+
+            service.getAuthUser.subscribe((obs) => {
+                actualAuthenicatedUserState = obs
+            });
+
+            service.isAuthorisedObservable.subscribe((obs) => {
+                actualIsAuthenticatedObsState = obs
+            })
+
+            expect(actualAuthenicatedUserState).toBeNull();
+            expect(actualIsAuthenticatedObsState).toBeFalse();
+            expect(fakeTokenService.removeToken).toHaveBeenCalled();
+            expect(fakeJwtService.isTokenExpired).not.toHaveBeenCalled();
+            expect(fakeJwtService.decodeToken).not.toHaveBeenCalled();
+        }));
+    });
 });

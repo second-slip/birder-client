@@ -21,16 +21,10 @@ export class AuthenticationService {
     return this._isAuthenticated$.asObservable();
   }
 
-  // // to avoid subscription in component, when it is not neccessary/appropriate...
-  // public get isAuthorised(): boolean {
-  //   return this._isAuthenticated$.value;
-  // }
-
   public get getAuthUser(): Observable<IAuthUser | null> {
     return this._authenticatedUser$.asObservable();
   }
 
-  // This method is used by the route guards
   public isLoggedIn():
     boolean
     | UrlTree
@@ -40,6 +34,7 @@ export class AuthenticationService {
     if (!this._isValidToken()) {
       return this._router.navigate(['/login']);
     }
+
     return true;
   }
 

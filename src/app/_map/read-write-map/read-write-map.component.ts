@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { Subject, takeUntil } from 'rxjs';
 import { GeocodeService } from '../geocode.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { GeocodeService } from '../geocode.service';
   styleUrls: ['./read-write-map.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ReadWriteMapComponent implements OnInit {
+export class ReadWriteMapComponent implements OnInit, OnDestroy {
   @Input() latitude: number;
   @Input() longitude: number;
   formattedAddress: string;
@@ -17,7 +18,10 @@ export class ReadWriteMapComponent implements OnInit {
   @ViewChild(GoogleMap, { static: false }) map: GoogleMap
   @ViewChild(MapInfoWindow, { static: false }) infoWindow: MapInfoWindow
 
-  public errorObject: any = null;
+  private _subscription = new Subject();
+
+  public markerStatus: 'idle' | 'success' | 'error' = 'idle';
+
   public locationMarker: any;
   public options: google.maps.MapOptions = {
     mapTypeId: 'terrain', zoom: 8,
@@ -28,28 +32,30 @@ export class ReadWriteMapComponent implements OnInit {
   constructor(private readonly _geocoding: GeocodeService) { }
 
   ngOnInit(): void {
-    this._addMarker(this.latitude, this.longitude);
+    try {
+      this._addMarker(this.latitude, this.longitude);
+      this.markerStatus = 'success';
+    } catch (error) {
+      this.markerStatus = 'error';
+    }
   }
 
   private _addMarker(latitude: number, longitude: number): void {
-    try {
-      this.locationMarker = ({
-        position: {
-          lat: latitude,
-          lng: longitude
-        },
-        options: { draggable: true },
-      })
 
-      this.latitude = latitude;
-      this.longitude = longitude;
+    this.locationMarker = ({
+      position: {
+        lat: latitude,
+        lng: longitude
+      },
+      options: { draggable: true },
+    })
 
-      // if (getAddress) {
-      this._getFormattedAddress(latitude, longitude);
-      // }
-    } catch (error) {
-      this.errorObject = error;
-    }
+    this.latitude = latitude;
+    this.longitude = longitude;
+
+    // if (getAddress) {
+    this._getFormattedAddress(latitude, longitude);
+    // }
     // this.infoWindow.open(this.locationMarker.position);
   }
 
@@ -63,37 +69,38 @@ export class ReadWriteMapComponent implements OnInit {
 
   private _getFormattedAddress(latitude: number, longitude: number): void {
     this._geocoding.reverseGeocode(latitude, longitude)
+    .pipe(takeUntil(this._subscription))
       .subscribe({
         next: (r) => {
           this.formattedAddress = r.results[0].formatted_address;
           this.shortAddress = this._geocoding.googleApiResponseHelper(r.results[0].address_components, "postal_town") + ', ' + this._geocoding.googleApiResponseHelper(r.results[0].address_components, "country");
         },
         error: (e) => {
-          this.errorObject = e;
-        }//,
-        //complete: () => { }
+          this.markerStatus = 'error';
+        }
       });
   }
 
   public findAddress(searchValue: string): void {
     this._geocoding.geocode(searchValue)
-    .subscribe({
-      next: (r) => {
-        this._changeZoomLevel(15);
-        this._addMarker(r.results[0].geometry.location.lat, r.results[0].geometry.location.lng); // false to stop second hit on API to get address...
-        this.formattedAddress = r.results[0].formatted_address;
-        if ((r.results[0].formatted_address.split(",").length - 1) === 1) {
-          this.shortAddress = r.results[0].formatted_address;
-        } else {
-          this.shortAddress = this._geocoding.googleApiResponseHelper(r.results[0].address_components, "postal_town") + ', ' + this._geocoding.googleApiResponseHelper(r.results[0].address_components, "country");
-        }
-        this.searchAddress = '';
-      },
-      error: (e) => {
-        this.errorObject = e;
-      }//,
-      //complete: () => { }
-    });
+      .pipe(takeUntil(this._subscription))
+      .subscribe({
+        next: (r) => {
+          this._changeZoomLevel(15);
+          this._addMarker(r.results[0].geometry.location.lat, r.results[0].geometry.location.lng); // false to stop second hit on API to get address...
+          this.formattedAddress = r.results[0].formatted_address;
+          if ((r.results[0].formatted_address.split(",").length - 1) === 1) {
+            this.shortAddress = r.results[0].formatted_address;
+          } else {
+            this.shortAddress = this._geocoding.googleApiResponseHelper(r.results[0].address_components, "postal_town") + ', ' + this._geocoding.googleApiResponseHelper(r.results[0].address_components, "country");
+          }
+          this.searchAddress = '';
+        },
+        error: (e) => {
+          this.markerStatus = 'error';
+        }//,
+        //complete: () => { }
+      });
   }
 
   public closeAlert(): void {
@@ -128,5 +135,10 @@ export class ReadWriteMapComponent implements OnInit {
 
   private _changeZoomLevel(level: number): void {
     this.options.zoom = level;
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.next('');
+    this._subscription.complete();
   }
 }

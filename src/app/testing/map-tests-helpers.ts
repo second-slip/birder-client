@@ -1,4 +1,5 @@
 import { environment } from "src/environments/environment";
+import { IObservationPosition } from "../_map/i-observation-position.dto";
 
 export const searchTerm = 'London';
 export const latitude = -2.567;
@@ -70,4 +71,12 @@ export const googleMapsApiResponse =
     }
   ],
   "status": "OK"
+};
+
+export const fakeLocationMarker = <IObservationPosition>{
+  observationPositionId: 1,
+  latitude: 0.9,
+  longitude: 0.8,
+  formattedAddress: 'address string',
+  shortAddress: 'short address tring'
 };

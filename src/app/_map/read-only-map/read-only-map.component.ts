@@ -12,16 +12,19 @@ export class ReadOnlyMapComponent implements OnInit {
   @Input() position: IObservationPosition;
   @ViewChild(MapInfoWindow, { static: false }) infoWindow: MapInfoWindow;
 
-  public errorObject: any = null;
+  public markerStatus: 'idle' | 'success' | 'error' = 'idle';
   public locationMarker: any;
-  public options: google.maps.MapOptions = {
-    mapTypeId: 'terrain', zoom: 8,
-  }
+  public options: google.maps.MapOptions = { mapTypeId: 'terrain', zoom: 8 }
 
   constructor() { }
 
   ngOnInit(): void {
-    this._addMarker(this.position.latitude, this.position.longitude);
+    try {
+      this._addMarker(this.position.latitude, this.position.longitude);
+      this.markerStatus = 'success';
+    } catch (error) {
+      this.markerStatus = 'error';
+    }
   }
 
   public openInfoWindow(marker: MapMarker): void {
@@ -29,17 +32,12 @@ export class ReadOnlyMapComponent implements OnInit {
   }
 
   private _addMarker(latitude: number, longitude: number): void {
-    try {
-      this.locationMarker = ({
-        position: {
-          lat: latitude,
-          lng: longitude
-        },
-        options: { animation: google.maps.Animation.BOUNCE },
-      })
-    } catch (error) {
-      // ToDo: implementation
-      this.errorObject = error;
-    }
+    this.locationMarker = ({
+      position: {
+        lat: latitude,
+        lng: longitude
+      },
+      options: { animation: google.maps.Animation.BOUNCE },
+    });
   }
 }

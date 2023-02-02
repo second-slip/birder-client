@@ -1,34 +1,26 @@
-<div class="map-container">
+<ng-container *ngIf="markerStatus === 'success'; else loadingOrError">
 
-    <ng-container *ngIf="locationMarker; else loadingOrError">
+    <p class="location" data-testid="location">
+        <mat-icon>location_on</mat-icon>
+        <span data-testid="location-text">{{ position.formattedAddress }}</span>
+    </p>
 
-        <p class="location">
-            <mat-icon>location_on</mat-icon>
-            <span>{{ position.formattedAddress }}</span>
-        </p>
+    <google-map height="300px" width="100%" [center]="locationMarker?.position" [options]="options">
+        <map-marker #markerElement="mapMarker" [position]="locationMarker?.position" [options]="locationMarker?.options"
+            (mapClick)="openInfoWindow(markerElement)" data-testid="map-marker">
+            <map-info-window data-testid="info-window">{{ position.formattedAddress }}</map-info-window>
+        </map-marker>
+    </google-map>
 
-        <google-map height="300px" width="100%" [center]="locationMarker?.position" [options]="options">
-            <map-marker #markerElement="mapMarker" [position]="locationMarker?.position"
-                [options]="locationMarker?.options" (mapClick)="openInfoWindow(markerElement)">
-                <map-info-window>{{ position.formattedAddress }}</map-info-window>
-            </map-marker>
-        </google-map>
+</ng-container>
 
-    </ng-container>
-
-    <ng-template #loadingOrError>
-        <ng-container *ngIf="errorObject; else loading">
-            <div class="error-message">
-                <p>An error occurred</p>
-            </div>
-        </ng-container>
-    </ng-template>
+<ng-template #loadingOrError>
+    <div *ngIf="markerStatus === 'error'; else loading" class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> There was an error displaying the map.<br>
+    </div>
+</ng-template>
 
 
-    <ng-template #loading>
-        <p class="centre">
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            <strong>&nbsp;Loading</strong>
-        </p>
-    </ng-template>
-</div>
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>

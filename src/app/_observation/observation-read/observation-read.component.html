@@ -22,14 +22,15 @@
                         <app-read-only-map [position]="observation.position">
                         </app-read-only-map>
 
-                        <small class="container map-info">
+                        <div class="alert alert-info">
+                            <!-- add margin-top ................ -->
                             <mat-icon color="primary">info</mat-icon>
                             <span>You can change the
                                 location in
                                 the <a routerLink="/observation/update/{{observation.observationId}}">edit
                                     observation</a>
                                 page</span>
-                        </small>
+                                </div>
 
                     </ng-template>
                 </li>

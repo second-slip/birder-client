@@ -12,24 +12,24 @@
             <mat-icon>search</mat-icon>
         </button>
 
-        <button type="submit" class="btn btn-primary" type="button" (click)="getCurrentPosition()"
+        <button type="submit" class="btn btn-primary btn-get-location" type="button" (click)="getCurrentPosition()"
             aria-label="Get your current location" matTooltip="Get your current location"
             triggers="mouseenter:mouseleave" ngbPopover='Click here to find your current location'
-            popoverTitle="Get your current location">
+            popoverTitle="Get your current location" data-testid="get-current-location">
             <mat-icon>my_location</mat-icon>
         </button>
 
     </form>
 
     <p *ngIf="geoError">
-        <ngb-alert [dismissible]="true" [type]="'danger'" (close)="closeAlert()">
+        <ngb-alert [dismissible]="true" [type]="'danger'">
             <strong>Warning!</strong> Better check yourself, you're not looking too good.
         </ngb-alert>
     </p>
 
-    <p class="location">
+    <p class="location" data-testid="location">
         <mat-icon>location_on</mat-icon>
-        <span>{{ formattedAddress }}</span>
+        <span data-testid="location-text">{{ formattedAddress }}</span>
     </p>
 
     <google-map height="300px" width="100%" [center]="locationMarker?.position" [options]="options">
@@ -41,12 +41,11 @@
 
 </ng-container>
 
+
 <ng-template #loadingOrError>
-    <ng-container *ngIf="markerStatus === 'error'; else loading">
-        <div class="error-message">
-            <p>An error occurred</p>
-        </div>
-    </ng-container>
+    <div *ngIf="markerStatus === 'error'; else loading" class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> There was an error displaying the map.<br>
+    </div>
 </ng-template>
 
 <ng-template #loading>

@@ -73,10 +73,13 @@ export const googleMapsApiResponse =
   "status": "OK"
 };
 
+export const testLatitude: number = 0.6;
+export const testLongitude: number = -0.4;
+
 export const fakeLocationMarker = <IObservationPosition>{
   observationPositionId: 1,
-  latitude: 0.9,
-  longitude: 0.8,
+  latitude: testLatitude,
+  longitude: testLongitude,
   formattedAddress: 'address string',
   shortAddress: 'short address tring'
 };

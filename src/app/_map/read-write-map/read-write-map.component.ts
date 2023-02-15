@@ -68,8 +68,9 @@ export class ReadWriteMapComponent implements OnInit, OnDestroy {
   }
 
   private _getFormattedAddress(latitude: number, longitude: number): void {
+    //console.log('hello');
     this._geocoding.reverseGeocode(latitude, longitude)
-    .pipe(takeUntil(this._subscription))
+      .pipe(takeUntil(this._subscription))
       .subscribe({
         next: (r) => {
           this.formattedAddress = r.results[0].formatted_address;
@@ -98,16 +99,14 @@ export class ReadWriteMapComponent implements OnInit, OnDestroy {
         },
         error: (e) => {
           this.markerStatus = 'error';
-        }//,
-        //complete: () => { }
+        }
       });
   }
 
-  public closeAlert(): void {
-    this.geoError = null;
-  }
-
   public getCurrentPosition(): void {
+
+    if (this.geoError) { this.geoError = null };
+
     if (window.navigator.geolocation) {
       window.navigator.geolocation.getCurrentPosition(
         (position) => {

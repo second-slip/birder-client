@@ -1,14 +1,14 @@
 <ng-container *ngIf="markerStatus === 'success'; else loadingOrError">
 
-    <form class="form-inline" (ngSubmit)="findAddress(searchAddress)">
+    <div class="form-inline" (ngSubmit)="findAddress()">
 
         <label class="sr-only" for="searchAddress">searchAddress</label>
-        <input class="form-control" type="text" name="searchAddress" placeholder="Type location here"
-            [(ngModel)]="searchAddress" [ngModelOptions]="{standalone: true}" required>
+        <input class="form-control" type="text" name="searchAddress" placeholder="Type location here" data-testid="searchAddress"
+            [(ngModel)]="searchAddress" required>
 
-        <button type="submit" class="btn btn-primary" [disabled]="!searchAddress" triggers="mouseenter:mouseleave"
+        <button type="submit" class="btn btn-primary btn-search-address" [disabled]="!searchAddress" triggers="mouseenter:mouseleave"
             ngbPopover='Type a place name (e.g. Canterbury, UK); or a specific address (e.g. 1 High St, Canterbury CT1 2JH)'
-            popoverTitle="Search help" aria-label="Search for a location" title="Search for a location">
+            popoverTitle="Search help" aria-label="Search for a location" title="Search for a location" (click)="findAddress()">
             <mat-icon>search</mat-icon>
         </button>
 
@@ -19,13 +19,9 @@
             <mat-icon>my_location</mat-icon>
         </button>
 
-    </form>
+    </div>
 
-    <p *ngIf="geoError">
-        <ngb-alert [dismissible]="true" [type]="'danger'">
-            <strong>Warning!</strong> Better check yourself, you're not looking too good.
-        </ngb-alert>
-    </p>
+    <div *ngIf="geoError" class="alert alert-danger" data-testid="geo-error">{{ geoError }}</div>
 
     <p class="location" data-testid="location">
         <mat-icon>location_on</mat-icon>

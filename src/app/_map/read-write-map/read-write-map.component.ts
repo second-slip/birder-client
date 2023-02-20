@@ -12,8 +12,6 @@ import { GeocodeService } from '../geocode.service';
 export class ReadWriteMapComponent implements OnInit, OnDestroy {
   @Input() latitude: number;
   @Input() longitude: number;
-  formattedAddress: string;
-  shortAddress: string;
 
   @ViewChild(GoogleMap, { static: false }) map: GoogleMap
   @ViewChild(MapInfoWindow, { static: false }) infoWindow: MapInfoWindow
@@ -21,13 +19,12 @@ export class ReadWriteMapComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
 
   public markerStatus: 'idle' | 'success' | 'error' = 'idle';
-
+  public formattedAddress: string;
+  public shortAddress: string;
   public locationMarker: any;
-  public options: google.maps.MapOptions = {
-    mapTypeId: 'terrain', zoom: 8,
-  }
+  public options: google.maps.MapOptions = { mapTypeId: 'terrain', zoom: 8 }
   public searchAddress = '';
-  public geoError: string | null;
+  public geoError = '';
 
   constructor(private readonly _geocoding: GeocodeService) { }
 
@@ -68,7 +65,6 @@ export class ReadWriteMapComponent implements OnInit, OnDestroy {
   }
 
   private _getFormattedAddress(latitude: number, longitude: number): void {
-    //console.log('hello');
     this._geocoding.reverseGeocode(latitude, longitude)
       .pipe(takeUntil(this._subscription))
       .subscribe({
@@ -82,8 +78,10 @@ export class ReadWriteMapComponent implements OnInit, OnDestroy {
       });
   }
 
-  public findAddress(searchValue: string): void {
-    this._geocoding.geocode(searchValue)
+  public findAddress(): void {
+    if (!this.searchAddress) { return };
+
+    this._geocoding.geocode(this.searchAddress)
       .pipe(takeUntil(this._subscription))
       .subscribe({
         next: (r) => {
@@ -105,14 +103,15 @@ export class ReadWriteMapComponent implements OnInit, OnDestroy {
 
   public getCurrentPosition(): void {
 
-    if (this.geoError) { this.geoError = null };
+    if (this.geoError) { this.geoError = '' };
 
     if (window.navigator.geolocation) {
       window.navigator.geolocation.getCurrentPosition(
         (position) => {
           this._addMarker(position.coords.latitude, position.coords.longitude);
           this._changeZoomLevel(15);
-        }, (error) => {
+        },
+        (error) => {
           switch (error.code) {
             case 3: // ...deal with timeout
               this.geoError = 'The request to get user location timed out...';

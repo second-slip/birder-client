@@ -51,7 +51,6 @@ export class ObservationFeedService implements OnDestroy {
 
   private _moreToGet(pageSize: number, items: number): void {
     if (items < pageSize) {
-      // console.log('no more available');
       this._allLoaded$.next(true);
     }
   }
@@ -61,7 +60,6 @@ export class ObservationFeedService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // console.log('feed service destroyed...');
     this._subscription.next('');
     this._subscription.complete();
   }

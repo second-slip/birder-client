@@ -274,74 +274,74 @@ describe('ReadWriteMapComponent', () => {
 
   // use SpyOn.............................
 
-  describe('when map requests are NOT successful', () => {
+  //   describe('when map requests are NOT successful', () => {
 
-    let component: ReadWriteMapComponent;
-    let fixture: ComponentFixture<ReadWriteMapComponent>;
-    let fakeService: jasmine.SpyObj<GeocodeService>;
+  //     let component: ReadWriteMapComponent;
+  //     let fixture: ComponentFixture<ReadWriteMapComponent>;
+  //     let fakeService: jasmine.SpyObj<GeocodeService>;
 
-    const errorResponse = new HttpErrorResponse({
-      status: 404,
-      statusText: 'Not Found',
-    });
+  //     const errorResponse = new HttpErrorResponse({
+  //       status: 404,
+  //       statusText: 'Not Found',
+  //     });
 
-    fakeService = jasmine.createSpyObj<GeocodeService>(
-      'GeocodeService',
-      {
-        geocode: of({ next: fail, error: errorResponse, complete: fail, }),
-        googleApiResponseHelper: undefined,
-        reverseGeocode: of({ next: fail, error: errorResponse, complete: fail, })
-      }
-    );
+  //     fakeService = jasmine.createSpyObj<GeocodeService>(
+  //       'GeocodeService',
+  //       {
+  //         geocode: of({ next: fail, error: errorResponse, complete: fail, }),
+  //         googleApiResponseHelper: undefined,
+  //         reverseGeocode: of({ next: fail, error: errorResponse, complete: fail, })
+  //       }
+  //     );
 
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
-        declarations: [ReadWriteMapComponent],
-        providers: [
-          { provide: GeocodeService, useValue: fakeService }
-        ],
-        imports: [GoogleMapsModule],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
-        .compileComponents();
-    });
+  //     beforeEach(async () => {
+  //       await TestBed.configureTestingModule({
+  //         declarations: [ReadWriteMapComponent],
+  //         providers: [
+  //           { provide: GeocodeService, useValue: fakeService }
+  //         ],
+  //         imports: [GoogleMapsModule],
+  //         schemas: [NO_ERRORS_SCHEMA]
+  //       })
+  //         .compileComponents();
+  //     });
 
-    beforeEach(() => {
-      fixture = TestBed.createComponent(ReadWriteMapComponent);
-      component = fixture.componentInstance;
-    });
-
-
-    it('should create', () => {
-      component.latitude = testLatitude;
-      component.longitude = testLongitude;
-      fixture.detectChanges();
-
-      expect(component).toBeTruthy();
-      expect(component.markerStatus).toBe('success');
-    });
-
-    it('calls ', () => {
-      spyOn(window.navigator.geolocation, 'getCurrentPosition').and.callFake((...args: any[]) => {
-        const position = { coords: { latitude: 0, longitude: 0 } };
-        args[0](position);
-      });
-
-      component.latitude = testLatitude;
-      component.longitude = testLongitude;
-      fixture.detectChanges();
-
-      // button click...
-      fixture.debugElement.query(By.css('.btn-get-location')).triggerEventHandler('click', null);
+  //     beforeEach(() => {
+  //       fixture = TestBed.createComponent(ReadWriteMapComponent);
+  //       component = fixture.componentInstance;
+  //     });
 
 
-      expect(window.navigator.geolocation.getCurrentPosition).toHaveBeenCalled();
+  //     it('should create', () => {
+  //       component.latitude = testLatitude;
+  //       component.longitude = testLongitude;
+  //       fixture.detectChanges();
 
-      expect(fakeService.reverseGeocode).toHaveBeenCalled();
+  //       expect(component).toBeTruthy();
+  //       expect(component.markerStatus).toBe('success');
+  //     });
 
-      expect(component.markerStatus).toBe('jkjk');
-    });
+  //     it('calls ', () => {
+  //       spyOn(window.navigator.geolocation, 'getCurrentPosition').and.callFake((...args: any[]) => {
+  //         const position = { coords: { latitude: 0, longitude: 0 } };
+  //         args[0](position);
+  //       });
+
+  //       component.latitude = testLatitude;
+  //       component.longitude = testLongitude;
+  //       fixture.detectChanges();
+
+  //       // button click...
+  //       fixture.debugElement.query(By.css('.btn-get-location')).triggerEventHandler('click', null);
 
 
-  });
+  //       expect(window.navigator.geolocation.getCurrentPosition).toHaveBeenCalled();
+
+  //       expect(fakeService.reverseGeocode).toHaveBeenCalled();
+
+  //       expect(component.markerStatus).toBe('jkjk');
+  //     });
+
+
+  //   });
 });

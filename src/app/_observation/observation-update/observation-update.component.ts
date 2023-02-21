@@ -17,6 +17,9 @@ import { IObservation } from '../i-observation.dto';
 import { ObservationCrudService } from '../observation-crud.service';
 import { IUpdateObservation } from './i-update-observation.dto';
 
+
+// todo: This component needs a major refactor...
+
 @Component({
   selector: 'app-observation-update',
   templateUrl: './observation-update.component.html',
@@ -76,7 +79,6 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
   }
 
   private _getObservation(): void {
-
     this._observationCrudService.getObservation(this._observationId)
       .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
       .subscribe({
@@ -84,7 +86,9 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
           this._createForms(r);
           this.observation = r;
         },
-        error: (e) => { this._redirect(); }
+        error: (e) => { 
+          console.log(e);
+          this._redirect(); }
       });
   }
 
@@ -109,7 +113,9 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
         ])),
       });
     }
-    catch (e) { }
+    catch (e) { 
+      console.log(e);
+    }
   }
 
   public onSubmit(): void {
@@ -118,8 +124,6 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
     try {
 
       const model = this._mapToModel();
-      // console.log(model);
-      // console.log(this.observation);
 
       this._observationCrudService.updateObservation(this._observationId, model)
         .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))

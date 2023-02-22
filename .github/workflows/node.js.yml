@@ -30,4 +30,4 @@ jobs:
       run: |
           echo "${{ secrets.ENV }}" > .environment.ts
     - run: npm ci
-    - run: npm test:prod
+    - run: npm test

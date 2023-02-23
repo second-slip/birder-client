@@ -34,6 +34,6 @@ const envConfigFile = `export const environment = {
 
 writeFile(targetPath, envConfigFile, 'utf8', (err) => {
     if (err) {
-        return console.log(err);
+        return console.log('hello 2' + err);
     }
 });

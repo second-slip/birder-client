@@ -26,12 +26,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: 'Create env file'
-      run: |
-          echo "${{ secrets.ENV }}" > environment.ts
+    #- name: 'Create env file'
+    #  run: |
+    #      echo "${{ secrets.ENV }}" > environment.ts
     - run: npm ci
     - run: npm run build --if-present
       env: 
         MAPKEY: ${{ secrets.MAPKEY }}
-        PHOTOKEY: ${{ secrets.PHOTOKEY }}
+        # PHOTOKEY: ${{ secrets.PHOTOKEY }}
     - run: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI

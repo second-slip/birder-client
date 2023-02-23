@@ -2,7 +2,7 @@
   "name": "birder-client",
   "version": "0.0.0",
   "scripts": {
-    "config": "ts-node -O '{\"module\": \"commonjs\"}' ./set-env.ts",
+    "config": "ts-node -O '{\"module\": \"commonjs\"}' src/config.index.ts",
     "ng": "ng",
     "start": "ng serve",
     "build": "npm run config && ng build --configuration production",

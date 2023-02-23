@@ -24,10 +24,11 @@ const targetPath = './src/environments/environment.prod.ts';
 
 const envConfigFile = `export const environment = {
     production: true,
-    mapKey: 'hello,
+    mapKey: '${process.env.MAPKEY}',
     apiUrl: 'https://birderweb.com',
-    photoKey: 'hello'
-  };`;
+    photoKey: '${process.env.PHOTOKEY}'
+  };
+  `;
 
 writeFile(targetPath, envConfigFile, 'utf8', (err) => {
     if (err) {

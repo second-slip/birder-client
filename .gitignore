@@ -50,6 +50,6 @@ middleware.js
 db.json
 routes.json
 
-# hide environment.ts (development evironment)
-/src/environments/environment.ts
+# hide environment.ts (development environment)
+#/src/environments/environment.ts
 

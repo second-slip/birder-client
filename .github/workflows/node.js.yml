@@ -33,5 +33,5 @@ jobs:
     - run: npm run build --if-present
       env: 
         MAPKEY: ${{ secrets.MAPKEY }}
-        # PHOTOKEY: ${{ secrets.PHOTOKEY }}
+        PHOTOKEY: ${{ secrets.PHOTOKEY }}
     - run: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI

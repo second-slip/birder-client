@@ -2,6 +2,8 @@
 
 Angular 15 client app for the Birder website. 
 
+[![Node.js CI](https://github.com/WinthorpeCross/birder-client/actions/workflows/node.js.yml/badge.svg)](https://github.com/WinthorpeCross/birder-client/actions/workflows/node.js.yml)
+
 
 ## Development server
 

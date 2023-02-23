@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ working ]
+    branches: [ master, working ]
   pull_request:
-    branches: [ working ]
+    branches: [ master, working ]
 
 jobs:
   build:
@@ -26,10 +26,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: 'Create env file'
-      run: |
-          echo "${{ secrets.ENV }}" > environment.ts
-    - run: npm install
+    #- name: 'Create env file'
+    #  run: |
+    #      echo "${{ secrets.ENV }}" > environment.ts
+    - run: npm ci
     - run: npm run build --if-present
-    #- run: npm test
+      env: 
+        MAPKEY: ${{ secrets.MAPKEY }}
+        PHOTOKEY: ${{ secrets.PHOTOKEY }}
     - run: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI

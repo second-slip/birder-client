@@ -2,9 +2,10 @@
   "name": "birder-client",
   "version": "0.0.0",
   "scripts": {
+    "config": "ts-node -O '{\"module\": \"commonjs\"}' ./config.index.ts",
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "npm run config && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -31,6 +32,7 @@
     "moment": "^2.29.3",
     "ng-mocks": "^14.3.2",
     "rxjs": "^7.5.7",
+    "ts-node": "^10.9.1",
     "tslib": "^2.4.0",
     "zone.js": "^0.12.0"
   },

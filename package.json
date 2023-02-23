@@ -2,10 +2,10 @@
   "name": "birder-client",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
     "config": "ts-node -O '{\"module\": \"commonjs\"}' ./set-env.ts",
+    "ng": "ng",
     "start": "ng serve",
-    "build": "npm run config && ng build",
+    "build": "npm run config && ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

@@ -22,6 +22,8 @@ const targetPath = './src/environments/environment.prod.ts';
 //   };
 //   `;
 
+console.log('${process.env.MAPKEY}');
+
 const envConfigFile = `export const environment = {
     production: true,
     mapKey: '${process.env.MAPKEY}',

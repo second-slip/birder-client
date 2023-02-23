@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "config": "ts-node -O '{\"module\": \"commonjs\"}' ./set-env.ts",
     "start": "ng serve",
-    "config": "ts-node set-env.ts",
     "build": "npm run config && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

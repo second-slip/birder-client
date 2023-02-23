@@ -28,7 +28,7 @@ jobs:
         cache: 'npm'
     - name: 'Create env file'
       run: |
-          echo "${{ secrets.ENV }}" > .environment.ts
+          echo "${{ secrets.ENV }}" > environment.ts
     - run: npm install
     - run: npm run build --if-present
     - run: npm test

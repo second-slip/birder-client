@@ -12,6 +12,7 @@ import { ContactFormComponent } from './contact-form.component';
 import { ContactFormService } from './contact-form.service';
 import { DebugElement } from '@angular/core';
 import { of, throwError } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
 const requiredFields = [
   'name',
@@ -145,6 +146,18 @@ describe('ContactFormComponent', () => {
     expect(fakeContactFormService.postMessage).not.toHaveBeenCalled();
   }));
 
+
+
+  it('submit button should be disabled', fakeAsync(async () => {
+    await setup();
+  
+    // Wait for async validators
+    tick(1000);
+    fixture.detectChanges();
+
+    expect(findEl(fixture, 'submit').properties.disabled).toBe(true);
+  }));
+
   const markFieldAsTouched = (element: DebugElement) => {
     dispatchFakeEvent(element.nativeElement, 'blur');
   };
@@ -179,4 +192,14 @@ describe('ContactFormComponent', () => {
       expectTextToContain(fixture, `${testId}-error`, `Your ${testId} is required`);
     });
   });
+
+
 });
+
+function isDisabled(fixture: ComponentFixture<any>, selector: string): boolean {
+  const element = fixture.debugElement.query(By.css(selector));
+
+  //expect(element).toBeTruthy(`${selector} should exist`);
+
+  return element.properties.disabled;
+}

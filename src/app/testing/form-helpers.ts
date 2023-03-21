@@ -1,7 +1,7 @@
 
-    //   console.log(this.findInvalidControls());
-    //  console.log(this.resetPasswordForm.value);
-    //   console.log(this.resetPasswordForm.valid);
+//   console.log(this.findInvalidControls());
+//  console.log(this.resetPasswordForm.value);
+//   console.log(this.resetPasswordForm.valid);
 
 import { FormGroup } from "@angular/forms";
 

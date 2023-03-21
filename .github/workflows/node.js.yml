@@ -39,5 +39,4 @@ jobs:
     - run: npm install -g cli-real-favicon
 
     - name: Check favicon is up-to-date
-      run: npm install -g cli-real-favicon
       run: npm run hello

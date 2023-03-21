@@ -37,8 +37,4 @@ jobs:
       uses: codecov/codecov-action@v3
     #
     - name: Check favicon is up-to-date
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-      run: real-favicon check-for-update --fail-on-update src/faviconData.json
+      run: npm run hello

@@ -26,6 +26,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: npm install -g cli-real-favicon
     - run: npm ci
     - run: npm run build --if-present
       env: 
@@ -36,7 +37,5 @@ jobs:
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
     #
-    - run: npm install -g cli-real-favicon
-
     - name: Check favicon is up-to-date
       run: npm run hello

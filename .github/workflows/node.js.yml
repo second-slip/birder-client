@@ -37,4 +37,5 @@ jobs:
       uses: codecov/codecov-action@v3
     #
     - name: Check favicon is up-to-date
+      run: npm install -g cli-real-favicon
       run: npm run hello

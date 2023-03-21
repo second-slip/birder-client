@@ -37,4 +37,4 @@ jobs:
       uses: codecov/codecov-action@v3
     #
     - name: Check favicon is up-to-date
-    - run: real-favicon check-for-update --fail-on-update faviconData.json
+      run: real-favicon check-for-update --fail-on-update faviconData.json

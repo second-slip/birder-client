@@ -33,6 +33,7 @@ export class RequestCacheWithMap implements RequestCache {
     const expired = isExpired ? 'expired ' : '';
 
     console.log(`Found ${expired}cached response for "${url}".`);
+
     return isExpired ? undefined : cached.response;
   }
 

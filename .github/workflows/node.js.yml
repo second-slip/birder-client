@@ -33,9 +33,9 @@ jobs:
         MAPKEY: ${{ secrets.MAPKEY }}
         PHOTOKEY: ${{ secrets.PHOTOKEY }}
     - run: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-    #
+    
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
-    #
+    
     - name: Check favicon is up-to-date
-      run: real-favicon check-for-update --fail-on-update faviconData.json # npm run hello
+      run: real-favicon check-for-update --fail-on-update faviconData.json

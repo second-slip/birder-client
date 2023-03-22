@@ -6,7 +6,7 @@ import {
 
 import { Observable, of } from 'rxjs';
 import { startWith, tap } from 'rxjs/operators';
-import { RequestCache } from './request-cache.service';
+import { RequestCache } from '../_sharedServices/request-cache.service';
 
 
 /**
@@ -21,6 +21,7 @@ import { RequestCache } from './request-cache.service';
  */
 @Injectable()
 export class CachingInterceptor implements HttpInterceptor {
+  
   constructor(private cache: RequestCache) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
@@ -46,7 +47,6 @@ export class CachingInterceptor implements HttpInterceptor {
 function isCachable(request: HttpRequest<any>) {
   return request.method === 'GET'
     && request.url.indexOf('api/Photograph') !== 0
-    //&& request.url.indexOf('https://preview.ibb.co') !== 0
     && request.url.indexOf('api/ObservationFeed') !== 0
     && request.url.indexOf('api/Observation') !== 0
     && request.url.indexOf('api/ObservationAnalysis') !== 0  // do not cache requests containing 'api/ObservationAnalysis'
@@ -78,38 +78,3 @@ function sendRequest(
     })
   );
 }
-
-
-
-// import { Injectable } from '@angular/core';
-// import { HttpEvent, HttpRequest, HttpHandler, HttpInterceptor, HttpResponse } from '@angular/common/http';
-// import { Observable, of } from 'rxjs';
-// import { tap, shareReplay } from 'rxjs/operators';
-
-// @Injectable()
-// export class CacheInterceptor implements HttpInterceptor {
-//   private cache = new Map<string, any>();
-
-//   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-//     // if cacheable
-//     if (request.method !== 'GET') {
-//       return next.handle(request);
-//     }
-
-//     console.warn('CacheInterceptor');
-
-//     const cachedResponse = this.cache.get(request.url);
-//     if (cachedResponse) {
-//       return of(cachedResponse);
-//     }
-
-//     return next.handle(request).pipe(
-//       tap(event => {
-//         if (event instanceof HttpResponse) {
-//           this.cache.set(request.url, event);
-//           console.log(this.cache);
-//         }
-//       })
-//     );
-//   }
-// }

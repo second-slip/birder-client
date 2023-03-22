@@ -84,6 +84,7 @@ import { AccountManagerComponent } from './_account/account-manager/account-mana
 import { FilterControlComponent } from './_observation-feed/filter-control/filter-control.component';
 import { ObservationFeedComponent } from './_observation-feed/observation-feed/observation-feed.component';
 import { FollowCommandComponent } from './_network/follow-command/follow-command.component';
+import { RequestCache, RequestCacheWithMap } from './_sharedServices/request-cache.service';
 
 @NgModule({
   declarations: [
@@ -185,7 +186,9 @@ import { FollowCommandComponent } from './_network/follow-command/follow-command
     }),
   ],
   providers: [
-    AuthenticationService, HttpInterceptorProviders,
+    AuthenticationService,
+    HttpInterceptorProviders,
+    { provide: RequestCache, useClass: RequestCacheWithMap },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: LOCALE_ID, useValue: 'en-GB' },
     { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } }

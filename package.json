@@ -7,9 +7,7 @@
     "start": "ng serve",
     "build": "npm run config && ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test --code-coverage",
-    "hello": "real-favicon check-for-update --fail-on-update src/faviconData.json"
-
+    "test": "ng test --code-coverage"
   },
   "private": true,
   "dependencies": {

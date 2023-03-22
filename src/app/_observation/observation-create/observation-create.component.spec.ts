@@ -15,34 +15,13 @@ describe('ObservationCreateComponent', () => {
   let component: ObservationCreateComponent;
   let fixture: ComponentFixture<ObservationCreateComponent>;
 
-  // let fakeObservationReadService: jasmine.SpyObj<ObservationCreateComponent>;
   let fakeAuthService: AuthenticationService;
-  // let fakeNavService: NavigationService;
   let fakeAnnounceChangesService: jasmine.SpyObj<AnnounceChangesService>;
   let fakeObservationCrudService: jasmine.SpyObj<ObservationCrudService>;
 
-  // fakeNavService = jasmine.createSpyObj<NavigationService>(
-  //   'NavigationService',
-  //   {
-  //     back: undefined
-  //   }
-  // );
 
   const setup = async (
-    // fakePropertyValues?: jasmine.SpyObjPropertyNames<ObservationReadService>,
     fakeAuthPropertyValues?: jasmine.SpyObjPropertyNames<AuthenticationService>) => {
-
-    // fakeObservationReadService = jasmine.createSpyObj<ObservationReadService>(
-    //   'ObservationReadService',
-    //   {
-    //     getData: undefined
-    //   },
-    //   {
-    //     isError: of(false),
-    //     observation: of(null),
-    //     ...fakePropertyValues
-    //   }
-    // );
 
     fakeObservationCrudService = jasmine.createSpyObj<ObservationCrudService>(
       'ObservationCrudService',
@@ -106,25 +85,3 @@ describe('ObservationCreateComponent', () => {
 
 
 });
-
-
-
-
-
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       declarations: [ ObservationCreateComponent ]
-//     })
-//     .compileComponents();
-//   });
-
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(ObservationCreateComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
-
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });

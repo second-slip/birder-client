@@ -1,4 +1,9 @@
 app-select-species {
+    .is-loading {
+        display: flex;
+        align-items: center;
+    }
+
     .ng-valid[required],
     .ng-valid.required {
         border-left: 5px solid #42a948; /* green */

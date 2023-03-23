@@ -12,17 +12,17 @@ import { SelectSpeciesService } from './select-species.service';
   styleUrls: ['./select-species.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class SelectSpeciesComponent implements OnInit  {
+export class SelectSpeciesComponent implements OnInit {
   @Input() selectSpeciesForm: FormGroup;
-  
+
   @ViewChild('instance', { static: true }) instance: NgbTypeahead;
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
 
-  constructor(private _service: SelectSpeciesService) { }
+  constructor(readonly _service: SelectSpeciesService) { }
 
   ngOnInit(): void {
-    this._service.getData();
+    this._fetchData();
   }
 
   public search: OperatorFunction<string, readonly IBirdSummary[]> = (text$: Observable<string>) => {
@@ -37,4 +37,12 @@ export class SelectSpeciesComponent implements OnInit  {
   }
 
   public formatter = (x: { englishName: string }) => x.englishName;
+
+  public reload(): void {
+    this._fetchData();
+  }
+
+  private _fetchData(): void {
+    this._service.getData();
+  }
 }

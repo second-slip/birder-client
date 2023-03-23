@@ -21,7 +21,6 @@ describe('SelectSpeciesComponent', () => {
         //...fakeMethodValues
     },
     {
-        isLoading: of(false),
         isError: of(false),
         getBirds: [],
         //...fakePropertyValues

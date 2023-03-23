@@ -1,10 +1,18 @@
-<form [formGroup]="selectSpeciesForm" novalidate>
-    <div class="form-group adjust-size">
+<div class="form-group adjust-size">
+    <form [formGroup]="selectSpeciesForm" novalidate>
         <label for="typeahead-focus">Choose species:</label>
-        <input id="typeahead-focus" type="text" class="form-control" formControlName="bird" [ngbTypeahead]="search"
-            required placeholder="type species name to filter species list" (focus)="focus$.next($any($event).target.value)"
-            (click)="click$.next($any($event).target.value)" #instance="ngbTypeahead" [resultFormatter]="formatter"
-            [inputFormatter]="formatter" />
+        <div class="is-loading">
+            <input id="typeahead-focus" type="text" class="form-control" formControlName="bird" [ngbTypeahead]="search"
+                required placeholder="type species name to filter species list"
+                (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
+                #instance="ngbTypeahead" [resultFormatter]="formatter" [inputFormatter]="formatter" />
+            <span *ngIf="!_service.getBirds.length" data-testid="loading" class="spinner-border spinner-border-sm"
+                role="status" aria-hidden="true"></span>
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="(_service.isError | async)" data-testid="error">
+            This is an error retrieving the birds species list. Please click <a class="alert-link" role="button"
+                (click)="reload()" data-testid="reload-button">here to try again</a>.
+        </div>
         <div *ngIf="selectSpeciesForm.get('bird')?.invalid && 
             selectSpeciesForm.get('bird')?.errors && 
             (selectSpeciesForm.get('bird')?.dirty || selectSpeciesForm.get('bird')?.touched)">
@@ -15,8 +23,7 @@
                 You must select a bird species from the list.
             </small>
         </div>
-        <!-- <hr> -->
         <!-- <pre>{{ selectSpeciesForm.value.bird.englishName }}</pre> -->
         <!-- <pre>{{ selectSpeciesForm.value | json }}</pre> -->
-    </div>
-</form>
+    </form>
+</div>

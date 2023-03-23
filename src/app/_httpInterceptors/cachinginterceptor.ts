@@ -44,7 +44,7 @@ export class CachingInterceptor implements HttpInterceptor {
 
 
 /** Is this request cachable? */
-function isCachable(request: HttpRequest<any>) {
+function isCachable(request: HttpRequest<any>): boolean {
   return request.method === 'GET'
     && request.url.indexOf('api/Photograph') !== 0
     && request.url.indexOf('api/ObservationFeed') !== 0

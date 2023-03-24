@@ -5,7 +5,7 @@
             <input id="typeahead-focus" type="text" class="form-control" formControlName="bird" [ngbTypeahead]="search"
                 required placeholder="type species name to filter species list"
                 (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
-                #instance="ngbTypeahead" [resultFormatter]="formatter" [inputFormatter]="formatter" />
+                #instance="ngbTypeahead" [resultFormatter]="formatter" [inputFormatter]="formatter" data-testid="bird"/>
             <span *ngIf="!_service.getBirds.length" data-testid="loading" class="spinner-border spinner-border-sm"
                 role="status" aria-hidden="true"></span>
         </div>

@@ -31,8 +31,7 @@ describe('AccountManageProfileComponent', () => {
 
   const setup = async (
     fakeAccountServiceReturnValues?: jasmine.SpyObjMethodNames<AccountService>,
-    fakeValidationReturnValues?: jasmine.SpyObjMethodNames<AccountValidationService>
-  ) => {
+    fakeValidationReturnValues?: jasmine.SpyObjMethodNames<AccountValidationService>) => {
 
     fakeAccountService = jasmine.createSpyObj<AccountService>(
       'AccountService',

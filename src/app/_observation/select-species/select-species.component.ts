@@ -22,7 +22,7 @@ export class SelectSpeciesComponent implements OnInit {
   constructor(readonly _service: SelectSpeciesService) { }
 
   ngOnInit(): void {
-    this._fetchData();
+    this._service.getData();
   }
 
   public search: OperatorFunction<string, readonly IBirdSummary[]> = (text$: Observable<string>) => {
@@ -39,10 +39,6 @@ export class SelectSpeciesComponent implements OnInit {
   public formatter = (x: { englishName: string }) => x.englishName;
 
   public reload(): void {
-    this._fetchData();
-  }
-
-  private _fetchData(): void {
     this._service.getData();
   }
 }

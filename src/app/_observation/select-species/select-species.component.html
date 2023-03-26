@@ -3,9 +3,10 @@
         <label for="typeahead-focus">Choose species:</label>
         <div class="is-loading">
             <input id="typeahead-focus" type="text" class="form-control" formControlName="bird" [ngbTypeahead]="search"
-                required placeholder="type species name to filter species list"
+                aria-required="true" required placeholder="type species name to filter species list"
                 (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
-                #instance="ngbTypeahead" [resultFormatter]="formatter" [inputFormatter]="formatter" data-testid="bird"/>
+                #instance="ngbTypeahead" [resultFormatter]="formatter" [inputFormatter]="formatter"
+                data-testid="bird" />
             <span *ngIf="!_service.getBirds.length" data-testid="loading" class="spinner-border spinner-border-sm"
                 role="status" aria-hidden="true"></span>
         </div>
@@ -16,12 +17,10 @@
         <div *ngIf="selectSpeciesForm.get('bird')?.invalid && 
             selectSpeciesForm.get('bird')?.errors && 
             (selectSpeciesForm.get('bird')?.dirty || selectSpeciesForm.get('bird')?.touched)">
-            <small class="text-danger" *ngIf="selectSpeciesForm.get('bird')?.hasError('required')">
-                This field is required.
-            </small>
-            <small class="text-danger" *ngIf="selectSpeciesForm.get('bird')?.hasError('notBirdListObject')">
-                You must select a bird species from the list.
-            </small>
+            <small class="text-danger" *ngIf="selectSpeciesForm.get('bird')?.hasError('required')"
+                data-testid="error-req">This field is required.</small>
+            <small class="text-danger" *ngIf="selectSpeciesForm.get('bird')?.hasError('notBirdListObject')"  data-testid="error-obj">You must
+                select a bird species from the list.</small>
         </div>
         <!-- <pre>{{ selectSpeciesForm.value.bird.englishName }}</pre> -->
         <!-- <pre>{{ selectSpeciesForm.value | json }}</pre> -->

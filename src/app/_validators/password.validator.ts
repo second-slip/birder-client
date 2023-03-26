@@ -1,16 +1,16 @@
-import { UntypedFormControl, FormGroup, NgForm, FormGroupDirective, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { AbstractControl, ValidationErrors, FormControl } from '@angular/forms';
 
-export class ParentErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = !!(form && form.submitted);
-    const controlTouched = !!(control && (control.dirty || control.touched));
-    const controlInvalid = !!(control && control.invalid);
-    const parentInvalid = !!(control && control.parent && control.parent.invalid && (control.parent.dirty || control.parent.touched));
+// not in use
+// export class ParentErrorStateMatcher implements ErrorStateMatcher {
+//   isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+//     const isSubmitted = !!(form && form.submitted);
+//     const controlTouched = !!(control && (control.dirty || control.touched));
+//     const controlInvalid = !!(control && control.invalid);
+//     const parentInvalid = !!(control && control.parent && control.parent.invalid && (control.parent.dirty || control.parent.touched));
 
-    return isSubmitted || (controlTouched && (controlInvalid || parentInvalid));
-  }
-}
+//     return isSubmitted || (controlTouched && (controlInvalid || parentInvalid));
+//   }
+// }
 
 export class ValidatePassword {
   static passwordMatcher(c: AbstractControl): ValidationErrors | null {
@@ -30,10 +30,10 @@ export class ValidatePassword {
 
 export function MatchOtherValidator(otherControlName: string) {
 
-  let thisControl: UntypedFormControl;
-  let otherControl: UntypedFormControl;
+  let thisControl: FormControl;
+  let otherControl: FormControl;
 
-  return function matchOtherValidate(control: UntypedFormControl) {
+  return function matchOtherValidate(control: FormControl) {
 
     if (!control.parent) {
       return null;
@@ -42,7 +42,7 @@ export function MatchOtherValidator(otherControlName: string) {
     // Initializing the validator.
     if (!thisControl) {
       thisControl = control;
-      otherControl = control.parent.get(otherControlName) as UntypedFormControl;
+      otherControl = control.parent.get(otherControlName) as FormControl;
       if (!otherControl) {
         throw new Error('matchOtherValidator(): other control is not found in parent group');
       }

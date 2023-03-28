@@ -19,7 +19,8 @@
             (selectSpeciesForm.get('bird')?.dirty || selectSpeciesForm.get('bird')?.touched)">
             <small class="text-danger" *ngIf="selectSpeciesForm.get('bird')?.hasError('required')"
                 data-testid="error-req">This field is required.</small>
-            <small class="text-danger" *ngIf="selectSpeciesForm.get('bird')?.hasError('notBirdListObject')"  data-testid="error-obj">You must
+            <small class="text-danger" *ngIf="selectSpeciesForm.get('bird')?.hasError('notBirdListObject')"
+                data-testid="error-obj">You must
                 select a bird species from the list.</small>
         </div>
         <!-- <pre>{{ selectSpeciesForm.value.bird.englishName }}</pre> -->

@@ -1,3 +1,4 @@
+// todo: better tests
 /*
 Ideally need to test model is valid (ng-valid) when object is selected from the typeahead
 But don't want to test their code (i.e. button clicks, etc), just mine...

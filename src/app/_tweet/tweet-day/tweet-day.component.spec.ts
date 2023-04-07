@@ -1,11 +1,12 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { TweetDayComponent } from './tweet-day.component';
 import { TweetDayService } from './tweet-day.service';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { expectText, findComponent } from 'src/app/testing/element.spec-helper'
 import { fakeITweet } from 'src/app/testing/tweet-day-test-helper';
+import { findEl } from 'src/app/testing/element.spec-helper';
 
 
 describe('TweetDayComponent unit tests', () => {
@@ -127,6 +128,17 @@ describe('TweetDayComponent unit tests', () => {
         it('should not show error content', () => {
             const compiled = fixture.nativeElement as HTMLElement;
             expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toBeUndefined();
+        });
+
+        it('links to the correct archive page', () => {
+            // interpolated link to bird/detail means the test doesn't work
+            // .get('bird-detail-link') is NULL
+            // bird/detail/${fakeITweet.birdId}`);
+
+            const address = findEl(fixture, 'archive-link').nativeElement
+                .getAttribute('routerlink');
+
+            expect(address).toEqual('/tweet/archive');
         });
     });
 

@@ -11,13 +11,13 @@
   "/network/Unfollow": "/unfollow",
   "/network/Suggestions": "/networkSuggestions",
   "/network/Search\\?searchCriterion=:searchCriterion": "/networkSearchResults?searchCriterion=:searchCriterion",
-  "/UserProfile\\?requestedUsername=:requestedUsername": "/userProfile",
+  "/UserProfile\\?requestedUsername=:requestedUsername": "/userprofile",
   "/birds/ddl": "/birdsDdl",
   "/Birds\\?pageIndex=:pageIndex&pageSize=:pageSize&speciesFilter=:speciesFilter": "/birdsIndex",
   "/Birds/Bird\\?id=:id": "/birds?birdId=:id",
   "/Recording?\\species=:species": "/recordings",
-  "/observation/create": "/createObservation",
-  "/observation/update?:id": "/updateObservation",
-  "/observation/delete?:id": "/deleteObservation",
+  "/observation/create": "/createobservation",
+  "/observation/update?:id": "/updateobservation",
+  "/observation/delete?:id": "/deleteoobservation",
   "/observation?:id": "/observation"
 }

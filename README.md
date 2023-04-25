@@ -9,12 +9,16 @@ Angular 15 client app for the Birder website.
 ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/WinthorpeCross/birder-client)
 
 
+## Code space
+
+`npm run api`
+
+`npm start`
 
 
 ## Add environment.ts file to compile
 
-The development environment configuration file (environment.ts) is untracked.  You need to add the environment.ts file to a cloned copy of the repsository. This should be added to the environments folder and it should follow the same structure as the environment.prod.ts file which _is_ tracked in this repository.
 
 ## Fake REST API for testing
 
-[json-server](https://www.npmjs.com/package/json-server) files which can be used to fake the Birder REST API are available on request (they are not tracked in this repository).
+

@@ -23,7 +23,7 @@ export class ObservationCountService implements OnDestroy {
 
   public getData(): void {
 
-    this._httpClient.get<IObservationCount>('api/ObservationAnalysis')
+    this._httpClient.get<IObservationCount>('api/observationanalysis')
       .pipe(takeUntil(this._subscription))
       .subscribe({
         next: (response) => {

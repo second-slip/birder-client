@@ -4,8 +4,8 @@ import { ICreateObservation } from "../_observation/observation-create/i-create-
 import { IUpdateObservation } from "../_observation/observation-update/i-update-observation.dto";
 import { IObservationNote } from "../_observation-note/i-observation-note.dto";
 import { authUserName, userModel } from "./auth-test-helpers";
-import { fakeIBirdSummary } from "./tweet-day-test-helper";
 import { ObservationNoteType } from "../_observation-note/observation-note-type";
+import { fakeIBirdSummary } from "./birds-helpers";
 
 export const observationId = 10090;
 export const quantity = 5;

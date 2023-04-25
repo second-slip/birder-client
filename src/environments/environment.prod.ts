@@ -1,8 +1,7 @@
-import { tokens } from "./environment.keys";
-
 export const environment = {
-  production: true,
-  ...tokens.mapKey,
-  apiUrl: 'https://birderweb.com',
-  ...tokens.photoKey
-};
+    production: true,
+    mapKey: 'undefined',
+    apiUrl: 'https://birderweb.com',
+    photoKey: 'undefined'
+  };
+  

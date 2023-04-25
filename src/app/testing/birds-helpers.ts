@@ -1,6 +1,18 @@
 import { IBirdDetail } from "../_bird/bird-detail/i-bird-detail.dto";
 import { IBirdSummary } from "../_bird/i-bird-summary.dto"
 
+export const fakeIBirdSummary: IBirdSummary = {
+  birdId: 1113,
+  species: 'Vanellus vanellus',
+  englishName: 'Lapwing',
+  populationSize: '100,000 - 500,000 Pairs',
+  btoStatusInBritain: 'Migrant/Resident Breeder, Passage/Winter Visitor',
+  thumbnailUrl: null,
+  conservationStatus: '',
+  conservationListColourCode: '',
+  birderStatus: 'Common'
+}
+
 export const fakeIBirdDetail: IBirdDetail =
 {
   birdId: 1013,

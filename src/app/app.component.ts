@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +7,4 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent {
   title = 'Birder';
-  constructor() {
-    console.log(environment.production); // Logs false for development environment
-  }
 }

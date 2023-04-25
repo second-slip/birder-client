@@ -1,4 +1,5 @@
 {
+  "/api/*": "/$1",
   "/observationfeed\\?pageIndex=:pageIndex&pageSize=:pageSize": "/observationsfeed?_page=:pageIndex&_limit=:pageSize",
   "/observationfeed/user\\?pageIndex=:pageIndex&pageSize=:pageSize": "/observationsfeed?_page=:pageIndex&_limit=:pageSize",
   "/observationfeed/network\\?pageIndex=:pageIndex&pageSize=:pageSize": "/observationsfeed?_page=:pageIndex&_limit=:pageSize",

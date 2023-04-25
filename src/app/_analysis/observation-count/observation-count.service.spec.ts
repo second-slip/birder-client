@@ -6,7 +6,7 @@ import { IObservationCount } from './i-observation-count.dto';
 
 import { ObservationCountService } from './observation-count.service';
 
-const _apiUrl = 'api/ObservationAnalysis';
+const _apiUrl = 'api/observationanalysis';
 
 describe('ObservationCountService', () => {
     let controller: HttpTestingController;

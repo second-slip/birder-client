@@ -9,11 +9,28 @@ Angular 15 client app for the Birder website.
 ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/WinthorpeCross/birder-client)
 
 
-## Code space
+## Codespace demonstration
+
+Run a working version in a fully-configured dev environment with Codespaces.
+
+### Step 1
+
+that responds with fake responses
 
 `npm run api`
 
+<details>
+  <summary>View screenshot of this step</summary>
+  
+  #### Screenshot showing user starting the fake server
+  
+![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://myoctocat.com/assets/images/base-octocat.svg)
+  
+</details>
+
 `npm start`
+
+
 
 
 ## Add environment.ts file to compile

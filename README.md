@@ -13,7 +13,26 @@ Angular 15 client app for the Birder website.
 
 Run a working version in a fully-configured dev environment with Codespaces.
 
-### Step 1
+<details>
+  <summary>1 - Start the fake dev server</summary>
+  
+  ### Heading
+  1. Foo
+  2. Bar
+     * Baz
+     * Qux
+     
+ npm run api
+
+  ### Some Code
+  ```
+  npm run api
+  ```
+</details>
+
+
+
+
 
 that responds with fake responses
 

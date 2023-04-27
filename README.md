@@ -14,47 +14,45 @@ Angular 15 client app for the Birder website.
 Run a working version in a fully-configured dev environment with Codespaces.
 
 <details>
-  <summary>1 - Start the fake dev server</summary>
+  <summary>Step 1 - Start the fake server (click for details)</summary>
   
-  ### Heading
-  1. Foo
-  2. Bar
-     * Baz
-     * Qux
-     
- npm run api
+  #### Start the fake server
+  A fake REST API is provided by <a href="https://dotnetnorth.org.uk/](https://github.com/typicode/json-server">json-server</a>.  Start the fake server in the terminal with `npm run api`.  The data server will start on http://localhost:3000.  It will respond with fake data to enable users to sample the website.
 
-  ### Some Code
+  #### Some Code
   ```
   npm run api
   ```
 </details>
 
+<details>
+  <summary>Step 2 - Serve the website (click for details)</summary>
+  
+  #### Serve the website
+  After starting data server, open a second terminal window and type `npm start` to serve the website.  Then access the website in the browser on `http://localhost:4200`.
 
+  #### Some Code
+  ```
+  npm start
+  ```
+</details>
 
-
-
-that responds with fake responses
-
-`npm run api`
 
 <details>
-  <summary>View screenshot of this step</summary>
+  <summary>Step 3 - Explore the website (click for details)</summary>
+  
+  #### Explore the website
+  The website will open at the login screen.  Type a fake email address (e.g. 'a@b.com') and a fake password and click the 'Login' button.  The website will open the main home screen for logged in users, which is the 'observations feed'.  
+
+</details>
+
+---
+
   
   #### Screenshot showing user starting the fake server
   
 ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://myoctocat.com/assets/images/base-octocat.svg)
   
-</details>
 
-`npm start`
-
-
-
-
-## Add environment.ts file to compile
-
-
-## Fake REST API for testing
 
 

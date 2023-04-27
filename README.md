@@ -17,7 +17,7 @@ Run a working version in a fully-configured dev environment with Codespaces.
   <summary>Step 1:  start the fake API (click for details)</summary>
   
   #### Start the fake server
-  A fake REST API is provided by <a href="https://dotnetnorth.org.uk/](https://github.com/typicode/json-server">json-server</a>.  Start the fake server in the terminal with `npm run api`.  The data server will start on http://localhost:3000.  It will respond with fake data to enable users to sample the website.
+  A fake <a href="https://github.com/WinthorpeCross/birder-server">birder-server</a> REST API is provided using a <a href="https://dotnetnorth.org.uk/](https://github.com/typicode/json-server">json-server</a> implementation.  Start the fake server in the terminal with `npm run api`.  It will start on http://localhost:3000.  It will respond with fake data to enable users to sample the website.
 
   ##### npm command
   ```

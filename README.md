@@ -13,29 +13,41 @@ Angular 15 client app for the Birder website.
 
 Run a working version in a fully-configured dev environment with Codespaces.
 
-### Step 1
-
-that responds with fake responses
-
-`npm run api`
-
 <details>
-  <summary>View screenshot of this step</summary>
+  <summary>Step 1:  start the fake API (click for details)</summary>
   
-  #### Screenshot showing user starting the fake server
-  
-![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://myoctocat.com/assets/images/base-octocat.svg)
-  
+  #### Start the fake server
+  A fake <a href="https://github.com/WinthorpeCross/birder-server">birder-server</a> REST API is provided using a <a href="https://dotnetnorth.org.uk/](https://github.com/typicode/json-server">json-server</a> implementation.  Start the fake server in the terminal with `npm run api`.  It will start on http://localhost:3000.  It will respond with fake data to enable users to sample the website.
+
+  ##### npm command
+  ```
+  npm run api
+  ```
+  ##### Screenshot
+  ![step-1-screenshot](https://user-images.githubusercontent.com/35421339/234880826-88feca4a-2cd4-496e-af76-c0a07624c2c1.png)
 </details>
 
-`npm start`
+<details>
+  <summary>Step 2:  serve the website (click for details)</summary>
+  
+  #### Serve the website
+  After starting data server, open a second terminal window and type `npm start` to serve the website.  Then access the website in the browser on `http://localhost:4200`.
+
+  #### Some Code
+  ```
+  npm start
+  ```
+  ##### Screenshot
+  ![step-2-screenshot](https://user-images.githubusercontent.com/35421339/234881927-80ef689b-c5ac-4a27-971e-98d4274b9942.png)
+</details>
 
 
-
-
-## Add environment.ts file to compile
-
-
-## Fake REST API for testing
-
-
+<details>
+  <summary>Step 3: use the website (click for details)</summary>
+  
+  #### Explore the website
+  The website will open at the login screen.  Type a fake email address (e.g. 'a@b.com') and a fake password and click the 'Login' button.  The website will open the main home screen for logged in users, which is the 'observations feed'. 
+  
+  ##### Screenshot
+![step-3-screenshot](https://user-images.githubusercontent.com/35421339/234882088-40209c0c-8c49-4d89-9074-2ac4cb19f92b.png)
+</details>

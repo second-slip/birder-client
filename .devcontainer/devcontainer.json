@@ -13,7 +13,8 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "yarn install",
-	"postCreateCommand": "npm install && npm i json-server"
+	// "postCreateCommand": "npm install && npm i json-server" // --> [ok, but saved json-server to devDeps]
+	"postCreateCommand": "npm install"
 
 	// Configure tool-specific properties.
 	// "customizations": {},

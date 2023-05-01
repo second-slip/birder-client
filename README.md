@@ -6,10 +6,11 @@ Angular 15 client app for the Birder website.
 [![Node.js CI](https://github.com/WinthorpeCross/birder-client/actions/workflows/node.js.yml/badge.svg)](https://github.com/WinthorpeCross/birder-client/actions/workflows/node.js.yml)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/WinthorpeCross/birder-client/node.js.yml)
 [![codecov](https://codecov.io/gh/WinthorpeCross/birder-client/branch/master/graph/badge.svg?token=LIA3YIDXX2)](https://codecov.io/gh/WinthorpeCross/birder-client)
-![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/WinthorpeCross/birder-client)
+<!-- ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/WinthorpeCross/birder-client) -->
+[![Known Vulnerabilities](https://snyk.io/test/github/WinthorpeCross/birder-client/badge.svg)](https://snyk.io/test/github/WinthorpeCross/birder-client)
 
 
-## Codespace demonstration
+## Open in GitHub Codespaces
 
 Run a working version in a fully-configured dev environment with Codespaces.
 

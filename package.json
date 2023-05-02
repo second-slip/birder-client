@@ -5,7 +5,7 @@
     "config": "ts-node -O '{\"module\": \"commonjs\"}' ./config.index.ts",
     "ng": "ng",
     "start": "ng serve",
-    "api": "json-server src/db.json --port 3000 --routes src/routes.json --middlewares src/middleware.js",
+    "api": "json-server src/api/db.json --port 3000 --routes src/api/routes.json --middlewares src/api/middleware.js",
     "build": "npm run config && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --code-coverage"

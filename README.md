@@ -11,7 +11,7 @@ Angular 15 client app for the Birder website.
 <!-- ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/WinthorpeCross/birder-client) -->
 
 
-## Open in GitHub Codespaces
+## Open a demo in GitHub Codespaces
 
 Run a working version in a fully-configured dev environment with Codespaces.
 

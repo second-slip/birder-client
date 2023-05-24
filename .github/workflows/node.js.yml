@@ -27,7 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm i -g cli-real-favicon
-    - run: npm ci --force
+    - run: npm ci --legacy-peer-deps # temporary due to @angular-material-components/datetime-picker
     - run: npm run build --if-present
       env: 
         MAPKEY: ${{ secrets.MAPKEY }}

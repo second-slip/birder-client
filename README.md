@@ -1,5 +1,6 @@
 # birder-client
-Angular 15 client app for the Birder website. 
+
+This is the Angular 15 client app for the Birder website. 
 
 <!-- [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](https://www.typescriptlang.org/) -->
 
@@ -10,6 +11,9 @@ Angular 15 client app for the Birder website.
 
 <!-- ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/WinthorpeCross/birder-client) -->
 
+Birder is a social network-style platform for logging, sharing, and analysing bird observations. Ultimately, the aim is to feed the data to an algorithm which will help with species identification.
+
+The complementary server respository is [birder-server](https://github.com/WinthorpeCross/birder-server).
 
 ## Open a demo in GitHub Codespaces
 

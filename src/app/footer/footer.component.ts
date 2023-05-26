@@ -7,9 +7,10 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class FooterComponent {
-  currentYear: number;
+  public message: string;
 
   constructor() {
-    this.currentYear = new Date().getFullYear();
+    const year = new Date().getFullYear().toString();
+    this.message = `\u00A9 ${year} Birder`
   }
 }

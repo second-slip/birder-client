@@ -27,13 +27,14 @@ describe('FooterComponent', () => {
 
     it('should set the year property to current year', () => {
       // Arrange
-      const expected = new Date().getFullYear();
+      const year = new Date().getFullYear().toString();
+      const expected = `\u00A9 ${year} Birder`;
 
       // Act or change
       fixture.detectChanges();
       
       // Assert
-      expect(component.currentYear).toEqual(expected);
+      expect(component.message).toEqual(expected);
     });
   });
 

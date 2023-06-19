@@ -5,7 +5,7 @@ import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
 
 import { SelectSpeciesService } from './select-species.service';
 
-const apiUrl = `api/birds/ddl`;
+const apiUrl = `api/birds-list`;
 
 describe('SelectSpeciesService', () => {
   let service: SelectSpeciesService;

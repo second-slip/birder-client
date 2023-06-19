@@ -13,7 +13,7 @@
   "/network/Suggestions": "/networkSuggestions",
   "/network/Search\\?searchCriterion=:searchCriterion": "/networkSearchResults?searchCriterion=:searchCriterion",
   "/UserProfile\\?requestedUsername=:requestedUsername": "/userprofile",
-  "/birds/ddl": "/birdsDdl",
+  "/birds-list": "/birdsDdl",
   "/Birds\\?pageIndex=:pageIndex&pageSize=:pageSize&speciesFilter=:speciesFilter": "/birdsIndex",
   "/Birds/Bird\\?id=:id": "/birds?birdId=:id",
   "/Recording?\\species=:species": "/recordings",

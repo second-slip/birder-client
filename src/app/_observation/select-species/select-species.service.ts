@@ -23,7 +23,7 @@ export class SelectSpeciesService implements OnDestroy {
 
   public getData(): void {
 
-    this._httpClient.get<IBirdSummary[]>('api/birds/ddl')
+    this._httpClient.get<IBirdSummary[]>('api/birds-list')
       .pipe(takeUntil(this._subscription))
       .subscribe({
         next: (response) => {

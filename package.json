@@ -31,7 +31,7 @@
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.2",
     "moment": "^2.29.3",
-    "ng-mocks": "^14.3.2",
+    "ng-mocks": "^14.10.1",
     "rxjs": "^7.5.7",
     "ts-node": "^10.9.1",
     "tslib": "^2.4.0",

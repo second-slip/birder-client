@@ -29,7 +29,7 @@
     "@auth0/angular-jwt": "^5.1.0",
     "@ng-bootstrap/ng-bootstrap": "^14.0.0-rc.1",
     "@popperjs/core": "^2.11.6",
-    "bootstrap": "^5.2.2",
+    "bootstrap": "^5.3.0",
     "moment": "^2.29.3",
     "ng-mocks": "^14.3.2",
     "rxjs": "^7.5.7",

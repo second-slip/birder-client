@@ -1,0 +1,76 @@
+<form [formGroup]="dateForm" novalidate>
+    <div class="form-group d-flex flex-row justify-content-left align-items-center" style="height: 100px;">
+
+        <label for="observationDateTime">Date</label>
+        <div class="p-2">
+            <div class="input-group">
+                <input class="form-control" placeholder="dd-mm-yyyy" name="dp" [(ngModel)]="date"
+                    [ngModelOptions]="{standalone: true}" ngbDatepicker #d="ngbDatepicker" (dateSelect)="onDateSelect()"
+                    required />
+                <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"></button>
+            </div>
+        </div>
+        <div class="p-2">
+            <!-- <div> -->
+            <ngb-timepicker [(ngModel)]="time" [ngModelOptions]="{standalone: true}" [spinners]="spinners"
+                (ngModelChange)="onDateSelect()"></ngb-timepicker>
+            <!-- </div> -->
+        </div>
+    </div>
+</form>
+
+
+<!-- <input class="form-control" type="number" id="quantity" placeholder="Quantity"
+formControlName="quantity" required min="1" max="1000"> -->
+
+<p>{{ date | json }}</p>
+<p>{{ time | json }}</p>
+<p>form:</p>
+<p>{{ dateForm.value | json }}</p>
+
+
+<!-- <div class="form-group adjust-size">
+                        <label for="observationDateTime">Date & time</label>
+                        <div class="date-time-control">
+                            <input class="form-control" type="datetime" id="observationDateTime" readonly="readonly"
+                                required [ngxMatDatetimePicker]="picker" placeholder="Choose a date"
+                                formControlName="observationDateTime" [min]="minDate" [max]="maxDate">
+                            <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+                            <ngx-mat-datetime-picker #picker [showSpinners]="true" [showSeconds]="false" [stepHour]="1"
+                                [stepMinute]="1" [stepSecond]="1" [touchUi]="false">
+                            </ngx-mat-datetime-picker>
+                        </div>
+                        <div
+                            *ngIf="addObservationForm.get('observationDateTime')?.invalid && 
+                    addObservationForm.get('observationDateTime')?.errors && 
+                    (addObservationForm.get('observationDateTime')?.dirty || addObservationForm.get('observationDateTime')?.touched)">
+                            <small class="text-danger"
+                                *ngIf="addObservationForm.get('observationDateTime')?.hasError('required')">
+                                This field is required.
+                            </small>
+                        </div>
+                    </div> -->
+
+
+<!-- <div class="form-group adjust-size">
+                                <label for="observationDateTime">Date & time</label>
+                                <div class="date-time-control">
+                                    <input class="form-control" type="datetime" id="observationDateTime"
+                                        readonly="readonly" required [ngxMatDatetimePicker]="picker"
+                                        placeholder="Choose a date" formControlName="observationDateTime"
+                                        [min]="minDate" [max]="maxDate">
+                                    <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+                                    <ngx-mat-datetime-picker #picker [showSpinners]="true" [showSeconds]="false"
+                                        [stepHour]="1" [stepMinute]="1" [stepSecond]="1" [touchUi]="false">
+                                    </ngx-mat-datetime-picker>
+                                </div>
+                                <div
+                                    *ngIf="updateObservationForm.get('observationDateTime')?.invalid && 
+                    updateObservationForm.get('observationDateTime')?.errors && 
+                    (updateObservationForm.get('observationDateTime')?.dirty || updateObservationForm.get('observationDateTime')?.touched)">
+                                    <small class="text-danger"
+                                        *ngIf="updateObservationForm.get('observationDateTime')?.hasError('required')">
+                                        This field is required.
+                                    </small>
+                                </div>
+                            </div> -->

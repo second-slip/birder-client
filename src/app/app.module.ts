@@ -48,8 +48,6 @@ import { LifeListComponent } from './_list/life-list/life-list.component';
 import { UserProfileComponent } from './_user/user-profile/user-profile.component';
 import { SelectSpeciesComponent } from './_observation/select-species/select-species.component';
 import { ObservationCreateComponent } from './_observation/observation-create/observation-create.component';
-import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
-import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { ReadOnlyMapComponent } from './_map/read-only-map/read-only-map.component';
 import { ReadWriteMapComponent } from './_map/read-write-map/read-write-map.component';
@@ -85,6 +83,7 @@ import { FilterControlComponent } from './_observation-feed/filter-control/filte
 import { ObservationFeedComponent } from './_observation-feed/observation-feed/observation-feed.component';
 import { FollowCommandComponent } from './_network/follow-command/follow-command.component';
 import { RequestCache, RequestCacheWithMap } from './_sharedServices/request-cache.service';
+import { SelectDateTimeComponent } from './_observation/select-date-time/select-date-time.component';
 
 @NgModule({
   declarations: [
@@ -154,6 +153,7 @@ import { RequestCache, RequestCacheWithMap } from './_sharedServices/request-cac
     FilterControlComponent,
     ObservationFeedComponent,
     FollowCommandComponent,
+    SelectDateTimeComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -166,8 +166,6 @@ import { RequestCache, RequestCacheWithMap } from './_sharedServices/request-cac
     MatIconModule,
     MatButtonModule,
     MatDatepickerModule,
-    NgxMatDatetimePickerModule,
-    NgxMatMomentModule,
     MatStepperModule,
     MatNativeDateModule,
     MatExpansionModule,

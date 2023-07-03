@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ThemePalette } from '@angular/material/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import * as moment from 'moment'; //ToDo: replace moment
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
@@ -35,16 +33,13 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
   public updateObservationForm: FormGroup;
   public errorObject: any = null;
 
+  public dateForm: FormGroup;
+
   @ViewChild(ReadWriteMapComponent)
   private _mapComponent: ReadWriteMapComponent;
 
   @ViewChild(EditNotesComponent)
   private _notesComponent: EditNotesComponent;
-
-  @ViewChild('picker') picker: any;
-  public minDate = moment().subtract(20, "years");// new Date().toISOString(); // moment.Moment;
-  public maxDate = moment().format('yyyy-MM-dd 23:59:59'); // new Date().toISOString(); // moment.Moment;
-  public color: ThemePalette = 'primary';
 
   constructor(readonly _authService: AuthenticationService
     , private readonly _router: Router
@@ -101,16 +96,22 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
         ]))
       });
 
+      this.dateForm = this._formBuilder.group({
+        observationDateTime: new FormControl(observation.observationDateTime, Validators.compose([
+          Validators.required
+        ]))
+      });
+
       this.updateObservationForm = this._formBuilder.group({
         observationId: new FormControl(observation.observationId),
         quantity: new FormControl(observation.quantity, Validators.compose([
           Validators.required,
           Validators.min(1),
           Validators.max(1000)
-        ])),
-        observationDateTime: new FormControl(observation.observationDateTime, Validators.compose([
-          Validators.required
-        ])),
+        ]))//,
+        // observationDateTime: new FormControl(observation.observationDateTime, Validators.compose([
+        //   Validators.required
+        // ])),
       });
     }
     catch (e) { 
@@ -141,7 +142,7 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
   private _mapToModel(): IUpdateObservation {
 
     const quantity = <Number>(this.updateObservationForm.value.quantity);
-    const dateTime = <Date>(new Date(this.updateObservationForm.value.observationDateTime));
+    const dateTime = <Date>(new Date(this.dateForm.value.observationDateTime));
     const selectedBird = <IBirdSummary>(this.selectSpeciesForm.value);
     const position = <IObservationPosition>{
       latitude: this._mapComponent.latitude,

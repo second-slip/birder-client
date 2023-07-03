@@ -1,5 +1,5 @@
 <div class="observation-create-container">
-    
+
     <h1>Create observation</h1>
 
     <ng-container *ngIf="addObservationForm; else loadingOrError">
@@ -11,27 +11,7 @@
                 <mat-step [stepControl]="addObservationForm && selectSpeciesForm" errorMessage="Section not complete.">
                     <ng-template matStepLabel><span class="stepperTop0">Details: what and when?</span></ng-template>
 
-                    <div class="form-group adjust-size">
-                        <label for="observationDateTime">Date & time</label>
-                        <div class="date-time-control">
-                            <input class="form-control" type="datetime" id="observationDateTime" readonly="readonly"
-                                required [ngxMatDatetimePicker]="picker" placeholder="Choose a date"
-                                formControlName="observationDateTime" [min]="minDate" [max]="maxDate">
-                            <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
-                            <ngx-mat-datetime-picker #picker [showSpinners]="true" [showSeconds]="false" [stepHour]="1"
-                                [stepMinute]="1" [stepSecond]="1" [touchUi]="false">
-                            </ngx-mat-datetime-picker>
-                        </div>
-                        <div
-                            *ngIf="addObservationForm.get('observationDateTime')?.invalid && 
-                    addObservationForm.get('observationDateTime')?.errors && 
-                    (addObservationForm.get('observationDateTime')?.dirty || addObservationForm.get('observationDateTime')?.touched)">
-                            <small class="text-danger"
-                                *ngIf="addObservationForm.get('observationDateTime')?.hasError('required')">
-                                This field is required.
-                            </small>
-                        </div>
-                    </div>
+                    <app-select-date-time [dateForm]="dateForm"></app-select-date-time>
 
                     <div class="form-group adjust-size">
                         <label for="quantity">How many</label>

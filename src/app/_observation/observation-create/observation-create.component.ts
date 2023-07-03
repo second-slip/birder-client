@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ThemePalette } from '@angular/material/core';
 import { Router } from '@angular/router';
-import * as moment from 'moment'; // ToDo: Replace moment with alternative
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
@@ -26,6 +24,7 @@ export class ObservationCreateComponent implements OnInit {
   public requesting: boolean;
   public selectSpeciesForm: FormGroup;
   public addObservationForm: FormGroup;
+  public dateForm: FormGroup;
   public errorObject: any = null;
 
   @ViewChild(ReadWriteMapComponent)
@@ -33,11 +32,6 @@ export class ObservationCreateComponent implements OnInit {
 
   @ViewChild(AddNotesComponent)
   private _notesComponent: AddNotesComponent;
-
-  @ViewChild('picker') picker: any;
-  public minDate = moment().subtract(20, "years");// new Date().toISOString(); // moment.Moment;
-  public maxDate = moment().format('yyyy-MM-dd 23:59:59'); // new Date().toISOString(); // moment.Moment;
-  public color: ThemePalette = 'primary';
 
   constructor(private readonly _router: Router
     , private readonly _formBuilder: FormBuilder
@@ -50,7 +44,6 @@ export class ObservationCreateComponent implements OnInit {
   }
 
   public onSubmit(): void {
-
     this.requesting = true;
 
     try {
@@ -61,7 +54,7 @@ export class ObservationCreateComponent implements OnInit {
         .subscribe({
           next: (r) => {
             this._announcement.announceObservationsChanged();
-            this._router.navigate([`/observation/detail/${r.observationId}`]); // + r.observationId.toString()]);
+            this._router.navigate([`/observation/detail/${r.observationId}`]);
           },
           error: (e) => { this.errorObject = e; }
         });
@@ -78,7 +71,7 @@ export class ObservationCreateComponent implements OnInit {
 
   private _mapToModel(): ICreateObservation {
     const quantity = <Number>(this.addObservationForm.value.quantity);
-    const dateTime = <Date>(new Date(this.addObservationForm.value.observationDateTime));
+    const dateTime = <Date>(new Date(this.dateForm.value.observationDateTime));
     const selectedBird = <IBirdSummary>(this.selectSpeciesForm.value);
     const position = <IObservationPosition>{
       latitude: this._mapComponent.latitude,
@@ -112,15 +105,18 @@ export class ObservationCreateComponent implements OnInit {
       ]))
     });
 
+    this.dateForm = this._formBuilder.group({
+      observationDateTime: new FormControl(new Date().toISOString(), Validators.compose([
+        Validators.required
+      ]))
+    });
+
     this.addObservationForm = this._formBuilder.group({
       quantity: new FormControl(1, Validators.compose([
         Validators.required,
         Validators.min(1),
         Validators.max(1000)
-      ])),
-      observationDateTime: new FormControl((moment()), Validators.compose([
-        Validators.required
-      ])),
+      ]))
     });
   }
 

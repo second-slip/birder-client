@@ -9,5 +9,16 @@ app-select-date-time {
         border-left: 5px solid #a94442; /* red */
     }
 
+    .date-time-controls {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: left;
+        // justify-items: center;
+        align-items: center;
+        height: 100px;
+    }
+
+
+
 
   }

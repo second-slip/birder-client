@@ -1,9 +1,10 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { NgbDate, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 import { Directive } from '@angular/core';
 import { NG_VALIDATORS, Validator } from '@angular/forms';
+
 
 @Component({
   selector: 'app-select-date-time',
@@ -16,27 +17,9 @@ export class SelectDateTimeComponent implements OnInit {
 
   public date: NgbDate;
   public time: NgbTimeStruct;
-  // public minDate = moment().subtract(20, "years");// new Date().toISOString(); // moment.Moment;
-  // public maxDate = moment().format('yyyy-MM-dd 23:59:59'); // new Date().toISOString(); // moment.Moment;
-
+  public minDate: NgbDateStruct;
+  public maxDate: NgbDateStruct;
   public spinners = true;
-
-  ctrl = (control: FormControl): ValidationErrors | null => {
-    const value = control.value;
-
-    if (!value) {
-      return null;
-    }
-
-    if (value.hour < 12) {
-      return { tooEarly: true };
-    }
-    if (value.hour > 13) {
-      return { tooLate: true };
-    }
-
-    return null;
-  };
 
   ngOnInit(): void {
     this._setInitialValue();
@@ -47,6 +30,20 @@ export class SelectDateTimeComponent implements OnInit {
 
     this.date = new NgbDate(formValue.getFullYear(), formValue.getMonth() + 1, formValue.getDate());
     this.time = { hour: formValue.getHours(), minute: formValue.getMinutes(), second: 0 };
+
+    const now = new Date();
+
+    this.maxDate = {
+      year: now.getFullYear(),
+      month: now.getMonth() + 1,
+      day: now.getDate()
+    }
+
+    this.minDate =  {
+      year: now.getFullYear() - 20,
+      month: now.getMonth() + 1,
+      day: now.getDate()
+    }
   }
 
   public updateFormValue(): void {

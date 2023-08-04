@@ -1,42 +1,52 @@
 <form [formGroup]="dateForm" novalidate>
-    <div class="form-group d-flex flex-row justify-content-left align-items-center" style="height: 100px;">
 
-        <label for="observationDateTime">Date</label>
+    <!-- class="form-group d-flex flex-row justify-content-left align-items-center" style="height: 100px;" -->
+    <label for="observationDateTime">Observation Date and Time</label>
+    <div class="date-time-controls">
+        <!-- <label for="observationDateTime">Date:</label> -->
         <div class="p-2">
             <div class="input-group">
                 <input class="form-control" placeholder="dd-mm-yyyy" readonly="readonly" name="dp" [(ngModel)]="date"
-                    [ngModelOptions]="{standalone: true}" ngbDatepicker #d="ngbDatepicker" (dateSelect)="updateFormValue()"
-                    required />
+                    [ngModelOptions]="{standalone: true}" ngbDatepicker #d="ngbDatepicker" [minDate]="minDate"
+                    [maxDate]="maxDate" (dateSelect)="updateFormValue()" required />
                 <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"></button>
             </div>
         </div>
+
+        <!-- <div> -->
+        <!-- <label for="time">Time:</label> -->
         <div class="p-2">
-            <!-- <div> -->
-            <ngb-timepicker [(ngModel)]="time"  appForbiddenName="bob" [ngModelOptions]="{standalone: true}" [spinners]="spinners"
-                (ngModelChange)="updateFormValue()" ng-disabled ng-required='true' ng-readonly ></ngb-timepicker>
-            <!-- </div> -->
+            <div class="input-group">
+                <ngb-timepicker [(ngModel)]="time" appForbiddenName="bob" [ngModelOptions]="{standalone: true}"
+                    [spinners]="spinners" (ngModelChange)="updateFormValue()" ng-disabled ng-required='true'
+                    ng-readonly></ngb-timepicker>
+            </div>
+
+
+
             <!-- <div class="mb-3">
-                <ngb-timepicker [formControl]="ctrl" required></ngb-timepicker> -->
-                <!-- <div *ngIf="ctrl.valid" class="small form-text text-success">Great choice</div>
+                <ngb-timepicker [formControl]="ctrl" required></ngb-timepicker>
+                <div *ngIf="ctrl.valid" class="small form-text text-success">Great choice</div>
                 <div *ngIf="ctrl.errors" class="small form-text text-danger">
                     <div *ngIf="ctrl.errors['required']">Select some time during lunchtime</div>
                     <div *ngIf="ctrl.errors['tooLate']">Oh no, it's way too late</div>
                     <div *ngIf="ctrl.errors['tooEarly']">It's a bit too early</div>
-                </div> -->
+                </div>
+            </div> -->
+
         </div>
     </div>
 </form>
 
 
-<!-- <input class="form-control" type="number" id="quantity" placeholder="Quantity"
-formControlName="quantity" required min="1" max="1000"> -->
 
-<p>{{ date | json }}</p>
-<p>{{ time | json }}</p>
-<p>form:</p>
-<p>{{ dateForm.value | json }}</p>
-<p>{{ dateForm.errors | json }}</p>
-
+<div class="p-2">
+    <p>{{ date | json }}</p>
+    <p>{{ time | json }}</p>
+    <p>form:</p>
+    <p>{{ dateForm.value | json }}</p>
+    <p>{{ dateForm.errors | json }}</p>
+</div>
 
 <!-- <div class="form-group adjust-size">
                         <label for="observationDateTime">Date & time</label>

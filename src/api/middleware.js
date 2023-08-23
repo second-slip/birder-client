@@ -2,7 +2,7 @@ module.exports = (req, res, next) => {
 
     if (req.method === 'POST' && req.originalUrl === '/authentication/login') { // /authToken') {
         return res.jsonp({
-            "authenticationToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkFuZHJldyIsIkltYWdlVXJsIjoiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9jb2xvci85Ni8wMDAwMDAvdXNlci5wbmciLCJMYXQiOiI1My40NDI1OTM0IiwiTG5nIjoiLTIuMjc2OTA1MiIsIkZsaWNrcktleSI6IjAzMzM4ZTJjOThiNTA3YWFmOWZiZDBmOGYwNDU1ODFiIiwianRpIjoiZjYzOTdiMjUtODdhNC00NTI4LTk1YTctMjMzY2FiMTI4Zjg5IiwiZXhwIjoxNzA5MzE3NDA3LCJpc3MiOiJodHRwczovL2JpcmRlcndlYi5jb20iLCJhdWQiOiJodHRwczovL2JpcmRlcndlYi5jb20ifQ.XEZ-zzPC-nJjC4JqFRuBjBaa0iwYbmwpx4ecVIHorgk",
+            "authenticationToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1vbmtleSIsImp0aSI6IjBmNDZmNWI3LWY3NGItNDU4Ni1iYmJjLTBiODY0ZTBhZWE0MSIsIkltYWdlVXJsIjoiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9jb2xvci85Ni8wMDAwMDAvdXNlci5wbmciLCJMYXQiOiI1NC45NzIyMzciLCJMbmciOiItMi40NjA4NTYwMDAwMDAwMzUyIiwiZXhwIjoxNzg1NTkwMjI5LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjU1NzIyIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1NTcyMiJ9.ijG-bbXsW4WMXlXjNc5n08GzauvENj1tDwdYfbpggKw",
             "failureReason": "0"
         })
     }

@@ -2,6 +2,9 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgbDate, NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup } from '@angular/forms';
 
+// ideally, it is better to write a proper validator
+// but added complexity because the ngb controls are binded to NgbDate & NgbTimeStruct models
+
 @Component({
   selector: 'app-select-date-time',
   templateUrl: './select-date-time.component.html',

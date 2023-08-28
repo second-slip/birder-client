@@ -4,6 +4,8 @@ import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { click, expectText, findEl } from 'src/app/testing/element.spec-helper';
 
+// todo: struggling to test updateFormValue method as cannot find a way to trigger the event handler...
+
 const requiredFields = [
   'date',
   'time'

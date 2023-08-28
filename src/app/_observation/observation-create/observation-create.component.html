@@ -8,7 +8,7 @@
 
             <mat-vertical-stepper [linear]="false" #stepper (selectionChange)="onStepperSelectionChange()">
 
-                <mat-step [stepControl]="addObservationForm && selectSpeciesForm" errorMessage="Section not complete.">
+                <mat-step [stepControl]="addObservationForm && selectSpeciesForm && dateForm" errorMessage="Section not complete.">
                     <ng-template matStepLabel><span class="stepperTop0">Details: what and when?</span></ng-template>
 
                     <app-select-date-time [dateForm]="dateForm"></app-select-date-time>
@@ -71,19 +71,19 @@
                     <ng-template matStepLabel><span class="stepperTop3">Done</span></ng-template>
                     <!-- <div> -->
 
-                    <ng-container *ngIf="!addObservationForm.valid || !selectSpeciesForm.valid">
+                    <ng-container *ngIf="!addObservationForm.valid || !selectSpeciesForm.valid || !dateForm.valid">
                         <p class="alert alert-danger">
                             The form is not complete. You must complete the manadatory fields in Section 1.
                             <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
                         </p>
                     </ng-container>
 
-                    <ng-container *ngIf="addObservationForm.valid && selectSpeciesForm.valid">
+                    <ng-container *ngIf="addObservationForm.valid && selectSpeciesForm.valid && dateForm.valid">
                         <div class="alert alert-info">
                             The form is complete. Choose 'Save' to add your observation.
                             <p>
                                 <button *ngIf="!requesting" type="submit" class="btn btn-primary btn-small"
-                                    [disabled]="!addObservationForm.valid || !addObservationForm.valid">
+                                    [disabled]="!addObservationForm.valid || !addObservationForm.valid || !dateForm.valid">
                                     Save
                                 </button>
                                 <button *ngIf="requesting" type="submit" class="btn btn-primary btn-small" disabled>

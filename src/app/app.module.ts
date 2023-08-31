@@ -14,9 +14,6 @@ import { FutureComponent } from './_home/future/future.component';
 import { HomeComponent } from './_home/home/home.component';
 import { TechnologyComponent } from './_home/technology/technology.component';
 import { MatButtonModule } from '@angular/material/button';
-import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
 import { LayoutNoSidebarComponent } from './_layout/layout-no-sidebar/layout-no-sidebar.component';
@@ -162,15 +159,10 @@ import { SelectDateTimeComponent } from './_observation/select-date-time/select-
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
-    //
     MatIconModule,
-    MatButtonModule,
-    MatDatepickerModule,
+    MatButtonModule, // only used in Notes dialogue (implementation to be changed)
     MatStepperModule,
-    MatNativeDateModule,
-    MatExpansionModule,
-    MatDialogModule,
-    //
+    MatDialogModule, // Notes dialogue (implementation to be changed)
     GoogleMapsModule,
     NgbModule,
     JwtModule.forRoot({
@@ -187,7 +179,6 @@ import { SelectDateTimeComponent } from './_observation/select-date-time/select-
     AuthenticationService,
     HttpInterceptorProviders,
     { provide: RequestCache, useClass: RequestCacheWithMap },
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: LOCALE_ID, useValue: 'en-GB' },
     { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } }
   ],

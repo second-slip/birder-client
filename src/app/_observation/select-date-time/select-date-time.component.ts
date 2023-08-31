@@ -3,7 +3,9 @@ import { NgbDate, NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstra
 import { FormGroup } from '@angular/forms';
 
 // ideally, it is better to write a proper validator
-// but added complexity because the ngb controls are binded to NgbDate & NgbTimeStruct models
+// but added complexity because the ngb controls are binded to NgbDate & NgbTimeStruct types
+
+// todo: might be better to change to Angular Material for better testability
 
 @Component({
   selector: 'app-select-date-time',

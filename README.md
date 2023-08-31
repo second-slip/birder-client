@@ -19,8 +19,22 @@ The complementary server respository is [birder-server](https://github.com/andre
 
 Run a working version in a fully-configured dev environment with Codespaces.
 
+Move to the 'working' or 'codespace' branch.  Click the green 'Code' button, then the 'Codespaces' tab.  Click the '+' to create a codepace.  See the screenshot:
+
 <details>
-  <summary>Step 1:  start the fake API (click for details)</summary>
+  <summary>Step 1:  start the codespace (click for details)</summary>
+  
+  #### Start the codespace
+  Move to the 'working' or 'codespace' branch.  Click the green 'Code' button, then the 'Codespaces' tab.  Click the '+' to create a codepace.   See the screenshot:
+
+  ##### Screenshot
+  ![step-0-screenshot](https://github.com/andrew-stuart-cross/birder-client/assets/35421339/f6444e4b-45fc-41e4-8d5d-6133c7365f86)
+
+</details>
+
+
+<details>
+  <summary>Step 2:  start the fake API (click for details)</summary>
   
   #### Start the fake server
   A fake <a href="https://github.com/andrew-stuart-cross/birder-server">birder-server</a> REST API is provided using a <a href="https://dotnetnorth.org.uk/](https://github.com/typicode/json-server">json-server</a> implementation.  Start the fake server in the terminal with `npm run api`.  It will start on http://localhost:3000.  It will respond with fake data to enable users to sample the website.
@@ -34,7 +48,7 @@ Run a working version in a fully-configured dev environment with Codespaces.
 </details>
 
 <details>
-  <summary>Step 2:  serve the website (click for details)</summary>
+  <summary>Step 3:  serve the website (click for details)</summary>
   
   #### Serve the website
   After starting data server, open a second terminal window and type `npm start` to serve the website.  Then access the website in the browser on `http://localhost:4200`.
@@ -49,7 +63,7 @@ Run a working version in a fully-configured dev environment with Codespaces.
 
 
 <details>
-  <summary>Step 3: use the website (click for details)</summary>
+  <summary>Step 4: use the website (click for details)</summary>
   
   #### Explore the website
   The website will open at the login screen.  Type a fake email address (e.g. 'a@b.com') and a fake password and click the 'Login' button.  The website will open the main home screen for logged in users, which is the 'observations feed'. 

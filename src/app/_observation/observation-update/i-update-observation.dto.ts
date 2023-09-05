@@ -7,7 +7,6 @@ export interface IUpdateObservation {
     observationId: number;
     quantity: number;
     observationDateTime: Date; //| string; --> not when posting to the server...
-    // birdId: number;
     bird: IBirdSummary;
     user: IAuthUser;
     position: IObservationPosition;

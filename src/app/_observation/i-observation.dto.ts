@@ -9,7 +9,7 @@ export interface IObservation {
     observationDateTime: Date | string;
     creationDate: Date | string;
     lastUpdateDate: Date | string;
-    birdId: number;
+    // birdId: number;
     bird: IBirdSummary;
     user: IAuthUser;
     position: IObservationPosition;

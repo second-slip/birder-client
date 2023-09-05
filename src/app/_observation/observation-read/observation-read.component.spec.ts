@@ -6,7 +6,7 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { of } from 'rxjs';
 import { userModel } from 'src/app/testing/auth-test-helpers';
 import { expectText, expectTextToContain, findComponent } from 'src/app/testing/element.spec-helper';
-import { singleObservation, singleObservationAuthUser } from 'src/app/testing/observation-test-helpers';
+import { singleObservationView, singleObservationViewAuthUser } from 'src/app/testing/observation-test-helpers';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { ObservationReadService } from '../observation-read.service';
@@ -126,7 +126,7 @@ describe('ObservationReadComponent', () => {
       await setup(
         {
           isError: of(false),
-          observation: of(singleObservation)
+          observation: of(singleObservationView)
         },
         {
           getAuthUser: of(userModel),
@@ -140,7 +140,7 @@ describe('ObservationReadComponent', () => {
       await setup(
         {
           isError: of(false),
-          observation: of(singleObservation)
+          observation: of(singleObservationView)
         },
         {
           getAuthUser: of(userModel),
@@ -159,7 +159,7 @@ describe('ObservationReadComponent', () => {
       await setup(
         {
           isError: of(false),
-          observation: of(singleObservation)
+          observation: of(singleObservationView)
         },
         {
           getAuthUser: of(userModel),
@@ -167,7 +167,7 @@ describe('ObservationReadComponent', () => {
         '10'
       );
 
-      const expectedTitle = ` ${singleObservation.user.userName}  observed ${singleObservation.quantity}  ${singleObservation.bird.englishName}  ${singleObservation.bird.species}  on `
+      const expectedTitle = ` ${singleObservationView.username}  observed ${singleObservationView.quantity}  ${singleObservationView.englishName}  ${singleObservationView.species}  on `
 
       expectTextToContain(fixture, 'observation-title', expectedTitle);
     }));
@@ -176,7 +176,7 @@ describe('ObservationReadComponent', () => {
       await setup(
         {
           isError: of(false),
-          observation: of(singleObservationAuthUser)
+          observation: of(singleObservationViewAuthUser)
         },
         {
           getAuthUser: of(userModel),
@@ -184,7 +184,7 @@ describe('ObservationReadComponent', () => {
         '10'
       );
 
-      const p = ` You  observed ${singleObservation.quantity}  ${singleObservation.bird.englishName}  ${singleObservation.bird.species}  on `
+      const p = ` You  observed ${singleObservationView.quantity}  ${singleObservationView.englishName}  ${singleObservationView.species}  on `
 
       expectTextToContain(fixture, 'observation-title', p);
     }));
@@ -193,7 +193,7 @@ describe('ObservationReadComponent', () => {
       await setup(
         {
           isError: of(false),
-          observation: of(singleObservation)
+          observation: of(singleObservationView)
         },
         {
           getAuthUser: of(userModel),
@@ -208,7 +208,7 @@ describe('ObservationReadComponent', () => {
       await setup(
         {
           isError: of(false),
-          observation: of(singleObservation)
+          observation: of(singleObservationView)
         },
         {
           getAuthUser: of(userModel),

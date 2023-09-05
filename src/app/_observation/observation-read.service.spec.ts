@@ -1,10 +1,10 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { skip } from 'rxjs';
-import { singleObservationResponse, singleObservation } from '../testing/observation-test-helpers';
-import { IObservation } from './i-observation.dto';
+import { singleObservationResponse, singleObservation, singleObservationView } from '../testing/observation-test-helpers';
 
 import { ObservationReadService } from './observation-read.service';
+import { IObservationViewDto } from './i-observation-view.dto';
 
 const _observationId = '10';
 const _apiUrl = `api/observation?id=${_observationId}`;
@@ -32,7 +32,7 @@ describe('ObservationReadService', () => {
 
   it('should return error if id is null or empty', () => {
 
-    let actualObservation: IObservation | null | undefined;
+    let actualObservation: IObservationViewDto | null | undefined;
     let actualErrorState: boolean | undefined;
 
     // Act
@@ -55,7 +55,7 @@ describe('ObservationReadService', () => {
 
   it('makes an http call', () => {
     // Arrange
-    let actualObservation: IObservation | null | undefined;
+    let actualObservation: IObservationViewDto | null | undefined;
     let actualErrorState: boolean | undefined;
 
     // Act
@@ -74,7 +74,7 @@ describe('ObservationReadService', () => {
     request.flush(singleObservationResponse);
 
     // Assert
-    expect(actualObservation).toEqual(singleObservation);
+    expect(actualObservation).toEqual(singleObservationView);
     expect(actualErrorState).toBeFalse();
   });
 
@@ -89,7 +89,7 @@ describe('ObservationReadService', () => {
     const status = 500;
     const statusText = 'Internal Server Error';
     const errorEvent = new ErrorEvent('API error');
-    let actualObservation: IObservation | null | undefined;
+    let actualObservation: IObservationViewDto | null | undefined;
     let actualErrorState: boolean | undefined;
 
     // Act & Assert

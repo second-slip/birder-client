@@ -6,6 +6,7 @@ import { IObservationNote } from "../_observation-note/i-observation-note.dto";
 import { authUserName, userModel } from "./auth-test-helpers";
 import { ObservationNoteType } from "../_observation-note/observation-note-type";
 import { fakeIBirdSummary } from "./birds-helpers";
+import { IObservationViewDto } from "../_observation/i-observation-view.dto";
 
 export const observationId = 10090;
 export const quantity = 5;
@@ -49,9 +50,47 @@ export const updateObservationModel: IUpdateObservation = {
 }
 
 
+export const singleObservationView: IObservationViewDto = {
+  "observationId": 1,
+  "quantity": 1,
+  "observationDateTime": "2023-09-03T21:27:35.693Z",
+  "birdId": 1006,
+  "species": "Tyto alba",
+  "englishName": "Barn Owl",
+  "username": "monkey",
+  "position": {
+      "observationPositionId": 1,
+      "latitude": 54.972237,
+      "longitude": -2.4608560000000352,
+      "formattedAddress": "8 Fair Hill, Haltwhistle NE49 9EE, UK",
+      "shortAddress": "Haltwhistle, United Kingdom"
+  },
+  "notes": [],
+  "notesCount": 2,
+  "creationDate": "2023-09-03T21:41:35.2300315Z",
+  "lastUpdateDate": "2023-09-03T21:41:35.2300315Z"
+}
 
-
-
+export const singleObservationViewAuthUser: IObservationViewDto = {
+  "observationId": 1,
+  "quantity": 1,
+  "observationDateTime": "2023-09-03T21:27:35.693Z",
+  "birdId": 1006,
+  "species": "Tyto alba",
+  "englishName": "Barn Owl",
+  "username": authUserName,
+  "position": {
+      "observationPositionId": 1,
+      "latitude": 54.972237,
+      "longitude": -2.4608560000000352,
+      "formattedAddress": "8 Fair Hill, Haltwhistle NE49 9EE, UK",
+      "shortAddress": "Haltwhistle, United Kingdom"
+  },
+  "notes": [],
+  "notesCount": 2,
+  "creationDate": "2023-09-03T21:41:35.2300315Z",
+  "lastUpdateDate": "2023-09-03T21:41:35.2300315Z"
+}
 
 
 export const singleObservation: IObservation = {
@@ -60,7 +99,7 @@ export const singleObservation: IObservation = {
   "observationDateTime": "2022-01-29T13:26:26Z",
   "creationDate": "2022-01-30T17:26:56.6266781Z",
   "lastUpdateDate": "2022-01-30T17:26:56.6266781Z",
-  "birdId": 1177,
+  // "birdId": 1177,
   "bird": {
     "birdId": 1177,
     "species": "Erithacus rubecula",
@@ -105,7 +144,7 @@ export const singleObservationAuthUser: IObservation = {
   "observationDateTime": "2022-01-29T13:26:26Z",
   "creationDate": "2022-01-30T17:26:56.6266781Z",
   "lastUpdateDate": "2022-01-30T17:26:56.6266781Z",
-  "birdId": 1177,
+  // "birdId": 1177,
   "bird": {
     "birdId": 1177,
     "species": "Erithacus rubecula",

@@ -73,7 +73,7 @@ export class ObservationCreateComponent implements OnInit {
   private _mapToModel(): ICreateObservation {
     const quantity = <Number>(this.addObservationForm.value.quantity);
     const dateTime = <Date>(new Date(this.dateForm.value.observationDateTime));
-    const selectedBird = <IBirdSummary>(this.selectSpeciesForm.value);
+    const selectedBird = <IBirdSummary>(this.selectSpeciesForm.value.bird);
     const position = <IObservationPosition>{
       latitude: this._mapComponent.latitude,
       longitude: this._mapComponent.longitude,

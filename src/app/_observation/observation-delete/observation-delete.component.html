@@ -6,7 +6,7 @@
 
             <h1>Delete Observation Report</h1>
 
-            <ng-container *ngIf="observation.user.userName !== authUser.userName">
+            <ng-container *ngIf="observation.username !== authUser.userName">
                 <ngb-alert [dismissible]="false" type="danger">
                     <strong>Whoops!</strong>&nbsp;Only the owner is allowed to delete their record.<br>
                     <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button"
@@ -14,12 +14,12 @@
                 </ngb-alert>
             </ng-container>
 
-            <ng-container *ngIf="observation.user.userName === authUser.userName">
+            <ng-container *ngIf="observation.username === authUser.userName">
 
                 <p>You observed <b>{{observation.quantity}}</b> <a
-                        routerLink="/bird/detail/{{observation.bird.birdId}}">
-                        {{observation.bird.englishName}}
-                    </a> <small><em> {{ observation.bird.species }} </em></small>
+                        routerLink="/bird/detail/{{observation.birdId}}">
+                        {{observation.englishName}}
+                    </a> <small><em> {{ observation.species }} </em></small>
                     on {{ observation.observationDateTime | date: 'EEEE, d MMMM yyyy' }}.
                 </p>
 

@@ -19,6 +19,7 @@
   "/Recording?\\species=:species": "/recordings",
   "/observation/create": "/createobservation",
   "/observation/update?:id": "/updateobservation",
-  "/observation/delete?:id": "/deleteoobservation",
-  "/observation?:id": "/observation"
+  "/observation/delete?:id": "/deleteobservation",
+  "/observation?:id": "/observation",
+  "/observationread?:id": "/observationread"
 }

@@ -6,11 +6,11 @@
 
             <h1>Observation Report</h1>
 
-            <p data-testid="observation-title"><a routerLink="/user/{{observation.user.userName}}">
-                    {{ observation.user.userName === authUser.userName ? 'You' : observation.user.userName }}
-                </a> observed {{ observation.quantity }} <a routerLink="/bird/detail/{{observation.bird.birdId}}">
-                    {{ observation.bird.englishName }}
-                </a> <small><em> {{ observation.bird.species }} </em></small>
+            <p data-testid="observation-title"><a routerLink="/user/{{observation.username}}">
+                    {{ observation.username === authUser.userName ? 'You' : observation.username }}
+                </a> observed {{ observation.quantity }} <a routerLink="/bird/detail/{{observation.birdId}}">
+                    {{ observation.englishName }}
+                </a> <small><em> {{ observation.species }} </em></small>
                 on {{ observation.observationDateTime | date: 'EEEE, d MMMM yyyy \'at\' HH:mm' }}.
             </p>
 
@@ -97,7 +97,7 @@
 
 
             <app-navigation-menu [observationId]="observation.observationId"
-                [isRecordOwner]="observation.user.userName===authUser.userName"></app-navigation-menu>
+                [isRecordOwner]="observation.username===authUser.userName"></app-navigation-menu>
 
         </ng-container>
 

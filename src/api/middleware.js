@@ -17,7 +17,6 @@ module.exports = (req, res, next) => {
     }
 
     // observation api
-
     if (req.method === 'GET' && req.originalUrl === '/observation') {
 
         return res.jsonp(
@@ -27,7 +26,7 @@ module.exports = (req, res, next) => {
                 observationDateTime: new Date(),
                 creationDate: new Date(),
                 lastUpdateDate: new Date(),
-                birdId: 1005,
+                // birdId: 1005,
                 bird: {
                     birdId: 1005,
                     species: "Puffinus mauretanicus",
@@ -52,19 +51,89 @@ module.exports = (req, res, next) => {
                     defaultLocationLatitude: 53.44244782183897,
                     defaultLocationLongitude: -2.2773529647976964
                 },
+                "notes": []
+            }
+        )
+    }
+
+    if (req.method === 'GET' && req.originalUrl === '/observationread') {
+
+        return res.jsonp(
+            {
+                "observationId": 1,
+                "quantity": 1,
+                "observationDateTime": "2023-09-03T21:27:35.693Z",
+                "birdId": 1006,
+                "species": "Tyto alba",
+                "englishName": "Barn Owl",
+                "username": "monkey",
+                "position": {
+                    "observationPositionId": 1,
+                    "latitude": 54.972237,
+                    "longitude": -2.4608560000000352,
+                    "formattedAddress": "8 Fair Hill, Haltwhistle NE49 9EE, UK",
+                    "shortAddress": "Haltwhistle, United Kingdom"
+                },
                 "notes": [
                     {
-                        id: 24,
-                        noteType: "General",
-                        note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                        "id": 1,
+                        "noteType": "General",
+                        "note": "Hello"
                     },
                     {
-                        id: 25,
-                        noteType: "General",
-                        note: "yu"
+                        "id": 2,
+                        "noteType": "Vocalisation",
+                        "note": "Noisy so-and-so"
                     }
-                ]
+                ],
+                "notesCount": 2,
+                "creationDate": "2023-09-03T21:41:35.2300315Z",
+                "lastUpdateDate": "2023-09-03T21:41:35.2300315Z"
             }
+            // {
+            //     observationId: 10094,
+            //     quantity: 1,
+            //     observationDateTime: new Date(),
+            //     creationDate: new Date(),
+            //     lastUpdateDate: new Date(),
+            //     // birdId: 1005,
+            //     bird: {
+            //         birdId: 1005,
+            //         species: "Puffinus mauretanicus",
+            //         englishName: "Balearic Shearwater",
+            //         populationSize: "1,000 - 10,000 Birds",
+            //         btoStatusInBritain: "Passage Visitor",
+            //         thumbnailUrl: null,
+            //         conservationStatus: "Red",
+            //         conservationListColourCode: "Red",
+            //         birderStatus: 0
+            //     },
+            //     "position": {
+            //         observationPositionId: 78,
+            //         latitude: 53.44244782183897,
+            //         longitude: -2.2773529647976964,
+            //         formattedAddress: "581A Wilbraham Rd, Chorlton-cum-Hardy, Manchester M21 9AF, UK",
+            //         shortAddress: "Manchester, United Kingdom"
+            //     },
+            //     "user": {
+            //         userName: "monkey",
+            //         avatar: "https://img.icons8.com/color/96/000000/user.png",
+            //         defaultLocationLatitude: 53.44244782183897,
+            //         defaultLocationLongitude: -2.2773529647976964
+            //     },
+            //     "notes": [
+            //         {
+            //             id: 24,
+            //             noteType: "General",
+            //             note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            //         },
+            //         {
+            //             id: 25,
+            //             noteType: "General",
+            //             note: "yu"
+            //         }
+            //     ]
+            // }
         )
     }
 

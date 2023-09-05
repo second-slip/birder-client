@@ -5,13 +5,13 @@
         <h1>Update Observation Report</h1>
 
         <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
-            <ngb-alert [dismissible]="false" type="danger" *ngIf="observation.user.userName !== authUser.userName">
+            <ngb-alert [dismissible]="false" type="danger" *ngIf="observation.username !== authUser.userName">
                 <strong>Whoops!</strong>&nbsp;Only the owner is allowed to delete their record.<br>
                 <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="redirect()">Go
                     back</button>
             </ngb-alert>
 
-            <ng-container *ngIf="observation.user.userName === authUser.userName">
+            <ng-container *ngIf="observation.username === authUser.userName">
 
                 <form [formGroup]="updateObservationForm" novalidate (ngSubmit)="onSubmit()">
                     <mat-vertical-stepper [linear]="false" #stepper (selectionChange)="onStepperSelectionChange()">
@@ -71,7 +71,11 @@
                         <mat-step [optional]="true">
                             <ng-template matStepLabel><span class="stepperTop2">Notes</span></ng-template>
 
-                            <app-edit-notes [notes]="observation.notes"></app-edit-notes>
+                            <div class="alert alert-info">
+                                <strong>Whoops!</strong> The Notes functionality is currently not available.  This capability is being redesigned.<br>
+                            </div>
+
+                            <!-- <app-edit-notes [notes]="observation.notes"></app-edit-notes> -->
 
                             <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
                             <button matStepperNext type="button" class="btn btn-light btn-small">Next</button>

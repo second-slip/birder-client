@@ -6,16 +6,12 @@ import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
 import { IObservationPosition } from 'src/app/_map/i-observation-position.dto';
 import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
-import { EditNotesComponent } from 'src/app/_observation-note/edit-notes/edit-notes.component';
-import { IObservationNote } from 'src/app/_observation-note/i-observation-note.dto';
 import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { BirdsListValidator } from 'src/app/_validators';
 import { IObservation } from '../i-observation.dto';
 import { ObservationCrudService } from '../observation-crud.service';
 import { IUpdateObservation } from './i-update-observation.dto';
-
-
 // todo: This component needs a major refactor...
 
 @Component({
@@ -28,18 +24,20 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
   private _observationId: string;
   private _subscription = new Subject();
   public requesting: boolean;
-  public observation: IObservation
+
+  public observation: IUpdateObservation
   public selectSpeciesForm: FormGroup;
   public updateObservationForm: FormGroup;
-  public errorObject: any = null;
+  //
+  public errorObject: any = null;   // ????
 
   public dateForm: FormGroup;
 
   @ViewChild(ReadWriteMapComponent)
   private _mapComponent: ReadWriteMapComponent;
 
-  @ViewChild(EditNotesComponent)
-  private _notesComponent: EditNotesComponent;
+  // @ViewChild(EditNotesComponent)
+  // private _notesComponent: EditNotesComponent;
 
   constructor(readonly _authService: AuthenticationService
     , private readonly _router: Router
@@ -140,7 +138,6 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
   }
 
   private _mapToModel(): IUpdateObservation {
-
     const quantity = <Number>(this.updateObservationForm.value.quantity);
     const dateTime = <Date>(new Date(this.dateForm.value.observationDateTime));
     const selectedBird = <IBirdSummary>(this.selectSpeciesForm.value);
@@ -151,21 +148,20 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
       shortAddress: this._mapComponent.shortAddress
     };
 
-    const notes: IObservationNote[] = this._notesComponent.notes.map(note => (
-      { // One can also get the updated notes from this.obervation (object is passed by reference to notes child component)
-        id: 0,
-        noteType: note.noteType,
-        note: note.note
-      }));
+    // const notes: IObservationNote[] = this._notesComponent.notes.map(note => (
+    //   { // One can also get the updated notes from this.obervation (object is passed by reference to notes child component)
+    //     id: 0,
+    //     noteType: note.noteType,
+    //     note: note.note
+    //   }));
 
     const observation = <IUpdateObservation>{
       observationId: this.observation.observationId,
       quantity: quantity,
       observationDateTime: dateTime,
       bird: selectedBird,
-      user: this.observation.user,
+      username: this.observation.username,
       position: position,
-      notes: notes,
     }
 
     return observation;

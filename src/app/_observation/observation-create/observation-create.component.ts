@@ -31,8 +31,8 @@ export class ObservationCreateComponent implements OnInit {
   @ViewChild(ReadWriteMapComponent)
   private _mapComponent: ReadWriteMapComponent;
 
-  @ViewChild(AddNotesComponent)
-  private _notesComponent: AddNotesComponent;
+  // @ViewChild(AddNotesComponent)
+  // private _notesComponent: AddNotesComponent;
 
   constructor(private readonly _router: Router
     , private readonly _formBuilder: FormBuilder
@@ -80,19 +80,19 @@ export class ObservationCreateComponent implements OnInit {
       formattedAddress: this._mapComponent.formattedAddress,
       shortAddress: this._mapComponent.shortAddress
     };
-    const notes: IObservationNote[] = this._notesComponent.notes.map(note => (
-      { // One can also get the updated notes from this.obervation (object is passed by reference to notes child component)
-        id: 0,
-        noteType: note.noteType, //   ObservationNoteType[note.noteType as keyof typeof ObservationNoteType],
-        note: note.note
-      }));
+    // const notes: IObservationNote[] = this._notesComponent.notes.map(note => (
+    //   { // One can also get the updated notes from this.obervation (object is passed by reference to notes child component)
+    //     id: 0,
+    //     noteType: note.noteType, //   ObservationNoteType[note.noteType as keyof typeof ObservationNoteType],
+    //     note: note.note
+    //   }));
 
     const observation = <ICreateObservation>{
       quantity: quantity,
       observationDateTime: dateTime,
       bird: selectedBird,
       position: position,
-      notes: notes,
+      // notes: notes,
     }
     return observation;
   }

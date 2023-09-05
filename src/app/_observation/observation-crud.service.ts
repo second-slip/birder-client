@@ -16,25 +16,26 @@ export class ObservationCrudService {
 
   constructor(private readonly _http: HttpClient) { }
 
-  public getObservation(id: string): Observable<IObservation> {
+  public getObservation(id: string): Observable<IUpdateObservation> {
     const options = id ?
       { params: new HttpParams().append('id', id.toString()) } : {};
 
-    return this._http.get<IObservation>('api/observation', options);
+    return this._http.get<IUpdateObservation>('api/observationread/update', options);
   }
 
-  public addObservation(model: ICreateObservation): Observable<IObservation> {
-    return this._http.post<IObservation>('api/observation/create', model, httpOptions);
+  public addObservation(model: ICreateObservation): Observable<{ observationId: string }> {
+    return this._http.post<{ observationId: string }>('api/observation/create', model, httpOptions);
   }
 
-  public updateObservation(id: string, viewModel: IUpdateObservation): Observable<IObservation> {
+  public updateObservation(id: string, viewModel: IUpdateObservation): Observable<{ observationId: string }> {
     const options = id ?
       { params: new HttpParams().set('id', id.toString()) } :
       { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
-    return this._http.put<IObservation>('api/observation/update', viewModel, options);
+    return this._http.put<{ observationId: string }>('api/observation/update', viewModel, options);
   }
 
+  // todo: return same object as above
   public deleteObservation(id: number): Observable<number> {
     const options = id ? { params: new HttpParams().set('id', id.toString()) } : {};
 

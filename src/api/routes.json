@@ -20,6 +20,6 @@
   "/observation/create": "/createobservation",
   "/observation/update?:id": "/updateobservation",
   "/observation/delete?:id": "/deleteobservation",
-  "/observation?:id": "/observation",
+  "/observationread/update?:id": "/observation",
   "/observationread?:id": "/observationread"
 }

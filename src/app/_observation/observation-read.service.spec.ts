@@ -1,13 +1,13 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { skip } from 'rxjs';
-import { singleObservationResponse, singleObservation, singleObservationView } from '../testing/observation-test-helpers';
+import { singleObservationResponse, singleObservation, singleObservationView, singleObservationViewResponse } from '../testing/observation-test-helpers';
 
 import { ObservationReadService } from './observation-read.service';
 import { IObservationViewDto } from './i-observation-view.dto';
 
 const _observationId = '10';
-const _apiUrl = `api/observation?id=${_observationId}`;
+const _apiUrl = `api/observationread?id=${_observationId}`;
 
 describe('ObservationReadService', () => {
   let service: ObservationReadService;
@@ -71,7 +71,7 @@ describe('ObservationReadService', () => {
       });
 
     const request = controller.expectOne(_apiUrl);
-    request.flush(singleObservationResponse);
+    request.flush(singleObservationViewResponse);
 
     // Assert
     expect(actualObservation).toEqual(singleObservationView);

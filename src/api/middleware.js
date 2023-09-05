@@ -21,37 +21,30 @@ module.exports = (req, res, next) => {
 
         return res.jsonp(
             {
-                observationId: 10094,
-                quantity: 1,
-                observationDateTime: new Date(),
-                creationDate: new Date(),
-                lastUpdateDate: new Date(),
-                // birdId: 1005,
-                bird: {
-                    birdId: 1005,
-                    species: "Puffinus mauretanicus",
-                    englishName: "Balearic Shearwater",
-                    populationSize: "1,000 - 10,000 Birds",
-                    btoStatusInBritain: "Passage Visitor",
-                    thumbnailUrl: null,
-                    conservationStatus: "Red",
-                    conservationListColourCode: "Red",
-                    birderStatus: 0
+                "observationId": 1,
+                "quantity": 1,
+                "observationDateTime": "2023-09-03T21:27:35.693Z",
+                "username": "monkey",
+                "bird": {
+                    "birdId": 1006,
+                    "species": "Tyto alba",
+                    "englishName": "Barn Owl",
+                    "populationSize": "1,000 - 10,000 Pairs",
+                    "btoStatusInBritain": "Resident Breeder",
+                    "thumbnailUrl": null,
+                    "conservationStatus": "Green",
+                    "conservationListColourCode": "Green",
+                    "birderStatus": 0
                 },
                 "position": {
-                    observationPositionId: 78,
-                    latitude: 53.44244782183897,
-                    longitude: -2.2773529647976964,
-                    formattedAddress: "581A Wilbraham Rd, Chorlton-cum-Hardy, Manchester M21 9AF, UK",
-                    shortAddress: "Manchester, United Kingdom"
+                    "observationPositionId": 1,
+                    "latitude": 54.972237,
+                    "longitude": -2.4608560000000352,
+                    "formattedAddress": "8 Fair Hill, Haltwhistle NE49 9EE, UK",
+                    "shortAddress": "Haltwhistle, United Kingdom"
                 },
-                "user": {
-                    userName: "monkey",
-                    avatar: "https://img.icons8.com/color/96/000000/user.png",
-                    defaultLocationLatitude: 53.44244782183897,
-                    defaultLocationLongitude: -2.2773529647976964
-                },
-                "notes": []
+                "creationDate": "2023-09-03T21:41:35.2300315Z",
+                "lastUpdateDate": "2023-09-03T21:41:35.2300315Z"
             }
         )
     }
@@ -90,72 +83,14 @@ module.exports = (req, res, next) => {
                 "creationDate": "2023-09-03T21:41:35.2300315Z",
                 "lastUpdateDate": "2023-09-03T21:41:35.2300315Z"
             }
-            // {
-            //     observationId: 10094,
-            //     quantity: 1,
-            //     observationDateTime: new Date(),
-            //     creationDate: new Date(),
-            //     lastUpdateDate: new Date(),
-            //     // birdId: 1005,
-            //     bird: {
-            //         birdId: 1005,
-            //         species: "Puffinus mauretanicus",
-            //         englishName: "Balearic Shearwater",
-            //         populationSize: "1,000 - 10,000 Birds",
-            //         btoStatusInBritain: "Passage Visitor",
-            //         thumbnailUrl: null,
-            //         conservationStatus: "Red",
-            //         conservationListColourCode: "Red",
-            //         birderStatus: 0
-            //     },
-            //     "position": {
-            //         observationPositionId: 78,
-            //         latitude: 53.44244782183897,
-            //         longitude: -2.2773529647976964,
-            //         formattedAddress: "581A Wilbraham Rd, Chorlton-cum-Hardy, Manchester M21 9AF, UK",
-            //         shortAddress: "Manchester, United Kingdom"
-            //     },
-            //     "user": {
-            //         userName: "monkey",
-            //         avatar: "https://img.icons8.com/color/96/000000/user.png",
-            //         defaultLocationLatitude: 53.44244782183897,
-            //         defaultLocationLongitude: -2.2773529647976964
-            //     },
-            //     "notes": [
-            //         {
-            //             id: 24,
-            //             noteType: "General",
-            //             note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-            //         },
-            //         {
-            //             id: 25,
-            //             noteType: "General",
-            //             note: "yu"
-            //         }
-            //     ]
-            // }
         )
     }
 
 
     if (req.method === 'POST' && req.originalUrl === '/createobservation') {
         return res.jsonp({
-            observationId: 10094, // an object with this id exists in 'observations'
-            quantity: req.body.quantity,
-            observationDateTime: req.body.observationDateTime,
-            creationDate: new Date(),
-            lastUpdateDate: new Date(),
-            birdId: req.body.bird.birdId,
-            bird: req.body.bird,
-            user: {
-                userName: 'Andrew',
-                avatar: 'https://img.icons8.com/color/96/000000/user.png',
-                defaultLocationLatitude: 54.972237,
-                defaultLocationLongitude: -2.4608560000000352
-            },
-            position: req.body.position,
-            notes: req.body.notes
-        })
+            "observationId": 10094
+        });
     }
 
     if (req.method === 'DELETE' && req.originalUrl === '/deleteobservation') {
@@ -165,18 +100,11 @@ module.exports = (req, res, next) => {
     }
 
     if (req.method === 'PUT' && req.originalUrl === '/updateobservation') {
+        // return res.jsonp({
+        //     observationId: req.body.observationId, // an object with this id 10090 exists in 'observations'
         return res.jsonp({
-            observationId: req.body.observationId, // an object with this id 10090 exists in 'observations'
-            quantity: req.body.quantity,
-            observationDateTime: req.body.observationDateTime,
-            creationDate: req.body.creationDate,
-            lastUpdateDate: new Date(),
-            birdId: req.body.bird.birdId,
-            bird: req.body.bird,
-            user: req.body.user,
-            position: req.body.position,
-            notes: req.body.notes
-        })
+            "observationId": req.body.observationId
+        });
     }
 
     if (req.method === 'POST' && req.originalUrl === '/account/register') {

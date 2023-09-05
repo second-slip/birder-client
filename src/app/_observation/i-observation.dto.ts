@@ -1,7 +1,5 @@
-import { IAuthUser } from "../_auth/i-auth-user.dto";
 import { IBirdSummary } from "../_bird/i-bird-summary.dto";
 import { IObservationPosition } from "../_map/i-observation-position.dto";
-import { IObservationNote } from "../_observation-note/i-observation-note.dto";
 
 export interface IObservation {
     observationId: number;
@@ -11,7 +9,9 @@ export interface IObservation {
     lastUpdateDate: Date | string;
     // birdId: number;
     bird: IBirdSummary;
-    user: IAuthUser;
+    username: string;
+    // user: IAuthUser;
     position: IObservationPosition;
-    notes: IObservationNote[];
+
+    // notes: IObservationNote[];
 }

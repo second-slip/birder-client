@@ -9,7 +9,7 @@ import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-ma
 import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { BirdsListValidator } from 'src/app/_validators';
-import { IObservation } from '../i-observation.dto';
+// import { IObservation } from '../i-observation.dto';
 import { ObservationCrudService } from '../observation-crud.service';
 import { IUpdateObservation } from './i-update-observation.dto';
 // todo: This component needs a major refactor...
@@ -85,7 +85,7 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _createForms(observation: IObservation): void {
+  private _createForms(observation: IUpdateObservation): void {
     try {
       this.selectSpeciesForm = this._formBuilder.group({
         bird: new FormControl(observation.bird, Validators.compose([

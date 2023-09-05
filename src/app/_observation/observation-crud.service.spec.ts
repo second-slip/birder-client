@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { createObservationModel, observationId, singleObservation, singleObservationResponse, updateObservationModel } from '../testing/observation-test-helpers';
-import { IObservation } from './i-observation.dto';
+import { createObservationModel, createdResponse, observationId, singleObservation, singleObservationResponse, updateObservationModel, updatedResponse } from '../testing/observation-test-helpers';
 import { ObservationCrudService } from './observation-crud.service';
+import { IUpdateObservation } from './observation-update/i-update-observation.dto';
 
 describe('ObservationCrudService', () => {
   let service: ObservationCrudService;
@@ -26,7 +26,7 @@ describe('ObservationCrudService', () => {
   });
 
   it('checks it gets the observation', () => {
-    let result: IObservation | null | undefined;
+    let result: IUpdateObservation | null | undefined;
     service.getObservation(observationId.toString())
       .subscribe((otherResult) => {
         result = otherResult;
@@ -34,7 +34,7 @@ describe('ObservationCrudService', () => {
 
     const request = controller.expectOne({
       method: 'GET',
-      url: `api/observation?id=${observationId}`
+      url: `api/observationread/update?id=${observationId}`
     });
     request.flush(singleObservationResponse);
 
@@ -42,7 +42,7 @@ describe('ObservationCrudService', () => {
   });
 
   it('check it adds the observation', () => {
-    let result: IObservation | null | undefined;
+    let result: { observationId: string} | null | undefined;
 
     service.addObservation(createObservationModel).subscribe((otherResult) => {
       result = otherResult;
@@ -53,13 +53,13 @@ describe('ObservationCrudService', () => {
       url: 'api/observation/create',
     });
     expect(request.request.body).toEqual(createObservationModel);
-    request.flush(singleObservation);
+    request.flush(createdResponse);
 
-    expect(result).toEqual(singleObservation);
+    expect(result).toEqual(createdResponse);
   });
 
   it('check it updates the observation', () => {
-    let result: IObservation | null | undefined;
+    let result: { observationId: string} | null | undefined;
     service.updateObservation(observationId.toString(), updateObservationModel).subscribe((otherResult) => {
       result = otherResult;
     });
@@ -69,9 +69,9 @@ describe('ObservationCrudService', () => {
       url: `api/observation/update?id=${observationId}`,
     });
 
-    request.flush(singleObservationResponse);
+    request.flush(updatedResponse);
 
-    expect(result).toEqual(singleObservation);
+    expect(result).toEqual(updatedResponse);
   });
 
   it('check it deletes the observation', () => {

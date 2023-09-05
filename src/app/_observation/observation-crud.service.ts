@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IObservation } from './i-observation.dto';
 import { ICreateObservation } from './observation-create/i-create-observation.dto';
 import { IUpdateObservation } from './observation-update/i-update-observation.dto';
 

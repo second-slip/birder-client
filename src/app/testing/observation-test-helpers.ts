@@ -1,5 +1,4 @@
 import { IObservationPosition } from "../_map/i-observation-position.dto";
-import { IObservation } from "../_observation/i-observation.dto";
 import { ICreateObservation } from "../_observation/observation-create/i-create-observation.dto";
 import { IUpdateObservation } from "../_observation/observation-update/i-update-observation.dto";
 import { IObservationNote } from "../_observation-note/i-observation-note.dto";
@@ -36,7 +35,6 @@ export const createObservationModel: ICreateObservation = {
   observationDateTime: observationDateTime, //| string; --> not when posting to the server...
   bird: fakeIBirdSummary,
   position: observationPosition,
-  notes: notes
 }
 
 export const updateObservationModel: IUpdateObservation = {
@@ -44,10 +42,19 @@ export const updateObservationModel: IUpdateObservation = {
   quantity: quantity,
   observationDateTime: observationDateTime, //| string, --> not when posting to the server...
   bird: fakeIBirdSummary,
-  user: userModel,
+  username: userModel.userName,
   position: observationPosition,
-  notes: notes
+  creationDate: '',
+  lastUpdateDate: ''
 }
+
+export const createdResponse: { observationId: string } = {
+  "observationId": "10094"
+};
+
+export const updatedResponse: { observationId: string } = {
+  "observationId": "10094"
+};
 
 
 export const singleObservationView: IObservationViewDto = {
@@ -59,11 +66,11 @@ export const singleObservationView: IObservationViewDto = {
   "englishName": "Barn Owl",
   "username": "monkey",
   "position": {
-      "observationPositionId": 1,
-      "latitude": 54.972237,
-      "longitude": -2.4608560000000352,
-      "formattedAddress": "8 Fair Hill, Haltwhistle NE49 9EE, UK",
-      "shortAddress": "Haltwhistle, United Kingdom"
+    "observationPositionId": 1,
+    "latitude": 54.972237,
+    "longitude": -2.4608560000000352,
+    "formattedAddress": "8 Fair Hill, Haltwhistle NE49 9EE, UK",
+    "shortAddress": "Haltwhistle, United Kingdom"
   },
   "notes": [],
   "notesCount": 2,
@@ -80,11 +87,11 @@ export const singleObservationViewAuthUser: IObservationViewDto = {
   "englishName": "Barn Owl",
   "username": authUserName,
   "position": {
-      "observationPositionId": 1,
-      "latitude": 54.972237,
-      "longitude": -2.4608560000000352,
-      "formattedAddress": "8 Fair Hill, Haltwhistle NE49 9EE, UK",
-      "shortAddress": "Haltwhistle, United Kingdom"
+    "observationPositionId": 1,
+    "latitude": 54.972237,
+    "longitude": -2.4608560000000352,
+    "formattedAddress": "8 Fair Hill, Haltwhistle NE49 9EE, UK",
+    "shortAddress": "Haltwhistle, United Kingdom"
   },
   "notes": [],
   "notesCount": 2,
@@ -93,10 +100,10 @@ export const singleObservationViewAuthUser: IObservationViewDto = {
 }
 
 
-export const singleObservation: IObservation = {
+export const singleObservation: IUpdateObservation = {
   "observationId": 10090,
   "quantity": 1,
-  "observationDateTime": "2022-01-29T13:26:26Z",
+  "observationDateTime": observationDateTime,
   "creationDate": "2022-01-30T17:26:56.6266781Z",
   "lastUpdateDate": "2022-01-30T17:26:56.6266781Z",
   "bird": {
@@ -117,30 +124,13 @@ export const singleObservation: IObservation = {
     "formattedAddress": "Sale Water Park, Rifle Rd, Sale M33 2LX, UK",
     "shortAddress": "Sale, United Kingdom"
   },
-  "user": {
-    "userName": "Andrew",
-    "avatar": "https://img.icons8.com/color/96/000000/user.png",
-    "defaultLocationLatitude": 53.4425934,
-    "defaultLocationLongitude": -2.2769052
-  },
-  "notes": [
-    {
-      "id": 6,
-      "noteType": ObservationNoteType["General"],
-      "note": "Observed from the Broad Ees Dole hide."
-    },
-    {
-      "id": 7,
-      "noteType": ObservationNoteType["Weather"],
-      "note": "Clear winter day"
-    }
-  ]
+  "username": "Andrew"
 }
 
-export const singleObservationAuthUser: IObservation = {
+export const singleObservationAuthUser: IUpdateObservation = {
   "observationId": 10090,
   "quantity": 1,
-  "observationDateTime": "2022-01-29T13:26:26Z",
+  "observationDateTime":observationDateTime,
   "creationDate": "2022-01-30T17:26:56.6266781Z",
   "lastUpdateDate": "2022-01-30T17:26:56.6266781Z",
   "bird": {
@@ -161,30 +151,13 @@ export const singleObservationAuthUser: IObservation = {
     "formattedAddress": "Sale Water Park, Rifle Rd, Sale M33 2LX, UK",
     "shortAddress": "Sale, United Kingdom"
   },
-  "user": {
-    "userName": authUserName,
-    "avatar": "https://img.icons8.com/color/96/000000/user.png",
-    "defaultLocationLatitude": 53.4425934,
-    "defaultLocationLongitude": -2.2769052
-  },
-  "notes": [
-    {
-      "id": 6,
-      "noteType": ObservationNoteType["General"],
-      "note": "Observed from the Broad Ees Dole hide."
-    },
-    {
-      "id": 7,
-      "noteType": ObservationNoteType["Weather"],
-      "note": "Clear winter day"
-    }
-  ]
+  "username": authUserName
 }
 
 export const singleObservationResponse = {
   "observationId": 10090,
   "quantity": 1,
-  "observationDateTime": "2022-01-29T13:26:26Z",
+  "observationDateTime": observationDateTime,
   "creationDate": "2022-01-30T17:26:56.6266781Z",
   "lastUpdateDate": "2022-01-30T17:26:56.6266781Z",
   "bird": {
@@ -205,24 +178,7 @@ export const singleObservationResponse = {
     "formattedAddress": "Sale Water Park, Rifle Rd, Sale M33 2LX, UK",
     "shortAddress": "Sale, United Kingdom"
   },
-  "user": {
-    "userName": "Andrew",
-    "avatar": "https://img.icons8.com/color/96/000000/user.png",
-    "defaultLocationLatitude": 53.4425934,
-    "defaultLocationLongitude": -2.2769052
-  },
-  "notes": [
-    {
-      "id": 6,
-      "noteType": "General",
-      "note": "Observed from the Broad Ees Dole hide."
-    },
-    {
-      "id": 7,
-      "noteType": "Weather",
-      "note": "Clear winter day"
-    }
-  ]
+  "username": "Andrew",
 };
 
 export const singleObservationViewResponse = {
@@ -234,11 +190,11 @@ export const singleObservationViewResponse = {
   "englishName": "Barn Owl",
   "username": "monkey",
   "position": {
-      "observationPositionId": 1,
-      "latitude": 54.972237,
-      "longitude": -2.4608560000000352,
-      "formattedAddress": "8 Fair Hill, Haltwhistle NE49 9EE, UK",
-      "shortAddress": "Haltwhistle, United Kingdom"
+    "observationPositionId": 1,
+    "latitude": 54.972237,
+    "longitude": -2.4608560000000352,
+    "formattedAddress": "8 Fair Hill, Haltwhistle NE49 9EE, UK",
+    "shortAddress": "Haltwhistle, United Kingdom"
   },
   "notes": [],
   "notesCount": 2,

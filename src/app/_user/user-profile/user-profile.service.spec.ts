@@ -4,7 +4,7 @@ import { username, userProfileModel } from 'src/app/testing/userProfile-tests-he
 import { IUserProfile } from './i-user-profile.dto';
 import { UserProfileService } from './user-profile.service';
 
-const apiUrl = `api/UserProfile?requestedUsername=${username}`;
+const apiUrl = `api/userprofile?requestedusername=${username}`;
 
 describe('UserProfileService', () => {
   let service: UserProfileService;

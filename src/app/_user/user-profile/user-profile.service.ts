@@ -27,9 +27,9 @@ export class UserProfileService implements OnDestroy {
     }
 
     const options = username ?
-      { params: new HttpParams().set('requestedUsername', username) } : {};
+      { params: new HttpParams().set('requestedusername', username) } : {};
 
-    this._httpClient.get<IUserProfile>('api/UserProfile', options)
+    this._httpClient.get<IUserProfile>('api/userprofile', options)
       .pipe(takeUntil(this._subscription))
       .subscribe({
         next: (response) => { this._profile$.next(response); },

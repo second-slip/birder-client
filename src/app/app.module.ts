@@ -13,7 +13,6 @@ import { FeaturesComponent } from './_home/features/features.component';
 import { FutureComponent } from './_home/future/future.component';
 import { HomeComponent } from './_home/home/home.component';
 import { TechnologyComponent } from './_home/technology/technology.component';
-import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
 import { LayoutNoSidebarComponent } from './_layout/layout-no-sidebar/layout-no-sidebar.component';
@@ -49,12 +48,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { ReadOnlyMapComponent } from './_map/read-only-map/read-only-map.component';
 import { ReadWriteMapComponent } from './_map/read-write-map/read-write-map.component';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { AddNoteDialogComponent } from './_observation-note/add-note-dialog/add-note-dialog.component';
-import { AddNotesComponent } from './_observation-note/add-notes/add-notes.component';
-import { EditNoteDialogComponent } from './_observation-note/edit-note-dialog/edit-note-dialog.component';
-import { EditNotesComponent } from './_observation-note/edit-notes/edit-notes.component';
 import { ViewOnlyNotesComponent } from './_observation-note/view-notes/view-only-notes.component';
-import { MatDialogModule } from '@angular/material/dialog';
 import { ObservationReadComponent } from './_observation/observation-read/observation-read.component';
 import { NavigationMenuComponent } from './_observation/navigation-menu/navigation-menu.component';
 import { ObservationDeleteComponent } from './_observation/observation-delete/observation-delete.component';
@@ -122,10 +116,6 @@ import { SelectDateTimeComponent } from './_observation/select-date-time/select-
     ReadOnlyMapComponent,
     ReadWriteMapComponent,
     ViewOnlyNotesComponent,
-    AddNotesComponent,
-    AddNoteDialogComponent,
-    EditNoteDialogComponent,
-    EditNotesComponent,
     ObservationReadComponent,
     NavigationMenuComponent,
     ObservationDeleteComponent,
@@ -160,9 +150,7 @@ import { SelectDateTimeComponent } from './_observation/select-date-time/select-
     BrowserModule,
     BrowserAnimationsModule,
     MatIconModule,
-    MatButtonModule, // only used in Notes dialogue (implementation to be changed)
     MatStepperModule,
-    MatDialogModule, // Notes dialogue (implementation to be changed)
     GoogleMapsModule,
     NgbModule,
     JwtModule.forRoot({

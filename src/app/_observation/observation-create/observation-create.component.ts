@@ -6,13 +6,10 @@ import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
 import { IObservationPosition } from 'src/app/_map/i-observation-position.dto';
 import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
-import { AddNotesComponent } from 'src/app/_observation-note/add-notes/add-notes.component';
-import { IObservationNote } from 'src/app/_observation-note/i-observation-note.dto';
 import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 import { BirdsListValidator } from 'src/app/_validators';
 import { ObservationCrudService } from '../observation-crud.service';
 import { ICreateObservation } from './i-create-observation.dto';
-
 
 @Component({
   selector: 'app-observation-create',

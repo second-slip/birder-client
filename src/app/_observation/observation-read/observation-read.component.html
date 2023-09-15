@@ -30,7 +30,7 @@
                                 the <a routerLink="/observation/update/{{observation.observationId}}">edit
                                     observation</a>
                                 page</span>
-                                </div>
+                        </div>
 
                     </ng-template>
                 </li>
@@ -106,7 +106,8 @@
     <ng-template #loadingOrError>
         <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
             <strong>Whoops!</strong> There was an error retrieving the data.<br>
-            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button" (click)="reload()">Try
+            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+                (click)="reload()">Try
                 Again</button>
         </div>
     </ng-template>

@@ -11,6 +11,8 @@ import { ObservationReadComponent } from '../observation-read/observation-read.c
 
 import { ObservationCreateComponent } from './observation-create.component';
 
+// STUB the select species child component...
+
 describe('ObservationCreateComponent', () => {
   let component: ObservationCreateComponent;
   let fixture: ComponentFixture<ObservationCreateComponent>;

@@ -13,9 +13,12 @@ import {
   email,
   changePasswordModel,
   locationModel,
-  manageProfileModel
+  manageProfileModel,
+  checkUsernameResponse,
+  checkEmailResponse
 } from 'src/app/testing/account-tests-helpers';
 import { IManageProfile } from './account-manage-profile/i-manage-profile.dto';
+
 
 describe('AccountService', () => {
   let service: AccountService;
@@ -39,30 +42,20 @@ describe('AccountService', () => {
       result = otherResult;
     });
 
-    const request = controller.expectOne({
-      method: 'POST',
-      url: 'api/account/check-username',
-    });
-    expect(request.request.body).toEqual({ model: { username: username } });
-    request.flush({ usernameTaken: true });
-
+    controller.expectOne(`api/account/check-username?username=${username}`).flush(checkUsernameResponse);
+  
     expect(result).toBe(true);
   });
 
   it('checks if the email is taken', () => {
     let result: boolean | undefined;
+
     service.isEmailTaken(email).subscribe((otherResult) => {
       result = otherResult;
     });
 
-    const request = controller.expectOne({
-      method: 'POST',
-      url: 'api/account/check-email',
-    });
-    expect(request.request.body).toEqual({ model: { email: email } });
-    request.flush({ emailTaken: true });
-
-    expect(result).toBe(true);
+    controller.expectOne(`api/account/check-email?email=${email}`).flush(checkEmailResponse);
+    expect(result).toBeTrue();
   });
 
   it('check it registers', () => {

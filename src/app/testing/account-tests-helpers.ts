@@ -25,6 +25,14 @@ export const resetPasswordModel = <IResetPassword>{
   code: code
 };
 
+export const checkUsernameResponse: { usernameTaken: boolean } = {
+  "usernameTaken": true
+};
+
+export const checkEmailResponse: { emailTaken: boolean } = {
+  "emailTaken": true
+};
+
 // Manage account objects
 
 export const manageProfileModel = <IManageProfile>{

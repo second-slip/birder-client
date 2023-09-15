@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { IManageLocation } from './account-manage-location/i-manage-location.dto';
@@ -37,16 +37,18 @@ export class AccountService {
   }
 
   public isUsernameTaken(username: string): Observable<boolean> {
-    const model = <IUsername>{ username: username };
+    const options = username ?
+      { params: new HttpParams().append('username', username.toString()) } : {};
 
-    return this._http.post<{ usernameTaken: boolean }>('api/account/check-username', { model }, httpOptions)
+    return this._http.get<{ usernameTaken: boolean }>('api/account/check-username', options)
       .pipe(map((result) => result.usernameTaken));
   }
 
   public isEmailTaken(email: string): Observable<boolean> {
-    const model = <IUserEmail>{ email: email };
+    const options = email ?
+      { params: new HttpParams().append('email', email.toString()) } : {};
 
-    return this._http.post<{ emailTaken: boolean }>('api/account/check-email', { model }, httpOptions)
+    return this._http.get<{ emailTaken: boolean }>('api/account/check-email', options)
       .pipe(map((result) => result.emailTaken));
   }
 

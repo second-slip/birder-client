@@ -6,7 +6,6 @@ import { IManagePassword } from './account-manage-password/i-manage-password.dto
 import { IManageProfile } from './account-manage-profile/i-manage-profile.dto';
 import { IAccountRegistration } from './account-registration/i-account-registration';
 import { IUserEmail } from './i-user-email.dto';
-import { IUsername } from './i-username.dto';
 import { IResetPassword } from './reset-password/i-reset-password.dto';
 
 const httpOptions = {

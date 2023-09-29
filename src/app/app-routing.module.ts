@@ -66,7 +66,7 @@ const routes: Routes = [
         canActivateChild: [() => inject(AuthenticationService).isLoggedIn()],
         children: [
           { path: '', component: HomeComponent, pathMatch: 'full' },
-          // Currently components are reused only when only route parameters change while staying on the same route.
+          // Currently components are reused only when route parameters change while staying on the same route.
           // If the route is changed, event when the new route uses the same component, a NEW component instance is created.
           { path: 'feed-n/:filter', component: ObservationFeedComponent },
           { path: 'feed-p/:filter', component: ObservationFeedComponent },

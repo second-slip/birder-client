@@ -59,7 +59,7 @@ describe('AccountService', () => {
   });
 
   it('check it registers', () => {
-    let result: { success: true } | undefined;
+    let result: { success: boolean } | undefined;
     service.register(registerModel).subscribe((otherResult) => {
       result = otherResult;
     });
@@ -75,7 +75,7 @@ describe('AccountService', () => {
   });
 
   it('checks the requestPasswordReset model is posted', () => {
-    let result: { success: true } | undefined;
+    let result: { success: boolean } | undefined;
     service.requestPasswordReset(emailModel).subscribe((otherResult) => {
       result = otherResult;
     });
@@ -91,7 +91,7 @@ describe('AccountService', () => {
   });
 
   it('checks it resends email', () => {
-    let result: { success: true } | undefined;
+    let result: { success: boolean } | undefined;
     service.resendEmailConfirmation(emailModel).subscribe((otherResult) => {
       result = otherResult;
     });
@@ -107,7 +107,7 @@ describe('AccountService', () => {
   });
 
   it('checks it resets the password', () => {
-    let result: { success: true } | undefined;
+    let result: { success: boolean } | undefined;
     service.resetPassword(resetPasswordModel).subscribe((otherResult) => {
       result = otherResult;
     });
@@ -150,7 +150,7 @@ describe('AccountService', () => {
   });
 
   it('checks it updates the password', () => {
-    let result: { success: true } | undefined;
+    let result: { success: boolean } | undefined;
     service.postChangePassword(changePasswordModel).subscribe((otherResult) => {
       result = otherResult;
     });
@@ -166,7 +166,7 @@ describe('AccountService', () => {
   });
 
   it('checks it updates the location', () => {
-    let result: { success: true } | undefined;
+    let result: { success: boolean } | undefined;
     service.postUpdateLocation(locationModel).subscribe((otherResult) => {
       result = otherResult;
     });

@@ -19,20 +19,20 @@ export class AccountService {
 
   constructor(private readonly _http: HttpClient) { }
 
-  public register(model: IAccountRegistration): Observable<{ success: true }> {
-    return this._http.post<{ success: true }>('api/account/register', model, httpOptions);
+  public register(model: IAccountRegistration): Observable<{ success: boolean }> {
+    return this._http.post<{ success: boolean }>('api/account/register', model, httpOptions);
   }
 
-  public requestPasswordReset(model: IUserEmail): Observable<{ success: true }> {
-    return this._http.post<{ success: true }>('api/account/request-password-reset', model, httpOptions);
+  public requestPasswordReset(model: IUserEmail): Observable<{ success: boolean }> {
+    return this._http.post<{ success: boolean }>('api/account/request-password-reset', model, httpOptions);
   }
 
-  public resendEmailConfirmation(model: IUserEmail): Observable<{ success: true }> {
-    return this._http.post<{ success: true }>('api/account/resend-email-confirmation', model, httpOptions);
+  public resendEmailConfirmation(model: IUserEmail): Observable<{ success: boolean }> {
+    return this._http.post<{ success: boolean }>('api/account/resend-email-confirmation', model, httpOptions);
   }
 
-  public resetPassword(model: IResetPassword): Observable<{ success: true }> {
-    return this._http.post<{ success: true }>('api/account/reset-password', model, httpOptions);
+  public resetPassword(model: IResetPassword): Observable<{ success: boolean }> {
+    return this._http.post<{ success: boolean }>('api/account/reset-password', model, httpOptions);
   }
 
   public isUsernameTaken(username: string): Observable<boolean> {
@@ -60,11 +60,11 @@ export class AccountService {
       .pipe(map((result) => result.emailConfirmationRequired));
   }
 
-  postChangePassword(viewModel: IManagePassword): Observable<{ success: true }> {
-    return this._http.post<{ success: true }>('api/manage/password', viewModel, httpOptions);
+  postChangePassword(viewModel: IManagePassword): Observable<{ success: boolean }> {
+    return this._http.post<{ success: boolean }>('api/manage/password', viewModel, httpOptions);
   }
 
-  public postUpdateLocation(viewModel: IManageLocation): Observable<{ success: true }> {
-    return this._http.post<{ success: true }>('api/manage/location', viewModel, httpOptions);
+  public postUpdateLocation(viewModel: IManageLocation): Observable<{ success: boolean }> {
+    return this._http.post<{ success: boolean }>('api/manage/location', viewModel, httpOptions);
   }
 }

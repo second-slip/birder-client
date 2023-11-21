@@ -32,7 +32,7 @@ import { ObservationFeedComponent } from "./_observation-feed/observation-feed/o
 import { AuthenticationService } from "./_auth/authentication.service";
 
 const routes: Routes = [
-  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '', component: HomeComponent, pathMatch: 'full' },
   {
     path: '',
     component: LayoutNoSidebarComponent,

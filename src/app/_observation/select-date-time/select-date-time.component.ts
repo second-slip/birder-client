@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { NgbDate, NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup } from '@angular/forms';
+import { NgbDate, NgbDateStruct, NgbTimeStruct, NgbInputDatepicker, NgbTimepicker } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
 
 // ideally, it is better to write a proper validator
 // but added complexity because the ngb controls are binded to NgbDate & NgbTimeStruct types
@@ -8,10 +9,12 @@ import { FormGroup } from '@angular/forms';
 // todo: might be better to change to Angular Material for better testability
 
 @Component({
-  selector: 'app-select-date-time',
-  templateUrl: './select-date-time.component.html',
-  styleUrls: ['./select-date-time.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-select-date-time',
+    templateUrl: './select-date-time.component.html',
+    styleUrls: ['./select-date-time.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule, NgbInputDatepicker, NgIf, NgbTimepicker]
 })
 export class SelectDateTimeComponent implements OnInit {
   @Input() dateForm: FormGroup;

@@ -13,10 +13,9 @@ describe('ReadOnlyMapComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ReadOnlyMapComponent],
-      imports: [GoogleMapsModule],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    imports: [GoogleMapsModule, ReadOnlyMapComponent],
+    schemas: [NO_ERRORS_SCHEMA]
+})
       .compileComponents();
   });
 

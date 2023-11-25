@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from '../authentication.service';
 import { Ilogin } from './ilogin.dto';
@@ -9,12 +9,16 @@ import { AuthenticationFailureReason } from '../authentication-failure-reason';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { IAuthenticationResult } from '../i-authentication-result.dto';
 import { TokenService } from '../token.service';
+import { LoadingComponent } from '../../_loading/loading/loading.component';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf, FormsModule, ReactiveFormsModule, RouterLink, LoadingComponent]
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();

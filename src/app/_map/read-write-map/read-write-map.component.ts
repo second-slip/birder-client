@@ -1,13 +1,20 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { GoogleMap, MapInfoWindow, MapMarker, GoogleMapsModule } from '@angular/google-maps';
 import { Subject, takeUntil } from 'rxjs';
 import { GeocodeService } from '../geocode.service';
+import { LoadingComponent } from '../../_loading/loading/loading.component';
+import { MatIconModule } from '@angular/material/icon';
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-read-write-map',
-  templateUrl: './read-write-map.component.html',
-  styleUrls: ['./read-write-map.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-read-write-map',
+    templateUrl: './read-write-map.component.html',
+    styleUrls: ['./read-write-map.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf, FormsModule, NgbPopover, MatIconModule, GoogleMapsModule, LoadingComponent]
 })
 export class ReadWriteMapComponent implements OnInit, OnDestroy {
   @Input() latitude: number;

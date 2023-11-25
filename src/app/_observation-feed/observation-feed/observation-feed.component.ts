@@ -1,13 +1,20 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ObservationFeedService } from '../../_observation-feed/observation-feed.service';
+import { LoadingComponent } from '../../_loading/loading/loading.component';
+import { ObservationFeedItemComponent } from '../observation-feed-item/observation-feed-item.component';
+import { InfiniteScrollComponent } from '../../infinite-scroll/infinite-scroll.component';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { FilterControlComponent } from '../filter-control/filter-control.component';
 
 @Component({
-  selector: 'app-observation-feed',
-  templateUrl: './observation-feed.component.html',
-  styleUrls: ['./observation-feed.component.scss'],
-  providers: [ObservationFeedService],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-observation-feed',
+    templateUrl: './observation-feed.component.html',
+    styleUrls: ['./observation-feed.component.scss'],
+    providers: [ObservationFeedService],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [FilterControlComponent, NgIf, InfiniteScrollComponent, NgFor, ObservationFeedItemComponent, RouterLink, LoadingComponent, AsyncPipe]
 })
 export class ObservationFeedComponent implements OnInit {
   private _url: string = '';

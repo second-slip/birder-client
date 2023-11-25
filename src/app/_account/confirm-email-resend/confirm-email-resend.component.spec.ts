@@ -37,12 +37,9 @@ describe('ConfirmEmailResendComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-      declarations: [
-        ConfirmEmailResendComponent
-      ],
-      imports: [FormsModule, ReactiveFormsModule],
-      providers: [{ provide: AccountService, useValue: fakeAccountService }]
-    }).compileComponents();
+    imports: [FormsModule, ReactiveFormsModule, ConfirmEmailResendComponent],
+    providers: [{ provide: AccountService, useValue: fakeAccountService }]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ConfirmEmailResendComponent);
     fixture.detectChanges();

@@ -18,9 +18,8 @@ describe('SelectDateTimeComponent', () => {
   const setup = async (fakeInputDate?: Date | null) => {
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, NgbModule, NgbModule],
-      declarations: [SelectDateTimeComponent]
-    })
+    imports: [FormsModule, NgbModule, NgbModule, SelectDateTimeComponent]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(SelectDateTimeComponent);

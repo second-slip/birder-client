@@ -32,13 +32,8 @@ describe('NetworkSuggestionComponent', () => {
 
 
     await TestBed.configureTestingModule({
-      declarations: [
-        NetworkSuggestionComponent
-      ],
-      // providers: [],
-      // imports: [NgbNavModule],
-      // schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(NetworkSuggestionComponent,
+    imports: [NetworkSuggestionComponent],
+}).overrideComponent(NetworkSuggestionComponent,
       {
         set: {
           providers: [

@@ -3,12 +3,15 @@ import { first, Subject, takeUntil } from 'rxjs';
 import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 import { INetworkUser } from '../i-network-user.dto';
 import { FollowCommandService } from './follow-command.service';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-follow-command',
-  templateUrl: './follow-command.component.html',
-  styleUrls: ['./follow-command.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-follow-command',
+    templateUrl: './follow-command.component.html',
+    styleUrls: ['./follow-command.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf]
 })
 export class FollowCommandComponent implements OnDestroy {
   @Input() user: INetworkUser

@@ -1,10 +1,14 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLink, NgbNavLinkBase } from '@ng-bootstrap/ng-bootstrap';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-developer',
-  templateUrl: './developer.component.html',
-  styleUrls: ['./developer.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-developer',
+    templateUrl: './developer.component.html',
+    styleUrls: ['./developer.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [RouterLink, NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLink, NgbNavLinkBase]
 })
 export class DeveloperComponent { }
 

@@ -46,14 +46,12 @@ describe('NetworkSummaryComponent', () => {
 
 
     await TestBed.configureTestingModule({
-      declarations: [
-        NetworkSummaryComponent
-      ],
-      providers: [
+    imports: [NetworkSummaryComponent],
+    providers: [
         { provide: NetworkSummaryService, useValue: fakeService },
         { provide: AuthenticationService, useValue: fakeAuthService }
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(NetworkSummaryComponent);
     component = fixture.componentInstance;

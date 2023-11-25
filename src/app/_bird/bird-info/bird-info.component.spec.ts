@@ -10,8 +10,8 @@ describe('BirdInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BirdInfoComponent]
-    })
+    imports: [BirdInfoComponent]
+})
       .compileComponents();
   });
 

@@ -6,11 +6,9 @@ import { findComponent } from './testing/element.spec-helper';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    imports: [AppComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+}).compileComponents();
   });
 
   it('should create the app', () => {

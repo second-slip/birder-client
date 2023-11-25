@@ -30,11 +30,8 @@ describe('NetworkFindComponent', () => {
 
 
     await TestBed.configureTestingModule({
-      declarations: [
-        NetworkFindComponent
-      ],
-      imports: [FormsModule]
-    }).overrideComponent(NetworkFindComponent,
+    imports: [FormsModule, NetworkFindComponent]
+}).overrideComponent(NetworkFindComponent,
       {
         set: {
           providers: [

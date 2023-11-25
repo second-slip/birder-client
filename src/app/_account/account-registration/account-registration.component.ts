@@ -1,18 +1,22 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Validators, AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Validators, AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { findInvalidControls } from 'src/app/testing/form-helpers';
 import { MatchOtherValidator, RestrictedNameValidator, ValidatePassword } from 'src/app/_validators';
 import { AccountValidationService } from '../account-validation.service';
 import { AccountService } from '../account.service';
 import { IAccountRegistration } from './i-account-registration';
+import { LoadingComponent } from '../../_loading/loading/loading.component';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-account-registration',
-  templateUrl: './account-registration.component.html',
-  styleUrls: ['./account-registration.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-account-registration',
+    templateUrl: './account-registration.component.html',
+    styleUrls: ['./account-registration.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor, RouterLink, LoadingComponent]
 })
 export class AccountRegistrationComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();

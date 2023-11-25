@@ -10,10 +10,9 @@ describe('TechnologyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TechnologyComponent ],
-      schemas: [ NO_ERRORS_SCHEMA ],
-      imports: [ NgbNavModule ]
-    })
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [NgbNavModule, TechnologyComponent]
+})
     .compileComponents();
   });
 

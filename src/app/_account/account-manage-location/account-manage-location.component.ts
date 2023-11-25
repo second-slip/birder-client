@@ -1,16 +1,20 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
 import { AccountService } from '../account.service';
 import { IManageLocation } from './i-manage-location.dto';
+import { ReadWriteMapComponent as ReadWriteMapComponent_1 } from '../../_map/read-write-map/read-write-map.component';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-account-manage-location',
-  templateUrl: './account-manage-location.component.html',
-  styleUrls: ['./account-manage-location.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-account-manage-location',
+    templateUrl: './account-manage-location.component.html',
+    styleUrls: ['./account-manage-location.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf, ReadWriteMapComponent_1, RouterLink, AsyncPipe]
 })
 export class AccountManageLocationComponent implements OnInit, OnDestroy {
   @ViewChild(ReadWriteMapComponent)

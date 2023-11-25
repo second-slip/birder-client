@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 
@@ -9,12 +9,16 @@ import { AccountValidationService } from '../account-validation.service';
 
 import { AccountService } from '../account.service';
 import { IManageProfile } from './i-manage-profile.dto';
+import { LoadingComponent } from '../../_loading/loading/loading.component';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-account-manage-profile',
-  templateUrl: './account-manage-profile.component.html',
-  styleUrls: ['./account-manage-profile.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-account-manage-profile',
+    templateUrl: './account-manage-profile.component.html',
+    styleUrls: ['./account-manage-profile.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor, LoadingComponent]
 })
 export class AccountManageProfileComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();

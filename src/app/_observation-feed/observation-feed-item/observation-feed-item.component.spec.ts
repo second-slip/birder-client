@@ -54,9 +54,9 @@ describe('ObservationFeedItemComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ObservationFeedItemComponent],
-            providers: [{ provide: AuthenticationService, useValue: fakeAuthService }]
-        })
+    imports: [ObservationFeedItemComponent],
+    providers: [{ provide: AuthenticationService, useValue: fakeAuthService }]
+})
             .compileComponents();
     });
 

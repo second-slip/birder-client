@@ -8,8 +8,8 @@ describe('ViewOnlyNotesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewOnlyNotesComponent ]
-    })
+    imports: [ViewOnlyNotesComponent]
+})
     .compileComponents();
   });
 

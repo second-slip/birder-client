@@ -32,13 +32,12 @@ describe('ReadWriteMapComponent', () => {
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        declarations: [ReadWriteMapComponent],
-        providers: [
-          { provide: GeocodeService, useValue: fakeService }
-        ],
-        imports: [GoogleMapsModule],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+    providers: [
+        { provide: GeocodeService, useValue: fakeService }
+    ],
+    imports: [GoogleMapsModule, ReadWriteMapComponent],
+    schemas: [NO_ERRORS_SCHEMA]
+})
         .compileComponents();
     });
 

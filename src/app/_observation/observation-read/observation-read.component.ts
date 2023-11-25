@@ -1,15 +1,24 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { ObservationReadService } from '../observation-read.service';
+import { LoadingComponent } from '../../_loading/loading/loading.component';
+import { NavigationMenuComponent } from '../navigation-menu/navigation-menu.component';
+import { ViewOnlyNotesComponent } from '../../_observation-note/view-notes/view-only-notes.component';
+import { MatIconModule } from '@angular/material/icon';
+import { ReadOnlyMapComponent } from '../../_map/read-only-map/read-only-map.component';
+import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLink, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from '@ng-bootstrap/ng-bootstrap';
+import { NgIf, AsyncPipe, DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-observation-read',
-  templateUrl: './observation-read.component.html',
-  styleUrls: ['./observation-read.component.scss'],
-  providers: [ObservationReadService],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-observation-read',
+    templateUrl: './observation-read.component.html',
+    styleUrls: ['./observation-read.component.scss'],
+    providers: [ObservationReadService],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf, RouterLink, NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLink, NgbNavLinkBase, NgbNavContent, ReadOnlyMapComponent, MatIconModule, ViewOnlyNotesComponent, NgbNavOutlet, NavigationMenuComponent, LoadingComponent, AsyncPipe, DatePipe]
 })
 export class ObservationReadComponent implements OnInit {
   private _observationId: string;

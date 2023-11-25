@@ -1,12 +1,19 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BirdIndexService } from './bird-index.service';
+import { LoadingComponent } from '../../_loading/loading/loading.component';
+import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
+import { RouterLink } from '@angular/router';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-bird-index',
-  templateUrl: './bird-index.component.html',
-  styleUrls: ['./bird-index.component.scss'],
-  providers: [BirdIndexService],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-bird-index',
+    templateUrl: './bird-index.component.html',
+    styleUrls: ['./bird-index.component.scss'],
+    providers: [BirdIndexService],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [FormsModule, NgIf, NgFor, RouterLink, NgbPagination, LoadingComponent, AsyncPipe]
 })
 export class BirdIndexComponent implements OnInit {
   public page = 1;

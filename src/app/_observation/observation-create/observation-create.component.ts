@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
@@ -10,12 +10,20 @@ import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes
 import { BirdsListValidator } from 'src/app/_validators';
 import { ObservationCrudService } from '../observation-crud.service';
 import { ICreateObservation } from './i-create-observation.dto';
+import { LoadingComponent } from '../../_loading/loading/loading.component';
+import { ReadWriteMapComponent as ReadWriteMapComponent_1 } from '../../_map/read-write-map/read-write-map.component';
+import { SelectSpeciesComponent } from '../select-species/select-species.component';
+import { SelectDateTimeComponent } from '../select-date-time/select-date-time.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-observation-create',
-  templateUrl: './observation-create.component.html',
-  styleUrls: ['./observation-create.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-observation-create',
+    templateUrl: './observation-create.component.html',
+    styleUrls: ['./observation-create.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf, FormsModule, ReactiveFormsModule, MatStepperModule, SelectDateTimeComponent, SelectSpeciesComponent, ReadWriteMapComponent_1, LoadingComponent, AsyncPipe]
 })
 export class ObservationCreateComponent implements OnInit {
   private _subscription = new Subject();

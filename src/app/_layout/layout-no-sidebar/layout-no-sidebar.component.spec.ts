@@ -8,8 +8,8 @@ describe('LayoutNoSidebarComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      declarations: [LayoutNoSidebarComponent]
-    })
+    imports: [LayoutNoSidebarComponent]
+})
       .compileComponents();
   });
 

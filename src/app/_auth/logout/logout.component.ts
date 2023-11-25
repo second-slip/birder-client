@@ -4,10 +4,11 @@ import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { AuthenticationService } from '../authentication.service';
 
 @Component({
-  selector: 'app-logout',
-  templateUrl: './logout.component.html',
-  styleUrls: ['./logout.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-logout',
+    templateUrl: './logout.component.html',
+    styleUrls: ['./logout.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true
 })
 export class LogoutComponent {
 

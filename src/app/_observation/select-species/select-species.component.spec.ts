@@ -57,10 +57,9 @@ describe('SelectSpeciesComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, HttpClientTestingModule, NgbModule, FormsModule, ReactiveFormsModule],
-      declarations: [SelectSpeciesComponent],
-      providers: [{ provide: SelectSpeciesService, useValue: fakeSelectSpeciesService }]
-    })
+    imports: [FormsModule, HttpClientTestingModule, NgbModule, FormsModule, ReactiveFormsModule, SelectSpeciesComponent],
+    providers: [{ provide: SelectSpeciesService, useValue: fakeSelectSpeciesService }]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(SelectSpeciesComponent);

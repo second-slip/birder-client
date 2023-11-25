@@ -8,8 +8,8 @@ describe('NetworkSidebarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NetworkSidebarComponent ]
-    })
+    imports: [NetworkSidebarComponent]
+})
     .compileComponents();
   });
 

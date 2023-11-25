@@ -10,12 +10,9 @@ describe('FeaturesComponent', () => {
     beforeEach(async () => {
 
         await TestBed.configureTestingModule({
-            declarations: [
-                FeaturesComponent
-            ],
-            schemas: [NO_ERRORS_SCHEMA],
-            imports: [NgbNavModule]
-        }).compileComponents();
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [NgbNavModule, FeaturesComponent]
+}).compileComponents();
 
         fixture = TestBed.createComponent(FeaturesComponent);
         debugElement = fixture.debugElement;

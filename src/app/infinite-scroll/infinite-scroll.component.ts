@@ -1,10 +1,12 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'app-infinite-scroll',
-  template: `<ng-content></ng-content><div #anchor></div>`,
-  styleUrls: ['./infinite-scroll.component.scss']
-  // , encapsulation: ViewEncapsulation.None
+    selector: 'app-infinite-scroll',
+    template: `<ng-content></ng-content><div #anchor></div>`,
+    styleUrls: ['./infinite-scroll.component.scss']
+    // , encapsulation: ViewEncapsulation.None
+    ,
+    standalone: true
 })
 export class InfiniteScrollComponent implements OnInit {
   @Input() options = {};

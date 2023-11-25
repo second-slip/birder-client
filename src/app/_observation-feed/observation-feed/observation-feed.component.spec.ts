@@ -34,21 +34,19 @@ describe('ObservationFeedComponent', () => {
         );
 
         await TestBed.configureTestingModule({
-            declarations: [
-                ObservationFeedComponent
-            ],
-            providers: [{
-                provide: ActivatedRoute,
-                useValue: {
-                    paramMap: of(new Map(Object.entries({
-                        filter: fakeRouteArgument
-                    })))
-                    // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
-                    // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
-                }
-            }],
-            schemas: [NO_ERRORS_SCHEMA]
-        }).overrideComponent(ObservationFeedComponent,
+    imports: [ObservationFeedComponent],
+    providers: [{
+            provide: ActivatedRoute,
+            useValue: {
+                paramMap: of(new Map(Object.entries({
+                    filter: fakeRouteArgument
+                })))
+                // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
+                // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
+            }
+        }],
+    schemas: [NO_ERRORS_SCHEMA]
+}).overrideComponent(ObservationFeedComponent,
             {
                 set: {
                     providers: [{ provide: ObservationFeedService, useValue: fakeObservationFeedService }]

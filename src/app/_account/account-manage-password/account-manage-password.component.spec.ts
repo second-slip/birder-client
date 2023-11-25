@@ -64,18 +64,16 @@ describe('AccountManagePasswordComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-      declarations: [
-        AccountManagePasswordComponent
-      ],
-      imports: [FormsModule, ReactiveFormsModule,
+    imports: [FormsModule, ReactiveFormsModule,
         RouterTestingModule.withRoutes([
-          { path: 'login', component: LoginComponent },
-        ])],
-      schemas: [NO_ERRORS_SCHEMA],
-      providers: [
+            { path: 'login', component: LoginComponent },
+        ]), AccountManagePasswordComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    providers: [
         { provide: AccountValidationService, useValue: fakeValidationService },
-        { provide: AccountService, useValue: fakeAccountService }]
-    }).compileComponents();
+        { provide: AccountService, useValue: fakeAccountService }
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(AccountManagePasswordComponent);
     component = fixture.componentInstance;

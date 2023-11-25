@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
@@ -11,13 +11,22 @@ import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { BirdsListValidator } from 'src/app/_validators';
 import { ObservationCrudService } from '../observation-crud.service';
 import { IUpdateObservation } from './i-update-observation.dto';
+import { LoadingComponent } from '../../_loading/loading/loading.component';
+import { ReadWriteMapComponent as ReadWriteMapComponent_1 } from '../../_map/read-write-map/read-write-map.component';
+import { SelectSpeciesComponent } from '../select-species/select-species.component';
+import { SelectDateTimeComponent } from '../select-date-time/select-date-time.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import { NgIf, AsyncPipe } from '@angular/common';
 // todo: This component needs a major refactor...
 
 @Component({
-  selector: 'app-observation-update',
-  templateUrl: './observation-update.component.html',
-  styleUrls: ['./observation-update.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-observation-update',
+    templateUrl: './observation-update.component.html',
+    styleUrls: ['./observation-update.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf, NgbAlert, FormsModule, ReactiveFormsModule, MatStepperModule, SelectDateTimeComponent, SelectSpeciesComponent, ReadWriteMapComponent_1, LoadingComponent, AsyncPipe]
 })
 export class ObservationUpdateComponent implements OnInit, OnDestroy {
   private _observationId: string;

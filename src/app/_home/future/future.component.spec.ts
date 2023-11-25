@@ -10,10 +10,9 @@ describe('FutureComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FutureComponent ],
-      schemas: [NO_ERRORS_SCHEMA],
-      imports: [NgbNavModule]
-    })
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [NgbNavModule, FutureComponent]
+})
     .compileComponents();
   });
 

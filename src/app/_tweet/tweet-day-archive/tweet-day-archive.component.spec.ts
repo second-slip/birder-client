@@ -30,11 +30,9 @@ describe('TweetDayArchiveComponent', () => {
       );
 
       await TestBed.configureTestingModule({
-        declarations: [
-          TweetDayArchiveComponent
-        ],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+    imports: [TweetDayArchiveComponent],
+    schemas: [NO_ERRORS_SCHEMA]
+})
         .overrideComponent(TweetDayArchiveComponent,
           {
             set: {
@@ -96,11 +94,9 @@ describe('TweetDayArchiveComponent', () => {
       );
 
       await TestBed.configureTestingModule({
-        declarations: [
-          TweetDayArchiveComponent
-        ],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+    imports: [TweetDayArchiveComponent],
+    schemas: [NO_ERRORS_SCHEMA]
+})
         .overrideComponent(TweetDayArchiveComponent,
           {
             set: {
@@ -163,11 +159,9 @@ describe('TweetDayArchiveComponent', () => {
       );
 
       await TestBed.configureTestingModule({
-        declarations: [
-          TweetDayArchiveComponent
-        ],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+    imports: [TweetDayArchiveComponent],
+    schemas: [NO_ERRORS_SCHEMA]
+})
         .overrideComponent(TweetDayArchiveComponent,
           {
             set: {
@@ -215,14 +209,12 @@ describe('TweetDayArchiveComponent', () => {
       );
 
       await TestBed.configureTestingModule({
-        declarations: [
-          TweetDayArchiveComponent
-        ],
-        schemas: [NO_ERRORS_SCHEMA]//,
-        // providers: [
-        //     { provide: TweetDayArchiveService, useValue: fakeTweetDayArchiveService }
-        // ]
-      })
+    imports: [TweetDayArchiveComponent],
+    schemas: [NO_ERRORS_SCHEMA] //,
+    // providers: [
+    //     { provide: TweetDayArchiveService, useValue: fakeTweetDayArchiveService }
+    // ]
+})
         .overrideComponent(TweetDayArchiveComponent,
           {
             set: {

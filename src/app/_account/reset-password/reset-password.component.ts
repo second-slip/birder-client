@@ -1,16 +1,20 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { ValidatePassword } from 'src/app/_validators';
 import { AccountService } from '../account.service';
 import { IResetPassword } from './i-reset-password.dto';
+import { LoadingComponent } from '../../_loading/loading/loading.component';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-reset-password',
+    templateUrl: './reset-password.component.html',
+    styleUrls: ['./reset-password.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor, RouterLink, LoadingComponent]
 })
 export class ResetPasswordComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();

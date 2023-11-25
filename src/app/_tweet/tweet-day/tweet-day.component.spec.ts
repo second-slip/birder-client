@@ -30,14 +30,12 @@ describe('TweetDayComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                declarations: [
-                    TweetDayComponent
-                ],
-                schemas: [NO_ERRORS_SCHEMA],
-                providers: [
-                    { provide: TweetDayService, useValue: fakeTweetDayService }
-                ]
-            }).compileComponents();
+    imports: [TweetDayComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    providers: [
+        { provide: TweetDayService, useValue: fakeTweetDayService }
+    ]
+}).compileComponents();
 
             fixture = TestBed.createComponent(TweetDayComponent);
             //fixture.detectChanges();
@@ -89,14 +87,12 @@ describe('TweetDayComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                declarations: [
-                    TweetDayComponent
-                ],
-                schemas: [NO_ERRORS_SCHEMA],
-                providers: [
-                    { provide: TweetDayService, useValue: fakeTweetDayService }
-                ]
-            }).compileComponents();
+    imports: [TweetDayComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    providers: [
+        { provide: TweetDayService, useValue: fakeTweetDayService }
+    ]
+}).compileComponents();
 
             fixture = TestBed.createComponent(TweetDayComponent);
             fixture.detectChanges();
@@ -162,14 +158,12 @@ describe('TweetDayComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                declarations: [
-                    TweetDayComponent
-                ],
-                schemas: [NO_ERRORS_SCHEMA],
-                providers: [
-                    { provide: TweetDayService, useValue: fakeTweetDayService }
-                ]
-            }).compileComponents();
+    imports: [TweetDayComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    providers: [
+        { provide: TweetDayService, useValue: fakeTweetDayService }
+    ]
+}).compileComponents();
 
             fixture = TestBed.createComponent(TweetDayComponent);
             fixture.detectChanges();
@@ -221,14 +215,12 @@ describe('TweetDayComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                declarations: [
-                    TweetDayComponent
-                ],
-                schemas: [NO_ERRORS_SCHEMA],
-                providers: [
-                    { provide: TweetDayService, useValue: fakeTweetDayService }
-                ]
-            }).compileComponents();
+    imports: [TweetDayComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    providers: [
+        { provide: TweetDayService, useValue: fakeTweetDayService }
+    ]
+}).compileComponents();
 
             fixture = TestBed.createComponent(TweetDayComponent);
             fixture.detectChanges();

@@ -8,8 +8,8 @@ describe('ConfirmEmailSuccessComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfirmEmailSuccessComponent ]
-    })
+    imports: [ConfirmEmailSuccessComponent]
+})
     .compileComponents();
   });
 

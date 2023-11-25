@@ -45,14 +45,12 @@ describe('HomeComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      declarations: [
-        HomeComponent
-      ],
-      providers: [
+    imports: [HomeComponent],
+    providers: [
         { provide: AuthenticationService, useValue: fakeService },
         { provide: Router, useValue: routerStub }
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;

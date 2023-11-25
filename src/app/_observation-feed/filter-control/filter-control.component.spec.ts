@@ -35,10 +35,9 @@ describe('FilterControlComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FilterControlComponent ],
-      imports: [ NgbDropdownModule ],
-      providers: [{ provide: AuthenticationService, useValue: fakeAuthService }]
-    })
+    imports: [NgbDropdownModule, FilterControlComponent],
+    providers: [{ provide: AuthenticationService, useValue: fakeAuthService }]
+})
     .compileComponents();
   });
 

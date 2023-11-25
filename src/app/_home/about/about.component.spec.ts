@@ -11,10 +11,9 @@ describe('AboutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AboutComponent ],
-      schemas: [NO_ERRORS_SCHEMA],
-      imports: [NgbNavModule]
-    })
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [NgbNavModule, AboutComponent]
+})
     .compileComponents();
   }));
 

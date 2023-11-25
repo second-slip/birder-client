@@ -69,30 +69,28 @@ describe('ObservationUpdateComponent', () => {
       });
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule,
+    imports: [FormsModule, ReactiveFormsModule,
         RouterTestingModule.withRoutes([
-          { path: 'login', component: ObservationReadComponent },
-        ])],
-      declarations: [
-        ObservationUpdateComponent
-      ],
-      providers: [
+            { path: 'login', component: ObservationReadComponent },
+        ]), ObservationUpdateComponent],
+    providers: [
         {
-          provide: ActivatedRoute,
-          useValue: {
-            paramMap: of(new Map(Object.entries({
-              id: fakeRouteArgument
-            })))
-            // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
-            // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
-          }
+            provide: ActivatedRoute,
+            useValue: {
+                paramMap: of(new Map(Object.entries({
+                    id: fakeRouteArgument
+                })))
+                // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
+                // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
+            }
         },
         { provide: AnnounceChangesService, useValue: fakeAnnounceChangesService },
         { provide: ObservationCrudService, useValue: fakeObservationCrudService },
         { provide: NavigationService, useValue: fakeNavService },
-        { provide: AuthenticationService, useValue: fakeAuthService }],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+        { provide: AuthenticationService, useValue: fakeAuthService }
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ObservationUpdateComponent);
     component = fixture.componentInstance;

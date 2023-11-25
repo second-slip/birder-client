@@ -36,14 +36,12 @@ describe('FollowCommandComponent', () => {
       });
 
     await TestBed.configureTestingModule({
-      declarations: [
-        FollowCommandComponent
-      ],
-      providers: [
+    imports: [FollowCommandComponent],
+    providers: [
         { provide: FollowCommandService, useValue: fakeService },
         { provide: AnnounceChangesService, useValue: fakeAnnounceChangesService }
-      ],
-    }).compileComponents();
+    ],
+}).compileComponents();
 
     fixture = TestBed.createComponent(FollowCommandComponent);
     component = fixture.componentInstance;

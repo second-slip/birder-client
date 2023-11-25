@@ -9,9 +9,8 @@ describe('AccountManagerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ NgbNavModule ],
-      declarations: [ AccountManagerComponent ]
-    })
+    imports: [NgbNavModule, AccountManagerComponent]
+})
     .compileComponents();
   });
 

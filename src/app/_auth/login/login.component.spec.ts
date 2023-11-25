@@ -62,19 +62,17 @@ describe('LoginComponent', () => {
     // );
 
     await TestBed.configureTestingModule({
-      declarations: [
-        LoginComponent
-      ],
-      imports: [FormsModule, ReactiveFormsModule,
+    imports: [FormsModule, ReactiveFormsModule,
         RouterTestingModule.withRoutes([
-          { path: 'confirm-email', component: ConfirmEmailComponent }
-        ])],
-      providers: [
+            { path: 'confirm-email', component: ConfirmEmailComponent }
+        ]), LoginComponent],
+    providers: [
         //{ provide: TokenService, useValue: fakeTokenService },
         { provide: NavigationService, useValue: fakeNavService },
         { provide: LoginService, useValue: fakeLoginService },
-        { provide: AuthenticationService, useValue: fakeAuthService }]
-    }).compileComponents();
+        { provide: AuthenticationService, useValue: fakeAuthService }
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;

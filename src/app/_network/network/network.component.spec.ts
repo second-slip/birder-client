@@ -9,9 +9,8 @@ describe('NetworkComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NetworkComponent ],
-      imports: [ NgbNavModule ]
-    })
+    imports: [NgbNavModule, NetworkComponent]
+})
     .compileComponents();
   });
 

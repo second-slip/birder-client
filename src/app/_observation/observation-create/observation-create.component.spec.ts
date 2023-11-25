@@ -55,18 +55,15 @@ describe('ObservationCreateComponent', () => {
       });
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule,
+    imports: [FormsModule, ReactiveFormsModule,
         RouterTestingModule.withRoutes([
-          { path: 'login', component: ObservationReadComponent },
-        ])],
-      declarations: [
-        ObservationCreateComponent
-      ],
-      providers: [{ provide: AnnounceChangesService, useValue: fakeAnnounceChangesService },
-      { provide: ObservationCrudService, useValue: fakeObservationCrudService },
-      { provide: AuthenticationService, useValue: fakeAuthService }],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+            { path: 'login', component: ObservationReadComponent },
+        ]), ObservationCreateComponent],
+    providers: [{ provide: AnnounceChangesService, useValue: fakeAnnounceChangesService },
+        { provide: ObservationCrudService, useValue: fakeObservationCrudService },
+        { provide: AuthenticationService, useValue: fakeAuthService }],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ObservationCreateComponent);
     component = fixture.componentInstance;

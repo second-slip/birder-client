@@ -2,12 +2,17 @@ import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { ContactFormModel } from './contact-form-model';
 import { ContactFormService } from './contact-form.service';
+import { FormsModule } from '@angular/forms';
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-contact-form',
-  templateUrl: './contact-form.component.html',
-  styleUrls: ['./contact-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-contact-form',
+    templateUrl: './contact-form.component.html',
+    styleUrls: ['./contact-form.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf, NgbAlert, FormsModule]
 })
 export class ContactFormComponent implements OnDestroy {
   private _subscription = new Subject();

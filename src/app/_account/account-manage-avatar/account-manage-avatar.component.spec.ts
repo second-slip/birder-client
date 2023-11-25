@@ -8,8 +8,8 @@ describe('AccountManageAvatarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccountManageAvatarComponent ]
-    })
+    imports: [AccountManageAvatarComponent]
+})
     .compileComponents();
   });
 

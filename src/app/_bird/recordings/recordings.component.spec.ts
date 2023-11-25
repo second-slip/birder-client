@@ -28,10 +28,8 @@ describe('RecordingsComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-      declarations: [
-        RecordingsComponent
-      ]
-    })
+    imports: [RecordingsComponent]
+})
       .overrideComponent(RecordingsComponent,
         {
           set: {

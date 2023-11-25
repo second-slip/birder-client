@@ -64,18 +64,16 @@ describe('AccountRegistrationComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-      declarations: [
-        AccountRegistrationComponent
-      ],
-      imports: [FormsModule, ReactiveFormsModule,
+    imports: [FormsModule, ReactiveFormsModule,
         RouterTestingModule.withRoutes([
-          { path: 'confirm-email', component: ConfirmEmailComponent },
-        ])],
-      schemas: [NO_ERRORS_SCHEMA],
-      providers: [
+            { path: 'confirm-email', component: ConfirmEmailComponent },
+        ]), AccountRegistrationComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    providers: [
         { provide: AccountValidationService, useValue: fakeValidationService },
-        { provide: AccountService, useValue: fakeAccountService }]
-    }).compileComponents();
+        { provide: AccountService, useValue: fakeAccountService }
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(AccountRegistrationComponent);
     fixture.detectChanges();

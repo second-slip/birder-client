@@ -51,12 +51,9 @@ describe('ContactFormComponent', () => {
 
 
     await TestBed.configureTestingModule({
-      declarations: [
-        ContactFormComponent
-      ],
-      imports: [FormsModule],
-      providers: [{ provide: ContactFormService, useValue: fakeContactFormService }]
-    }).compileComponents();
+    imports: [FormsModule, ContactFormComponent],
+    providers: [{ provide: ContactFormService, useValue: fakeContactFormService }]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ContactFormComponent);
     fixture.detectChanges();

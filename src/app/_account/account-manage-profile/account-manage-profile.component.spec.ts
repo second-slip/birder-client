@@ -75,20 +75,18 @@ describe('AccountManageProfileComponent', () => {
     )
 
     await TestBed.configureTestingModule({
-      declarations: [
-        AccountManageProfileComponent
-      ],
-      imports: [FormsModule, ReactiveFormsModule,
+    imports: [FormsModule, ReactiveFormsModule,
         RouterTestingModule.withRoutes([
-          { path: 'login', component: LoginComponent },
-          { path: 'confirm-email', component: ConfirmEmailComponent }
-        ])],
-      schemas: [NO_ERRORS_SCHEMA],
-      providers: [
+            { path: 'login', component: LoginComponent },
+            { path: 'confirm-email', component: ConfirmEmailComponent }
+        ]), AccountManageProfileComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    providers: [
         { provide: AccountValidationService, useValue: fakeValidationService },
         { provide: AccountService, useValue: fakeAccountService },
-        { provide: AuthenticationService, useValue: fakeAuthService }]
-    }).compileComponents();
+        { provide: AuthenticationService, useValue: fakeAuthService }
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(AccountManageProfileComponent);
     component = fixture.componentInstance;

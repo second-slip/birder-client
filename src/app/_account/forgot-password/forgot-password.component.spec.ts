@@ -35,12 +35,9 @@ describe('ForgotPasswordComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-      declarations: [
-        ForgotPasswordComponent
-      ],
-      imports: [FormsModule, ReactiveFormsModule],
-      providers: [{ provide: AccountService, useValue: fakeAccountService }]
-    }).compileComponents();
+    imports: [FormsModule, ReactiveFormsModule, ForgotPasswordComponent],
+    providers: [{ provide: AccountService, useValue: fakeAccountService }]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ForgotPasswordComponent);
     fixture.detectChanges();

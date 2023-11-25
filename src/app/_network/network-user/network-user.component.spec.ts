@@ -9,8 +9,8 @@ describe('NetworkUserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NetworkUserComponent]
-    })
+    imports: [NetworkUserComponent]
+})
       .compileComponents();
   });
 

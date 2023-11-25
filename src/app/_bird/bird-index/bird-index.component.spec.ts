@@ -29,11 +29,9 @@ describe('BirdIndexComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                declarations: [
-                    BirdIndexComponent
-                ],
-                schemas: [NO_ERRORS_SCHEMA]
-            })
+    imports: [BirdIndexComponent],
+    schemas: [NO_ERRORS_SCHEMA]
+})
                 .overrideComponent(BirdIndexComponent,
                     {
                         set: {
@@ -93,11 +91,9 @@ describe('BirdIndexComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                declarations: [
-                    BirdIndexComponent
-                ],
-                schemas: [NO_ERRORS_SCHEMA]
-            })
+    imports: [BirdIndexComponent],
+    schemas: [NO_ERRORS_SCHEMA]
+})
                 .overrideComponent(BirdIndexComponent,
                     {
                         set: {
@@ -157,11 +153,9 @@ describe('BirdIndexComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                declarations: [
-                    BirdIndexComponent
-                ],
-                schemas: [NO_ERRORS_SCHEMA]
-            })
+    imports: [BirdIndexComponent],
+    schemas: [NO_ERRORS_SCHEMA]
+})
                 .overrideComponent(BirdIndexComponent,
                     {
                         set: {
@@ -219,11 +213,9 @@ describe('BirdIndexComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                declarations: [
-                    BirdIndexComponent
-                ],
-                schemas: [NO_ERRORS_SCHEMA]
-            })
+    imports: [BirdIndexComponent],
+    schemas: [NO_ERRORS_SCHEMA]
+})
                 .overrideComponent(BirdIndexComponent,
                     {
                         set: {
@@ -282,11 +274,9 @@ describe('BirdIndexComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                declarations: [
-                    BirdIndexComponent
-                ],
-                schemas: [NO_ERRORS_SCHEMA]
-            })
+    imports: [BirdIndexComponent],
+    schemas: [NO_ERRORS_SCHEMA]
+})
                 .overrideComponent(BirdIndexComponent,
                     {
                         set: {

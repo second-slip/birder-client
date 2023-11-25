@@ -39,12 +39,10 @@ describe('LifeListComponent', () => {
       });
 
     await TestBed.configureTestingModule({
-      declarations: [
-        LifeListComponent
-      ],
-      providers: [{ provide: ObservationCountService, useValue: fakeCountService }],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(LifeListComponent,
+    imports: [LifeListComponent],
+    providers: [{ provide: ObservationCountService, useValue: fakeCountService }],
+    schemas: [NO_ERRORS_SCHEMA]
+}).overrideComponent(LifeListComponent,
       {
         set: {
           providers: [{ provide: LifeListService, useValue: fakeListService }]

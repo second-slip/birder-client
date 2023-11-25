@@ -1,12 +1,18 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NetworkSuggestionService } from './network-suggestion.service';
+import { LoadingComponent } from '../../_loading/loading/loading.component';
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import { NetworkUserComponent } from '../network-user/network-user.component';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-network-suggestion',
-  templateUrl: './network-suggestion.component.html',
-  styleUrls: ['./network-suggestion.component.scss'],
-  providers: [NetworkSuggestionService],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-network-suggestion',
+    templateUrl: './network-suggestion.component.html',
+    styleUrls: ['./network-suggestion.component.scss'],
+    providers: [NetworkSuggestionService],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf, NgFor, NetworkUserComponent, NgbAlert, LoadingComponent, AsyncPipe]
 })
 export class NetworkSuggestionComponent implements OnInit {
 

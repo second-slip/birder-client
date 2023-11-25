@@ -35,16 +35,14 @@ describe('LogoutComponent', () => {
   const setup = async () => {
 
     await TestBed.configureTestingModule({
-      declarations: [
-        LogoutComponent
-      ],
-      imports: [RouterTestingModule.withRoutes([
-        { path: 'home', component: HomeComponent }
-      ])],
-      providers: [
+    imports: [RouterTestingModule.withRoutes([
+            { path: 'home', component: HomeComponent }
+        ]), LogoutComponent],
+    providers: [
         { provide: NavigationService, useValue: fakeNavService },
-        { provide: AuthenticationService, useValue: fakeAuthService }]
-    }).compileComponents();
+        { provide: AuthenticationService, useValue: fakeAuthService }
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(LogoutComponent);
     component = fixture.componentInstance;

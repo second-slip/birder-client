@@ -10,10 +10,9 @@ describe('ContactComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ContactComponent ],
-      schemas: [NO_ERRORS_SCHEMA],
-      imports: [NgbNavModule]
-    })
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [NgbNavModule, ContactComponent]
+})
     .compileComponents();
   });
 

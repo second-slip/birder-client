@@ -28,10 +28,8 @@ describe('FlickrComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-      declarations: [
-        FlickrComponent
-      ]
-    })
+    imports: [FlickrComponent]
+})
       .overrideComponent(FlickrComponent,
         {
           set: {

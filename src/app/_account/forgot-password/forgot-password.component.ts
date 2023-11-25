@@ -1,14 +1,17 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { AccountService } from '../account.service';
 import { IUserEmail } from '../i-user-email.dto';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-forgot-password',
-  templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-forgot-password',
+    templateUrl: './forgot-password.component.html',
+    styleUrls: ['./forgot-password.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor]
 })
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();

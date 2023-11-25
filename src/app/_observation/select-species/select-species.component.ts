@@ -1,16 +1,19 @@
 import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, merge, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
 import { SelectSpeciesService } from './select-species.service';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-select-species',
-  templateUrl: './select-species.component.html',
-  styleUrls: ['./select-species.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-select-species',
+    templateUrl: './select-species.component.html',
+    styleUrls: ['./select-species.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule, NgbTypeahead, NgIf, AsyncPipe]
 })
 export class SelectSpeciesComponent implements OnInit {
   @Input() selectSpeciesForm: FormGroup;

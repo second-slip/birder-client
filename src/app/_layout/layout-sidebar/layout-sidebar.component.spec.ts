@@ -9,8 +9,8 @@ describe('LayoutSidebarComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      declarations: [ LayoutSidebarComponent ]
-    })
+    imports: [LayoutSidebarComponent]
+})
     .compileComponents();
   });
 

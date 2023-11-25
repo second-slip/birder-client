@@ -51,22 +51,19 @@ describe('FollowersComponent', () => {
     )
 
     await TestBed.configureTestingModule({
-      declarations: [
-        FollowersComponent
-      ],
-      providers: [{
-        provide: ActivatedRoute,
-        useValue: {
-          paramMap: of(new Map(Object.entries({
-            username: fakeRouteArgument
-          })))
-          // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
-          // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
-        }
-      }],
-      imports: [NgbNavModule],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(FollowersComponent,
+    providers: [{
+            provide: ActivatedRoute,
+            useValue: {
+                paramMap: of(new Map(Object.entries({
+                    username: fakeRouteArgument
+                })))
+                // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
+                // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
+            }
+        }],
+    imports: [NgbNavModule, FollowersComponent],
+    schemas: [NO_ERRORS_SCHEMA]
+}).overrideComponent(FollowersComponent,
       {
         set: {
           providers: [

@@ -7,6 +7,8 @@ import { fakeNetworkUserModelArray } from 'src/app/testing/network-test-helpers'
 import { NetworkSuggestionComponent } from './network-suggestion.component';
 import { NetworkSuggestionService } from './network-suggestion.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockComponent } from 'ng-mocks';
+import { NetworkUserComponent } from '../network-user/network-user.component';
 
 describe('NetworkSuggestionComponent', () => {
   let component: NetworkSuggestionComponent;
@@ -36,11 +38,19 @@ describe('NetworkSuggestionComponent', () => {
       imports: [NetworkSuggestionComponent, RouterTestingModule],
     }).overrideComponent(NetworkSuggestionComponent,
       {
-        set: {
+        remove: { imports: [NetworkUserComponent], providers: [NetworkSuggestionService] },
+        add: {
+          imports: [MockComponent(NetworkUserComponent)],
           providers: [
             { provide: NetworkSuggestionService, useValue: fakeService }
           ]
         }
+        // {
+        //   set: {
+        //     providers: [
+        //       { provide: NetworkSuggestionService, useValue: fakeService }
+        //     ]
+        //   }
       }).compileComponents();
 
     fixture = TestBed.createComponent(NetworkSuggestionComponent);

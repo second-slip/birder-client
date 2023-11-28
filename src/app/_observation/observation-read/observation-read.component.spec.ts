@@ -12,6 +12,11 @@ import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { ObservationReadService } from '../observation-read.service';
 
 import { ObservationReadComponent } from './observation-read.component';
+import { ReadOnlyMapComponent } from 'src/app/_map/read-only-map/read-only-map.component';
+import { ViewOnlyNotesComponent } from 'src/app/_observation-note/view-notes/view-only-notes.component';
+import { NavigationEvent } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-view-model';
+import { NavigationMenuComponent } from '../navigation-menu/navigation-menu.component';
+import { MockComponent } from 'ng-mocks';
 
 // todo: test different tab contents....
 
@@ -76,9 +81,19 @@ describe('ObservationReadComponent', () => {
       schemas: [NO_ERRORS_SCHEMA]
     }).overrideComponent(ObservationReadComponent,
       {
-        set: {
-          providers: [{ provide: ObservationReadService, useValue: fakeObservationReadService }]
+        remove: {
+          imports: [ReadOnlyMapComponent, ViewOnlyNotesComponent, NavigationMenuComponent],
+          providers: [ObservationReadService]
+        },
+        add: {
+          imports: [MockComponent(ReadOnlyMapComponent), MockComponent(ViewOnlyNotesComponent), MockComponent(NavigationMenuComponent)],
+          providers: [
+            { provide: ObservationReadService, useValue: fakeObservationReadService }
+          ]
         }
+        // set: {
+        //   providers: [{ provide: ObservationReadService, useValue: fakeObservationReadService }]
+        // }
       }).compileComponents();
 
     fixture = TestBed.createComponent(ObservationReadComponent);

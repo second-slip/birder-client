@@ -64,14 +64,17 @@ describe('UserProfileComponent', () => {
             ],
             imports: [NgbNavModule, UserProfileComponent],
         }).overrideComponent(UserProfileComponent, {
-                remove: { imports: [FollowCommandComponent] },
-                add: { imports: [MockComponent(FollowCommandComponent)] },
-                set: {
-                    providers: [
-                        { provide: UserProfileService, useValue: fakeService }
-                    ]
-                }
-            }).compileComponents();
+            remove: {
+                imports: [FollowCommandComponent],
+                providers: [UserProfileService]
+            },
+            add: {
+                imports: [MockComponent(FollowCommandComponent)],
+                providers: [
+                    { provide: UserProfileService, useValue: fakeService }
+                ]
+            }
+        }).compileComponents();
 
         fixture = TestBed.createComponent(UserProfileComponent);
         component = fixture.componentInstance;

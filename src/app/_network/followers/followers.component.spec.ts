@@ -11,6 +11,8 @@ import { AuthenticationService } from 'src/app/_auth/authentication.service';
 
 import { FollowersComponent } from './followers.component';
 import { FollowersService } from './followers.service';
+import { NetworkUserComponent } from '../network-user/network-user.component';
+import { MockComponent } from 'ng-mocks';
 
 describe('FollowersComponent', () => {
   let component: FollowersComponent;
@@ -51,26 +53,34 @@ describe('FollowersComponent', () => {
     )
 
     await TestBed.configureTestingModule({
-    providers: [{
-            provide: ActivatedRoute,
-            useValue: {
-                paramMap: of(new Map(Object.entries({
-                    username: fakeRouteArgument
-                })))
-                // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
-                // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
-            }
-        }],
-    imports: [NgbNavModule, FollowersComponent],
-    schemas: [NO_ERRORS_SCHEMA]
-}).overrideComponent(FollowersComponent,
+      providers: [{
+        provide: ActivatedRoute,
+        useValue: {
+          paramMap: of(new Map(Object.entries({
+            username: fakeRouteArgument
+          })))
+          // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
+          // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
+        }
+      }],
+      imports: [NgbNavModule, FollowersComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    }).overrideComponent(FollowersComponent,
       {
-        set: {
+        remove: { imports: [NetworkUserComponent], providers: [FollowersService, AuthenticationService] },
+        add: {
+          imports: [MockComponent(NetworkUserComponent)],
           providers: [
             { provide: FollowersService, useValue: fakeService },
             { provide: AuthenticationService, useValue: fakeAuthService }
           ]
         }
+        // set: {
+        //   providers: [
+        //     { provide: FollowersService, useValue: fakeService },
+        //     { provide: AuthenticationService, useValue: fakeAuthService }
+        //   ]
+        // }
       }).compileComponents();
 
     fixture = TestBed.createComponent(FollowersComponent);

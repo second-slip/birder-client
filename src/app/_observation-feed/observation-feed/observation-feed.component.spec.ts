@@ -7,6 +7,10 @@ import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
 import { fakeIObservationFeed } from 'src/app/testing/observation-feed-helper';
 import { ObservationFeedService } from '../../_observation-feed/observation-feed.service';
 import { ObservationFeedComponent } from './observation-feed.component';
+import { ObservationFeedItemComponent } from '../observation-feed-item/observation-feed-item.component';
+import { MockComponent } from 'ng-mocks';
+import { InfiniteScrollComponent } from 'src/app/infinite-scroll/infinite-scroll.component';
+import { FilterControlComponent } from '../filter-control/filter-control.component';
 
 describe('ObservationFeedComponent', () => {
     let component: ObservationFeedComponent;
@@ -48,9 +52,20 @@ describe('ObservationFeedComponent', () => {
             schemas: [NO_ERRORS_SCHEMA]
         }).overrideComponent(ObservationFeedComponent,
             {
-                set: {
-                    providers: [{ provide: ObservationFeedService, useValue: fakeObservationFeedService }]
+                remove: {
+                    imports: [ObservationFeedItemComponent, InfiniteScrollComponent, FilterControlComponent],
+                    providers: [ObservationFeedService]
+                },
+                add: {
+                    imports: [MockComponent(ObservationFeedItemComponent), MockComponent(InfiniteScrollComponent), MockComponent(FilterControlComponent)],
+                    providers: [
+                        { provide: ObservationFeedService, useValue: fakeObservationFeedService }
+                    ]
                 }
+                // ,
+                // set: {
+                //     providers: [{ provide: ObservationFeedService, useValue: fakeObservationFeedService }]
+                // }
             }).compileComponents();
 
         fixture = TestBed.createComponent(ObservationFeedComponent);

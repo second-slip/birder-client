@@ -8,6 +8,10 @@ import { fakeNetworkUserModelArray, networkSearchTerm } from 'src/app/testing/ne
 import { NetworkFindComponent } from './network-find.component';
 import { NetworkFindService } from './network-find.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockComponent } from 'ng-mocks';
+import { NetworkUserComponent } from '../network-user/network-user.component';
+import { LoadingComponent } from 'src/app/_loading/loading/loading.component';
+import { provideRouter } from '@angular/router';
 
 describe('NetworkFindComponent', () => {
   let component: NetworkFindComponent;
@@ -31,15 +35,30 @@ describe('NetworkFindComponent', () => {
 
 
     await TestBed.configureTestingModule({
-    imports: [FormsModule, NetworkFindComponent, RouterTestingModule]
-}).overrideComponent(NetworkFindComponent,
-      {
-        set: {
-          providers: [
-            { provide: NetworkFindService, useValue: fakeService }
-          ]
-        }
-      }).compileComponents();
+      imports: [FormsModule, NetworkFindComponent, RouterTestingModule],
+      providers: [{ provide: NetworkFindService, useValue: fakeService }]//, provideRouter()]
+    })
+      .overrideComponent(NetworkFindComponent,
+        {
+          // set: {
+          //   providers: [
+          //     { provide: NetworkFindService, useValue: fakeService }
+          //   ]
+          // },
+          remove: {
+            imports: [NetworkUserComponent],
+            providers: [
+              NetworkFindService
+            ]
+          },
+          add: {
+            imports: [MockComponent(NetworkUserComponent)],
+            providers: [
+              { provide: NetworkFindService, useValue: fakeService }
+            ]
+          },
+        })
+      .compileComponents();
 
     fixture = TestBed.createComponent(NetworkFindComponent);
     component = fixture.componentInstance;

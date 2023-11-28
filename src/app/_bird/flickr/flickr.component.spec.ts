@@ -1,10 +1,11 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { expectText } from 'src/app/testing/element.spec-helper';
 import { photoUrlsArray } from 'src/app/testing/flickr-recordings-api-tests-helper';
 import { FlickrComponent } from './flickr.component';
 import { FlickrService } from './flickr.service';
+import { NgbCarousel, NgbSlide } from '@ng-bootstrap/ng-bootstrap';
 
 describe('FlickrComponent', () => {
   let component: FlickrComponent;
@@ -28,8 +29,8 @@ describe('FlickrComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-    imports: [FlickrComponent]
-})
+      imports: [FlickrComponent, NgbCarousel, NgbSlide]
+    })
       .overrideComponent(FlickrComponent,
         {
           set: {
@@ -61,18 +62,21 @@ describe('FlickrComponent', () => {
     it('calls data fetch', fakeAsync(async () => {
       await setup();
       expect(fakeFlickrService.getData).toHaveBeenCalledTimes(1);
+      discardPeriodicTasks(); 
     }));
 
     it('shows the images', fakeAsync(async () => {
       await setup();
       const carousel = fixture.nativeElement as HTMLElement;
       expect(carousel.querySelector('[data-testid="images"]')?.textContent).toBeDefined();
+      discardPeriodicTasks(); 
     }));
 
     it('does not show error section', fakeAsync(async () => {
       await setup();
       const w = fixture.nativeElement as HTMLElement;
       expect(w.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
+      discardPeriodicTasks(); 
     }));
 
     it('does not show the loading section', fakeAsync(async () => {
@@ -81,6 +85,7 @@ describe('FlickrComponent', () => {
       const { debugElement } = fixture;
       const loading = debugElement.query(By.css('app-loading'));
       expect(loading).toBeNull();
+      discardPeriodicTasks(); 
     }));
   });
 

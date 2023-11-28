@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LayoutSidebarComponent } from './layout-sidebar.component';
 
 import { By } from '@angular/platform-browser';
+import { SideMenuComponent } from '../side-menu/side-menu.component';
+import { MockComponent } from 'ng-mocks';
 
 describe('LayoutSidebarComponent', () => {
   let component: LayoutSidebarComponent;
@@ -9,9 +11,13 @@ describe('LayoutSidebarComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-    imports: [LayoutSidebarComponent]
-})
-    .compileComponents();
+      imports: [LayoutSidebarComponent]
+    })
+      .overrideComponent(LayoutSidebarComponent, {
+        remove: { imports: [SideMenuComponent] },
+        add: { imports: [MockComponent(SideMenuComponent)] },
+      })
+      .compileComponents();
   });
 
   beforeEach(() => {

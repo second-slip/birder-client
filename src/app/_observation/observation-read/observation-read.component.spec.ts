@@ -60,21 +60,21 @@ describe('ObservationReadComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-    imports: [NgbNavModule, ObservationReadComponent],
-    providers: [{
-            provide: ActivatedRoute,
-            useValue: {
-                paramMap: of(new Map(Object.entries({
-                    id: fakeRouteArgument
-                })))
-                // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
-                // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
-            }
-        },
-        { provide: AuthenticationService, useValue: fakeAuthService },
-        { provide: NavigationService, useValue: fakeNavService }],
-    schemas: [NO_ERRORS_SCHEMA]
-}).overrideComponent(ObservationReadComponent,
+      imports: [NgbNavModule, ObservationReadComponent],
+      providers: [{
+        provide: ActivatedRoute,
+        useValue: {
+          paramMap: of(new Map(Object.entries({
+            id: fakeRouteArgument
+          })))
+          // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
+          // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
+        }
+      },
+      { provide: AuthenticationService, useValue: fakeAuthService },
+      { provide: NavigationService, useValue: fakeNavService }],
+      schemas: [NO_ERRORS_SCHEMA]
+    }).overrideComponent(ObservationReadComponent,
       {
         set: {
           providers: [{ provide: ObservationReadService, useValue: fakeObservationReadService }]

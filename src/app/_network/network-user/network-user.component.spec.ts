@@ -3,6 +3,8 @@ import { expectText } from 'src/app/testing/element.spec-helper';
 import { fakeNetworkUserModel, userName } from 'src/app/testing/network-test-helpers';
 import { NetworkUserComponent } from './network-user.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { FollowCommandComponent } from '../follow-command/follow-command.component';
+import { MockComponent } from 'ng-mocks';
 
 describe('NetworkUserComponent', () => {
   let component: NetworkUserComponent;
@@ -10,8 +12,12 @@ describe('NetworkUserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [NetworkUserComponent, RouterTestingModule]
-})
+      imports: [NetworkUserComponent, RouterTestingModule]
+    })
+      .overrideComponent(NetworkUserComponent, {
+        remove: { imports: [FollowCommandComponent] },
+        add: { imports: [MockComponent(FollowCommandComponent)] },
+      })
       .compileComponents();
   });
 

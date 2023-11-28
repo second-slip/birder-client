@@ -60,14 +60,19 @@ describe('AccountManageLocationComponent (child with ng-mocks)', () => {
         )
 
         await TestBed.configureTestingModule({
-    imports: [FormsModule, ReactiveFormsModule,
-        RouterTestingModule.withRoutes([
-            { path: 'login', component: ConfirmEmailComponent },
-        ]), AccountManageLocationComponent, MockComponent(ReadWriteMapComponent)],
-    providers: [{ provide: AccountService, useValue: fakeAccountService },
-        { provide: AuthenticationService, useValue: fakeAuthService }],
-    schemas: [NO_ERRORS_SCHEMA],
-}).compileComponents();
+            imports: [FormsModule, ReactiveFormsModule,
+                RouterTestingModule.withRoutes([
+                    { path: 'login', component: ConfirmEmailComponent },
+                ]), AccountManageLocationComponent],
+            providers: [{ provide: AccountService, useValue: fakeAccountService },
+            { provide: AuthenticationService, useValue: fakeAuthService }],
+            schemas: [NO_ERRORS_SCHEMA],
+        })
+        .overrideComponent(AccountManageLocationComponent, {
+            remove: { imports: [ReadWriteMapComponent] },
+            add: { imports: [MockComponent(ReadWriteMapComponent)] },
+          })
+        .compileComponents();
 
         fixture = TestBed.createComponent(AccountManageLocationComponent);
         component = fixture.componentInstance;

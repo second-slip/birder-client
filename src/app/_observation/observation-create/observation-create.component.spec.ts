@@ -10,6 +10,12 @@ import { ObservationCrudService } from '../observation-crud.service';
 import { ObservationReadComponent } from '../observation-read/observation-read.component';
 
 import { ObservationCreateComponent } from './observation-create.component';
+import { SelectSpeciesComponent } from '../select-species/select-species.component';
+import { SelectDateTimeComponent } from '../select-date-time/select-date-time.component';
+import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
+import { MockComponent } from 'ng-mocks';
+import { MatStepperModule } from '@angular/material/stepper';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // STUB the select species child component...
 
@@ -55,7 +61,7 @@ describe('ObservationCreateComponent', () => {
       });
 
     await TestBed.configureTestingModule({
-    imports: [FormsModule, ReactiveFormsModule,
+    imports: [FormsModule, ReactiveFormsModule, MatStepperModule, BrowserAnimationsModule,
         RouterTestingModule.withRoutes([
             { path: 'login', component: ObservationReadComponent },
         ]), ObservationCreateComponent],
@@ -63,7 +69,12 @@ describe('ObservationCreateComponent', () => {
         { provide: ObservationCrudService, useValue: fakeObservationCrudService },
         { provide: AuthenticationService, useValue: fakeAuthService }],
     schemas: [NO_ERRORS_SCHEMA]
-}).compileComponents();
+})
+.overrideComponent(ObservationCreateComponent, {
+  remove: { imports: [SelectSpeciesComponent, SelectDateTimeComponent, ReadWriteMapComponent] },
+  add: { imports: [MockComponent(SelectSpeciesComponent), MockComponent(SelectDateTimeComponent), MockComponent(ReadWriteMapComponent)] },
+})
+.compileComponents();
 
     fixture = TestBed.createComponent(ObservationCreateComponent);
     component = fixture.componentInstance;

@@ -2,6 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { SideMenuComponent } from './side-menu.component';
+import { ObservationCountComponent } from 'src/app/_analysis/observation-count/observation-count.component';
+import { TweetDayComponent } from 'src/app/_tweet/tweet-day/tweet-day.component';
+import { ObservationTopFiveComponent } from 'src/app/_analysis/observation-top-five/observation-top-five.component';
+import { NetworkSidebarComponent } from 'src/app/_network/network-sidebar/network-sidebar.component';
+import { MockComponent } from 'ng-mocks';
 
 describe('SideMenuComponent', () => {
   let component: SideMenuComponent;
@@ -9,9 +14,13 @@ describe('SideMenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [SideMenuComponent]
-})
-    .compileComponents();
+      imports: [SideMenuComponent]
+    })
+      .overrideComponent(SideMenuComponent, {
+        remove: { imports: [ObservationCountComponent, TweetDayComponent, ObservationTopFiveComponent, NetworkSidebarComponent] },
+        add: { imports: [MockComponent(ObservationCountComponent), MockComponent(ObservationTopFiveComponent), MockComponent(NetworkSidebarComponent)] },
+      })
+      .compileComponents();
   });
 
   beforeEach(() => {

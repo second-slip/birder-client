@@ -2,6 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AccountManagerComponent } from './account-manager.component';
+import { AccountManageAvatarComponent } from '../account-manage-avatar/account-manage-avatar.component';
+import { AccountManageLocationComponent } from '../account-manage-location/account-manage-location.component';
+import { AccountManagePasswordComponent } from '../account-manage-password/account-manage-password.component';
+import { AccountManageProfileComponent } from '../account-manage-profile/account-manage-profile.component';
+import { MockComponent } from 'ng-mocks';
 
 describe('AccountManagerComponent', () => {
   let component: AccountManagerComponent;
@@ -9,9 +14,13 @@ describe('AccountManagerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [NgbNavModule, AccountManagerComponent]
-})
-    .compileComponents();
+      imports: [NgbNavModule, AccountManagerComponent]
+    })
+      .overrideComponent(AccountManagerComponent, {
+        remove: { imports: [AccountManageAvatarComponent, AccountManageLocationComponent, AccountManagePasswordComponent, AccountManageProfileComponent] },
+        add: { imports: [MockComponent(AccountManageAvatarComponent), MockComponent(AccountManageLocationComponent), MockComponent(AccountManagePasswordComponent), MockComponent(AccountManageProfileComponent)] },
+      })
+      .compileComponents();
   });
 
   beforeEach(() => {

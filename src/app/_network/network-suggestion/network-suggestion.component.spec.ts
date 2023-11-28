@@ -6,6 +6,7 @@ import { fakeNetworkUserModelArray } from 'src/app/testing/network-test-helpers'
 
 import { NetworkSuggestionComponent } from './network-suggestion.component';
 import { NetworkSuggestionService } from './network-suggestion.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NetworkSuggestionComponent', () => {
   let component: NetworkSuggestionComponent;
@@ -32,8 +33,8 @@ describe('NetworkSuggestionComponent', () => {
 
 
     await TestBed.configureTestingModule({
-    imports: [NetworkSuggestionComponent],
-}).overrideComponent(NetworkSuggestionComponent,
+      imports: [NetworkSuggestionComponent, RouterTestingModule],
+    }).overrideComponent(NetworkSuggestionComponent,
       {
         set: {
           providers: [

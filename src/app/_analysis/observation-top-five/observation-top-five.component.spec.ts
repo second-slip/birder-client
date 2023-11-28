@@ -9,6 +9,7 @@ import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
 import { ObservationTopFiveComponent } from './observation-top-five.component';
 import { ObservationTopFiveService } from './observation-top-five.service';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ObservationTopFiveComponent unit tests', () => {
   let fakeAuthService: AuthenticationService;
@@ -46,7 +47,7 @@ describe('ObservationTopFiveComponent unit tests', () => {
 
       await TestBed.configureTestingModule({
     schemas: [NO_ERRORS_SCHEMA],
-    imports: [NgbNavModule, ObservationTopFiveComponent],
+    imports: [NgbNavModule, ObservationTopFiveComponent, RouterTestingModule],
     providers: [
         { provide: ObservationTopFiveService, useValue: fakeObservationTopFiveService },
         { provide: AuthenticationService, useValue: fakeAuthService }
@@ -97,7 +98,7 @@ describe('ObservationTopFiveComponent unit tests', () => {
 
       await TestBed.configureTestingModule({
     schemas: [NO_ERRORS_SCHEMA],
-    imports: [NgbNavModule, ObservationTopFiveComponent],
+    imports: [NgbNavModule, ObservationTopFiveComponent, RouterTestingModule],
     providers: [
         { provide: ObservationTopFiveService, useValue: fakeObservationTopFiveService },
         { provide: AuthenticationService, useValue: fakeAuthService }
@@ -159,7 +160,7 @@ describe('ObservationTopFiveComponent unit tests', () => {
 
       await TestBed.configureTestingModule({
     schemas: [NO_ERRORS_SCHEMA],
-    imports: [NgbNavModule, ObservationTopFiveComponent],
+    imports: [NgbNavModule, ObservationTopFiveComponent, RouterTestingModule],
     providers: [
         { provide: ObservationTopFiveService, useValue: fakeObservationTopFiveService },
         { provide: AuthenticationService, useValue: fakeAuthService }
@@ -220,7 +221,7 @@ describe('ObservationTopFiveComponent unit tests', () => {
 
       await TestBed.configureTestingModule({
     schemas: [NO_ERRORS_SCHEMA],
-    imports: [NgbNavModule, ObservationTopFiveComponent],
+    imports: [NgbNavModule, ObservationTopFiveComponent, RouterTestingModule],
     providers: [
         { provide: ObservationTopFiveService, useValue: fakeObservationTopFiveService },
         { provide: AuthenticationService, useValue: fakeAuthService }
@@ -278,7 +279,7 @@ describe('ObservationTopFiveComponent unit tests', () => {
 
       await TestBed.configureTestingModule({
     schemas: [NO_ERRORS_SCHEMA],
-    imports: [NgbNavModule, ObservationTopFiveComponent],
+    imports: [NgbNavModule, ObservationTopFiveComponent, RouterTestingModule],
     providers: [
         { provide: ObservationTopFiveService, useValue: fakeObservationTopFiveService },
         { provide: AuthenticationService, useValue: fakeAuthService }

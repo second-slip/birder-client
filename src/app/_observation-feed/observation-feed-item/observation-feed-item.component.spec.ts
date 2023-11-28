@@ -6,6 +6,7 @@ import { ObservationFeedItemComponent } from './observation-feed-item.component'
 import { IObservationFeed } from '../i-observation-feed.dto';
 import { IAuthUser } from '../../_auth/i-auth-user.dto';
 import { expectText } from 'src/app/testing/element.spec-helper';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 describe('ObservationFeedItemComponent', () => {
@@ -54,7 +55,7 @@ describe('ObservationFeedItemComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-    imports: [ObservationFeedItemComponent],
+    imports: [ObservationFeedItemComponent, RouterTestingModule],
     providers: [{ provide: AuthenticationService, useValue: fakeAuthService }]
 })
             .compileComponents();

@@ -6,6 +6,7 @@ import { fakeIObservationCount, fakeIObservationCountIsZero } from 'src/app/test
 import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
 import { ObservationCountComponent } from './observation-count.component';
 import { ObservationCountService } from './observation-count.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ObservationCountComponent unit tests', () => {
 
@@ -28,12 +29,12 @@ describe('ObservationCountComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [ObservationCountComponent],
-    schemas: [NO_ERRORS_SCHEMA],
-    providers: [
-        { provide: ObservationCountService, useValue: fakeObservationCountService }
-    ]
-}).compileComponents();
+                imports: [ObservationCountComponent, RouterTestingModule],
+                schemas: [NO_ERRORS_SCHEMA],
+                providers: [
+                    { provide: ObservationCountService, useValue: fakeObservationCountService }
+                ]
+            }).compileComponents();
 
             fixture = TestBed.createComponent(ObservationCountComponent);
             //fixture.detectChanges();
@@ -85,12 +86,12 @@ describe('ObservationCountComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [ObservationCountComponent],
-    schemas: [NO_ERRORS_SCHEMA],
-    providers: [
-        { provide: ObservationCountService, useValue: fakeObservationCountService }
-    ]
-}).compileComponents();
+                imports: [ObservationCountComponent],
+                schemas: [NO_ERRORS_SCHEMA],
+                providers: [
+                    { provide: ObservationCountService, useValue: fakeObservationCountService }
+                ]
+            }).compileComponents();
 
             fixture = TestBed.createComponent(ObservationCountComponent);
             fixture.detectChanges();
@@ -145,12 +146,12 @@ describe('ObservationCountComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [ObservationCountComponent],
-    schemas: [NO_ERRORS_SCHEMA],
-    providers: [
-        { provide: ObservationCountService, useValue: fakeObservationCountService }
-    ]
-}).compileComponents();
+                imports: [ObservationCountComponent, RouterTestingModule],
+                schemas: [NO_ERRORS_SCHEMA],
+                providers: [
+                    { provide: ObservationCountService, useValue: fakeObservationCountService }
+                ]
+            }).compileComponents();
 
             fixture = TestBed.createComponent(ObservationCountComponent);
             fixture.detectChanges();
@@ -205,12 +206,12 @@ describe('ObservationCountComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [ObservationCountComponent],
-    schemas: [NO_ERRORS_SCHEMA],
-    providers: [
-        { provide: ObservationCountService, useValue: fakeObservationCountService }
-    ]
-}).compileComponents();
+                imports: [ObservationCountComponent, RouterTestingModule],
+                schemas: [NO_ERRORS_SCHEMA],
+                providers: [
+                    { provide: ObservationCountService, useValue: fakeObservationCountService }
+                ]
+            }).compileComponents();
 
             fixture = TestBed.createComponent(ObservationCountComponent);
             fixture.detectChanges();
@@ -261,12 +262,12 @@ describe('ObservationCountComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [ObservationCountComponent],
-    schemas: [NO_ERRORS_SCHEMA],
-    providers: [
-        { provide: ObservationCountService, useValue: fakeObservationCountService }
-    ]
-}).compileComponents();
+                imports: [ObservationCountComponent, RouterTestingModule],
+                schemas: [NO_ERRORS_SCHEMA],
+                providers: [
+                    { provide: ObservationCountService, useValue: fakeObservationCountService }
+                ]
+            }).compileComponents();
 
             fixture = TestBed.createComponent(ObservationCountComponent);
             fixture.detectChanges();

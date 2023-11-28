@@ -6,6 +6,7 @@ import { fakeIBirdArray } from 'src/app/testing/birds-helpers';
 import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
 import { BirdIndexComponent } from './bird-index.component';
 import { BirdIndexService } from './bird-index.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('BirdIndexComponent unit tests', () => {
 
@@ -29,9 +30,9 @@ describe('BirdIndexComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [BirdIndexComponent],
-    schemas: [NO_ERRORS_SCHEMA]
-})
+                imports: [BirdIndexComponent, RouterTestingModule],
+                schemas: [NO_ERRORS_SCHEMA]
+            })
                 .overrideComponent(BirdIndexComponent,
                     {
                         set: {
@@ -91,9 +92,9 @@ describe('BirdIndexComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [BirdIndexComponent],
-    schemas: [NO_ERRORS_SCHEMA]
-})
+                imports: [BirdIndexComponent, RouterTestingModule],
+                schemas: [NO_ERRORS_SCHEMA]
+            })
                 .overrideComponent(BirdIndexComponent,
                     {
                         set: {
@@ -153,9 +154,9 @@ describe('BirdIndexComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [BirdIndexComponent],
-    schemas: [NO_ERRORS_SCHEMA]
-})
+                imports: [BirdIndexComponent, RouterTestingModule],
+                schemas: [NO_ERRORS_SCHEMA]
+            })
                 .overrideComponent(BirdIndexComponent,
                     {
                         set: {
@@ -213,9 +214,9 @@ describe('BirdIndexComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [BirdIndexComponent],
-    schemas: [NO_ERRORS_SCHEMA]
-})
+                imports: [BirdIndexComponent, RouterTestingModule],
+                schemas: [NO_ERRORS_SCHEMA]
+            })
                 .overrideComponent(BirdIndexComponent,
                     {
                         set: {
@@ -274,9 +275,9 @@ describe('BirdIndexComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [BirdIndexComponent],
-    schemas: [NO_ERRORS_SCHEMA]
-})
+                imports: [BirdIndexComponent, RouterTestingModule],
+                schemas: [NO_ERRORS_SCHEMA]
+            })
                 .overrideComponent(BirdIndexComponent,
                     {
                         set: {

@@ -9,6 +9,7 @@ import { INetworkSummary } from './i-network-summary.dto';
 
 import { NetworkSummaryComponent } from './network-summary.component';
 import { NetworkSummaryService } from './network-summary.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NetworkSummaryComponent', () => {
   let component: NetworkSummaryComponent;
@@ -46,7 +47,7 @@ describe('NetworkSummaryComponent', () => {
 
 
     await TestBed.configureTestingModule({
-    imports: [NetworkSummaryComponent],
+    imports: [NetworkSummaryComponent, RouterTestingModule],
     providers: [
         { provide: NetworkSummaryService, useValue: fakeService },
         { provide: AuthenticationService, useValue: fakeAuthService }

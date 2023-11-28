@@ -1,15 +1,20 @@
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
-import { Router } from '@angular/router';
+import { Router, Routes } from '@angular/router';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { of } from 'rxjs';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { ObservationFeedComponent } from 'src/app/_observation-feed/observation-feed/observation-feed.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let fakeService: jasmine.SpyObj<AuthenticationService>;
-  let routerStub: any;
+  let router: Router;
+
+  const routes: Routes = [
+    { path: 'feed-p/public', component: ObservationFeedComponent }
+  ];
 
   const setup = async (
     fakeServiceReturnValues?: jasmine.SpyObjMethodNames<AuthenticationService>) => {
@@ -40,17 +45,15 @@ describe('HomeComponent', () => {
       }
     );
 
-    routerStub = {
-      navigate: jasmine.createSpy('navigate'),
-    };
-
     await TestBed.configureTestingModule({
-    imports: [HomeComponent],
-    providers: [
-        { provide: AuthenticationService, useValue: fakeService },
-        { provide: Router, useValue: routerStub }
-    ]
-}).compileComponents();
+      imports: [HomeComponent, RouterTestingModule.withRoutes(routes)],
+      providers: [
+        { provide: AuthenticationService, useValue: fakeService }
+      ]
+    }).compileComponents();
+
+    router = TestBed.inject(Router);
+    spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
@@ -68,10 +71,9 @@ describe('HomeComponent', () => {
     it('should create', fakeAsync(async () => {
       await setup({
         isLoggedIn: false
-        // isTokenValid: false
       });
 
-      expect(routerStub.navigate).not.toHaveBeenCalledWith(['/feed-p/public']);
+      expect(router.navigate).not.toHaveBeenCalledWith(['/feed-p/public']);
     }));
 
   });
@@ -83,7 +85,7 @@ describe('HomeComponent', () => {
         isLoggedIn: true
       });
 
-      expect(routerStub.navigate).toHaveBeenCalledWith(['/feed-p/public']);
+      expect(router.navigate).toHaveBeenCalledWith(['/feed-p/public']);
     }));
   });
 });

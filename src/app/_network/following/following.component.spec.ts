@@ -11,6 +11,8 @@ import { AuthenticationService } from 'src/app/_auth/authentication.service';
 
 import { FollowingComponent } from './following.component';
 import { FollowingService } from './following.service';
+import { NetworkUserComponent } from '../network-user/network-user.component';
+import { MockComponent } from 'ng-mocks';
 
 describe('FollowingComponent', () => {
   let component: FollowingComponent;
@@ -65,6 +67,8 @@ describe('FollowingComponent', () => {
     schemas: [NO_ERRORS_SCHEMA]
 }).overrideComponent(FollowingComponent,
       {
+        remove: { imports: [NetworkUserComponent] },
+        add: { imports: [MockComponent(NetworkUserComponent)] },
         set: {
           providers: [
             { provide: FollowingService, useValue: fakeService },

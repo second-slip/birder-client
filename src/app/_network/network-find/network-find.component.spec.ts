@@ -7,6 +7,7 @@ import { fakeNetworkUserModelArray, networkSearchTerm } from 'src/app/testing/ne
 
 import { NetworkFindComponent } from './network-find.component';
 import { NetworkFindService } from './network-find.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NetworkFindComponent', () => {
   let component: NetworkFindComponent;
@@ -30,7 +31,7 @@ describe('NetworkFindComponent', () => {
 
 
     await TestBed.configureTestingModule({
-    imports: [FormsModule, NetworkFindComponent]
+    imports: [FormsModule, NetworkFindComponent, RouterTestingModule]
 }).overrideComponent(NetworkFindComponent,
       {
         set: {

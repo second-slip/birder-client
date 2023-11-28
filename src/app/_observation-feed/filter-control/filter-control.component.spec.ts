@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 
 import { FilterControlComponent } from './filter-control.component';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { RouterTestingModule } from '@angular/router/testing';
 
 // ToDo: Test the template
 
@@ -35,7 +36,7 @@ describe('FilterControlComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [NgbDropdownModule, FilterControlComponent],
+    imports: [NgbDropdownModule, FilterControlComponent, RouterTestingModule],
     providers: [{ provide: AuthenticationService, useValue: fakeAuthService }]
 })
     .compileComponents();

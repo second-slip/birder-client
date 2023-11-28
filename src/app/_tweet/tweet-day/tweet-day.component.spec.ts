@@ -7,6 +7,7 @@ import { By } from '@angular/platform-browser';
 import { expectText, findComponent } from 'src/app/testing/element.spec-helper'
 import { fakeITweet } from 'src/app/testing/tweet-day-test-helper';
 import { findEl } from 'src/app/testing/element.spec-helper';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 describe('TweetDayComponent unit tests', () => {
@@ -30,7 +31,7 @@ describe('TweetDayComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [TweetDayComponent],
+    imports: [TweetDayComponent, RouterTestingModule],
     schemas: [NO_ERRORS_SCHEMA],
     providers: [
         { provide: TweetDayService, useValue: fakeTweetDayService }
@@ -87,7 +88,7 @@ describe('TweetDayComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [TweetDayComponent],
+    imports: [TweetDayComponent, RouterTestingModule],
     schemas: [NO_ERRORS_SCHEMA],
     providers: [
         { provide: TweetDayService, useValue: fakeTweetDayService }
@@ -158,7 +159,7 @@ describe('TweetDayComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [TweetDayComponent],
+    imports: [TweetDayComponent, RouterTestingModule],
     schemas: [NO_ERRORS_SCHEMA],
     providers: [
         { provide: TweetDayService, useValue: fakeTweetDayService }
@@ -215,7 +216,7 @@ describe('TweetDayComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [TweetDayComponent],
+    imports: [TweetDayComponent, RouterTestingModule],
     schemas: [NO_ERRORS_SCHEMA],
     providers: [
         { provide: TweetDayService, useValue: fakeTweetDayService }

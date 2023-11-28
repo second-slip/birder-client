@@ -7,6 +7,7 @@ import { lifeListModel } from 'src/app/testing/list-test-helpers';
 import { ObservationCountService } from 'src/app/_analysis/observation-count/observation-count.service';
 import { LifeListComponent } from './life-list.component';
 import { LifeListService } from './life-list.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LifeListComponent', () => {
   let component: LifeListComponent;
@@ -39,10 +40,10 @@ describe('LifeListComponent', () => {
       });
 
     await TestBed.configureTestingModule({
-    imports: [LifeListComponent],
-    providers: [{ provide: ObservationCountService, useValue: fakeCountService }],
-    schemas: [NO_ERRORS_SCHEMA]
-}).overrideComponent(LifeListComponent,
+      imports: [LifeListComponent, RouterTestingModule],
+      providers: [{ provide: ObservationCountService, useValue: fakeCountService }],
+      schemas: [NO_ERRORS_SCHEMA]
+    }).overrideComponent(LifeListComponent,
       {
         set: {
           providers: [{ provide: LifeListService, useValue: fakeListService }]

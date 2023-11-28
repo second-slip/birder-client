@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { expectText } from 'src/app/testing/element.spec-helper';
 import { fakeNetworkUserModel, userName } from 'src/app/testing/network-test-helpers';
 import { NetworkUserComponent } from './network-user.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NetworkUserComponent', () => {
   let component: NetworkUserComponent;
@@ -9,7 +10,7 @@ describe('NetworkUserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [NetworkUserComponent]
+    imports: [NetworkUserComponent, RouterTestingModule]
 })
       .compileComponents();
   });

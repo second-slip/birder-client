@@ -6,6 +6,7 @@ import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
 import { fakeTweetArchiveArray } from 'src/app/testing/tweet-day-test-helper';
 import { TweetDayArchiveComponent } from './tweet-day-archive.component';
 import { TweetDayArchiveService } from './tweet-day-archive.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TweetDayArchiveComponent', () => {
 
@@ -30,9 +31,9 @@ describe('TweetDayArchiveComponent', () => {
       );
 
       await TestBed.configureTestingModule({
-    imports: [TweetDayArchiveComponent],
-    schemas: [NO_ERRORS_SCHEMA]
-})
+        imports: [TweetDayArchiveComponent, RouterTestingModule],
+        schemas: [NO_ERRORS_SCHEMA]
+      })
         .overrideComponent(TweetDayArchiveComponent,
           {
             set: {
@@ -94,9 +95,9 @@ describe('TweetDayArchiveComponent', () => {
       );
 
       await TestBed.configureTestingModule({
-    imports: [TweetDayArchiveComponent],
-    schemas: [NO_ERRORS_SCHEMA]
-})
+        imports: [TweetDayArchiveComponent, RouterTestingModule],
+        schemas: [NO_ERRORS_SCHEMA]
+      })
         .overrideComponent(TweetDayArchiveComponent,
           {
             set: {
@@ -159,9 +160,9 @@ describe('TweetDayArchiveComponent', () => {
       );
 
       await TestBed.configureTestingModule({
-    imports: [TweetDayArchiveComponent],
-    schemas: [NO_ERRORS_SCHEMA]
-})
+        imports: [TweetDayArchiveComponent, RouterTestingModule],
+        schemas: [NO_ERRORS_SCHEMA]
+      })
         .overrideComponent(TweetDayArchiveComponent,
           {
             set: {
@@ -209,12 +210,12 @@ describe('TweetDayArchiveComponent', () => {
       );
 
       await TestBed.configureTestingModule({
-    imports: [TweetDayArchiveComponent],
-    schemas: [NO_ERRORS_SCHEMA] //,
-    // providers: [
-    //     { provide: TweetDayArchiveService, useValue: fakeTweetDayArchiveService }
-    // ]
-})
+        imports: [TweetDayArchiveComponent, RouterTestingModule],
+        schemas: [NO_ERRORS_SCHEMA] //,
+        // providers: [
+        //     { provide: TweetDayArchiveService, useValue: fakeTweetDayArchiveService }
+        // ]
+      })
         .overrideComponent(TweetDayArchiveComponent,
           {
             set: {
@@ -251,7 +252,7 @@ describe('TweetDayArchiveComponent', () => {
       fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
 
       expect(fakeTweetDayArchiveService.getData).toHaveBeenCalled();
-  }));
+    }));
   });
 });
 

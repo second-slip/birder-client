@@ -6,7 +6,9 @@ import { fakeIObservationCount, fakeIObservationCountIsZero } from 'src/app/test
 import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
 import { ObservationCountComponent } from './observation-count.component';
 import { ObservationCountService } from './observation-count.service';
-import { RouterTestingModule } from '@angular/router/testing';
+import { } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
+import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 
 describe('ObservationCountComponent unit tests', () => {
 
@@ -29,9 +31,10 @@ describe('ObservationCountComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                imports: [ObservationCountComponent, RouterTestingModule],
+                imports: [ObservationCountComponent],
                 schemas: [NO_ERRORS_SCHEMA],
                 providers: [
+                    provideRouter(blankRoutesArray),
                     { provide: ObservationCountService, useValue: fakeObservationCountService }
                 ]
             }).compileComponents();
@@ -89,6 +92,7 @@ describe('ObservationCountComponent unit tests', () => {
                 imports: [ObservationCountComponent],
                 schemas: [NO_ERRORS_SCHEMA],
                 providers: [
+                    provideRouter(blankRoutesArray),
                     { provide: ObservationCountService, useValue: fakeObservationCountService }
                 ]
             }).compileComponents();
@@ -146,9 +150,10 @@ describe('ObservationCountComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                imports: [ObservationCountComponent, RouterTestingModule],
+                imports: [ObservationCountComponent,],
                 schemas: [NO_ERRORS_SCHEMA],
                 providers: [
+                    provideRouter(blankRoutesArray),
                     { provide: ObservationCountService, useValue: fakeObservationCountService }
                 ]
             }).compileComponents();
@@ -206,9 +211,10 @@ describe('ObservationCountComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                imports: [ObservationCountComponent, RouterTestingModule],
+                imports: [ObservationCountComponent,],
                 schemas: [NO_ERRORS_SCHEMA],
                 providers: [
+                    provideRouter(blankRoutesArray),
                     { provide: ObservationCountService, useValue: fakeObservationCountService }
                 ]
             }).compileComponents();
@@ -262,9 +268,10 @@ describe('ObservationCountComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                imports: [ObservationCountComponent, RouterTestingModule],
+                imports: [ObservationCountComponent,],
                 schemas: [NO_ERRORS_SCHEMA],
                 providers: [
+                    provideRouter(blankRoutesArray),
                     { provide: ObservationCountService, useValue: fakeObservationCountService }
                 ]
             }).compileComponents();

@@ -4,9 +4,10 @@ import { AboutComponent } from './about.component';
 
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from 'ng-mocks';
 import { FeaturesComponent } from '../features/features.component';
+import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
+import { provideRouter } from '@angular/router';
 
 describe('AboutComponent', () => {
   let component: AboutComponent;
@@ -15,7 +16,8 @@ describe('AboutComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [NgbNavModule, AboutComponent, RouterTestingModule]
+      providers: [provideRouter(blankRoutesArray)],
+      imports: [NgbNavModule, AboutComponent]
     })
       .overrideComponent(AboutComponent, {
         remove: { imports: [FeaturesComponent] },

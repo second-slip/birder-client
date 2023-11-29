@@ -3,12 +3,12 @@ import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
 import { fakeNetworkUserModelArray } from 'src/app/testing/network-test-helpers';
-
 import { NetworkSuggestionComponent } from './network-suggestion.component';
 import { NetworkSuggestionService } from './network-suggestion.service';
-import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from 'ng-mocks';
 import { NetworkUserComponent } from '../network-user/network-user.component';
+import { provideRouter } from '@angular/router';
+import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 
 describe('NetworkSuggestionComponent', () => {
   let component: NetworkSuggestionComponent;
@@ -35,7 +35,8 @@ describe('NetworkSuggestionComponent', () => {
 
 
     await TestBed.configureTestingModule({
-      imports: [NetworkSuggestionComponent, RouterTestingModule],
+      imports: [NetworkSuggestionComponent],
+      providers: [provideRouter(blankRoutesArray)],
     }).overrideComponent(NetworkSuggestionComponent,
       {
         remove: { imports: [NetworkUserComponent], providers: [NetworkSuggestionService] },

@@ -1,13 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { of } from 'rxjs';
-
 import { ObservationFeedItemComponent } from './observation-feed-item.component';
 import { IObservationFeed } from '../i-observation-feed.dto';
 import { IAuthUser } from '../../_auth/i-auth-user.dto';
 import { expectText } from 'src/app/testing/element.spec-helper';
-import { RouterTestingModule } from '@angular/router/testing';
-
+import { provideRouter } from '@angular/router';
+import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 
 describe('ObservationFeedItemComponent', () => {
     let component: ObservationFeedItemComponent;
@@ -55,9 +54,10 @@ describe('ObservationFeedItemComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-    imports: [ObservationFeedItemComponent, RouterTestingModule],
-    providers: [{ provide: AuthenticationService, useValue: fakeAuthService }]
-})
+            imports: [ObservationFeedItemComponent],
+            providers: [{ provide: AuthenticationService, useValue: fakeAuthService },
+            provideRouter(blankRoutesArray)]
+        })
             .compileComponents();
     });
 

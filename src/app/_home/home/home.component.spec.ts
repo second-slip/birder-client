@@ -1,9 +1,8 @@
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
-import { Router, Routes } from '@angular/router';
+import { provideRouter, Router, Routes } from '@angular/router';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { of } from 'rxjs';
-import { RouterTestingModule } from '@angular/router/testing';
 import { ObservationFeedComponent } from 'src/app/_observation-feed/observation-feed/observation-feed.component';
 
 describe('HomeComponent', () => {
@@ -46,8 +45,9 @@ describe('HomeComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-      imports: [HomeComponent, RouterTestingModule.withRoutes(routes)],
+      imports: [HomeComponent],
       providers: [
+        provideRouter(routes),
         { provide: AuthenticationService, useValue: fakeService }
       ]
     }).compileComponents();

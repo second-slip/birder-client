@@ -2,9 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { expectText } from 'src/app/testing/element.spec-helper';
 import { fakeNetworkUserModel, userName } from 'src/app/testing/network-test-helpers';
 import { NetworkUserComponent } from './network-user.component';
-import { RouterTestingModule } from '@angular/router/testing';
 import { FollowCommandComponent } from '../follow-command/follow-command.component';
 import { MockComponent } from 'ng-mocks';
+import { provideRouter } from '@angular/router';
+import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 
 describe('NetworkUserComponent', () => {
   let component: NetworkUserComponent;
@@ -12,7 +13,8 @@ describe('NetworkUserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NetworkUserComponent, RouterTestingModule]
+      imports: [NetworkUserComponent],
+      providers: [provideRouter(blankRoutesArray)]
     })
       .overrideComponent(NetworkUserComponent, {
         remove: { imports: [FollowCommandComponent] },

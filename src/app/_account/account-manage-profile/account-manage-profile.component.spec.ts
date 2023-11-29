@@ -1,22 +1,26 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { manageProfileModel } from 'src/app/testing/account-tests-helpers';
 import { userModel } from 'src/app/testing/auth-test-helpers';
-import { dispatchFakeEvent, expectText, findEl, setFieldValue } from 'src/app/testing/element.spec-helper';
+import { dispatchFakeEvent, expectText, findEl } from 'src/app/testing/element.spec-helper';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { LoginComponent } from 'src/app/_auth/login/login.component';
 import { AccountValidationService } from '../account-validation.service';
 import { AccountService } from '../account.service';
 import { ConfirmEmailComponent } from '../confirm-email/confirm-email.component';
-
 import { AccountManageProfileComponent } from './account-manage-profile.component';
+import { Routes, provideRouter } from '@angular/router';
 
 const requiredFields = [
   'username',
   'email'
+];
+
+const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'confirm-email', component: ConfirmEmailComponent }
 ];
 
 describe('AccountManageProfileComponent', () => {
@@ -75,18 +79,15 @@ describe('AccountManageProfileComponent', () => {
     )
 
     await TestBed.configureTestingModule({
-    imports: [FormsModule, ReactiveFormsModule,
-        RouterTestingModule.withRoutes([
-            { path: 'login', component: LoginComponent },
-            { path: 'confirm-email', component: ConfirmEmailComponent }
-        ]), AccountManageProfileComponent],
-    schemas: [NO_ERRORS_SCHEMA],
-    providers: [
+      imports: [FormsModule, ReactiveFormsModule, AccountManageProfileComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        provideRouter(routes),
         { provide: AccountValidationService, useValue: fakeValidationService },
         { provide: AccountService, useValue: fakeAccountService },
         { provide: AuthenticationService, useValue: fakeAuthService }
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AccountManageProfileComponent);
     component = fixture.componentInstance;

@@ -1,12 +1,13 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
 import { fakeTweetArchiveArray } from 'src/app/testing/tweet-day-test-helper';
 import { TweetDayArchiveComponent } from './tweet-day-archive.component';
 import { TweetDayArchiveService } from './tweet-day-archive.service';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
+import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 
 describe('TweetDayArchiveComponent', () => {
 
@@ -31,7 +32,8 @@ describe('TweetDayArchiveComponent', () => {
       );
 
       await TestBed.configureTestingModule({
-        imports: [TweetDayArchiveComponent, RouterTestingModule],
+        imports: [TweetDayArchiveComponent],
+        providers: [provideRouter(blankRoutesArray)],
         schemas: [NO_ERRORS_SCHEMA]
       })
         .overrideComponent(TweetDayArchiveComponent,
@@ -95,7 +97,8 @@ describe('TweetDayArchiveComponent', () => {
       );
 
       await TestBed.configureTestingModule({
-        imports: [TweetDayArchiveComponent, RouterTestingModule],
+        imports: [TweetDayArchiveComponent],
+        providers: [provideRouter(blankRoutesArray)],
         schemas: [NO_ERRORS_SCHEMA]
       })
         .overrideComponent(TweetDayArchiveComponent,
@@ -160,7 +163,8 @@ describe('TweetDayArchiveComponent', () => {
       );
 
       await TestBed.configureTestingModule({
-        imports: [TweetDayArchiveComponent, RouterTestingModule],
+        imports: [TweetDayArchiveComponent],
+        providers: [provideRouter(blankRoutesArray)],
         schemas: [NO_ERRORS_SCHEMA]
       })
         .overrideComponent(TweetDayArchiveComponent,
@@ -210,11 +214,9 @@ describe('TweetDayArchiveComponent', () => {
       );
 
       await TestBed.configureTestingModule({
-        imports: [TweetDayArchiveComponent, RouterTestingModule],
-        schemas: [NO_ERRORS_SCHEMA] //,
-        // providers: [
-        //     { provide: TweetDayArchiveService, useValue: fakeTweetDayArchiveService }
-        // ]
+        imports: [TweetDayArchiveComponent],
+        providers: [provideRouter(blankRoutesArray)],
+        schemas: [NO_ERRORS_SCHEMA]
       })
         .overrideComponent(TweetDayArchiveComponent,
           {

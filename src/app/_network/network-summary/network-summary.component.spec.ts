@@ -6,10 +6,10 @@ import { expectText } from 'src/app/testing/element.spec-helper';
 import { fakeNetworkSummary } from 'src/app/testing/network-test-helpers';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { INetworkSummary } from './i-network-summary.dto';
-
 import { NetworkSummaryComponent } from './network-summary.component';
 import { NetworkSummaryService } from './network-summary.service';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
+import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 
 describe('NetworkSummaryComponent', () => {
   let component: NetworkSummaryComponent;
@@ -47,12 +47,13 @@ describe('NetworkSummaryComponent', () => {
 
 
     await TestBed.configureTestingModule({
-    imports: [NetworkSummaryComponent, RouterTestingModule],
-    providers: [
+      imports: [NetworkSummaryComponent],
+      providers: [
+        provideRouter(blankRoutesArray),
         { provide: NetworkSummaryService, useValue: fakeService },
         { provide: AuthenticationService, useValue: fakeAuthService }
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NetworkSummaryComponent);
     component = fixture.componentInstance;

@@ -1,7 +1,6 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { LoginComponent } from 'src/app/_auth/login/login.component';
 import { AccountValidationService } from '../account-validation.service';
@@ -15,11 +14,16 @@ import {
   password
 } from 'src/app/testing/account-tests-helpers';
 import { dispatchFakeEvent, expectText, findEl, setFieldValue } from 'src/app/testing/element.spec-helper';
+import { Routes, provideRouter } from '@angular/router';
 
 const requiredFields = [
   'oldPassword',
   'password',
   'confirmPassword'
+];
+
+const routes: Routes = [
+  { path: 'login', component: LoginComponent }
 ];
 
 describe('AccountManagePasswordComponent', () => {
@@ -64,16 +68,14 @@ describe('AccountManagePasswordComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-    imports: [FormsModule, ReactiveFormsModule,
-        RouterTestingModule.withRoutes([
-            { path: 'login', component: LoginComponent },
-        ]), AccountManagePasswordComponent],
-    schemas: [NO_ERRORS_SCHEMA],
-    providers: [
+      imports: [FormsModule, ReactiveFormsModule, AccountManagePasswordComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        provideRouter(routes),
         { provide: AccountValidationService, useValue: fakeValidationService },
         { provide: AccountService, useValue: fakeAccountService }
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AccountManagePasswordComponent);
     component = fixture.componentInstance;

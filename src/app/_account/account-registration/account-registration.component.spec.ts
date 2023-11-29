@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { dispatchFakeEvent, expectText, findEl, setFieldValue } from 'src/app/testing/element.spec-helper';
 import { AccountService } from '../account.service';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import { RouterTestingModule } from '@angular/router/testing';
 import { ConfirmEmailComponent } from '../confirm-email/confirm-email.component';
 import { AccountValidationService } from '../account-validation.service';
 import { of, throwError } from 'rxjs';
@@ -15,12 +14,19 @@ import {
   confirmPassword,
   email
 } from 'src/app/testing/account-tests-helpers';
+import { provideRouter, Routes } from '@angular/router';
+import { LoginComponent } from 'src/app/_auth/login/login.component';
 
 const requiredFields = [
   'username',
   'email',
   'password',
   'confirmPassword'
+];
+
+const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'confirm-email', component: ConfirmEmailComponent }
 ];
 
 describe('AccountRegistrationComponent', () => {
@@ -64,16 +70,14 @@ describe('AccountRegistrationComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-    imports: [FormsModule, ReactiveFormsModule,
-        RouterTestingModule.withRoutes([
-            { path: 'confirm-email', component: ConfirmEmailComponent },
-        ]), AccountRegistrationComponent],
-    schemas: [NO_ERRORS_SCHEMA],
-    providers: [
+      imports: [FormsModule, ReactiveFormsModule, AccountRegistrationComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        provideRouter(routes),
         { provide: AccountValidationService, useValue: fakeValidationService },
         { provide: AccountService, useValue: fakeAccountService }
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AccountRegistrationComponent);
     fixture.detectChanges();

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { NavigationMenuComponent } from './navigation-menu.component';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
+import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 
 describe('NavigationMenuComponent', () => {
   let component: NavigationMenuComponent;
@@ -9,9 +9,10 @@ describe('NavigationMenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [NavigationMenuComponent, RouterTestingModule]
-})
-    .compileComponents();
+      imports: [NavigationMenuComponent],
+      providers: [provideRouter(blankRoutesArray)]
+    })
+      .compileComponents();
   });
 
   beforeEach(() => {

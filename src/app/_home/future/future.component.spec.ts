@@ -3,7 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { FutureComponent } from './future.component';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
+import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 
 describe('FutureComponent', () => {
   let component: FutureComponent;
@@ -12,7 +13,8 @@ describe('FutureComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
     schemas: [NO_ERRORS_SCHEMA],
-    imports: [NgbNavModule, FutureComponent, RouterTestingModule]
+    providers: [provideRouter(blankRoutesArray)],
+    imports: [NgbNavModule, FutureComponent]
 })
     .compileComponents();
   });

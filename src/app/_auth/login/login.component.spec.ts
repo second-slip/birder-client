@@ -1,7 +1,6 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { authFailResult, authSuccessResult, loginModel, password, username } from 'src/app/testing/auth-test-helpers';
 import { dispatchFakeEvent, expectText, findEl, setFieldValue } from 'src/app/testing/element.spec-helper';
@@ -10,6 +9,11 @@ import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { AuthenticationService } from '../authentication.service';
 import { LoginComponent } from './login.component';
 import { LoginService } from './login.service';
+import { provideRouter, Routes } from '@angular/router';
+
+const routes: Routes = [
+  { path: 'confirm-email', component: ConfirmEmailComponent }
+];
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -62,12 +66,9 @@ describe('LoginComponent', () => {
     // );
 
     await TestBed.configureTestingModule({
-    imports: [FormsModule, ReactiveFormsModule,
-        RouterTestingModule.withRoutes([
-            { path: 'confirm-email', component: ConfirmEmailComponent }
-        ]), LoginComponent],
+    imports: [FormsModule, ReactiveFormsModule,LoginComponent],
     providers: [
-        //{ provide: TokenService, useValue: fakeTokenService },
+        provideRouter(routes),
         { provide: NavigationService, useValue: fakeNavService },
         { provide: LoginService, useValue: fakeLoginService },
         { provide: AuthenticationService, useValue: fakeAuthService }

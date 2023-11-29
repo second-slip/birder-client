@@ -7,11 +7,11 @@ import { fakeNetworkUserModelArray, networkSearchTerm } from 'src/app/testing/ne
 
 import { NetworkFindComponent } from './network-find.component';
 import { NetworkFindService } from './network-find.service';
-import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from 'ng-mocks';
 import { NetworkUserComponent } from '../network-user/network-user.component';
 import { LoadingComponent } from 'src/app/_loading/loading/loading.component';
 import { provideRouter } from '@angular/router';
+import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 
 describe('NetworkFindComponent', () => {
   let component: NetworkFindComponent;
@@ -35,8 +35,8 @@ describe('NetworkFindComponent', () => {
 
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, NetworkFindComponent, RouterTestingModule],
-      providers: [{ provide: NetworkFindService, useValue: fakeService }]//, provideRouter()]
+      imports: [FormsModule, NetworkFindComponent],
+      providers: [{ provide: NetworkFindService, useValue: fakeService }, provideRouter(blankRoutesArray)]
     })
       .overrideComponent(NetworkFindComponent,
         {

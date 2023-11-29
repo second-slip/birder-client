@@ -1,20 +1,21 @@
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
+import { provideRouter, Router, Routes } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { of } from 'rxjs';
 import { fakeDecodedToken, userModel } from '../testing/auth-test-helpers';
 import { AuthenticationService } from './authentication.service';
 import { IAuthUser } from './i-auth-user.dto';
 import { LoginComponent } from './login/login.component';
 import { TokenService } from './token.service';
 
-
 describe('AuthenticationService', () => {
     let service: AuthenticationService;
     let fakeJwtService: jasmine.SpyObj<JwtHelperService>;
     let fakeTokenService: jasmine.SpyObj<TokenService>;
     let routerStub: any;
+
+    const routes: Routes = [
+        { path: 'login', component: LoginComponent }
+    ];
 
     const setup = async (fakeJwtReturnValues?: jasmine.SpyObjMethodNames<JwtHelperService>,
         fakeTokenServicereturnValues?: jasmine.SpyObjMethodNames<TokenService>) => {
@@ -47,13 +48,11 @@ describe('AuthenticationService', () => {
         };
 
         await TestBed.configureTestingModule({
-            imports: [RouterTestingModule.withRoutes([
-                { path: 'login', component: LoginComponent },
-            ])],
-            providers: [AuthenticationService,
-                { provide: JwtHelperService, useValue: fakeJwtService },
-                { provide: TokenService, useValue: fakeTokenService },
-                { provide: Router, useValue: routerStub }
+            providers: [provideRouter(routes),
+            AuthenticationService,
+            { provide: JwtHelperService, useValue: fakeJwtService },
+            { provide: TokenService, useValue: fakeTokenService },
+            { provide: Router, useValue: routerStub }
             ]
         })
         service = TestBed.inject(AuthenticationService);

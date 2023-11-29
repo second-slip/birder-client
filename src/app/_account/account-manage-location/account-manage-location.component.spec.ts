@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { expectText } from 'src/app/testing/element.spec-helper';
 import { AccountService } from '../account.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { RouterTestingModule } from '@angular/router/testing';
 import { ConfirmEmailComponent } from '../confirm-email/confirm-email.component';
 import { of, throwError } from 'rxjs';
 import { MockComponent } from 'ng-mocks';
@@ -16,6 +15,7 @@ import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
 import { originalLatitude, originalLongitude, userModel } from 'src/app/testing/auth-test-helpers';
 import { By } from '@angular/platform-browser';
+import { provideRouter, Routes } from '@angular/router';
 
 describe('AccountManageLocationComponent (child with ng-mocks)', () => {
     let fixture: ComponentFixture<AccountManageLocationComponent>;
@@ -24,6 +24,10 @@ describe('AccountManageLocationComponent (child with ng-mocks)', () => {
 
     let fakeAuthService: jasmine.SpyObj<AuthenticationService>;
     let fakeAccountService: jasmine.SpyObj<AccountService>;
+
+    const routes: Routes = [
+        { path: 'login', component: ConfirmEmailComponent }
+    ];
 
     const setup = async (
         fakeAccountServiceReturnValues?: jasmine.SpyObjMethodNames<AccountService>) => {
@@ -60,19 +64,18 @@ describe('AccountManageLocationComponent (child with ng-mocks)', () => {
         )
 
         await TestBed.configureTestingModule({
-            imports: [FormsModule, ReactiveFormsModule,
-                RouterTestingModule.withRoutes([
-                    { path: 'login', component: ConfirmEmailComponent },
-                ]), AccountManageLocationComponent],
-            providers: [{ provide: AccountService, useValue: fakeAccountService },
-            { provide: AuthenticationService, useValue: fakeAuthService }],
+            imports: [FormsModule, ReactiveFormsModule, AccountManageLocationComponent],
+            providers: [
+                { provide: AccountService, useValue: fakeAccountService },
+                { provide: AuthenticationService, useValue: fakeAuthService },
+                provideRouter(routes)],
             schemas: [NO_ERRORS_SCHEMA],
         })
-        .overrideComponent(AccountManageLocationComponent, {
-            remove: { imports: [ReadWriteMapComponent] },
-            add: { imports: [MockComponent(ReadWriteMapComponent)] },
-          })
-        .compileComponents();
+            .overrideComponent(AccountManageLocationComponent, {
+                remove: { imports: [ReadWriteMapComponent] },
+                add: { imports: [MockComponent(ReadWriteMapComponent)] },
+            })
+            .compileComponents();
 
         fixture = TestBed.createComponent(AccountManageLocationComponent);
         component = fixture.componentInstance;

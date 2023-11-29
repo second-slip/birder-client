@@ -1,11 +1,15 @@
-import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { HomeComponent } from 'src/app/_home/home/home.component';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { AuthenticationService } from '../authentication.service';
 import { LogoutComponent } from './logout.component';
+import { provideRouter, Routes } from '@angular/router';
+
+const routes: Routes = [
+  { path: 'home', component: HomeComponent }
+];
 
 describe('LogoutComponent', () => {
   let component: LogoutComponent;
@@ -35,14 +39,13 @@ describe('LogoutComponent', () => {
   const setup = async () => {
 
     await TestBed.configureTestingModule({
-    imports: [RouterTestingModule.withRoutes([
-            { path: 'home', component: HomeComponent }
-        ]), LogoutComponent],
-    providers: [
+      imports: [LogoutComponent],
+      providers: [
+        provideRouter(routes),
         { provide: NavigationService, useValue: fakeNavService },
         { provide: AuthenticationService, useValue: fakeAuthService }
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LogoutComponent);
     component = fixture.componentInstance;
@@ -71,7 +74,7 @@ describe('LogoutComponent', () => {
     fixture.detectChanges();
 
     expect(fakeNavService.back).toHaveBeenCalled();
-    
+
   }));
 
 });

@@ -5,11 +5,11 @@ import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { fakeIObservationTopFive, fakeIObservationTopFiveEmpty } from 'src/app/testing/analysis-helpers';
 import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
-
 import { ObservationTopFiveComponent } from './observation-top-five.component';
 import { ObservationTopFiveService } from './observation-top-five.service';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
+import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 
 describe('ObservationTopFiveComponent unit tests', () => {
   let fakeAuthService: AuthenticationService;
@@ -46,13 +46,14 @@ describe('ObservationTopFiveComponent unit tests', () => {
       );
 
       await TestBed.configureTestingModule({
-    schemas: [NO_ERRORS_SCHEMA],
-    imports: [NgbNavModule, ObservationTopFiveComponent, RouterTestingModule],
-    providers: [
-        { provide: ObservationTopFiveService, useValue: fakeObservationTopFiveService },
-        { provide: AuthenticationService, useValue: fakeAuthService }
-    ]
-}).compileComponents();
+        schemas: [NO_ERRORS_SCHEMA],
+        imports: [NgbNavModule, ObservationTopFiveComponent],
+        providers: [
+          provideRouter(blankRoutesArray),
+          { provide: ObservationTopFiveService, useValue: fakeObservationTopFiveService },
+          { provide: AuthenticationService, useValue: fakeAuthService }
+        ]
+      }).compileComponents();
 
       fixture = TestBed.createComponent(ObservationTopFiveComponent);
       //fixture.detectChanges();
@@ -97,13 +98,14 @@ describe('ObservationTopFiveComponent unit tests', () => {
       );
 
       await TestBed.configureTestingModule({
-    schemas: [NO_ERRORS_SCHEMA],
-    imports: [NgbNavModule, ObservationTopFiveComponent, RouterTestingModule],
-    providers: [
-        { provide: ObservationTopFiveService, useValue: fakeObservationTopFiveService },
-        { provide: AuthenticationService, useValue: fakeAuthService }
-    ]
-}).compileComponents();
+        schemas: [NO_ERRORS_SCHEMA],
+        imports: [NgbNavModule, ObservationTopFiveComponent],
+        providers: [
+          provideRouter(blankRoutesArray),
+          { provide: ObservationTopFiveService, useValue: fakeObservationTopFiveService },
+          { provide: AuthenticationService, useValue: fakeAuthService }
+        ]
+      }).compileComponents();
 
       fixture = TestBed.createComponent(ObservationTopFiveComponent);
       fixture.detectChanges();
@@ -159,13 +161,14 @@ describe('ObservationTopFiveComponent unit tests', () => {
       );
 
       await TestBed.configureTestingModule({
-    schemas: [NO_ERRORS_SCHEMA],
-    imports: [NgbNavModule, ObservationTopFiveComponent, RouterTestingModule],
-    providers: [
-        { provide: ObservationTopFiveService, useValue: fakeObservationTopFiveService },
-        { provide: AuthenticationService, useValue: fakeAuthService }
-    ]
-}).compileComponents();
+        schemas: [NO_ERRORS_SCHEMA],
+        imports: [NgbNavModule, ObservationTopFiveComponent],
+        providers: [
+          provideRouter(blankRoutesArray),
+          { provide: ObservationTopFiveService, useValue: fakeObservationTopFiveService },
+          { provide: AuthenticationService, useValue: fakeAuthService }
+        ]
+      }).compileComponents();
 
       fixture = TestBed.createComponent(ObservationTopFiveComponent);
       fixture.detectChanges();
@@ -220,13 +223,14 @@ describe('ObservationTopFiveComponent unit tests', () => {
       );
 
       await TestBed.configureTestingModule({
-    schemas: [NO_ERRORS_SCHEMA],
-    imports: [NgbNavModule, ObservationTopFiveComponent, RouterTestingModule],
-    providers: [
-        { provide: ObservationTopFiveService, useValue: fakeObservationTopFiveService },
-        { provide: AuthenticationService, useValue: fakeAuthService }
-    ]
-}).compileComponents();
+        schemas: [NO_ERRORS_SCHEMA],
+        imports: [NgbNavModule, ObservationTopFiveComponent],
+        providers: [
+          provideRouter(blankRoutesArray),
+          { provide: ObservationTopFiveService, useValue: fakeObservationTopFiveService },
+          { provide: AuthenticationService, useValue: fakeAuthService }
+        ]
+      }).compileComponents();
 
       fixture = TestBed.createComponent(ObservationTopFiveComponent);
       fixture.detectChanges();
@@ -254,7 +258,7 @@ describe('ObservationTopFiveComponent unit tests', () => {
     it('tries data fetch again on retry button click', fakeAsync(async () => {
       fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
       expect(fakeObservationTopFiveService.getData).toHaveBeenCalled();
-  }));
+    }));
   });
 
 
@@ -278,13 +282,14 @@ describe('ObservationTopFiveComponent unit tests', () => {
       );
 
       await TestBed.configureTestingModule({
-    schemas: [NO_ERRORS_SCHEMA],
-    imports: [NgbNavModule, ObservationTopFiveComponent, RouterTestingModule],
-    providers: [
-        { provide: ObservationTopFiveService, useValue: fakeObservationTopFiveService },
-        { provide: AuthenticationService, useValue: fakeAuthService }
-    ]
-}).compileComponents();
+        schemas: [NO_ERRORS_SCHEMA],
+        imports: [NgbNavModule, ObservationTopFiveComponent],
+        providers: [
+          provideRouter(blankRoutesArray),
+          { provide: ObservationTopFiveService, useValue: fakeObservationTopFiveService },
+          { provide: AuthenticationService, useValue: fakeAuthService }
+        ]
+      }).compileComponents();
 
       fixture = TestBed.createComponent(ObservationTopFiveComponent);
       fixture.detectChanges();

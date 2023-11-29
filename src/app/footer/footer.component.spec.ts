@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FooterComponent } from './footer.component';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
+import { blankRoutesArray } from '../testing/route-tests-helpers';
 
 describe('FooterComponent', () => {
   let component: FooterComponent;
@@ -9,7 +10,8 @@ describe('FooterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FooterComponent, RouterTestingModule]
+      imports: [FooterComponent],
+      providers: [provideRouter(blankRoutesArray)],
     })
       .compileComponents();
   }));

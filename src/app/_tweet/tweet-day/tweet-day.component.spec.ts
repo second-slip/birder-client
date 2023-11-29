@@ -7,7 +7,8 @@ import { By } from '@angular/platform-browser';
 import { expectText, findComponent } from 'src/app/testing/element.spec-helper'
 import { fakeITweet } from 'src/app/testing/tweet-day-test-helper';
 import { findEl } from 'src/app/testing/element.spec-helper';
-import { RouterTestingModule } from '@angular/router/testing';
+import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
+import { provideRouter } from '@angular/router';
 
 
 describe('TweetDayComponent unit tests', () => {
@@ -31,12 +32,13 @@ describe('TweetDayComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [TweetDayComponent, RouterTestingModule],
-    schemas: [NO_ERRORS_SCHEMA],
-    providers: [
-        { provide: TweetDayService, useValue: fakeTweetDayService }
-    ]
-}).compileComponents();
+                imports: [TweetDayComponent],
+                schemas: [NO_ERRORS_SCHEMA],
+                providers: [
+                    provideRouter(blankRoutesArray),
+                    { provide: TweetDayService, useValue: fakeTweetDayService }
+                ]
+            }).compileComponents();
 
             fixture = TestBed.createComponent(TweetDayComponent);
             //fixture.detectChanges();
@@ -88,12 +90,13 @@ describe('TweetDayComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [TweetDayComponent, RouterTestingModule],
-    schemas: [NO_ERRORS_SCHEMA],
-    providers: [
-        { provide: TweetDayService, useValue: fakeTweetDayService }
-    ]
-}).compileComponents();
+                imports: [TweetDayComponent],
+                schemas: [NO_ERRORS_SCHEMA],
+                providers: [
+                    provideRouter(blankRoutesArray),
+                    { provide: TweetDayService, useValue: fakeTweetDayService }
+                ]
+            }).compileComponents();
 
             fixture = TestBed.createComponent(TweetDayComponent);
             fixture.detectChanges();
@@ -159,12 +162,13 @@ describe('TweetDayComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [TweetDayComponent, RouterTestingModule],
-    schemas: [NO_ERRORS_SCHEMA],
-    providers: [
-        { provide: TweetDayService, useValue: fakeTweetDayService }
-    ]
-}).compileComponents();
+                imports: [TweetDayComponent],
+                schemas: [NO_ERRORS_SCHEMA],
+                providers: [
+                    provideRouter(blankRoutesArray),
+                    { provide: TweetDayService, useValue: fakeTweetDayService }
+                ]
+            }).compileComponents();
 
             fixture = TestBed.createComponent(TweetDayComponent);
             fixture.detectChanges();
@@ -216,12 +220,13 @@ describe('TweetDayComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-    imports: [TweetDayComponent, RouterTestingModule],
-    schemas: [NO_ERRORS_SCHEMA],
-    providers: [
-        { provide: TweetDayService, useValue: fakeTweetDayService }
-    ]
-}).compileComponents();
+                imports: [TweetDayComponent],
+                schemas: [NO_ERRORS_SCHEMA],
+                providers: [
+                    provideRouter(blankRoutesArray),
+                    { provide: TweetDayService, useValue: fakeTweetDayService }
+                ]
+            }).compileComponents();
 
             fixture = TestBed.createComponent(TweetDayComponent);
             fixture.detectChanges();

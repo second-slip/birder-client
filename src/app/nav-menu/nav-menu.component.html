@@ -19,7 +19,7 @@
                 <!-- Or created a new object Authentication with yes/no plus user if yes-->
                 <ng-container *ngIf="(_service.getAuthUser | async) as authUser">
 
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" data-testid="auth-content">
                         <li class="nav-item">
                             <a class="nav-link" [routerLink]='["/feed-p/public"]'>Feed</a>
                         </li>
@@ -38,7 +38,7 @@
 
                     <!--  -->
                     <div class="right-hand-menu">
-                        <ul class="nav navbar-nav me-auto">
+                        <ul class="nav navbar-nav me-auto" data-testid="auth-content">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -61,7 +61,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item small-text" routerLink="/user/{{authUser.userName}}">Signed
                                         in
-                                        as:<br><span class="username">{{authUser.userName}}</span></a>
+                                        as:<br><span class="username" data-testid="auth-username">{{authUser.userName}}</span></a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" routerLink="/user/{{authUser.userName}}">My
                                         Profile</a>
@@ -78,14 +78,14 @@
 
             <!-- not authenticated -->
             <ng-template #notAuthenticated>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" data-testid="not-auth-content">
                     <li class="nav-item">
                         <a class="nav-link" [routerLink]='["/about/about"]'>About</a>
                     </li>
                 </ul>
                 <!--  -->
                 <div class="right-hand-menu">
-                    <ul class="nav navbar-nav me-2">
+                    <ul class="nav navbar-nav me-2" data-testid="not-auth-content">
                         <li class="nav-item">
                             <a class="nav-link" [routerLink]='["/login"]'>Login</a>
                         </li>

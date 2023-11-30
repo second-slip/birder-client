@@ -4,6 +4,7 @@ import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { RouterLink } from '@angular/router';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { ObservationPluralPipe } from 'src/app/pipes/observation-plural.pipe';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { NgIf, AsyncPipe } from '@angular/common';
     styleUrls: ['./observation-count.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgIf, NgbAlert, RouterLink, LoadingComponent, AsyncPipe]
+    imports: [NgIf, NgbAlert, RouterLink, LoadingComponent, AsyncPipe, ObservationPluralPipe]
 })
 export class ObservationCountComponent implements OnInit {
 

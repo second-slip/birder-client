@@ -5,8 +5,12 @@
                 analysis.uniqueSpeciesCount }}</span>
             species <br>in
             <span class="count-text">{{ analysis.totalObservationsCount }}</span>
-            {{ analysis.totalObservationsCount > 1 ? 'observations' : 'observation' }}
+            {{ analysis.totalObservationsCount | observationPlural }}
         </p>
+
+        <!-- <p class="analysis-text" data-testid="analysis-count-more-than-one">
+            {{ analysis.uniqueSpeciesCount | observationPlural: analysis.totalObservationsCount }}
+        </p> -->
     </div>
 
     <div *ngIf="!analysis.totalObservationsCount" data-testid="analysis-count-zero">

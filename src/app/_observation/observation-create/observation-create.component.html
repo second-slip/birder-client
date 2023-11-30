@@ -8,7 +8,8 @@
 
             <mat-vertical-stepper [linear]="false" #stepper (selectionChange)="onStepperSelectionChange()">
 
-                <mat-step [stepControl]="addObservationForm && selectSpeciesForm && dateForm" errorMessage="Section not complete.">
+                <mat-step [stepControl]="addObservationForm && selectSpeciesForm && dateForm"
+                    errorMessage="Section not complete.">
                     <ng-template matStepLabel><span class="stepperTop0">Details: what and when?</span></ng-template>
 
                     <app-select-date-time [dateForm]="dateForm"></app-select-date-time>
@@ -59,7 +60,8 @@
                     <ng-template matStepLabel><span class="stepperTop2">Notes</span></ng-template>
 
                     <div class="alert alert-info">
-                        <strong>Whoops!</strong> The Notes functionality is currently not available.  This capability is being redesigned.<br>
+                        <strong>Whoops!</strong> The Notes functionality is currently not available. This capability is
+                        being redesigned.<br>
                     </div>
 
                     <!-- <div>

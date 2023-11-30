@@ -135,7 +135,7 @@ describe('UserProfileComponent', () => {
                 const compiled = fixture.nativeElement as HTMLElement;
                 expect(compiled.querySelector('[data-testid="obs-summary-own"]')?.textContent).toBeDefined();
 
-                const summaryText = `${fakeIObservationCount.uniqueSpeciesCount} species in ${fakeIObservationCount.totalObservationsCount} observations`;
+                const summaryText = ` ${fakeIObservationCount.uniqueSpeciesCount} species in ${fakeIObservationCount.totalObservationsCount} observations. `;
                 expectText(fixture, 'obs-summary-own', summaryText);
             }));
         });
@@ -167,7 +167,7 @@ describe('UserProfileComponent', () => {
                 const compiled = fixture.nativeElement as HTMLElement;
                 expect(compiled.querySelector('[data-testid="obs-summary-other"]')?.textContent).toBeDefined();
 
-                const summaryText = `${otherProfile.observationCount.uniqueSpeciesCount} species in ${otherProfile.observationCount.totalObservationsCount} observations`;
+                const summaryText = ` ${otherProfile.observationCount.uniqueSpeciesCount} species in ${otherProfile.observationCount.totalObservationsCount} observations. `;
                 expectText(fixture, 'obs-summary-other', summaryText);
             }));
         });

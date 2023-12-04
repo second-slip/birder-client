@@ -31,6 +31,6 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 }
 
 function isExcluded(request: HttpRequest<any>) {
-  return request.method === 'GET'
-    && request.url.indexOf('maps.google.com/') !== 0
+  return request.method === 'GET' && -1 < request.url.indexOf('maps.google.com/')
+    // && request.url.indexOf('maps.google.com/') !== 0
 }

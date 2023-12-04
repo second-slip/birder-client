@@ -21,8 +21,8 @@ import { RequestCache } from '../_sharedServices/request-cache.service';
  */
 @Injectable()
 export class CachingInterceptor implements HttpInterceptor {
-  
-  constructor(private cache: RequestCache) {}
+
+  constructor(private cache: RequestCache) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
     // continue if not cachable.
@@ -33,7 +33,7 @@ export class CachingInterceptor implements HttpInterceptor {
     if (request.headers.get('x-refresh')) {
       const results$ = sendRequest(request, next, this.cache);
       return cachedResponse ?
-        results$.pipe( startWith(cachedResponse) ) :
+        results$.pipe(startWith(cachedResponse)) :
         results$;
     }
     // cache-or-fetch
@@ -41,7 +41,6 @@ export class CachingInterceptor implements HttpInterceptor {
       of(cachedResponse) : sendRequest(request, next, this.cache);
   }
 }
-
 
 /** Is this request cachable? */
 function isCachable(request: HttpRequest<any>): boolean {
@@ -54,7 +53,7 @@ function isCachable(request: HttpRequest<any>): boolean {
     && request.url.indexOf('api/network') !== 0
     && request.url.indexOf('api/manage') !== 0
     && request.url.indexOf('api/account/check-username') !== 0;
-  }
+}
 
 /**
  * Get server response observable by sending request to `next()`.
@@ -64,9 +63,6 @@ function sendRequest(
   request: HttpRequest<any>,
   next: HttpHandler,
   cache: RequestCache): Observable<HttpEvent<any>> {
-
-  // No headers allowed in npm search request
-  // const noHeaderReq = request.clone({ headers: new HttpHeaders() });
 
   return next.handle(request).pipe(
     tap(event => {

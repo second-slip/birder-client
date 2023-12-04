@@ -51,13 +51,16 @@ describe('errorInterceptor integration(?) tests', () => {
     });
 
     // assert
-    const req = httpTestingController
-      .expectOne({
-        method: 'GET',
-        url: url
-      });
+    const retryCount = 3;
+    for (var i = 0, c = retryCount + 1; i < c; i++) {
+      const req = httpTestingController
+        .expectOne({
+          method: 'GET',
+          url: url
+        });
 
-    req.flush(emsg, { status: status, statusText: statusText });
+      req.flush(emsg, { status: status, statusText: statusText });
+    }
   });
 
   it('should return client-side error message variant', () => {
@@ -85,12 +88,15 @@ describe('errorInterceptor integration(?) tests', () => {
     });
 
     // assert
-    const req = httpTestingController
-      .expectOne({
-        method: 'GET',
-        url: url
-      });
+    const retryCount = 3;
+    for (var i = 0, c = retryCount + 1; i < c; i++) {
+      const req = httpTestingController
+        .expectOne({
+          method: 'GET',
+          url: url
+        });
 
-    req.flush(errorEvent, { status: status, statusText: statusText });
+      req.flush(errorEvent, { status: status, statusText: statusText });
+    }
   });
 });

@@ -1,12 +1,15 @@
 import { ApplicationConfig, LOCALE_ID, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { JwtModule } from '@auth0/angular-jwt';
 import { HttpInterceptorProviders } from './_httpInterceptors';
 import { RequestCache, RequestCacheWithMap } from './_sharedServices/request-cache.service';
+import { authenticationInterceptor } from './_httpInterceptors/authentication.interceptor';
+import { errorInterceptor } from './_httpInterceptors/error.interceptor';
+import { cacheInterceptor } from './_httpInterceptors/cache.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,7 +28,9 @@ export const appConfig: ApplicationConfig = {
     { provide: RequestCache, useClass: RequestCacheWithMap },
     { provide: LOCALE_ID, useValue: 'en-GB' },
     { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } },
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptorsFromDi(),
+    // withInterceptors([authenticationInterceptor, errorInterceptor, cacheInterceptor])
+    ),
     provideAnimations()
   ]
 };

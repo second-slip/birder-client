@@ -125,11 +125,11 @@ module.exports = (req, res, next) => {
         return res.jsonp({ success: true })
     }
 
-    if (req.method === 'POST' && req.originalUrl === '/account/check-username') {
+    if (req.method === 'GET' && req.originalUrl === '/account/check-username') {
         return res.jsonp({ usernameTaken: false })
     }
 
-    if (req.method === 'POST' && req.originalUrl === '/account/check-email') {
+    if (req.method === 'GET' && req.originalUrl === '/account/check-email') {
         return res.jsonp({ emailTaken: false })
     }
 

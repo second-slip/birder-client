@@ -21,5 +21,7 @@
   "/observation/update?:id": "/updateobservation",
   "/observation/delete?:id": "/deleteobservation",
   "/observationread/update?:id": "/observation",
-  "/observationread?:id": "/observationread"
+  "/observationread?:id": "/observationread",
+  "/account/check-email\\?:email": "/account/check-email",
+  "/account/check-username?:username": "/account/check-username"
 }

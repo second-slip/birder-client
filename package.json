@@ -25,7 +25,7 @@
     "@angular/platform-browser-dynamic": "^17.0.3",
     "@angular/router": "^17.0.3",
     "@auth0/angular-jwt": "^5.2.0",
-    "@ng-bootstrap/ng-bootstrap": "^16.0.0-rc.0",
+    "@ng-bootstrap/ng-bootstrap": "^16.0.0",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.2",
     "ng-mocks": "^14.12.0",

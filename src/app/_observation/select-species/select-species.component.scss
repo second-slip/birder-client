@@ -14,27 +14,28 @@ app-select-species {
     }
 
     .dropdown-menu {
-      max-height: 200px;
-      overflow-y: scroll;
-  }
+        max-height: 200px;
+        overflow-y: scroll;
+    }
 
+    @media only screen and (max-width: 768px) {
+    }
 
-      @media only screen and (max-width: 768px) { }
-    
-      /* Medium devices (landscape tablets, 768px and up) */
-      @media only screen and (min-width: 768px) {
+    /* Medium devices (landscape tablets, 768px and up) */
+    @media only screen and (min-width: 768px) {
         .adjust-size {
             width: 50%;
         }
-      }
-    
-      /* Large devices (laptops/desktops, 992px and up) */
-      @media only screen and (min-width: 992px) {
+    }
+
+    /* Large devices (laptops/desktops, 992px and up) */
+    @media only screen and (min-width: 992px) {
         .adjust-size {
             width: 50%;
         }
-      }
-    
-      /* Extra large devices (large laptops and desktops, 1200px and up) */
-      @media only screen and (min-width: 1200px) {}
+    }
+
+    /* Extra large devices (large laptops and desktops, 1200px and up) */
+    @media only screen and (min-width: 1200px) {
+    }
 }

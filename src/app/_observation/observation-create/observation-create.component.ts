@@ -16,7 +16,6 @@ import { SelectSpeciesComponent } from '../select-species/select-species.compone
 import { SelectDateTimeComponent } from '../select-date-time/select-date-time.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { NgIf, AsyncPipe } from '@angular/common';
-import { SelectSpeciesTwoComponent } from '../select-species-two/select-species-two.component';
 
 @Component({
     selector: 'app-observation-create',
@@ -24,7 +23,7 @@ import { SelectSpeciesTwoComponent } from '../select-species-two/select-species-
     styleUrls: ['./observation-create.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgIf, FormsModule, ReactiveFormsModule, MatStepperModule, SelectDateTimeComponent, SelectSpeciesComponent, SelectSpeciesTwoComponent, ReadWriteMapComponent_1, LoadingComponent, AsyncPipe]
+    imports: [NgIf, FormsModule, ReactiveFormsModule, MatStepperModule, SelectDateTimeComponent, SelectSpeciesComponent, ReadWriteMapComponent_1, LoadingComponent, AsyncPipe]
 })
 export class ObservationCreateComponent implements OnInit {
   private _subscription = new Subject();

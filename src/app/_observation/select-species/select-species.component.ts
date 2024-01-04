@@ -7,6 +7,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { SelectSpeciesService } from '../select-species/select-species.service';
 import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-select-species',
@@ -16,6 +19,9 @@ import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
     AsyncPipe,
     CommonModule
@@ -23,7 +29,6 @@ import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
   templateUrl: './select-species.component.html',
   styleUrl: './select-species.component.scss'
 })
-
 export class SelectSpeciesComponent implements OnInit {
   @Input() selectSpeciesForm: FormGroup
   filteredBirds: Observable<IBirdSummary[]>;
@@ -47,6 +52,7 @@ export class SelectSpeciesComponent implements OnInit {
   }
 
   public reload(): void {
+    alert('hello')
     this._service.getData();
   }
 

@@ -21,8 +21,7 @@ export class SelectSpeciesService implements OnDestroy {
     return this._birds$.value;
   }
 
-  public getData(): void {
-    // Note: b.p: DO NOT call methods in the constructor
+  public getData(): void { // Note: b.p: DO NOT call methods in the constructor
     if (!this._birds$.value.length) { // only fetch if empty... | conider doing this by date as well?
       this._httpClient.get<IBirdSummary[]>('api/birds-list')
         .pipe(takeUntil(this._subscription))

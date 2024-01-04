@@ -9,3 +9,25 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 // @use '../node_modules/bootstrap/scss/functions';
 // @use '../node_modules/bootstrap/scss/variables';
 // @use '../node_modules/bootstrap/scss/mixins';
+
+
+.alert {
+    padding: 3%;
+    color: black;
+}
+
+.strong-title {
+    padding-right: 1%;
+}
+
+.alert-danger {
+    background-color: #f44336;
+}
+
+.alert-success {
+    background-color: #77ff33;
+}
+
+.alert-info {
+    background-color: #0bc9cd; // 'Robin egg blue'
+}

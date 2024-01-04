@@ -1,38 +1,43 @@
 @if(_service.isError | async) {
-    <!-- to do use new alert stuff -->
-    <div class="alert alert-danger" role="alert" *ngIf="(_service.isError | async)" data-testid="error">
-        This is an error retrieving the birds species list. Please click <a class="alert-link" role="button"
-            (click)="reload()" data-testid="reload-button">here to try again</a>.
-    </div>
-    } @else {
-    <form class="example-form" [formGroup]="selectSpeciesForm">
-        <mat-form-field class="example-full-width">
-            <mat-label>Species</mat-label>
-            <input matInput aria-label="species" [matAutocomplete]="auto" formControlName="bird" placeholder="Pick species"
-                (focus)="filter()" required>
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                @for (bird of filteredBirds | async; track bird) {
-                <mat-option [value]="bird">
-                    {{bird.englishName}}
-                    <!-- {{bird.englishName}} | <small>{{bird.birderStatus}}</small> -->
-                </mat-option>
-                }
-            </mat-autocomplete>
-            <mat-hint align="start">Type to filter species list</mat-hint>
-            @if (selectSpeciesForm.get('bird')?.hasError('notBirdListObject') &&
-            !selectSpeciesForm.get('bird')?.hasError('required')) {
-            <mat-error><strong>You must select a bird species from the list</strong></mat-error>
+<div class="alert alert-danger" data-testid="error">
+    <p>There was a problem retrieving the birds species list.</p>
+    <button mat-stroked-button type="button" (click)="reload()" data-testid="reload-button">
+        <mat-icon>autorenew</mat-icon>
+        Reload
+    </button>
+</div>
+} @else {
+<form class="example-form" [formGroup]="selectSpeciesForm">
+    <mat-form-field class="example-full-width">
+        <mat-label>Species</mat-label>
+        <input matInput aria-label="species" [matAutocomplete]="auto" formControlName="bird" placeholder="Pick species"
+            (focus)="filter()" required>
+        @if (!_service.getBirds.length) {
+        <mat-spinner class="loading-spinner" matSuffix diameter="25"></mat-spinner>
+        }
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            @for (bird of filteredBirds | async; track bird) {
+            <mat-option [value]="bird">
+                {{bird.englishName}}
+                <!-- {{bird.englishName}} | <small>{{bird.birderStatus}}</small> -->
+            </mat-option>
             }
-            @if (selectSpeciesForm.get('bird')?.hasError('required')) {
-            <mat-error>Species is <strong>required</strong></mat-error>
-            }
-        </mat-form-field>
-    
-        <!-- <br> -->
-        <!-- <pre>{{ selectSpeciesForm.value.bird.englishName }}</pre> -->
-        <!-- <pre>{{ selectSpeciesForm.value | json }}</pre> -->
-    </form>
-    }
+        </mat-autocomplete>
+        <mat-hint align="start">Type to filter species list</mat-hint>
+        @if (selectSpeciesForm.get('bird')?.hasError('notBirdListObject') &&
+        !selectSpeciesForm.get('bird')?.hasError('required')) {
+        <mat-error><strong>You must select a bird species from the list</strong></mat-error>
+        }
+        @if (selectSpeciesForm.get('bird')?.hasError('required')) {
+        <mat-error>Species is <strong>required</strong></mat-error>
+        }
+    </mat-form-field>
+
+    <!-- <br> -->
+    <!-- <pre>{{ selectSpeciesForm.value.bird.englishName }}</pre> -->
+    <!-- <pre>{{ selectSpeciesForm.value | json }}</pre> -->
+</form>
+}
 
 <!-- <div class="form-group adjust-size">
     <form [formGroup]="selectSpeciesForm" novalidate>

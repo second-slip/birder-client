@@ -4,7 +4,8 @@
 
     <div *ngIf="recordings.length; else noRecordings">
 
-        <div *ngFor="let item of recordings | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i" data-testid="recordings">
+        <div *ngFor="let item of recordings | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i"
+            data-testid="recordings">
             <div>
                 <audio controls>
                     <source src="{{item.url}}" type="audio/mpeg">
@@ -27,10 +28,8 @@
     </div>
 
     <ng-template #noRecordings>
-        <p data-testid="no-recordings">
-            <ngb-alert type="info" [dismissible]="false">
-                <strong>We're sorry!</strong> There are no recordings available for this species
-            </ngb-alert>
+        <p data-testid="no-recordings" class="alert alert-info">
+            <strong>We're sorry!</strong> There are no recordings available for this species
         </p>
     </ng-template>
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NetworkSuggestionService } from './network-suggestion.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
-import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+
 import { NetworkUserComponent } from '../network-user/network-user.component';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
@@ -12,7 +12,7 @@ import { NgIf, NgFor, AsyncPipe } from '@angular/common';
     providers: [NetworkSuggestionService],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgIf, NgFor, NetworkUserComponent, NgbAlert, LoadingComponent, AsyncPipe]
+    imports: [NgIf, NgFor, NetworkUserComponent,  LoadingComponent, AsyncPipe]
 })
 export class NetworkSuggestionComponent implements OnInit {
 

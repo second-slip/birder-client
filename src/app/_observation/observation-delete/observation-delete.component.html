@@ -7,11 +7,11 @@
             <h1>Delete Observation Report</h1>
 
             <ng-container *ngIf="observation.username !== authUser.userName">
-                <ngb-alert [dismissible]="false" type="danger">
+                <p class="alert alert-info">
                     <strong>Whoops!</strong>&nbsp;Only the owner is allowed to delete their record.<br>
                     <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button"
                         (click)="redirect()">Go back</button>
-                </ngb-alert>
+                </p>
             </ng-container>
 
             <ng-container *ngIf="observation.username === authUser.userName">

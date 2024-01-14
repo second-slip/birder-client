@@ -8,7 +8,7 @@ import { ObservationCrudService } from '../observation-crud.service';
 import { ObservationReadService } from '../observation-read.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { NavigationMenuComponent } from '../navigation-menu/navigation-menu.component';
-import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+
 import { NgIf, AsyncPipe, DatePipe } from '@angular/common';
 
 @Component({
@@ -18,7 +18,7 @@ import { NgIf, AsyncPipe, DatePipe } from '@angular/common';
     providers: [ObservationReadService],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgIf, NgbAlert, RouterLink, NavigationMenuComponent, LoadingComponent, AsyncPipe, DatePipe]
+    imports: [NgIf,  RouterLink, NavigationMenuComponent, LoadingComponent, AsyncPipe, DatePipe]
 })
 export class ObservationDeleteComponent implements OnInit, OnDestroy {
   private _observationId: string;

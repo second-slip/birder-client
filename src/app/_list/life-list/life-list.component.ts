@@ -3,7 +3,7 @@ import { ObservationCountService } from 'src/app/_analysis/observation-count/obs
 import { LifeListService } from './life-list.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { RouterLink } from '@angular/router';
-import { NgbAlert, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
+import {  NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 import { NgIf, NgFor, AsyncPipe, SlicePipe, DecimalPipe } from '@angular/common';
 
 @Component({
@@ -13,7 +13,7 @@ import { NgIf, NgFor, AsyncPipe, SlicePipe, DecimalPipe } from '@angular/common'
     providers: [LifeListService],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgIf, NgbAlert, RouterLink, NgFor, NgbPagination, LoadingComponent, AsyncPipe, SlicePipe, DecimalPipe]
+    imports: [NgIf,  RouterLink, NgFor, NgbPagination, LoadingComponent, AsyncPipe, SlicePipe, DecimalPipe]
 })
 export class LifeListComponent implements OnInit {
   public page: number = 1;

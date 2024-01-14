@@ -10,10 +10,8 @@
             </div>
         </div>
 
-        <div *ngIf="!suggestions.length" data-testid="suggestions-list-is-zero">
-            <ngb-alert [dismissible]="false" class="d-block mt-3" type="info">
+        <div *ngIf="!suggestions.length" data-testid="suggestions-list-is-zero" class="alert alert-info">
                 No suggestions at this time...
-            </ngb-alert>
         </div>
 
     </ng-container>

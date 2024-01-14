@@ -5,11 +5,11 @@
         <h1>Update Observation Report</h1>
 
         <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
-            <ngb-alert [dismissible]="false" type="danger" *ngIf="observation.username !== authUser.userName">
+            <p class="alert alert-info" *ngIf="observation.username !== authUser.userName">
                 <strong>Whoops!</strong>&nbsp;Only the owner is allowed to delete their record.<br>
                 <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="redirect()">Go
                     back</button>
-            </ngb-alert>
+            </p>
 
             <ng-container *ngIf="observation.username === authUser.userName">
 
@@ -52,7 +52,7 @@
 
                             <app-select-species #species [selectSpeciesForm]="selectSpeciesForm"></app-select-species>
 
-                    
+
                             <button matStepperNext type="button" class="btn btn-light btn-small">Next</button>
                         </mat-step>
 
@@ -73,7 +73,8 @@
                             <ng-template matStepLabel><span class="stepperTop2">Notes</span></ng-template>
 
                             <div class="alert alert-info">
-                                <strong>Whoops!</strong> The Notes functionality is currently not available.  This capability is being redesigned.<br>
+                                <strong>Whoops!</strong> The Notes functionality is currently not available. This
+                                capability is being redesigned.<br>
                             </div>
 
                             <!-- <app-edit-notes [notes]="observation.notes"></app-edit-notes> -->

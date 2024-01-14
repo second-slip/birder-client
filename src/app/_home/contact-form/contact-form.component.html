@@ -2,11 +2,9 @@
     <hr>
     <h2>Contact Form</h2>
 
-    <div *ngIf="submitProgress === 'error'" data-testid="error">
-        <ngb-alert type="danger" [dismissible]="false">
-            <strong>Error!</strong> An error occurred. Please try to send the form again.
-        </ngb-alert>
-    </div>
+    <p *ngIf="submitProgress === 'error'" data-testid="error" class="alert alert-danger">
+        <strong>Error!</strong> An error occurred. Please try to send the form again.
+    </p>
 
     <div *ngIf="submitProgress !== 'success'">
         <p>Use this form to contact the developer.</p>
@@ -55,9 +53,7 @@
         </form>
     </div>
 
-    <div *ngIf="submitProgress === 'success'" data-testid="success">
-        <ngb-alert type="success" [dismissible]="false">
-            <strong>Success!</strong> Your message has been sent to the developer. Thank you.
-        </ngb-alert>
+    <div *ngIf="submitProgress === 'success'" data-testid="success" class="alert alert-success">
+        <strong>Success!</strong> Your message has been sent to the developer. Thank you.
     </div>
 </div>

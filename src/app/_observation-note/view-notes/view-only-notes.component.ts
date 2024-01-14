@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IObservationNote } from '../i-observation-note.dto';
-import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+
 import { NgIf, NgFor } from '@angular/common';
 
 @Component({
@@ -8,7 +8,7 @@ import { NgIf, NgFor } from '@angular/common';
     templateUrl: './view-only-notes.component.html',
     styleUrls: ['./view-only-notes.component.scss'],
     standalone: true,
-    imports: [NgIf, NgFor, NgbAlert]
+    imports: [NgIf, NgFor]
 })
 export class ViewOnlyNotesComponent   {
   @Input() notes: IObservationNote[];

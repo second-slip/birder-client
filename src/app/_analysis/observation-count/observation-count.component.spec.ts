@@ -173,7 +173,7 @@ describe('ObservationCountComponent unit tests', () => {
             tick();
 
             expect(compiled.querySelector('[data-testid="analysis-count-zero"]')?.textContent).toBeDefined();
-            expect(compiled.querySelector('[data-testid="analysis-zero-text"]')?.textContent).toContain('You have not yet logged any observations');
+            expect(compiled.querySelector('[data-testid="analysis-count-zero"]')?.textContent).toContain('You have not yet logged any observations');
 
             expect(compiled.querySelector('[data-testid="analysis-count-more-than-one"]')?.textContent).toBeUndefined();
         }));

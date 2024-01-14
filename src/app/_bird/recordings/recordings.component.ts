@@ -1,17 +1,17 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { RecordingsService } from './recordings.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
-import { NgbPagination, NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 import { NgIf, NgFor, AsyncPipe, SlicePipe } from '@angular/common';
 
 @Component({
-    selector: 'app-recordings',
-    templateUrl: './recordings.component.html',
-    styleUrls: ['./recordings.component.scss'],
-    providers: [RecordingsService],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [NgIf, NgFor, NgbPagination, NgbAlert, LoadingComponent, AsyncPipe, SlicePipe]
+  selector: 'app-recordings',
+  templateUrl: './recordings.component.html',
+  styleUrls: ['./recordings.component.scss'],
+  providers: [RecordingsService],
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NgIf, NgFor, NgbPagination, LoadingComponent, AsyncPipe, SlicePipe]
 })
 export class RecordingsComponent implements OnInit {
   @Input() species: string;

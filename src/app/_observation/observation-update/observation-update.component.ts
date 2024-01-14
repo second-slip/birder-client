@@ -16,7 +16,7 @@ import { ReadWriteMapComponent as ReadWriteMapComponent_1 } from '../../_map/rea
 import { SelectSpeciesComponent } from '../select-species/select-species.component';
 import { SelectDateTimeComponent } from '../select-date-time/select-date-time.component';
 import { MatStepperModule } from '@angular/material/stepper';
-import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+
 import { NgIf, AsyncPipe } from '@angular/common';
 
 // todo: This component needs a major refactor...
@@ -27,7 +27,7 @@ import { NgIf, AsyncPipe } from '@angular/common';
     styleUrls: ['./observation-update.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgIf, NgbAlert, FormsModule, ReactiveFormsModule, MatStepperModule, SelectDateTimeComponent, SelectSpeciesComponent, ReadWriteMapComponent_1, LoadingComponent, AsyncPipe]
+    imports: [NgIf,  FormsModule, ReactiveFormsModule, MatStepperModule, SelectDateTimeComponent, SelectSpeciesComponent, ReadWriteMapComponent_1, LoadingComponent, AsyncPipe]
 })
 export class ObservationUpdateComponent implements OnInit, OnDestroy {
   private _observationId: string;

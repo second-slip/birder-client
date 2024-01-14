@@ -3,7 +3,7 @@ import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { ObservationTopFiveService } from './observation-top-five.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { RouterLink } from '@angular/router';
-import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLink, NgbNavLinkBase, NgbNavContent, NgbAlert, NgbNavOutlet } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLink, NgbNavLinkBase, NgbNavContent,  NgbNavOutlet } from '@ng-bootstrap/ng-bootstrap';
 import { NgIf, NgFor, AsyncPipe, DecimalPipe } from '@angular/common';
 
 @Component({
@@ -12,7 +12,7 @@ import { NgIf, NgFor, AsyncPipe, DecimalPipe } from '@angular/common';
     styleUrls: ['./observation-top-five.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgIf, NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLink, NgbNavLinkBase, NgbNavContent, NgFor, RouterLink, NgbAlert, NgbNavOutlet, LoadingComponent, AsyncPipe, DecimalPipe]
+    imports: [NgIf, NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLink, NgbNavLinkBase, NgbNavContent, NgFor, RouterLink,  NgbNavOutlet, LoadingComponent, AsyncPipe, DecimalPipe]
 })
 export class ObservationTopFiveComponent implements OnInit {
   active: number = 1;

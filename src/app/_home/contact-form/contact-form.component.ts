@@ -3,7 +3,7 @@ import { finalize, Subject, takeUntil } from 'rxjs';
 import { ContactFormModel } from './contact-form-model';
 import { ContactFormService } from './contact-form.service';
 import { FormsModule } from '@angular/forms';
-import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -12,7 +12,7 @@ import { NgIf } from '@angular/common';
     styleUrls: ['./contact-form.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgIf, NgbAlert, FormsModule]
+    imports: [NgIf,  FormsModule]
 })
 export class ContactFormComponent implements OnDestroy {
   private _subscription = new Subject();

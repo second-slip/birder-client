@@ -29,10 +29,8 @@
             </div>
         </div>
 
-        <div *ngIf="!results.length" data-testid="no-search-results">
-            <ngb-alert [dismissible]="false" class="d-block mt-3" type="info">
+        <div *ngIf="!results.length" data-testid="no-search-results" class="alert alert-info">
                 No results...
-            </ngb-alert>
         </div>
     </ng-container>
 

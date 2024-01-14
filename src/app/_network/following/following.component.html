@@ -23,10 +23,8 @@
             </div>
         </div>
 
-        <div *ngIf="!following.length" data-testid="following-list-is-zero">
-            <ngb-alert [dismissible]="false" class="d-block mt-3" type="info">
+        <div *ngIf="!following.length" data-testid="following-list-is-zero" class="alert alert-info">
                 You don't yet follow any <i>Birders</i>
-            </ngb-alert>
         </div>
 
     </ng-container>

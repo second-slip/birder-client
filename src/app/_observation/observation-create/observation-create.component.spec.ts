@@ -63,18 +63,18 @@ describe('ObservationCreateComponent', () => {
       });
 
     await TestBed.configureTestingModule({
-    imports: [FormsModule, ReactiveFormsModule, MatStepperModule, BrowserAnimationsModule, ObservationCreateComponent],
-    providers: [{ provide: AnnounceChangesService, useValue: fakeAnnounceChangesService },
-        { provide: ObservationCrudService, useValue: fakeObservationCrudService },
-        { provide: AuthenticationService, useValue: fakeAuthService },
-        provideRouter(routes)],
-    schemas: [NO_ERRORS_SCHEMA]
-})
-.overrideComponent(ObservationCreateComponent, {
-  remove: { imports: [SelectSpeciesComponent, SelectDateTimeComponent, ReadWriteMapComponent] },
-  add: { imports: [MockComponent(SelectSpeciesComponent), MockComponent(SelectDateTimeComponent), MockComponent(ReadWriteMapComponent)] },
-})
-.compileComponents();
+      imports: [FormsModule, ReactiveFormsModule, MatStepperModule, BrowserAnimationsModule, ObservationCreateComponent],
+      providers: [{ provide: AnnounceChangesService, useValue: fakeAnnounceChangesService },
+      { provide: ObservationCrudService, useValue: fakeObservationCrudService },
+      { provide: AuthenticationService, useValue: fakeAuthService },
+      provideRouter(routes)],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
+      .overrideComponent(ObservationCreateComponent, {
+        remove: { imports: [SelectSpeciesComponent, SelectDateTimeComponent, ReadWriteMapComponent] },
+        add: { imports: [MockComponent(SelectSpeciesComponent), MockComponent(SelectDateTimeComponent), MockComponent(ReadWriteMapComponent)] },
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(ObservationCreateComponent);
     component = fixture.componentInstance;

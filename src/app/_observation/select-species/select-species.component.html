@@ -1,7 +1,7 @@
 @if(_service.isError | async) {
 <div class="alert alert-danger" data-testid="error">
-    <p>There was a problem retrieving the birds species list.</p>
-    <button mat-stroked-button type="button" (click)="reload()" data-testid="reload-button">
+    <p data-testid="error-message">There was a problem retrieving the birds species list.</p>
+    <button mat-stroked-button type="button" id="reload" (click)="reload()" data-testid="reload-button">
         <mat-icon>autorenew</mat-icon>
         Reload
     </button>
@@ -10,8 +10,8 @@
 <form class="example-form" [formGroup]="selectSpeciesForm">
     <mat-form-field class="example-full-width">
         <mat-label>Species</mat-label>
-        <input matInput aria-label="species" [matAutocomplete]="auto" formControlName="bird" placeholder="Pick species"
-            (focus)="filter()" required>
+        <input matInput aria-label="species" name="bird" id="bird" [matAutocomplete]="auto" formControlName="bird" placeholder="Pick species"
+            (focus)="filter()" required data-testid="bird">
         @if (!_service.getBirds.length) {
         <mat-spinner class="loading-spinner" matSuffix diameter="25"></mat-spinner>
         }

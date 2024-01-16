@@ -31,7 +31,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class SelectSpeciesComponent implements OnInit {
   @Input() selectSpeciesForm: FormGroup
-  filteredBirds: Observable<IBirdSummary[]>;
+  public filteredBirds: Observable<IBirdSummary[]>;
 
   constructor(readonly _service: SelectSpeciesService) { }
 
@@ -52,7 +52,6 @@ export class SelectSpeciesComponent implements OnInit {
   }
 
   public reload(): void {
-    alert('hello')
     this._service.getData();
   }
 

@@ -11,8 +11,9 @@
     <!-- todo: adjust width of the control -->
     <mat-form-field class="example-full-width">
         <mat-label>Species</mat-label>
-        <input matInput aria-label="species" name="bird" id="bird" [matAutocomplete]="autocomplete" formControlName="bird" placeholder="Pick species"
-            (focus)="filter()" required data-testid="bird">
+                <!-- placeholder="Pick species" -->
+        <input matInput aria-label="species" id="bird" [matAutocomplete]="autocomplete" formControlName="bird" 
+            (focus)="filter()" required>
         @if (!_service.getBirds.length) {
         <mat-spinner class="loading-spinner" matSuffix diameter="25"></mat-spinner>
         }

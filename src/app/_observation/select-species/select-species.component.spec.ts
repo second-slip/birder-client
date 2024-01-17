@@ -19,7 +19,7 @@ import { BirdsListValidator } from 'src/app/_validators';
 
 import { SelectSpeciesComponent } from './select-species.component';
 import { SelectSpeciesService } from './select-species.service';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -27,6 +27,7 @@ import { MatInputHarness } from '@angular/material/input/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing'
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const birdSummaryObject = [
     {
@@ -223,12 +224,18 @@ describe('SelectSpeciesComponent', () => {
         //         getBirds: BirdsDddlResponse
         //     });
 
-        //     const input = await loader.getHarness(MatAutocompleteHarness.with({ selector: '#bird'}))
+        //     const input = await loader.getHarness(MatAutocompleteHarness.with({ selector: '#bird' }))
+        //     // const input = await loader.getHarness(MatAutocompleteHarness.with({ selector: '#bird'}))
         //     await input.focus();
+        //     fixture.detectChanges();
+        //     await input.enterText('i')
+        //     fixture.detectChanges();
         //     expect(await input.isFocused()).toBe(true);
+        //     fixture.detectChanges();
         //     const options = await input.getOptions();
+        //     fixture.detectChanges();
         //     expect(options.length).toEqual(1)
-        //   });
+        // });
 
         it('should be able to type in an input', async () => {
             await setup({
@@ -236,9 +243,11 @@ describe('SelectSpeciesComponent', () => {
                 getBirds: BirdsDddlResponse
             });
 
-            const input = await loader.getHarness(MatAutocompleteHarness.with({ selector: '#bird' }));
-            await input.enterText('Hello there');
-            expect(await input.getValue()).toBe('Hello there');
+            const input = await loader.getHarness(MatInputHarness.with({ selector: '#bird' }));
+            // await input.focus();
+            await input.setValue('Hell');
+            expect(await input.getValue()).toBe('Hell');
+            // expect(expect(component.filter).toHaveBeenCalledTimes(1))
         });
 
 

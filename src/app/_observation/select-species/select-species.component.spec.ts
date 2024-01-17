@@ -26,6 +26,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing'
+import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 
 const birdSummaryObject = [
     {
@@ -81,6 +82,9 @@ describe('SelectSpeciesComponent', () => {
         });
 
         spyOn(component, 'reload'); /// .....................?
+        spyOn(component, 'filter'); /// .....................?
+        spyOn(component, 'displayFn');
+        // spyOnProperty(component, 'filteredBirds', 'get'); /// .....................?
 
         fixture.detectChanges();
     };
@@ -133,7 +137,7 @@ describe('SelectSpeciesComponent', () => {
             const btn = await loader.getHarness(MatButtonHarness.with({ selector: '#reload' }));
             expect(await btn.isDisabled()).toBe(false);
             expect(await btn.getText()).toContain('Reload');
-          });
+        });
 
         it('should request data again on request (test without Harness)', fakeAsync(async () => {
             await setup({ isError: of(true) });
@@ -183,6 +187,76 @@ describe('SelectSpeciesComponent', () => {
             expect(await input.getType()).toBe('text');
             expect(await input.isDisabled()).toBe(false);
             expect(await input.getValue()).toBe('');
+        }));
+
+        it('autocomplete should focus and blur an input', async () => {
+            await setup({
+                isError: of(false),
+                getBirds: BirdsDddlResponse
+            });
+
+            const input = await loader.getHarness(MatAutocompleteHarness.with({ selector: '#bird' }));
+            expect(await input.isFocused()).toBe(false);
+            await input.focus();
+            expect(await input.isFocused()).toBe(true);
+            await input.blur();
+            expect(await input.isFocused()).toBe(false);
+        });
+
+        // it('should be able to get filtered options', async () => {
+        //     await setup({
+        //         isError: of(false),
+        //         getBirds: BirdsDddlResponse
+        //     });
+
+        //     const input = await loader.getHarness(MatAutocompleteHarness.with({ selector: '#bird' }));
+        //     await input.focus();
+        //     const options = await input.getOptions();
+
+        //     expect(options.length).toBe(1);
+        //     expect(await options[0].getText()).toBe('New York');
+        // });
+
+        // it('should be able to get filtered options 2', async () => {
+        //     await setup({
+        //         isError: of(false),
+        //         getBirds: BirdsDddlResponse
+        //     });
+
+        //     const input = await loader.getHarness(MatAutocompleteHarness.with({ selector: '#bird'}))
+        //     await input.focus();
+        //     expect(await input.isFocused()).toBe(true);
+        //     const options = await input.getOptions();
+        //     expect(options.length).toEqual(1)
+        //   });
+
+        it('should be able to type in an input', async () => {
+            await setup({
+                isError: of(false),
+                getBirds: BirdsDddlResponse
+            });
+
+            const input = await loader.getHarness(MatAutocompleteHarness.with({ selector: '#bird' }));
+            await input.enterText('Hello there');
+            expect(await input.getValue()).toBe('Hello there');
+        });
+
+
+
+        it('YYYYYYYYYY', fakeAsync(async () => {
+            await setup({
+                isError: of(false),
+                getBirds: BirdsDddlResponse
+            });
+
+            const input = await loader.getHarness(MatInputHarness.with({ selector: '#bird' }));
+
+            //await input.setValue('l');
+
+            expect(expect(component.filter).toHaveBeenCalledTimes(1))
+            expect(expect(component.displayFn).toHaveBeenCalledTimes(1))
+            // expect(expect(component.filteredBirds).toHaveBeenCalledTimes(1))
+
         }));
 
         // it('should call spy on city search', fakeAsync(() => {

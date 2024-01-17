@@ -7,15 +7,16 @@
     </button>
 </div>
 } @else {
-<form class="example-form" [formGroup]="selectSpeciesForm">
+<form class="select-species-form" [formGroup]="selectSpeciesForm">
+    <!-- todo: adjust width of the control -->
     <mat-form-field class="example-full-width">
         <mat-label>Species</mat-label>
-        <input matInput aria-label="species" name="bird" id="bird" [matAutocomplete]="auto" formControlName="bird" placeholder="Pick species"
+        <input matInput aria-label="species" name="bird" id="bird" [matAutocomplete]="autocomplete" formControlName="bird" placeholder="Pick species"
             (focus)="filter()" required data-testid="bird">
         @if (!_service.getBirds.length) {
         <mat-spinner class="loading-spinner" matSuffix diameter="25"></mat-spinner>
         }
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-autocomplete #autocomplete="matAutocomplete" [displayWith]="displayFn">
             @for (bird of filteredBirds | async; track bird) {
             <mat-option [value]="bird">
                 {{bird.englishName}}

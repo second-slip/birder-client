@@ -55,7 +55,8 @@ export class SelectSpeciesComponent implements OnInit {
     this._service.getData();
   }
 
-  private _filterBirds(value: any): IBirdSummary[] {
+  //  private
+  public _filterBirds(value: any): IBirdSummary[] {
     if (value.bird.englishName) { // full IBirdSummary object selected from the list
       const filterValue = value.bird.englishName.toLowerCase();
       return this._service.getBirds.filter((bird: IBirdSummary) => bird.englishName.toLowerCase().includes(filterValue));

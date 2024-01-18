@@ -32,7 +32,8 @@ export class AuthenticationService {
     | Promise<boolean | UrlTree> {
 
     if (!this._isValidToken()) {
-      return this._router.navigate(['/login']);
+      this.logout();
+      return this._router.navigate(['/home']);
     }
 
     return true;

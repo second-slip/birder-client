@@ -122,7 +122,7 @@ describe('AuthenticationService', () => {
 
     describe('when IsLoggedIn() is called ', () => {
 
-        it('should return false and redirect to login when token is invalid', fakeAsync(async () => {
+        it('should return false and redirect to Home when token is invalid', fakeAsync(async () => {
             await setup({}, {
                 getToken: ''
             });
@@ -134,7 +134,7 @@ describe('AuthenticationService', () => {
 
             //not called because short circuit as token is falsy (null or '')
             expect(fakeJwtService.isTokenExpired).not.toHaveBeenCalled();
-            expect(routerStub.navigate).toHaveBeenCalledWith(['/login']);
+            expect(routerStub.navigate).toHaveBeenCalledWith(['/home']);
         }));
 
 

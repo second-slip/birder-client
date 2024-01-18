@@ -47,16 +47,15 @@ export class SelectSpeciesComponent implements OnInit {
     );
   }
 
-  public displayFn(user: IBirdSummary): string {
-    return user && user.englishName ? user.englishName : '';
+  public displayFn(bird: IBirdSummary): string {
+    return bird && bird.englishName ? bird.englishName : '';
   }
 
   public reload(): void {
     this._service.getData();
   }
 
-  //  private
-  public _filterBirds(value: any): IBirdSummary[] {
+  private _filterBirds(value: any): IBirdSummary[] {
     if (value.bird.englishName) { // full IBirdSummary object selected from the list
       const filterValue = value.bird.englishName.toLowerCase();
       return this._service.getBirds.filter((bird: IBirdSummary) => bird.englishName.toLowerCase().includes(filterValue));

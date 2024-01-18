@@ -55,81 +55,23 @@
 
         <hr>
 
-        <ul ngbNav #nav="ngbNav" class="nav-tabs">
-            <li [ngbNavItem]="1">
-                <a ngbNavLink>Observations</a>
-                <ng-template ngbNavContent>
-                    <!-- Keep content! -->
-                    <!-- <app-user-feed></app-user-feed> -->
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at cursus est, vel
-                        scelerisque
-                        metus. Fusce eu egestas dolor. Suspendisse efficitur odio urna, vitae commodo ante lacinia
-                        at.
-                        In a aliquam turpis. Suspendisse ac justo at arcu tristique efficitur. Morbi sit amet magna
-                        sit
-                        amet est rhoncus pretium. Suspendisse ac placerat nisl, eget malesuada dui. Praesent
-                        pulvinar
-                        volutpat enim ac imperdiet. Ut in hendrerit nisi, at fringilla turpis. Aliquam pharetra,
-                        odio id
-                        rhoncus condimentum, arcu neque posuere mi, vitae iaculis odio massa non enim. Donec quis
-                        tempus
-                        libero, a egestas est. Proin non felis ut massa dictum aliquam a eget ante. Quisque
-                        consectetur
-                        sapien malesuada mauris tristique, eget porttitor lectus porttitor. Fusce in laoreet massa.
-                        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
-                        egestas.
-                        Nullam in ipsum blandit, malesuada velit eget, bibendum purus.</p>
+        <mat-tab-group>
+            <mat-tab label="Observations">
+                <ng-template matTabContent>
+                    <p>{{ placeholder }}</p>
                 </ng-template>
-            </li>
-            <li [ngbNavItem]="2">
-                <a ngbNavLink>Distribution map</a>
-                <ng-template ngbNavContent>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at cursus est, vel
-                        scelerisque
-                        metus. Fusce eu egestas dolor. Suspendisse efficitur odio urna, vitae commodo ante lacinia
-                        at.
-                        In a aliquam turpis. Suspendisse ac justo at arcu tristique efficitur. Morbi sit amet magna
-                        sit
-                        amet est rhoncus pretium. Suspendisse ac placerat nisl, eget malesuada dui. Praesent
-                        pulvinar
-                        volutpat enim ac imperdiet. Ut in hendrerit nisi, at fringilla turpis. Aliquam pharetra,
-                        odio id
-                        rhoncus condimentum, arcu neque posuere mi, vitae iaculis odio massa non enim. Donec quis
-                        tempus
-                        libero, a egestas est. Proin non felis ut massa dictum aliquam a eget ante. Quisque
-                        consectetur
-                        sapien malesuada mauris tristique, eget porttitor lectus porttitor. Fusce in laoreet massa.
-                        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
-                        egestas.
-                        Nullam in ipsum blandit, malesuada velit eget, bibendum purus.</p>
+            </mat-tab>
+            <mat-tab label="Distribution map">
+                <ng-template matTabContent>
+                    <p>{{ placeholder }}</p>
                 </ng-template>
-            </li>
-            <li [ngbNavItem]="3">
-                <a ngbNavLink>Achievements</a>
-                <ng-template ngbNavContent>
-                    <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id
-                        diam.
-                        Nulla facilisi.
-                        Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt
-                        eu,
-                        congue et odio.
-                        Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices
-                        et.
-                        Sed diam urna,
-                        egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus
-                        faucibus
-                        nisl enim, nec
-                        tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius
-                        natoque
-                        penatibus et
-                        magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet
-                        ultricies in eget
-                        neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>
+            </mat-tab>
+            <mat-tab label="Achievements">
+                <ng-template matTabContent>
+                    <p>{{ placeholder }}</p>
                 </ng-template>
-            </li>
-        </ul>
-
-        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+            </mat-tab>
+        </mat-tab-group>
 
     </ng-container>
 

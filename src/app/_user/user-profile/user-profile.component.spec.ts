@@ -1,7 +1,6 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { of } from 'rxjs';
 import { fakeIObservationCount } from 'src/app/testing/analysis-helpers';
 import { expectText } from 'src/app/testing/element.spec-helper';
@@ -13,6 +12,8 @@ import { UserProfileComponent } from './user-profile.component';
 import { UserProfileService } from './user-profile.service';
 import { FollowCommandComponent } from 'src/app/_network/follow-command/follow-command.component';
 import { MockComponent } from 'ng-mocks';
+import { NoopAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import { MatTabsModule } from '@angular/material/tabs';
 
 describe('UserProfileComponent', () => {
     let component: UserProfileComponent;
@@ -50,6 +51,7 @@ describe('UserProfileComponent', () => {
 
         await TestBed.configureTestingModule({
             providers: [
+                // provideAnimations(),
                 { provide: ObservationCountService, useValue: fakeCountService },
                 {
                     provide: ActivatedRoute,
@@ -62,7 +64,7 @@ describe('UserProfileComponent', () => {
                     }
                 }
             ],
-            imports: [NgbNavModule, UserProfileComponent],
+            imports: [UserProfileComponent, NoopAnimationsModule, MatTabsModule],
         }).overrideComponent(UserProfileComponent, {
             remove: {
                 imports: [FollowCommandComponent],
@@ -107,6 +109,8 @@ describe('UserProfileComponent', () => {
                 getUserProfile: of(userProfileModel)
             });
 
+            tick(50);
+
             const compiled = fixture.nativeElement as HTMLElement;
             expect(compiled.querySelector('[data-testid="user-profile"]')?.textContent).toBeDefined();
 
@@ -117,6 +121,8 @@ describe('UserProfileComponent', () => {
             await setup({
                 getUserProfile: of(userProfileModel)
             });
+
+            tick(50);
 
             const compiled = fixture.nativeElement as HTMLElement;
             expect(compiled.querySelector('[data-testid="network-summary"]')?.textContent).toBeDefined();
@@ -131,6 +137,8 @@ describe('UserProfileComponent', () => {
                 await setup({
                     getUserProfile: of(userProfileModel)
                 });
+
+                tick(50);
 
                 const compiled = fixture.nativeElement as HTMLElement;
                 expect(compiled.querySelector('[data-testid="obs-summary-own"]')?.textContent).toBeDefined();
@@ -163,6 +171,8 @@ describe('UserProfileComponent', () => {
                 await setup({
                     getUserProfile: of(otherProfile)
                 });
+
+                tick(50);
 
                 const compiled = fixture.nativeElement as HTMLElement;
                 expect(compiled.querySelector('[data-testid="obs-summary-other"]')?.textContent).toBeDefined();

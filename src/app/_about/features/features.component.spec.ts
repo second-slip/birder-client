@@ -24,6 +24,6 @@ describe('FeaturesComponent', () => {
 
     it('should render title', () => {
         const compiled = fixture.nativeElement as HTMLElement;
-        expect(compiled.querySelector('[data-testid="main-title"]')?.textContent).toContain('The Features');
+        expect(compiled.querySelector('[data-testid="main-title"]')?.textContent).toContain('Website Features');
     });
 });

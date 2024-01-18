@@ -179,42 +179,61 @@ describe('SelectSpeciesComponent', () => {
             const options = await input.getOptions();
 
             expect(options.length).toBe(40);
-            // expect(await options[0].getText()).toBe('New York');
         }));
 
+        it('filter should return one option when appropriate', async () => {
+            await setup({
+                isError: of(false),
+                getBirds: BirdsDddlResponse
+            });
 
-        // it('should be able to get filtered options', async () => {
-        //     await setup({
-        //         isError: of(false),
-        //         getBirds: BirdsDddlResponse
-        //     });
+            const input = await loader.getHarness(MatAutocompleteHarness.with({ selector: '#bird' }));
+            await input.focus();
+            const options = await input.getOptions({ text: /Blue/ });
 
-        //     const input = await loader.getHarness(MatAutocompleteHarness.with({ selector: '#bird' }));
-        //     await input.focus();
-        //     const options = await input.getOptions();
+            expect(options.length).toBe(1);
+            expect(await options[0].getText()).toBe('Blue Tit');
+        });
 
-        //     expect(options.length).toBe(1);
-        //     expect(await options[0].getText()).toBe('New York');
-        // });
+        it('filter should return multiple options when appropriate', async () => {
+            await setup({
+                isError: of(false),
+                getBirds: BirdsDddlResponse
+            });
 
-        // it('should be able to get filtered options 2', async () => {
-        //     await setup({
-        //         isError: of(false),
-        //         getBirds: BirdsDddlResponse
-        //     });
+            const input = await loader.getHarness(MatAutocompleteHarness.with({ selector: '#bird' }));
+            await input.focus();
+            const options = await input.getOptions({ text: /Barn/ });
 
-        //     const input = await loader.getHarness(MatAutocompleteHarness.with({ selector: '#bird' }))
-        //     // const input = await loader.getHarness(MatAutocompleteHarness.with({ selector: '#bird'}))
-        //     await input.focus();
-        //     fixture.detectChanges();
-        //     await input.enterText('i')
-        //     fixture.detectChanges();
-        //     expect(await input.isFocused()).toBe(true);
-        //     fixture.detectChanges();
-        //     const options = await input.getOptions();
-        //     fixture.detectChanges();
-        //     expect(options.length).toEqual(1)
-        // });
+            expect(options.length).toBe(2);
+            expect(await options[0].getText()).toBe('Barn Owl');
+            expect(await options[1].getText()).toBe('Barnacle Goose');
+        });
+
+        it('should be able to select option', async () => {
+            await setup({
+                isError: of(false),
+                getBirds: BirdsDddlResponse
+            });
+
+            const birdSummaryObject: IBirdSummary =
+            {
+                birdId: 1002,
+                species: "Stercorarius parasiticus",
+                englishName: "Arctic Skua",
+                populationSize: "1,000 - 10,000 Pairs",
+                btoStatusInBritain: "Migrant Breeder, Passage Visitor",
+                thumbnailUrl: null,
+                conservationStatus: "Red",
+                conservationListColourCode: "Red",
+                birderStatus: "Common"
+            };
+
+            const input = await loader.getHarness(MatAutocompleteHarness.with({ selector: '#bird' }));
+            await input.selectOption({ text: 'Arctic Skua' });
+            expect(await input.getValue()).toBe(birdSummaryObject.englishName);
+        });
+
 
         it('should be able to type in an input', async () => {
             await setup({
@@ -262,33 +281,6 @@ describe('SelectSpeciesComponent', () => {
             expect(await formField.getTextErrors()).toEqual(['Species is required']);
             expect(await formField.getTextHints()).toEqual([]);
         });
-
-        //   it('should be able to check if form field is invalid', async () => {
-        //     await setup({
-        //         isError: of(false),
-        //         getBirds: BirdsDddlResponse
-        //     });
-
-        //     const formField = await loader.getHarness(MatFormFieldHarness);
-        //     expect(await formField.isControlValid()).toBe(true);
-
-        //     await ((await formField.getControl()) as MatInputHarness)?.setValue(' ');//.blur();
-
-        //     // fixture.componentInstance.requiredControl.setValue('');
-        //     // const input = await loader.getHarness(MatInputHarness.with({ selector: '#bird' }));
-        //     // expect(await input.isFocused()).toBe(false);
-        //     // await input.focus();
-        //     // expect(await input.isFocused()).toBe(true);
-
-        //     // await input.setValue(' ');
-        //     // fixture.detectChanges();
-        //     fixture.componentInstance.selectSpeciesForm.get('bird')?.setValue('');
-
-        //     fixture.detectChanges();
-
-        //     expect(await formField.isControlValid()).toBe(false);
-        //   });
-
 
         describe('display function tests', () => {
 

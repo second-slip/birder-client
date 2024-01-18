@@ -11,12 +11,7 @@ import { LoginComponent } from "./_auth/login/login.component";
 import { LogoutComponent } from "./_auth/logout/logout.component";
 import { BirdDetailComponent } from "./_bird/bird-detail/bird-detail.component";
 import { BirdIndexComponent } from "./_bird/bird-index/bird-index.component";
-import { AboutComponent } from "./_home/about/about.component";
-import { ContactComponent } from "./_home/contact/contact.component";
-import { DeveloperComponent } from "./_home/developer/developer.component";
-import { FutureComponent } from "./_home/future/future.component";
 import { HomeComponent } from "./_home/home/home.component";
-import { TechnologyComponent } from "./_home/technology/technology.component";
 import { LayoutNoSidebarComponent } from "./_layout/layout-no-sidebar/layout-no-sidebar.component";
 import { LayoutSidebarComponent } from "./_layout/layout-sidebar/layout-sidebar.component";
 import { LifeListComponent } from "./_list/life-list/life-list.component";
@@ -30,6 +25,7 @@ import { ObservationReadComponent } from "./_observation/observation-read/observ
 import { ObservationUpdateComponent } from "./_observation/observation-update/observation-update.component";
 import { TweetDayArchiveComponent } from "./_tweet/tweet-day-archive/tweet-day-archive.component";
 import { UserProfileComponent } from "./_user/user-profile/user-profile.component";
+import { AboutComponent } from "./_about/about/about.component";
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -39,11 +35,7 @@ export const routes: Routes = [
         children: [
             { path: '', component: HomeComponent, pathMatch: 'full' },
             { path: 'home', component: HomeComponent, pathMatch: 'full' },
-            { path: 'about/about', component: AboutComponent },
-            { path: 'about/contact', component: ContactComponent },
-            { path: 'about/technology', component: TechnologyComponent },
-            { path: 'about/developer', component: DeveloperComponent },
-            { path: 'about/future', component: FutureComponent },
+            { path: 'about', component: AboutComponent },
             { path: 'login', component: LoginComponent },
             { path: 'logout', component: LogoutComponent },
             { path: 'confirm-email', component: ConfirmEmailComponent },

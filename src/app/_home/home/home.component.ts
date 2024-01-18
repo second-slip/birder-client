@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
-import { FeaturesComponent } from '../features/features.component';
+import { FeaturesComponent } from '../../_about/features/features.component';
 
 @Component({
     selector: 'app-home',

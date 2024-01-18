@@ -21,7 +21,6 @@ export class AboutComponent {
 
 // import { Component, ViewEncapsulation } from '@angular/core';
 // import { FeaturesComponent } from '../features/features.component';
-// // import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLink, NgbNavLinkBase } from '@ng-bootstrap/ng-bootstrap';
 // import { RouterLink } from '@angular/router';
 
 // @Component({

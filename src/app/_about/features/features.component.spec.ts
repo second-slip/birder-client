@@ -1,6 +1,5 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { FeaturesComponent } from './features.component';
 
 describe('FeaturesComponent', () => {
@@ -11,7 +10,7 @@ describe('FeaturesComponent', () => {
 
         await TestBed.configureTestingModule({
     schemas: [NO_ERRORS_SCHEMA],
-    imports: [NgbNavModule, FeaturesComponent]
+    imports: [FeaturesComponent]
 }).compileComponents();
 
         fixture = TestBed.createComponent(FeaturesComponent);

@@ -1,21 +1,19 @@
-<div>
-
+<div class="section centre">
     <a [routerLink]='["/"]'>
         <img src="assets/images/logoWithSlogan.png" alt="Birder">
     </a>
 
-    <p><i>Birder</i> is a free website for logging, sharing, and analysing bird observations</p>
+    <a mat-raised-button [routerLink]='["/account/registration"]' class="button">Get Started</a>
+    <a mat-raised-button mat-button color="primary" [routerLink]='["/login"]' class="button">I
+        already have an account</a>
+</div>
 
-    <app-features [showBlurb]="false"></app-features>
+<app-features></app-features>
 
-    <hr>
 
-    <h3>Find out more - or login or register</h3>
-
-    <p>You can learn more about Birder in the <a [routerLink]='["/about/about"]'>About</a> page.</p>
-
-    <a type="button" class="btn btn-light" [routerLink]='["/login"]'>Login</a>
-    or &nbsp;
-    <a type="button" class="btn btn-light" [routerLink]='["/account/registration"]'>Register</a>
-
+<div class="section centre extra-room">
+    <h2>Are you ready?</h2>
+    <a mat-raised-button [routerLink]='["/account/registration"]' class="button">Get Started</a>
+    <a mat-raised-button mat-button color="primary" [routerLink]='["/login"]' class="button">I
+        already have an account</a>
 </div>

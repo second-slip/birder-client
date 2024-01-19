@@ -1,15 +1,10 @@
-import { Component, Input } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-features',
   templateUrl: './features.component.html',
   styleUrls: ['./features.component.scss'],
-  // encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [NgIf]
+  imports: []
 })
-export class FeaturesComponent {
-  @Input()
-  public showBlurb: boolean;
-}
+export class FeaturesComponent { }

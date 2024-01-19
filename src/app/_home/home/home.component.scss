@@ -1,13 +1,16 @@
-app-home {
+.section {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 
-    margin: 2%;
-    text-align: center;
+  padding: 10px;
+}
 
-  .btn {
-    margin: 2%;
-  }
+.button {
+  margin: 10px auto;
+  width: 300px;
+}
 
-  // @media screen and (min-width: 801px) { }
-  
-  // @media screen and (max-width: 800px) { }
+.extra-room {
+  margin-top: 5%;
 }

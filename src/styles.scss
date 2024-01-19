@@ -27,6 +27,9 @@ body {
     margin: auto;
 }
 
+.italics {
+    font-style: italic;
+}
 
 .alert {
     padding: 3%;
@@ -47,4 +50,21 @@ body {
 
 .alert-info {
     background-color: #0bc9cd; // 'Robin egg blue'
+}
+
+
+@media only screen and (max-width: 992px) {
+    .wrapper {
+        // border: black;
+        // border-style: solid;
+        margin: 3% 5%; //(top, bottom) / (right, left)
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .wrapper {
+        // border: black;
+        // border-style: solid;
+        margin: 3% 15%; //(top, bottom) / (right, left)
+    }
 }

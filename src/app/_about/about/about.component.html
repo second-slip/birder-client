@@ -1,108 +1,35 @@
 <section class="logo-section">
-    <a [routerLink]='["/"]'>
-        <img src="assets/images/logoWithSlogan.png" alt="Birder">
-    </a>
+  <a [routerLink]='["/"]'>
+    <img src="assets/images/logoWithSlogan.png" alt="Birder">
+  </a>
 </section>
 
 
 <mat-tab-group>
-    <mat-tab>
-        <ng-template mat-tab-label>
-            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-            About
-        </ng-template>
-    </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+      About
+    </ng-template>
 
-    <mat-tab>
-        <ng-template mat-tab-label>
-            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-            Website features
-        </ng-template>
-        <app-features></app-features>
-    </mat-tab>
+    <app-about-general></app-about-general>
+  </mat-tab>
 
-    <mat-tab>
-        <ng-template mat-tab-label>
-            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-            Third
-        </ng-template>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+      Features
+    </ng-template>
 
-        Content 3
-    </mat-tab>
+    <app-features></app-features>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+      Policies
+    </ng-template>
+
+    <p>{{ placeholder }}</p>
+  </mat-tab>
 </mat-tab-group>
-
-
-
-
-
-
-    
-    //   <app-features></app-features>
-     -->
-
-
-     <!-- <div class="main">
-
-        <section>
-          <hr>
-          <h2>The Technology Stack</h2>
-    
-          <h3>Client</h3>
-          <ul>
-            <li>
-              <a href='https://angular.io/' target="_">Angular</a> 13<sup>1</sup> and <a
-                href='https://www.typescriptlang.org/' target="_">TypeScript</a>
-              single-page application
-            </li>
-    
-            <li>
-              <a href='https://getbootstrap.com/' target="_">Bootstrap</a> and <a href="https://material.angular.io/"
-                target="_">Angular Material</a> components libraries.
-            </li>
-          </ul>
-    
-          <h3>Server</h3>
-          <ul>
-            <li>
-              <a href='https://get.asp.net/' target="_">ASP.NET 6</a><sup>2</sup> and <a
-                href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx' target="_">C#</a> REST API
-            </li>
-            <li>
-              <a href="https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-overview" target="_">Azure
-                'serverless' SQL Database</a>
-            </li>
-          </ul>
-    
-          <h3>Deployment</h3>
-          <ul>
-            <li>
-              Hosted on the <a href='https://azure.microsoft.com/en-gb/overview/'>Azure</a> cloud platform in <a
-                href='https://www.docker.com/'>Docker</a> containers
-            </li>
-          </ul>
-    
-          <small><sup>1</sup> Since 10<sup>th</sup> November 2021. Formerly Angular 6 &mdash; 12.</small>
-          <small><br><sup>2</sup> Since 11<sup>th</sup> November 2021. Formerly .NET Core versions
-            2.2, 3.0, 3.1, and .NET 5.</small>
-        </section>
-    
-        <section>
-          <hr>
-          <h2>The Code</h2>
-          <p>The code is open-source and it is available on GitHub. Contributions are welcome.</p>
-    
-          <div class="repo-links">
-            <iframe
-              src="https://ghbtns.com/github-btn.html?user=WinthorpeCross&repo=Birder&type=watch&count=false&size=large&v=2"
-              frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
-    
-            <iframe
-              src="https://ghbtns.com/github-btn.html?user=WinthorpeCross&repo=Birder&type=star&count=false&size=large"
-              frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
-    
-            <iframe
-              src="https://ghbtns.com/github-btn.html?user=WinthorpeCross&repo=Birder&type=fork&count=false&size=large"
-              frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
-          </div>
-        </section>
-      </div> -->

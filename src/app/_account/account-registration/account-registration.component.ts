@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Validators, AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
-import { findInvalidControls } from 'src/app/testing/form-helpers';
 import { MatchOtherValidator, RestrictedNameValidator, ValidatePassword } from 'src/app/_validators';
 import { AccountValidationService } from '../account-validation.service';
 import { AccountService } from '../account.service';

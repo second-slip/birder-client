@@ -18,18 +18,6 @@ describe('HomeComponent', () => {
   const setup = async (
     fakeServiceReturnValues?: jasmine.SpyObjMethodNames<AuthenticationService>) => {
 
-    // fakeTokenService = jasmine.createSpyObj<TokenService>(
-    //   'TokenService',
-    //   {
-    //     addToken: undefined,
-    //     getToken: undefined,
-    //     getUser: undefined,
-    //     isTokenValid: undefined,
-    //     removeToken: undefined,
-    //     ...fakeTokenServiceReturnValues
-    //   }
-    // );
-
     fakeService = jasmine.createSpyObj<AuthenticationService>(
       'AuthenticationService',
       {

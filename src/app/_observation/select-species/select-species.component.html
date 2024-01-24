@@ -8,11 +8,9 @@
 </div>
 } @else {
 <form class="select-species-form" [formGroup]="selectSpeciesForm">
-    <!-- todo: adjust width of the control -->
-    <mat-form-field class="example-full-width">
+    <mat-form-field class="form-field species-autocomplete">
         <mat-label>Species</mat-label>
-                <!-- placeholder="Pick species" -->
-        <input matInput aria-label="species" id="bird" [matAutocomplete]="autocomplete" formControlName="bird" 
+        <input matInput aria-label="species" id="bird" [matAutocomplete]="autocomplete" formControlName="bird"
             (focus)="filter()" required>
         @if (!_service.getBirds.length) {
         <mat-spinner class="loading-spinner" matSuffix diameter="25"></mat-spinner>
@@ -40,31 +38,3 @@
     <!-- <pre>{{ selectSpeciesForm.value | json }}</pre> -->
 </form>
 }
-
-<!-- <div class="form-group adjust-size">
-    <form [formGroup]="selectSpeciesForm" novalidate>
-        <label for="typeahead-focus">Choose species:</label>
-        <div class="is-loading">
-            <input id="typeahead-focus" type="text" class="form-control" formControlName="bird" [ngbTypeahead]="search"
-                aria-required="true" required placeholder="type species name to filter species list"
-                (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
-                #instance="ngbTypeahead" [resultFormatter]="formatter" [inputFormatter]="formatter"
-                data-testid="bird" />
-            <span *ngIf="!_service.getBirds.length" data-testid="loading" class="spinner-border spinner-border-sm"
-                role="status" aria-hidden="true"></span>
-        </div>
-        <div class="alert alert-danger" role="alert" *ngIf="(_service.isError | async)" data-testid="error">
-            This is an error retrieving the birds species list. Please click <a class="alert-link" role="button"
-                (click)="reload()" data-testid="reload-button">here to try again</a>.
-        </div>
-        <div *ngIf="selectSpeciesForm.get('bird')?.invalid && 
-            selectSpeciesForm.get('bird')?.errors && 
-            (selectSpeciesForm.get('bird')?.dirty || selectSpeciesForm.get('bird')?.touched)">
-            <small class="text-danger" *ngIf="selectSpeciesForm.get('bird')?.hasError('required')"
-                data-testid="error-req">This field is required.</small>
-            <small class="text-danger" *ngIf="selectSpeciesForm.get('bird')?.hasError('notBirdListObject')"
-                data-testid="error-obj">You must
-                select a bird species from the list.</small>
-        </div>
-    </form>
-</div> -->

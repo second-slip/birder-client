@@ -1,131 +1,102 @@
-<div class="observation-create-container">
-
+<div class="standard-container">
+    
     <h1>Create observation</h1>
 
-    <ng-container *ngIf="addObservationForm; else loadingOrError">
+    <form [formGroup]="addObservationForm" novalidate (ngSubmit)="onSubmit()">
 
-        <form [formGroup]="addObservationForm" novalidate (ngSubmit)="onSubmit()">
+        <mat-vertical-stepper [linear]="false" #stepper>
 
-            <mat-vertical-stepper [linear]="false" #stepper (selectionChange)="onStepperSelectionChange()">
+            <mat-step [stepControl]="dateForm && selectSpeciesForm && addObservationForm"
+                errorMessage="This section is not completed">
 
-                <mat-step [stepControl]="addObservationForm && selectSpeciesForm && dateForm"
-                    errorMessage="Section not complete.">
-                    <ng-template matStepLabel><span class="stepperTop0">Details: what and when?</span></ng-template>
+                <ng-template matStepLabel><span class="stepperTop0">Details: what and when?</span></ng-template>
 
-                    <app-select-date-time [dateForm]="dateForm"></app-select-date-time>
+                <app-select-species #species [selectSpeciesForm]="selectSpeciesForm"></app-select-species>
 
-                    <div class="form-group adjust-size">
-                        <label for="quantity">How many</label>
-                        <input class="form-control" type="number" id="quantity" placeholder="Quantity"
-                            formControlName="quantity" required min="1" max="1000">
-                        <div *ngIf="addObservationForm.get('quantity')?.invalid && 
-                        addObservationForm.get('quantity')?.errors && 
-                        (addObservationForm.get('quantity')?.dirty || addObservationForm.get('quantity')?.touched)">
-                            <small class="text-danger" *ngIf="addObservationForm.get('quantity')?.hasError('required')">
-                                This field is required.
-                            </small>
-                            <small class="text-danger" *ngIf="addObservationForm.get('quantity')?.hasError('min')">
-                                The minimum value is {{ addObservationForm.get('quantity')?.errors?.min?.min
-                                }}
-                                individual.
-                            </small>
-                            <small class="text-danger" *ngIf="addObservationForm.get('quantity')?.hasError('max')">
-                                The maximum value is {{ addObservationForm.get('quantity')?.errors?.max?.max
-                                }}
-                                individuals.
-                            </small>
-                        </div>
-                    </div>
+                <mat-form-field class="form-field">
+                    <mat-label>Quantity</mat-label>
+                    <input matInput #message type="number" min="1" max="1000" id="quantity" formControlName="quantity">
+                    <mat-hint align="start">How many individuals</mat-hint>
+                    @if (addObservationForm.get('quantity')?.hasError('required'))
+                    {
+                    <mat-error>This field is required.</mat-error>
+                    }
+                    @if (addObservationForm.get('quantity')?.hasError('min')) {
+                    <mat-error>
+                        The minimum value is {{ addObservationForm.get('quantity')?.errors?.min?.min}}
+                        individual.</mat-error>
+                    }
+                    @if (addObservationForm.get('quantity')?.hasError('max')) {
+                    <mat-error>
+                        The maximum value is {{ addObservationForm.get('quantity')?.errors?.max?.max }} individuals.
+                    </mat-error>
+                    }
+                </mat-form-field>
 
-                    <app-select-species #species [selectSpeciesForm]="selectSpeciesForm"></app-select-species>
+                <app-select-date-time [dateForm]="dateForm"></app-select-date-time>
 
-                    <button matStepperNext type="button" class="btn btn-light btn-small">Next</button>
-                </mat-step>
+                <button matStepperNext type="button" class="btn btn-light btn-small">Next</button>
+            </mat-step>
 
-                <mat-step>
-                    <ng-template matStepLabel><span class="stepperTop1">Location</span></ng-template>
+            <mat-step>
+                <ng-template matStepLabel><span class="stepperTop1">Location</span></ng-template>
 
-                    <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
-                        <app-read-write-map [latitude]="authUser.defaultLocationLatitude"
-                            [longitude]="authUser.defaultLocationLongitude">
-                        </app-read-write-map>
-                        <!-- [formattedAddress]="" [shortAddress]="" -->
-                    </ng-container>
+                @if (_authService.getAuthUser | async; as authUser) {
+                <app-read-write-map [latitude]="authUser.defaultLocationLatitude"
+                    [longitude]="authUser.defaultLocationLongitude">
+                </app-read-write-map>
+                }
 
+                <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
+                <button matStepperNext type="button" class="btn btn-light btn-small">Next</button>
+            </mat-step>
+
+            <mat-step [optional]="true">
+                <ng-template matStepLabel><span class="stepperTop2">Notes</span></ng-template>
+
+                <p class="alert alert-info">
+                    <strong>Whoops!</strong> The Notes functionality is currently not available. This capability is
+                    being redesigned.<br>
+                </p>
+
+                <!-- <div>
+                <app-add-notes></app-add-notes>
+                </div> -->
+
+                <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
+                <button matStepperNext type="button" class="btn btn-light btn-small">Next</button>
+            </mat-step>
+
+            <mat-step>
+                <ng-template matStepLabel><span class="stepperTop3">Done</span></ng-template>
+
+                @if(addObservationForm.valid && selectSpeciesForm.valid && dateForm.valid) {
+                <div class="alert alert-info">
+                    The form is complete. Choose 'Save' to add your observation.
+                    <p>
+                        @if(requesting) {
+                        <button type="submit" class="btn btn-primary btn-small" disabled>
+                            Saving observation...
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </button>
+                        } @else {
+                        <button type="submit" class="btn btn-primary btn-small"
+                            [disabled]="!addObservationForm.valid || !addObservationForm.valid || !dateForm.valid">
+                            Save
+                        </button>
+                        }
+                        <button (click)="stepper.reset()" class="btn btn-warning btn-small" type="button">Reset</button>
+                        <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
+                    </p>
+                </div>
+                } @else {
+                <p class="alert alert-danger">
+                    The form is not complete. You must complete the manadatory fields in Section 1.
                     <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
-                    <button matStepperNext type="button" class="btn btn-light btn-small">Next</button>
-                </mat-step>
+                </p>
+                }
 
-                <mat-step [optional]="true">
-                    <ng-template matStepLabel><span class="stepperTop2">Notes</span></ng-template>
-
-                    <div class="alert alert-info">
-                        <strong>Whoops!</strong> The Notes functionality is currently not available. This capability is
-                        being redesigned.<br>
-                    </div>
-
-                    <!-- <div>
-                        <app-add-notes></app-add-notes>
-                    </div> -->
-
-                    <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
-                    <button matStepperNext type="button" class="btn btn-light btn-small">Next</button>
-                </mat-step>
-                <!--  -->
-
-                <mat-step>
-                    <ng-template matStepLabel><span class="stepperTop3">Done</span></ng-template>
-                    <!-- <div> -->
-
-                    <ng-container *ngIf="!addObservationForm.valid || !selectSpeciesForm.valid || !dateForm.valid">
-                        <p class="alert alert-danger">
-                            The form is not complete. You must complete the manadatory fields in Section 1.
-                            <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
-                        </p>
-                    </ng-container>
-
-                    <ng-container *ngIf="addObservationForm.valid && selectSpeciesForm.valid && dateForm.valid">
-                        <div class="alert alert-info">
-                            The form is complete. Choose 'Save' to add your observation.
-                            <p>
-                                <button *ngIf="!requesting" type="submit" class="btn btn-primary btn-small"
-                                    [disabled]="!addObservationForm.valid || !addObservationForm.valid || !dateForm.valid">
-                                    Save
-                                </button>
-                                <button *ngIf="requesting" type="submit" class="btn btn-primary btn-small" disabled>
-                                    Saving observation...
-                                    <span class="spinner-border spinner-border-sm" role="status"
-                                        aria-hidden="true"></span>
-                                </button>
-                                <button (click)="stepper.reset()" class="btn btn-warning btn-small"
-                                    type="button">Reset</button>
-                                <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
-                            </p>
-                        </div>
-                    </ng-container>
-
-                </mat-step>
-
-            </mat-vertical-stepper>
-
-        </form>
-
-    </ng-container>
-
-
-    <ng-template #loadingOrError>
-        <ng-container *ngIf="errorObject; else loading">
-            <p class="centre">
-                <strong>Whoops!</strong>&nbsp;An error occurred<br>
-                <!-- ToDo: what's best here? -->
-                <!-- <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
-                Again</button> -->
-            </p>
-        </ng-container>
-    </ng-template>
-
-    <ng-template #loading>
-        <app-loading></app-loading>
-    </ng-template>
-
+            </mat-step>
+        </mat-vertical-stepper>
+    </form>
 </div>

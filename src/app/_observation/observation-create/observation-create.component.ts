@@ -1,29 +1,31 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
 import { IObservationPosition } from 'src/app/_map/i-observation-position.dto';
-import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
 import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 import { BirdsListValidator } from 'src/app/_validators';
 import { ObservationCrudService } from '../observation-crud.service';
 import { ICreateObservation } from './i-create-observation.dto';
-import { LoadingComponent } from '../../_loading/loading/loading.component';
-import { ReadWriteMapComponent as ReadWriteMapComponent_1 } from '../../_map/read-write-map/read-write-map.component';
+import { ReadWriteMapComponent } from '../../_map/read-write-map/read-write-map.component';
 import { SelectSpeciesComponent } from '../select-species/select-species.component';
 import { SelectDateTimeComponent } from '../select-date-time/select-date-time.component';
 import { MatStepperModule } from '@angular/material/stepper';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @Component({
-    selector: 'app-observation-create',
-    templateUrl: './observation-create.component.html',
-    styleUrls: ['./observation-create.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [NgIf, FormsModule, ReactiveFormsModule, MatStepperModule, SelectDateTimeComponent, SelectSpeciesComponent, ReadWriteMapComponent_1, LoadingComponent, AsyncPipe]
+  selector: 'app-observation-create',
+  templateUrl: './observation-create.component.html',
+  styleUrls: ['./observation-create.component.scss'],
+  providers: [{ provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } }],
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, AsyncPipe, MatFormFieldModule, MatInputModule, MatStepperModule,
+    ReadWriteMapComponent, SelectDateTimeComponent, SelectSpeciesComponent]
 })
 export class ObservationCreateComponent implements OnInit {
   private _subscription = new Subject();
@@ -52,27 +54,17 @@ export class ObservationCreateComponent implements OnInit {
   public onSubmit(): void {
     this.requesting = true;
 
-    try {
-      const model = this._mapToModel();
+    const model = this._mapToModel();
 
-      this._service.addObservation(model)
-        .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
-        .subscribe({
-          next: (r) => {
-            this._announcement.announceObservationsChanged();
-            this._router.navigate([`/observation/detail/${r.observationId}`]);
-          },
-          error: (e) => { this.errorObject = e; }
-        });
-
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  ngOnDestroy(): void {
-    this._subscription.next('');
-    this._subscription.complete();
+    this._service.addObservation(model)
+      .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
+      .subscribe({
+        next: (r) => {
+          this._announcement.announceObservationsChanged();
+          this._router.navigate([`/observation/detail/${r.observationId}`]);
+        },
+        error: (e) => { this.errorObject = e; }
+      });
   }
 
   private _mapToModel(): ICreateObservation {
@@ -118,7 +110,7 @@ export class ObservationCreateComponent implements OnInit {
     });
 
     this.addObservationForm = this._formBuilder.group({
-      quantity: new FormControl(1, Validators.compose([
+      quantity: new FormControl('', Validators.compose([
         Validators.required,
         Validators.min(1),
         Validators.max(1000)
@@ -126,20 +118,8 @@ export class ObservationCreateComponent implements OnInit {
     });
   }
 
-  // This functionality needs to be refactored
-  public onStepperSelectionChange() {
-    this._scrollToSectionHook();
-  }
-
-  private _scrollToSectionHook() {
-    const element = document.querySelector('.stepperTop0');
-    if (element) {
-      setTimeout(() => {
-        element.scrollIntoView({
-          behavior: 'smooth', block: 'start', inline:
-            'nearest'
-        });
-      }, 250);
-    }
+  ngOnDestroy(): void {
+    this._subscription.next('');
+    this._subscription.complete();
   }
 }

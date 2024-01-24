@@ -18,16 +18,18 @@ import { SelectDateTimeComponent } from '../select-date-time/select-date-time.co
 import { MatStepperModule } from '@angular/material/stepper';
 
 import { NgIf, AsyncPipe } from '@angular/common';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 // todo: This component needs a major refactor...
 
 @Component({
-    selector: 'app-observation-update',
-    templateUrl: './observation-update.component.html',
-    styleUrls: ['./observation-update.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [NgIf,  FormsModule, ReactiveFormsModule, MatStepperModule, SelectDateTimeComponent, SelectSpeciesComponent, ReadWriteMapComponent_1, LoadingComponent, AsyncPipe]
+  selector: 'app-observation-update',
+  templateUrl: './observation-update.component.html',
+  styleUrls: ['./observation-update.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  providers: [{ provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } }],
+  standalone: true,
+  imports: [NgIf, FormsModule, ReactiveFormsModule, MatStepperModule, SelectDateTimeComponent, SelectSpeciesComponent, ReadWriteMapComponent_1, LoadingComponent, AsyncPipe]
 })
 export class ObservationUpdateComponent implements OnInit, OnDestroy {
   private _observationId: string;
@@ -85,9 +87,10 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
           this._createForms(r);
           this.observation = r;
         },
-        error: (e) => { 
+        error: (e) => {
           console.log(e);
-          this._redirect(); }
+          this._redirect();
+        }
       });
   }
 
@@ -118,7 +121,7 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
         // ])),
       });
     }
-    catch (e) { 
+    catch (e) {
       console.log(e);
     }
   }

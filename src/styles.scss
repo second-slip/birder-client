@@ -53,11 +53,20 @@ body {
 }
 
 
+
 @media only screen and (max-width: 992px) {
     .wrapper {
         // border: black;
         // border-style: solid;
         margin: 3% 5%; //(top, bottom) / (right, left)
+    }
+
+    .standard-container {
+        margin: 3% 3%; //(top, bottom) / (right, left)
+    }
+
+    .form-field {
+        width: 100%;
     }
 }
 
@@ -66,5 +75,13 @@ body {
         // border: black;
         // border-style: solid;
         margin: 3% 15%; //(top, bottom) / (right, left)
+    }
+
+    .standard-container {
+        margin: 3% 1%; //(top, bottom) / (right, left)
+    }
+
+    .form-field {
+        width: 50%;
     }
 }

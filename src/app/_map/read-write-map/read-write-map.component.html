@@ -1,49 +1,50 @@
-<ng-container *ngIf="markerStatus === 'success'; else loadingOrError">
+@if (markerStatus === 'success') {
 
-    <div class="form-inline" (ngSubmit)="findAddress()">
+<div class="form-inline" (ngSubmit)="findAddress()">
 
-        <label class="sr-only" for="searchAddress">searchAddress</label>
-        <input class="form-control" type="text" name="searchAddress" placeholder="Type location here" data-testid="searchAddress"
-            [(ngModel)]="searchAddress" required>
+    <label class="sr-only" for="searchAddress">searchAddress</label>
+    <input class="form-control" type="text" name="searchAddress" placeholder="Type location here"
+        data-testid="searchAddress" [(ngModel)]="searchAddress" required>
 
-        <button type="submit" class="btn btn-primary btn-search-address" [disabled]="!searchAddress" triggers="mouseenter:mouseleave"
-            ngbPopover='Type a place name (e.g. Canterbury, UK); or a specific address (e.g. 1 High St, Canterbury CT1 2JH)'
-            popoverTitle="Search help" aria-label="Search for a location" title="Search for a location" (click)="findAddress()">
-            <mat-icon>search</mat-icon>
-        </button>
+    <button type="submit" class="btn btn-primary btn-search-address" [disabled]="!searchAddress"
+        triggers="mouseenter:mouseleave"
+        ngbPopover='Type a place name (e.g. Canterbury, UK); or a specific address (e.g. 1 High St, Canterbury CT1 2JH)'
+        popoverTitle="Search help" aria-label="Search for a location" title="Search for a location"
+        (click)="findAddress()">
+        <mat-icon>search</mat-icon>
+    </button>
 
-        <button type="submit" class="btn btn-primary btn-get-location" type="button" (click)="getCurrentPosition()"
-            aria-label="Get your current location" matTooltip="Get your current location"
-            triggers="mouseenter:mouseleave" ngbPopover='Click here to find your current location'
-            popoverTitle="Get your current location" data-testid="get-current-location">
-            <mat-icon>my_location</mat-icon>
-        </button>
+    <button type="submit" class="btn btn-primary btn-get-location" type="button" (click)="getCurrentPosition()"
+        aria-label="Get your current location" matTooltip="Get your current location" triggers="mouseenter:mouseleave"
+        ngbPopover='Click here to find your current location' popoverTitle="Get your current location"
+        data-testid="get-current-location">
+        <mat-icon>my_location</mat-icon>
+    </button>
 
-    </div>
+</div>
 
-    <div *ngIf="geoError" class="alert alert-danger" data-testid="geo-error">{{ geoError }}</div>
+@if (geoError) {
+<div class="alert alert-danger" data-testid="geo-error">{{ geoError }}</div>
+}
 
-    <p class="location" data-testid="location">
-        <mat-icon>location_on</mat-icon>
-        <span data-testid="location-text">{{ formattedAddress }}</span>
-    </p>
+<p class="location" data-testid="location">
+    <mat-icon>location_on</mat-icon>
+    <span data-testid="location-text">{{ formattedAddress }}</span>
+</p>
 
-    <google-map height="300px" width="100%" [center]="locationMarker?.position" [options]="options">
-        <map-marker #markerElement="mapMarker" [position]="locationMarker?.position" [options]="locationMarker.options"
-            (mapDragend)="markerChanged($event)" (mapClick)="openInfoWindow(markerElement)">
-            <map-info-window>{{ formattedAddress }}</map-info-window>
-        </map-marker>
-    </google-map>
+<google-map height="300px" width="100%" [center]="locationMarker?.position" [options]="options">
+    <map-marker #markerElement="mapMarker" [position]="locationMarker?.position" [options]="locationMarker.options"
+        (mapDragend)="markerChanged($event)" (mapClick)="openInfoWindow(markerElement)">
+        <map-info-window>{{ formattedAddress }}</map-info-window>
+    </map-marker>
+</google-map>
 
-</ng-container>
+} @else if (markerStatus === 'error') {
 
+<div class="alert alert-danger" data-testid="error">
+    <strong>Whoops!</strong> There was an error displaying the map.<br>
+</div>
 
-<ng-template #loadingOrError>
-    <div *ngIf="markerStatus === 'error'; else loading" class="alert alert-danger" data-testid="error">
-        <strong>Whoops!</strong> There was an error displaying the map.<br>
-    </div>
-</ng-template>
-
-<ng-template #loading>
-    <app-loading></app-loading>
-</ng-template>
+} @else {
+<app-loading></app-loading>
+}

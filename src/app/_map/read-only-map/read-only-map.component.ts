@@ -3,7 +3,6 @@ import { MapInfoWindow, MapMarker, GoogleMapsModule } from '@angular/google-maps
 import { IObservationPosition } from '../i-observation-position.dto';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { MatIconModule } from '@angular/material/icon';
-import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-read-only-map',
@@ -11,7 +10,7 @@ import { NgIf } from '@angular/common';
     styleUrls: ['./read-only-map.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgIf, MatIconModule, GoogleMapsModule, LoadingComponent]
+    imports: [MatIconModule, GoogleMapsModule, LoadingComponent]
 })
 export class ReadOnlyMapComponent implements OnInit {
   @Input() position: IObservationPosition;

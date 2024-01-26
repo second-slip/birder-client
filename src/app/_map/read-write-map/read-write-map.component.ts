@@ -6,7 +6,6 @@ import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { MatIconModule } from '@angular/material/icon';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-read-write-map',
@@ -14,7 +13,7 @@ import { NgIf } from '@angular/common';
     styleUrls: ['./read-write-map.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgIf, FormsModule, NgbPopover, MatIconModule, GoogleMapsModule, LoadingComponent]
+    imports: [FormsModule, NgbPopover, MatIconModule, GoogleMapsModule, LoadingComponent]
 })
 export class ReadWriteMapComponent implements OnInit, OnDestroy {
   @Input() latitude: number;

@@ -1,26 +1,20 @@
-<ng-container *ngIf="markerStatus === 'success'; else loadingOrError">
+@if (markerStatus === 'success') {
+<p class="location" data-testid="location">
+    <mat-icon>location_on</mat-icon>
+    <span data-testid="location-text">{{ position.formattedAddress }}</span>
+</p>
 
-    <p class="location" data-testid="location">
-        <mat-icon>location_on</mat-icon>
-        <span data-testid="location-text">{{ position.formattedAddress }}</span>
-    </p>
+<google-map height="300px" width="100%" [center]="locationMarker?.position" [options]="options">
+    <map-marker #markerElement="mapMarker" [position]="locationMarker?.position" [options]="locationMarker?.options"
+        (mapClick)="openInfoWindow(markerElement)" data-testid="map-marker">
+        <map-info-window data-testid="info-window">{{ position.formattedAddress }}</map-info-window>
+    </map-marker>
+</google-map>
 
-    <google-map height="300px" width="100%" [center]="locationMarker?.position" [options]="options">
-        <map-marker #markerElement="mapMarker" [position]="locationMarker?.position" [options]="locationMarker?.options"
-            (mapClick)="openInfoWindow(markerElement)" data-testid="map-marker">
-            <map-info-window data-testid="info-window">{{ position.formattedAddress }}</map-info-window>
-        </map-marker>
-    </google-map>
-
-</ng-container>
-
-<ng-template #loadingOrError>
-    <div *ngIf="markerStatus === 'error'; else loading" class="alert alert-danger" data-testid="error">
-        <strong>Whoops!</strong> There was an error displaying the map.<br>
-    </div>
-</ng-template>
-
-
-<ng-template #loading>
-    <app-loading></app-loading>
-</ng-template>
+} @else if (markerStatus === 'error') {
+<div class="alert alert-danger" data-testid="error">
+    <strong>Whoops!</strong> There was an error displaying the map.<br>
+</div>
+} @else {
+<app-loading></app-loading>
+}

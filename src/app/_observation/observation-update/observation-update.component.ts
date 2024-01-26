@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
@@ -12,35 +12,35 @@ import { BirdsListValidator } from 'src/app/_validators';
 import { ObservationCrudService } from '../observation-crud.service';
 import { IUpdateObservation } from './i-update-observation.dto';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
-import { ReadWriteMapComponent as ReadWriteMapComponent_1 } from '../../_map/read-write-map/read-write-map.component';
 import { SelectSpeciesComponent } from '../select-species/select-species.component';
 import { SelectDateTimeComponent } from '../select-date-time/select-date-time.component';
 import { MatStepperModule } from '@angular/material/stepper';
-
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-
-// todo: This component needs a major refactor...
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-observation-update',
   templateUrl: './observation-update.component.html',
   styleUrls: ['./observation-update.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   providers: [{ provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } }],
   standalone: true,
-  imports: [NgIf, FormsModule, ReactiveFormsModule, MatStepperModule, SelectDateTimeComponent, SelectSpeciesComponent, ReadWriteMapComponent_1, LoadingComponent, AsyncPipe]
+  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatStepperModule, MatButtonModule,
+    SelectDateTimeComponent, SelectSpeciesComponent, ReadWriteMapComponent, LoadingComponent, AsyncPipe]
 })
 export class ObservationUpdateComponent implements OnInit, OnDestroy {
   private _observationId: string;
   private _subscription = new Subject();
+  public loading: boolean = true;
   public requesting: boolean;
 
   public observation: IUpdateObservation
   public selectSpeciesForm: FormGroup;
   public updateObservationForm: FormGroup;
   //
-  public errorObject: any = null;   // ????
+  public error: boolean = false;
 
   public dateForm: FormGroup;
 
@@ -81,7 +81,7 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
 
   private _getObservation(): void {
     this._observationCrudService.getObservation(this._observationId)
-      .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
+      .pipe(finalize(() => { this.loading = false; }), takeUntil(this._subscription))
       .subscribe({
         next: (r) => {
           this._createForms(r);
@@ -115,35 +115,29 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.min(1),
           Validators.max(1000)
-        ]))//,
-        // observationDateTime: new FormControl(observation.observationDateTime, Validators.compose([
-        //   Validators.required
-        // ])),
+        ]))
       });
     }
     catch (e) {
-      console.log(e);
+      this.error = true;
     }
   }
 
   public onSubmit(): void {
     this.requesting = true;
 
-    try {
+    const model = this._mapToModel();
 
-      const model = this._mapToModel();
+    this._observationCrudService.updateObservation(this._observationId, model)
+      .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
+      .subscribe({
+        next: (r) => {
+          this._announcement.announceObservationsChanged();
+          this._router.navigate([`/observation/detail/${r.observationId}`]);
+        },
+        error: (e) => { this.error = true; }
+      });
 
-      this._observationCrudService.updateObservation(this._observationId, model)
-        .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
-        .subscribe({
-          next: (r) => {
-            this._announcement.announceObservationsChanged();
-            this._router.navigate([`/observation/detail/${r.observationId}`]); // + r.observationId.toString()]);
-          },
-          error: (e) => { this.errorObject = e; }
-        });
-    }
-    catch (e) { }
   }
 
   private _mapToModel(): IUpdateObservation {
@@ -187,22 +181,5 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._subscription.next('');
     this._subscription.complete();
-  }
-
-  // This functionality needs to be refactored
-  public onStepperSelectionChange() {
-    this._scrollToSectionHook();
-  }
-
-  private _scrollToSectionHook() {
-    const element = document.querySelector('.stepperTop0');
-    if (element) {
-      setTimeout(() => {
-        element.scrollIntoView({
-          behavior: 'smooth', block: 'start', inline:
-            'nearest'
-        });
-      }, 250);
-    }
   }
 }

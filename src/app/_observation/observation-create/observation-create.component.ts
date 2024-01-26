@@ -25,7 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./observation-create.component.scss'],
   providers: [{ provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } }],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, AsyncPipe, MatFormFieldModule, MatInputModule, MatStepperModule, MatButtonModule, 
+  imports: [FormsModule, ReactiveFormsModule, AsyncPipe, MatFormFieldModule, MatInputModule, MatStepperModule, MatButtonModule,
     ReadWriteMapComponent, SelectDateTimeComponent, SelectSpeciesComponent]
 })
 export class ObservationCreateComponent implements OnInit {

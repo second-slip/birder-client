@@ -1,5 +1,5 @@
 <div class="standard-container">
-    
+
     <h1>Create observation</h1>
 
     <form [formGroup]="addObservationForm" novalidate (ngSubmit)="onSubmit()">
@@ -9,17 +9,17 @@
             <mat-step [stepControl]="dateForm && selectSpeciesForm && addObservationForm"
                 errorMessage="This section is not completed">
 
-                <ng-template matStepLabel><span class="stepperTop0">Details: what and when?</span></ng-template>
+                <ng-template matStepLabel><span>Details: what and when?</span></ng-template>
 
                 <app-select-species #species [selectSpeciesForm]="selectSpeciesForm"></app-select-species>
 
-                <mat-form-field class="form-field">
+                <mat-form-field class="form-field" id="quantity">
                     <mat-label>Quantity</mat-label>
-                    <input matInput #message type="number" min="1" max="1000" id="quantity" formControlName="quantity">
+                    <input matInput type="number" min="1" max="1000" id="quantity" formControlName="quantity" required>
                     <mat-hint align="start">How many individuals</mat-hint>
                     @if (addObservationForm.get('quantity')?.hasError('required'))
                     {
-                    <mat-error>This field is required.</mat-error>
+                    <mat-error class="validation-required-email">This field is required.</mat-error>
                     }
                     @if (addObservationForm.get('quantity')?.hasError('min')) {
                     <mat-error>
@@ -39,7 +39,7 @@
             </mat-step>
 
             <mat-step>
-                <ng-template matStepLabel><span class="stepperTop1">Location</span></ng-template>
+                <ng-template matStepLabel><span>Location</span></ng-template>
 
                 @if (_authService.getAuthUser | async; as authUser) {
                 <app-read-write-map [latitude]="authUser.defaultLocationLatitude"
@@ -52,7 +52,7 @@
             </mat-step>
 
             <mat-step [optional]="true">
-                <ng-template matStepLabel><span class="stepperTop2">Notes</span></ng-template>
+                <ng-template matStepLabel><span>Notes</span></ng-template>
 
                 <p class="alert alert-info">
                     <strong>Whoops!</strong> The Notes functionality is currently not available. This capability is
@@ -68,31 +68,36 @@
             </mat-step>
 
             <mat-step>
-                <ng-template matStepLabel><span class="stepperTop3">Done</span></ng-template>
+                <ng-template matStepLabel><span>Done</span></ng-template>
 
                 @if(addObservationForm.valid && selectSpeciesForm.valid && dateForm.valid) {
-                <div class="alert alert-info">
+                <div class="alert alert-info" data-testid="valid-form-section">
                     The form is complete. Choose 'Save' to add your observation.
                     <p>
                         @if(requesting) {
-                        <button type="submit" class="btn btn-primary btn-small" disabled>
+                        <button mat-button mat-raised-button type="submit" class="btn" disabled>
                             Saving observation...
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         </button>
                         } @else {
-                        <button type="submit" class="btn btn-primary btn-small"
+                        <button mat-button mat-raised-button type="submit" color="primary" class="btn"
                             [disabled]="!addObservationForm.valid || !addObservationForm.valid || !dateForm.valid">
                             Save
                         </button>
                         }
-                        <button (click)="stepper.reset()" class="btn btn-warning btn-small" type="button">Reset</button>
+                        @if (error) {
+                        <!-- TODO.......................................... -->
+                        }
+                        <button mat-button mat-raised-button (click)="stepper.reset()" class="btn"
+                            type="button">Reset</button>
                         <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
                     </p>
                 </div>
                 } @else {
-                <p class="alert alert-danger">
+                <p class="alert alert-danger" data-testid="invalid-form-msg">
                     The form is not complete. You must complete the manadatory fields in Section 1.
-                    <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
+                    <button matStepperPrevious mat-button type="button" class="btn btn-light btn-small"
+                        id="back-form-invalid">Back</button>
                 </p>
                 }
 

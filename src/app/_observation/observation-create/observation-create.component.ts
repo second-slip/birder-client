@@ -13,10 +13,11 @@ import { ReadWriteMapComponent } from '../../_map/read-write-map/read-write-map.
 import { SelectSpeciesComponent } from '../select-species/select-species.component';
 import { SelectDateTimeComponent } from '../select-date-time/select-date-time.component';
 import { MatStepperModule } from '@angular/material/stepper';
-import { AsyncPipe, CommonModule } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-observation-create',
@@ -24,7 +25,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
   styleUrls: ['./observation-create.component.scss'],
   providers: [{ provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } }],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, AsyncPipe, MatFormFieldModule, MatInputModule, MatStepperModule,
+  imports: [FormsModule, ReactiveFormsModule, AsyncPipe, MatFormFieldModule, MatInputModule, MatStepperModule, MatButtonModule, 
     ReadWriteMapComponent, SelectDateTimeComponent, SelectSpeciesComponent]
 })
 export class ObservationCreateComponent implements OnInit {
@@ -33,7 +34,7 @@ export class ObservationCreateComponent implements OnInit {
   public selectSpeciesForm: FormGroup;
   public addObservationForm: FormGroup;
   public dateForm: FormGroup;
-  public errorObject: any = null;
+  public error = false; // implementation ..................................................................
 
   @ViewChild(ReadWriteMapComponent)
   private _mapComponent: ReadWriteMapComponent;
@@ -63,7 +64,7 @@ export class ObservationCreateComponent implements OnInit {
           this._announcement.announceObservationsChanged();
           this._router.navigate([`/observation/detail/${r.observationId}`]);
         },
-        error: (e) => { this.errorObject = e; }
+        error: (e) => { this.error = true; }
       });
   }
 

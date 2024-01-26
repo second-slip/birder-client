@@ -86,7 +86,9 @@
                         </button>
                         }
                         @if (error) {
-                        <!-- TODO.......................................... -->
+                        <div class="alert alert-danger" data-testid="form-submission-error-msg">
+                            There was an error submitting the observation.  Please try again.
+                        </div>
                         }
                         <button mat-button mat-raised-button (click)="stepper.reset()" class="btn"
                             type="button">Reset</button>

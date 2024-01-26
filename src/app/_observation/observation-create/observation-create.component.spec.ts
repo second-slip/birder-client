@@ -1,7 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 import { ObservationCrudService } from '../observation-crud.service';
@@ -13,18 +13,17 @@ import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-ma
 import { MockComponent } from 'ng-mocks';
 import { MatStepperModule } from '@angular/material/stepper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { provideRouter, Routes } from '@angular/router';
+import { provideRouter, Router, Routes } from '@angular/router';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { BirdsListValidator } from 'src/app/_validators';
-import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { By } from '@angular/platform-browser';
 import { userModel } from 'src/app/testing/auth-test-helpers';
+import { fakeIBirdSummary } from 'src/app/testing/birds-helpers';
 
-// STUB the select species child component...
 const routes: Routes = [
   { path: 'login', component: ObservationReadComponent }
 ];
@@ -34,13 +33,14 @@ describe('ObservationCreateComponent', () => {
   let component: ObservationCreateComponent;
   let fixture: ComponentFixture<ObservationCreateComponent>;
   let loader: HarnessLoader;
+  let router: Router;
 
   let fakeAuthService: AuthenticationService;
   let fakeAnnounceChangesService: jasmine.SpyObj<AnnounceChangesService>;
   let fakeObservationCrudService: jasmine.SpyObj<ObservationCrudService>;
 
-  const setup = async (
-    fakeAuthPropertyValues?: jasmine.SpyObjPropertyNames<AuthenticationService>) => {
+  const setup = async (fakeAuthPropertyValues?: jasmine.SpyObjPropertyNames<AuthenticationService>,
+    fakeServiceMethodValues?: jasmine.SpyObjMethodNames<ObservationCrudService>) => {
 
     fakeObservationCrudService = jasmine.createSpyObj<ObservationCrudService>(
       'ObservationCrudService',
@@ -48,7 +48,8 @@ describe('ObservationCreateComponent', () => {
         getObservation: undefined,
         updateObservation: undefined,
         addObservation: undefined,
-        deleteObservation: undefined
+        deleteObservation: undefined,
+        ...fakeServiceMethodValues
       });
 
     fakeAuthService = jasmine.createSpyObj<AuthenticationService>(
@@ -85,26 +86,15 @@ describe('ObservationCreateComponent', () => {
       })
       .compileComponents();
 
+    router = TestBed.inject(Router);
+    spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
+
     fixture = TestBed.createComponent(ObservationCreateComponent);
     component = fixture.componentInstance;
     loader = TestbedHarnessEnvironment.loader(fixture);
 
-    // ............... put this in test helper ..........................................
-    const birdSummaryObject: IBirdSummary =
-    {
-      birdId: 1002,
-      species: "Stercorarius parasiticus",
-      englishName: "Arctic Skua",
-      populationSize: "1,000 - 10,000 Pairs",
-      btoStatusInBritain: "Migrant Breeder, Passage Visitor",
-      thumbnailUrl: null,
-      conservationStatus: "Red",
-      conservationListColourCode: "Red",
-      birderStatus: "Common"
-    };
-
     component.selectSpeciesForm = new FormGroup({
-      bird: new FormControl(birdSummaryObject, Validators.compose([
+      bird: new FormControl(fakeIBirdSummary, Validators.compose([
         Validators.required,
         BirdsListValidator()
       ]))
@@ -219,8 +209,6 @@ describe('ObservationCreateComponent', () => {
 
   describe('SUBMITTING A VALID FORM', () => {
 
-    // beforeEach(() => MockInstance(ReadWriteMapComponent, '_mapComponent', jasmine.createSpy()));
-
     it('should render the valid form section when form is valid', async () => {
       await setup();
 
@@ -233,19 +221,8 @@ describe('ObservationCreateComponent', () => {
       //   controls[control].updateValueAndValidity({ onlySelf: true });
       // }
       // component.selectSpeciesForm.updateValueAndValidity();
-      const birdSummaryObject: IBirdSummary =
-      {
-        birdId: 1002,
-        species: "Stercorarius parasiticus",
-        englishName: "Arctic Skua",
-        populationSize: "1,000 - 10,000 Pairs",
-        btoStatusInBritain: "Migrant Breeder, Passage Visitor",
-        thumbnailUrl: null,
-        conservationStatus: "Red",
-        conservationListColourCode: "Red",
-        birderStatus: "Common"
-      };
-      fixture.componentInstance.selectSpeciesForm.get('bird')?.setValue(birdSummaryObject);
+
+      fixture.componentInstance.selectSpeciesForm.get('bird')?.setValue(fakeIBirdSummary);
 
       fixture.componentInstance.addObservationForm.get('quantity')?.setValue('1');
 
@@ -263,70 +240,46 @@ describe('ObservationCreateComponent', () => {
       expect(await resetBtn.getText()).toBe('Reset');
     });
 
+
     it('should submit the valid form and call the service', async () => {
-      await setup();
+      await setup({}, {
+        addObservation: of({ observationId: '1' })
+      })
 
-      const birdSummaryObject: IBirdSummary =
-      {
-        birdId: 1002,
-        species: "Stercorarius parasiticus",
-        englishName: "Arctic Skua",
-        populationSize: "1,000 - 10,000 Pairs",
-        btoStatusInBritain: "Migrant Breeder, Passage Visitor",
-        thumbnailUrl: null,
-        conservationStatus: "Red",
-        conservationListColourCode: "Red",
-        birderStatus: "Common"
-      };
-      fixture.componentInstance.selectSpeciesForm.get('bird')?.setValue(birdSummaryObject);
-
+      fixture.componentInstance.selectSpeciesForm.get('bird')?.setValue(fakeIBirdSummary);
       fixture.componentInstance.addObservationForm.get('quantity')?.setValue('1');
 
-      // fixture.detectChanges();
-
-
-
       const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Save' }));
-
       await submitBtn.click();
 
       expect(fakeObservationCrudService.addObservation).toHaveBeenCalledTimes(1);
-      // expect(fakeObservationCrudService.addObservation).toHaveBeenCalledWith(contactFormModel);
+      expect(fakeAnnounceChangesService.announceObservationsChanged).toHaveBeenCalledTimes(1);
+      expect(router.navigate).toHaveBeenCalledWith(['/observation/detail/1']);
     });
 
+    // show error message on service error
 
+    it('should submit the valid form and call the service', async () => {
+      await setup({}, {
+        addObservation: throwError(() => new Error('location update error'))
+      })
 
+      fixture.componentInstance.selectSpeciesForm.get('bird')?.setValue(fakeIBirdSummary);
+      fixture.componentInstance.addObservationForm.get('quantity')?.setValue('1');
 
-
-
-
-    it('PPPPPPPPPPPPPPPPPPPPPPPPPP', async () => {
-      await setup();
-
-      const input = await loader.getHarness(MatInputHarness.with({ selector: '#quantity' }));
-
-      expect(await input.getValue()).toBe('');
-      await input.setValue('1');
-
-      expect(await input.getValue()).toBe('1');
-
-      const controls = component.selectSpeciesForm.controls;
-      for (const control in controls) {
-        // Clear sync validators - use clearAsyncValidators() for async
-        // validators
-        controls[control].clearValidators();
-        // should update just the control and not everything
-        controls[control].updateValueAndValidity({ onlySelf: true });
-      }
-      component.selectSpeciesForm.updateValueAndValidity();
-
-      // fixture.detectChanges();
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector('[data-testid="form-submission-error-msg"]')).toBeFalsy();
 
       const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Save' }));
-      expect(await submitBtn.isDisabled()).toBe(false);
-      expect(await submitBtn.getText()).toBe('Save');
+      await submitBtn.click();
+
+      expect(fakeObservationCrudService.addObservation).toHaveBeenCalledTimes(1);
+      expect(fakeAnnounceChangesService.announceObservationsChanged).not.toHaveBeenCalledTimes(1);
+      expect(router.navigate).not.toHaveBeenCalled();
+
+      fixture.detectChanges()
+
+      expect(compiled.querySelector('[data-testid="form-submission-error-msg"]')?.textContent).toBeTruthy();
     });
-
   })
-
 });

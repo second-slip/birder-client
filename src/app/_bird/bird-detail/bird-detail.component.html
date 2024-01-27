@@ -3,6 +3,7 @@
     <h1 data-testid="main-title">{{ bird.englishName }}<small><i> {{ bird.species }}</i></small></h1>
 
     <hr>
+    <!-- lazy load tab contents...................... -->
 
     <ul ngbNav #nav="ngbNav" class="nav-tabs" data-testid="bird-detail-tabs">
         <li [ngbNavItem]="1">

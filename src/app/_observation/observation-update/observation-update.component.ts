@@ -33,7 +33,10 @@ import { MatInputModule } from '@angular/material/input';
 export class ObservationUpdateComponent implements OnInit, OnDestroy {
   private _observationId: string;
   private _subscription = new Subject();
-  public loading: boolean = true;
+
+  // public loading: boolean = true;
+  public loadingError: boolean = false;
+
   public requesting: boolean;
 
   public observation: IUpdateObservation
@@ -71,25 +74,16 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
-  public reload(): void {
-    if (this._observationId) {
-      this._getData(this._observationId);
-    } else {
-      this._redirect();
-    }
-  }
-
   private _getObservation(): void {
     this._observationCrudService.getObservation(this._observationId)
-      .pipe(finalize(() => { this.loading = false; }), takeUntil(this._subscription))
+      .pipe(takeUntil(this._subscription))
       .subscribe({
         next: (r) => {
           this._createForms(r);
           this.observation = r;
         },
         error: (e) => {
-          console.log(e);
-          this._redirect();
+          this.loadingError = true;
         }
       });
   }
@@ -172,6 +166,14 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
 
   public redirect(): void {
     this._redirect();
+  }
+
+  public reload(): void {
+    if (this._observationId) {
+      this._getData(this._observationId);
+    } else {
+      this._redirect();
+    }
   }
 
   private _redirect(): void {

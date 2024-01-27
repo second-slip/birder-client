@@ -28,7 +28,6 @@ const routes: Routes = [
   { path: 'login', component: ObservationReadComponent }
 ];
 
-
 describe('ObservationCreateComponent', () => {
   let component: ObservationCreateComponent;
   let fixture: ComponentFixture<ObservationCreateComponent>;

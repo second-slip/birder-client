@@ -1,6 +1,6 @@
 <div class="standard-container">
 
-    @if (!loading) {
+    @if (observation) {
 
     <h1>Update Observation Report</h1>
 
@@ -13,7 +13,7 @@
             back</button>
     </p>
     } @else {
-    <form [formGroup]="updateObservationForm" novalidate (ngSubmit)="onSubmit()">
+    <form [formGroup]="updateObservationForm" novalidate (ngSubmit)="onSubmit()" data-testid="form">
 
         <mat-vertical-stepper [linear]="false" #stepper>
 
@@ -111,8 +111,8 @@
     </form>
     }
     }
-    } @else if (error) {
-    <p class="alert alert-danger">
+    } @else if (loadingError) {
+    <p class="alert alert-danger" data-testid="loading-error-section">
         <strong>Whoops!</strong>&nbsp;An error occurred<br>
         <button mat-button mat-raised-button type="button" class="btn" data-testid="reload-button"
             (click)="reload()">Try Again</button>

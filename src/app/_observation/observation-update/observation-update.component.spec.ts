@@ -3,8 +3,8 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, provideRouter, Routes } from '@angular/router';
-import { of } from 'rxjs';
-import { singleObservationAuthUser } from 'src/app/testing/observation-test-helpers';
+import { of, throwError } from 'rxjs';
+import { singleObservationAuthUser, updateObservationModel } from 'src/app/testing/observation-test-helpers';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
@@ -12,10 +12,21 @@ import { ObservationCrudService } from '../observation-crud.service';
 import { ObservationReadComponent } from '../observation-read/observation-read.component';
 
 import { ObservationUpdateComponent } from './observation-update.component';
+import { userModel } from 'src/app/testing/auth-test-helpers';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatButtonHarness } from '@angular/material/button/testing';
+import { SelectSpeciesComponent } from '../select-species/select-species.component';
+import { SelectDateTimeComponent } from '../select-date-time/select-date-time.component';
+import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
+import { MockComponent } from 'ng-mocks';
+import { MatStepperModule } from '@angular/material/stepper';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ObservationUpdateComponent', () => {
   let component: ObservationUpdateComponent;
   let fixture: ComponentFixture<ObservationUpdateComponent>;
+  let loader: HarnessLoader;
 
   // let fakeObservationReadService: jasmine.SpyObj<ObservationCreateComponent>;
   let fakeAuthService: AuthenticationService;
@@ -72,7 +83,7 @@ describe('ObservationUpdateComponent', () => {
       });
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule, ObservationUpdateComponent],
+      imports: [FormsModule, ReactiveFormsModule, BrowserAnimationsModule, ObservationUpdateComponent], //MatStepperModule
       providers: [
         provideRouter(routes),
         {
@@ -91,10 +102,17 @@ describe('ObservationUpdateComponent', () => {
         { provide: AuthenticationService, useValue: fakeAuthService }
       ],
       schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    })
+      .overrideComponent(ObservationUpdateComponent, {
+        remove: { imports: [SelectSpeciesComponent, SelectDateTimeComponent, ReadWriteMapComponent] },
+        add: { imports: [MockComponent(SelectSpeciesComponent), MockComponent(SelectDateTimeComponent), MockComponent(ReadWriteMapComponent)] },
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(ObservationUpdateComponent);
     component = fixture.componentInstance;
+    loader = TestbedHarnessEnvironment.loader(fixture);
+
     fixture.detectChanges();
   };
 
@@ -105,6 +123,7 @@ describe('ObservationUpdateComponent', () => {
       await setup({}, {}, '');
 
       expect(component).toBeTruthy();
+
       const { debugElement } = fixture;
       const loading = debugElement.query(By.css('app-loading'));
       expect(loading).toBeTruthy();
@@ -129,7 +148,67 @@ describe('ObservationUpdateComponent', () => {
       expect(fakeNavService.back).toHaveBeenCalled();
     }));
 
-    // observation fetch error should redirect
+    // todo: test auth user
+    // observation.username !== authUser.userName
+
+  });
+
+  describe('when record cannot be fetched', () => {
+
+    it('should show error section', async () => {
+      const expectedRouteArgument = '1';
+
+      await setup({
+        getObservation: throwError(() => new Error('location update error'))
+      }, {}, expectedRouteArgument);
+
+      expect(fakeObservationCrudService.getObservation).toHaveBeenCalledOnceWith(expectedRouteArgument);
+
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector('[data-testid="loading-error-section"]')).toBeTruthy();
+
+      const btn = await loader.getHarness(MatButtonHarness.with({ text: 'Try Again' }));
+      expect(await btn.isDisabled()).toBe(false);
+      expect(await btn.getText()).toBe('Try Again');
+    });
+
+    it('should retry on button click', async () => {
+      const expectedRouteArgument = '1';
+
+      await setup({
+        getObservation: throwError(() => new Error('location update error'))
+      }, {}, expectedRouteArgument);
+
+      expect(fakeObservationCrudService.getObservation).toHaveBeenCalledOnceWith(expectedRouteArgument);
+
+      const btn = await loader.getHarness(MatButtonHarness.with({ text: 'Try Again' }));
+      await btn.click();
+
+      expect(fakeObservationCrudService.getObservation).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('when observation is successfully loaded', () => {
+
+    it('should show render the update observation form', async () => {
+      const expectedRouteArgument = '1';
+
+      await setup({
+        getObservation: of(updateObservationModel)
+      }, {
+        getAuthUser: of(userModel)
+      }, expectedRouteArgument);
+
+      expect(fakeObservationCrudService.getObservation).toHaveBeenCalledOnceWith(expectedRouteArgument);
+
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector('[data-testid="form"]')).toBeTruthy();
+
+      // const btn = await loader.getHarness(MatButtonHarness.with({ text: 'Try Again' }));
+      // expect(await btn.isDisabled()).toBe(false);
+      // expect(await btn.getText()).toBe('Try Again');
+    });
+
 
 
   });

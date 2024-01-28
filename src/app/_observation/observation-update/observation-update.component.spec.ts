@@ -290,6 +290,31 @@ describe('ObservationUpdateComponent', () => {
       expect(compiled.querySelector('[data-testid="not-authorised"]')?.textContent).toContain('Only the record owner is allowed to update their record');
     });
 
+    it('should  redirect on request, if not authorised', async () => {
+      const expectedRouteArgument = '1';
+
+      const notAuthorisedUser = <IAuthUser>{ // observation.username !== authUser.userName
+        userName: 'not authorised user',
+        avatar: 'avatar',
+        defaultLocationLatitude: 1,
+        defaultLocationLongitude: 1
+      }
+
+      await setup({
+        getObservation: of(updateObservationModel)
+      }, {
+        getAuthUser: of(notAuthorisedUser)
+      }, expectedRouteArgument);
+
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector('[data-testid="not-authorised"]')).toBeTruthy();
+      
+      const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Go back' }));
+      await submitBtn.click();
+
+      expect(fakeNavService.back).toHaveBeenCalled();
+    });
+
     it('should NOT show "not authorised" message if record owner', async () => {
       const expectedRouteArgument = '1';
 

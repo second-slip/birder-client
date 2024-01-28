@@ -9,7 +9,7 @@
     @if (observation.username !== authUser.userName) {
     <p class="alert alert-info" data-testid="not-authorised">
         <strong>Whoops!</strong>&nbsp;Only the record owner is allowed to update their record.<br>
-        <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="redirect()">Go
+        <button  mat-button mat-raised-button type="button" class="btn" data-testid="rediect-button" (click)="redirect()">Go
             back</button>
     </p>
     } @else {

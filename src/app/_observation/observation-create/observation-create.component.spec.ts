@@ -256,9 +256,7 @@ describe('ObservationCreateComponent', () => {
       expect(router.navigate).toHaveBeenCalledWith(['/observation/detail/1']);
     });
 
-    // show error message on service error
-
-    it('should submit the valid form and call the service', async () => {
+    it('show error message on service error', async () => {
       await setup({}, {
         addObservation: throwError(() => new Error('location update error'))
       })

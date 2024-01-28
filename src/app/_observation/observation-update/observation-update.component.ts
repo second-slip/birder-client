@@ -33,18 +33,12 @@ import { MatInputModule } from '@angular/material/input';
 export class ObservationUpdateComponent implements OnInit, OnDestroy {
   private _observationId: string;
   private _subscription = new Subject();
-
-  // public loading: boolean = true;
   public loadingError: boolean = false;
-
+  public updateError: boolean = false;
   public requesting: boolean;
-
   public observation: IUpdateObservation
   public selectSpeciesForm: FormGroup;
   public updateObservationForm: FormGroup;
-  //
-  public error: boolean = false;
-
   public dateForm: FormGroup;
 
   @ViewChild(ReadWriteMapComponent)
@@ -113,7 +107,7 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
       });
     }
     catch (e) {
-      this.error = true;
+      this.updateError = true;
     }
   }
 
@@ -129,9 +123,8 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
           this._announcement.announceObservationsChanged();
           this._router.navigate([`/observation/detail/${r.observationId}`]);
         },
-        error: (e) => { this.error = true; }
+        error: (e) => { this.updateError = true; }
       });
-
   }
 
   private _mapToModel(): IUpdateObservation {

@@ -34,7 +34,7 @@ export class ObservationCreateComponent implements OnInit {
   public selectSpeciesForm: FormGroup;
   public addObservationForm: FormGroup;
   public dateForm: FormGroup;
-  public error = false; // implementation ..................................................................
+  public error = false;
 
   @ViewChild(ReadWriteMapComponent)
   private _mapComponent: ReadWriteMapComponent;

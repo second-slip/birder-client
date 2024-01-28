@@ -2,7 +2,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { ActivatedRoute, provideRouter, Routes } from '@angular/router';
+import { ActivatedRoute, provideRouter, Router, Routes } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { singleObservationAuthUser, updateObservationModel } from 'src/app/testing/observation-test-helpers';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
@@ -22,11 +22,15 @@ import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-ma
 import { MockComponent } from 'ng-mocks';
 import { MatStepperModule } from '@angular/material/stepper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputHarness } from '@angular/material/input/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { IAuthUser } from 'src/app/_auth/i-auth-user.dto';
 
 describe('ObservationUpdateComponent', () => {
   let component: ObservationUpdateComponent;
   let fixture: ComponentFixture<ObservationUpdateComponent>;
   let loader: HarnessLoader;
+  let router: Router;
 
   // let fakeObservationReadService: jasmine.SpyObj<ObservationCreateComponent>;
   let fakeAuthService: AuthenticationService;
@@ -109,6 +113,9 @@ describe('ObservationUpdateComponent', () => {
       })
       .compileComponents();
 
+    router = TestBed.inject(Router);
+    spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
+
     fixture = TestBed.createComponent(ObservationUpdateComponent);
     component = fixture.componentInstance;
     loader = TestbedHarnessEnvironment.loader(fixture);
@@ -147,10 +154,6 @@ describe('ObservationUpdateComponent', () => {
       expect(fakeObservationCrudService.getObservation).not.toHaveBeenCalled();
       expect(fakeNavService.back).toHaveBeenCalled();
     }));
-
-    // todo: test auth user
-    // observation.username !== authUser.userName
-
   });
 
   describe('when record cannot be fetched', () => {
@@ -203,15 +206,228 @@ describe('ObservationUpdateComponent', () => {
 
       const compiled = fixture.nativeElement as HTMLElement;
       expect(compiled.querySelector('[data-testid="form"]')).toBeTruthy();
-
-      // const btn = await loader.getHarness(MatButtonHarness.with({ text: 'Try Again' }));
-      // expect(await btn.isDisabled()).toBe(false);
-      // expect(await btn.getText()).toBe('Try Again');
     });
 
+    it('should load quantity input with correct setup', async () => {
+      const expectedRouteArgument = '1';
 
+      await setup({
+        getObservation: of(updateObservationModel)
+      }, {
+        getAuthUser: of(userModel)
+      }, expectedRouteArgument);
 
+      const input = await loader.getHarness(MatInputHarness.with({ selector: '#quantity' }));
+      expect(await input.isRequired()).toBe(true);
+      expect(await input.getType()).toBe('number');
+      expect(await input.isDisabled()).toBe(false);
+      expect(await input.getValue()).toBe(updateObservationModel.quantity.toString());
+    });
+
+    it('should render child component with select species form/control', async () => {
+      const expectedRouteArgument = '1';
+
+      await setup({
+        getObservation: of(updateObservationModel)
+      }, {
+        getAuthUser: of(userModel)
+      }, expectedRouteArgument);
+
+      const { debugElement } = fixture;
+      const counter = debugElement.query(By.css('app-select-species'));
+      expect(counter).toBeTruthy();
+    });
+
+    it('should render child component with select date/time form/control', async () => {
+      const expectedRouteArgument = '1';
+
+      await setup({
+        getObservation: of(updateObservationModel)
+      }, {
+        getAuthUser: of(userModel)
+      }, expectedRouteArgument);
+
+      const { debugElement } = fixture;
+      const counter = debugElement.query(By.css('app-select-date-time'));
+      expect(counter).toBeTruthy();
+    });
+
+    it('should show valid form menu', async () => {
+      const expectedRouteArgument = '1';
+
+      await setup({
+        getObservation: of(updateObservationModel)
+      }, {
+        getAuthUser: of(userModel)
+      }, expectedRouteArgument);
+
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector('[data-testid="valid-form-menu"]')).toBeTruthy();
+      expect(compiled.querySelector('[data-testid="valid-form-menu"]')?.textContent).toContain('The form is complete. Choose "Update" to save the changes.');
+    });
   });
 
+  describe('checks the authorisation status', () => {
 
+    it('should show "not authorised" message if not record owner', async () => {
+      const expectedRouteArgument = '1';
+
+      const notAuthorisedUser = <IAuthUser>{ // observation.username !== authUser.userName
+        userName: 'not authorised user',
+        avatar: 'avatar',
+        defaultLocationLatitude: 1,
+        defaultLocationLongitude: 1
+      }
+
+      await setup({
+        getObservation: of(updateObservationModel)
+      }, {
+        getAuthUser: of(notAuthorisedUser)
+      }, expectedRouteArgument);
+
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector('[data-testid="not-authorised"]')).toBeTruthy();
+      expect(compiled.querySelector('[data-testid="not-authorised"]')?.textContent).toContain('Only the record owner is allowed to update their record');
+    });
+
+    it('should NOT show "not authorised" message if record owner', async () => {
+      const expectedRouteArgument = '1';
+
+      await setup({
+        getObservation: of(updateObservationModel)
+      }, {
+        getAuthUser: of(userModel)
+      }, expectedRouteArgument);
+
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector('[data-testid="not-authorised"]')).toBeFalsy();
+    });
+  });
+
+  describe('filling out the form', () => {
+
+    it('should show quantity required validation messages when input is touched but empty', async () => {
+      const expectedRouteArgument = '1';
+
+      await setup({
+        getObservation: of(updateObservationModel)
+      }, {
+        getAuthUser: of(userModel)
+      }, expectedRouteArgument);
+
+      fixture.componentInstance.updateObservationForm.get('quantity')?.setValue('');
+
+      const formField = await loader.getHarness(MatFormFieldHarness.with({ selector: '#quantity' }));
+      expect((await formField.getControl()) instanceof MatInputHarness).toBe(true);
+      expect(await formField.getTextErrors()).toEqual([]);
+
+      await ((await formField.getControl()) as MatInputHarness)?.blur();
+      expect(await formField.getTextErrors()).toEqual(['This field is required.']);
+
+      fixture.componentInstance.updateObservationForm.get('quantity')?.setValue('');
+      expect(await formField.isControlValid()).toBe(false);
+    });
+
+    it('should show quantity MINIMUM validation messages when 0', async () => {
+      const expectedRouteArgument = '1';
+
+      await setup({
+        getObservation: of(updateObservationModel)
+      }, {
+        getAuthUser: of(userModel)
+      }, expectedRouteArgument);
+
+      const formField = await loader.getHarness(MatFormFieldHarness.with({ selector: '#quantity' }));
+      expect((await formField.getControl()) instanceof MatInputHarness).toBe(true);
+      expect(await formField.getTextErrors()).toEqual([]);
+
+      await ((await formField.getControl()) as MatInputHarness)?.blur();
+      // expect(await formField.getTextErrors()).toEqual(['This field is required.']);
+
+      fixture.componentInstance.updateObservationForm.get('quantity')?.setValue('0');
+      expect(await formField.getTextErrors()).toEqual(['The minimum value is 1 individual.']);
+      expect(await formField.isControlValid()).toBe(false);
+    });
+
+    it('should show quantity MAXIMUM validation message when > 1000', async () => {
+      const expectedRouteArgument = '1';
+
+      await setup({
+        getObservation: of(updateObservationModel)
+      }, {
+        getAuthUser: of(userModel)
+      }, expectedRouteArgument);
+
+      const formField = await loader.getHarness(MatFormFieldHarness.with({ selector: '#quantity' }));
+      expect((await formField.getControl()) instanceof MatInputHarness).toBe(true);
+      expect(await formField.getTextErrors()).toEqual([]);
+
+      await ((await formField.getControl()) as MatInputHarness)?.blur();
+      // expect(await formField.getTextErrors()).toEqual(['This field is required.']);
+
+      fixture.componentInstance.updateObservationForm.get('quantity')?.setValue('1001');
+      expect(await formField.getTextErrors()).toEqual(['The maximum value is 1000 individuals.']);
+      expect(await formField.isControlValid()).toBe(false);
+    });
+
+    it('should show invalid form menu when form is not valid', async () => {
+      const expectedRouteArgument = '1';
+
+      await setup({
+        getObservation: of(updateObservationModel)
+      }, {
+        getAuthUser: of(userModel)
+      }, expectedRouteArgument);
+
+      fixture.componentInstance.updateObservationForm.get('quantity')?.setValue('');
+      fixture.detectChanges();
+
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector('[data-testid="invalid-form-menu"]')).toBeTruthy();
+      expect(compiled.querySelector('[data-testid="invalid-form-menu"]')?.textContent).toContain('The form is not complete. You must complete the manadatory fields in Section 1.');
+    });
+  });
+
+  describe('to submit the form', () => {
+
+    it('should submit the valid form and call the service', async () => {
+      const expectedRouteArgument = '1';
+
+      await setup({
+        getObservation: of(updateObservationModel),
+        updateObservation: of({ observationId: expectedRouteArgument })
+      }, {
+        getAuthUser: of(userModel)
+      }, expectedRouteArgument);
+
+      const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Update' }));
+      await submitBtn.click();
+
+      expect(fakeObservationCrudService.updateObservation).toHaveBeenCalledTimes(1);
+      expect(fakeAnnounceChangesService.announceObservationsChanged).toHaveBeenCalledTimes(1);
+      expect(router.navigate).toHaveBeenCalledWith(['/observation/detail/' + expectedRouteArgument]);
+    });
+
+    it('show error message on service error', async () => {
+      const expectedRouteArgument = '1';
+
+      await setup({
+        getObservation: of(updateObservationModel),
+        updateObservation: throwError(() => new Error('location update error'))
+      }, {
+        getAuthUser: of(userModel)
+      }, expectedRouteArgument);
+
+      const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Update' }));
+      await submitBtn.click();
+
+      expect(fakeObservationCrudService.updateObservation).toHaveBeenCalledTimes(1);
+      expect(fakeAnnounceChangesService.announceObservationsChanged).not.toHaveBeenCalled();
+      expect(router.navigate).not.toHaveBeenCalled();
+
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector('[data-testid="record-update-error"]')).toBeTruthy();
+      expect(compiled.querySelector('[data-testid="record-update-error"]')?.textContent).toContain('There was an error updating the observation. Please try again.');
+    });
+  });
 });

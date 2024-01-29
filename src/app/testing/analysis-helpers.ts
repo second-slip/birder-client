@@ -1,4 +1,5 @@
 import { IObservationCount } from "../_analysis/observation-count/i-observation-count.dto";
+import { IObservationTopFiveRecord } from "../_analysis/observation-top-five/i-observation-top-five-record.dto";
 import { IObservationTopFive } from "../_analysis/observation-top-five/i-observation-top-five.dto";
 
 export const fakeIObservationCount: IObservationCount =
@@ -22,6 +23,35 @@ export const fakeObservationCountResponse: any =
     "totalObservationsCount": 123,
     "uniqueSpeciesCount": 57
 }
+
+export const fakeTopObservationsArray: IObservationTopFiveRecord[] =
+    [
+        {
+            "birdId": 1004,
+            "name": "Avocet",
+            "count": 1
+        },
+        {
+            "birdId": 1022,
+            "name": "Blue Tit",
+            "count": 1
+        },
+        {
+            "birdId": 1023,
+            "name": "Brambling",
+            "count": 1
+        },
+        {
+            "birdId": 1037,
+            "name": "Collared Dove",
+            "count": 1
+        },
+        {
+            "birdId": 1090,
+            "name": "Grey Heron",
+            "count": 1
+        }
+    ]
 
 
 export const fakeIObservationTopFive: IObservationTopFive = {

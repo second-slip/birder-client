@@ -8,7 +8,7 @@ import { NavigationMenuComponent } from '../navigation-menu/navigation-menu.comp
 import { ViewOnlyNotesComponent } from '../../_observation-note/view-notes/view-only-notes.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ReadOnlyMapComponent } from '../../_map/read-only-map/read-only-map.component';
-import { NgIf, AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { LoremIpsumComponent } from 'src/app/lorem-ipsum/lorem-ipsum.component';
 

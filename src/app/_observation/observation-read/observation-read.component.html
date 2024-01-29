@@ -13,30 +13,29 @@
         on {{ observation.observationDateTime | date: 'EEEE, d MMMM yyyy \'at\' HH:mm' }}.
     </p>
 
-    <section>
-        <mat-tab-group>
-            <mat-tab label="Map">
-                <ng-template matTabContent>
-                    <app-read-only-map [position]="observation.position"></app-read-only-map>
-                </ng-template>
-            </mat-tab>
-            <mat-tab label="Notes">
-                <ng-template matTabContent>
-                    <app-view-only-notes [notes]="observation.notes"></app-view-only-notes>
-                </ng-template>
-            </mat-tab>
-            <mat-tab label="Photos">
-                <ng-template matTabContent>
-                    <app-lorem-ipsum></app-lorem-ipsum>
-                </ng-template>
-            </mat-tab>
-            <mat-tab label="Other sightings">
-                <ng-template matTabContent>
-                    <app-lorem-ipsum></app-lorem-ipsum>
-                </ng-template>
-            </mat-tab>
-        </mat-tab-group>
-    </section>
+    <mat-tab-group>
+        <mat-tab label="Map">
+            <ng-template matTabContent>
+                <app-read-only-map [position]="observation.position"></app-read-only-map>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Notes">
+            <ng-template matTabContent>
+                <app-view-only-notes [notes]="observation.notes"></app-view-only-notes>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Photos">
+            <ng-template matTabContent>
+                <app-lorem-ipsum></app-lorem-ipsum>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Other sightings">
+            <ng-template matTabContent>
+                <app-lorem-ipsum></app-lorem-ipsum>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+
 
     <app-navigation-menu [observationId]="observation.observationId"
         [isRecordOwner]="observation.username===authUser.userName"></app-navigation-menu>

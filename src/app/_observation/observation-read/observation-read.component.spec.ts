@@ -17,7 +17,7 @@ import { NavigationEvent } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicke
 import { NavigationMenuComponent } from '../navigation-menu/navigation-menu.component';
 import { MockComponent } from 'ng-mocks';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTabsModule } from '@angular/material/tabs';
+
 
 // todo: test different tab contents....
 

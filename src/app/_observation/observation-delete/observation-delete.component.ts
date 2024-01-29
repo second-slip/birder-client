@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
@@ -8,17 +8,15 @@ import { ObservationCrudService } from '../observation-crud.service';
 import { ObservationReadService } from '../observation-read.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { NavigationMenuComponent } from '../navigation-menu/navigation-menu.component';
-
-import { NgIf, AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 
 @Component({
-    selector: 'app-observation-delete',
-    templateUrl: './observation-delete.component.html',
-    styleUrls: ['./observation-delete.component.scss'],
-    providers: [ObservationReadService],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [NgIf,  RouterLink, NavigationMenuComponent, LoadingComponent, AsyncPipe, DatePipe]
+  selector: 'app-observation-delete',
+  templateUrl: './observation-delete.component.html',
+  styleUrls: ['./observation-delete.component.scss'],
+  providers: [ObservationReadService],
+  standalone: true,
+  imports: [RouterLink, NavigationMenuComponent, LoadingComponent, AsyncPipe, DatePipe]
 })
 export class ObservationDeleteComponent implements OnInit, OnDestroy {
   private _observationId: string;
@@ -66,10 +64,10 @@ export class ObservationDeleteComponent implements OnInit, OnDestroy {
     this._observationCrudService.deleteObservation(id)
       .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
       .subscribe({
-        next: (r) => { 
+        next: (r) => {
           this._announcement.announceObservationsChanged();
           this._router.navigate(['/feed-p/public']);
-         },
+        },
         error: (e) => {
           console.log('error');
           // this.errorObject = e; this._handleError(e); 

@@ -1,72 +1,65 @@
-<div class="observation-delete-container">
+<div class="standard-container">
 
-    <ng-container *ngIf="(_service.observation | async) as observation; else loadingOrError">
+    @if (_service.observation | async; as observation) {
+    @if (_authService.getAuthUser | async; as authUser) {
 
-        <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
+    <h1>Delete Observation Report</h1>
 
-            <h1>Delete Observation Report</h1>
+    @if (observation.username === authUser.userName) {
 
-            <ng-container *ngIf="observation.username !== authUser.userName">
-                <p class="alert alert-info">
-                    <strong>Whoops!</strong>&nbsp;Only the owner is allowed to delete their record.<br>
-                    <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button"
-                        (click)="redirect()">Go back</button>
-                </p>
-            </ng-container>
+    <p>You observed <b>{{observation.quantity}}</b> <a routerLink="/bird/detail/{{observation.birdId}}">
+            {{observation.englishName}}
+        </a> <small><em> {{ observation.species }} </em></small>
+        on {{ observation.observationDateTime | date: 'EEEE, d MMMM yyyy' }}.
+    </p>
 
-            <ng-container *ngIf="observation.username === authUser.userName">
-
-                <p>You observed <b>{{observation.quantity}}</b> <a
-                        routerLink="/bird/detail/{{observation.birdId}}">
-                        {{observation.englishName}}
-                    </a> <small><em> {{ observation.species }} </em></small>
-                    on {{ observation.observationDateTime | date: 'EEEE, d MMMM yyyy' }}.
-                </p>
-
-                <ng-container>
-                    <div class="alert alert-info">
-                        Are you sure you want to delete your observation?
-                        <p>
-                            <button *ngIf="!requesting" type="submit" class="btn btn-danger btn-small"
-                                (click)="deleteObservation(observation.observationId)">
-                                Delete
-                            </button>
-                            <button *ngIf="requesting" type="submit" class="btn btn-danger btn-small" disabled>
-                                Deleting observation...
-                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            </button>
-                            <button class="btn btn-link" (click)="redirect()">
-                                Go back
-                            </button>
-                        </p>
-                    </div>
-                </ng-container>
-
-                <small><em>Observation created at {{ observation.creationDate | date: 'dd/MM/yyyy HH:mm' }}; last
-                        updated at
-                        {{ observation.lastUpdateDate | date: 'dd/MM/yyyy HH:mm' }}</em></small>
-
-                <app-navigation-menu [observationId]="observation.observationId" [isRecordOwner]="true">
-                </app-navigation-menu>
-
-            </ng-container>
-
-        </ng-container>
-
+    <ng-container>
+        <div class="alert alert-info">
+            Are you sure you want to delete your observation?
+            <p>
+                @if (requesting) {
+                <button type="submit" class="btn btn-danger btn-small" disabled>
+                    Deleting observation...
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                </button>
+                } @else {
+                <button type="submit" class="btn btn-danger btn-small"
+                    (click)="deleteObservation(observation.observationId)">
+                    Delete
+                </button>
+                }
+                <button class="btn btn-link" (click)="redirect()">
+                    Go back
+                </button>
+            </p>
+        </div>
     </ng-container>
 
-    <ng-template #loadingOrError>
-        <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
-            <strong>Whoops!</strong> There was an error retrieving the data.<br>
-            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
-                (click)="reload()">Try
-                Again</button>
-        </div>
-    </ng-template>
+    <small><em>Observation created at {{ observation.creationDate | date: 'dd/MM/yyyy HH:mm' }}; last
+            updated at
+            {{ observation.lastUpdateDate | date: 'dd/MM/yyyy HH:mm' }}</em></small>
 
+    <app-navigation-menu [observationId]="observation.observationId" [isRecordOwner]="true">
+    </app-navigation-menu>
 
-    <ng-template #loading>
-        <app-loading></app-loading>
-    </ng-template>
+    } @else {
+    <p class="alert alert-info">
+        <strong>Whoops!</strong>&nbsp;Only the owner is allowed to delete their record.<br>
+        <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="redirect()">Go
+            back</button>
+    </p>
+    }
+    }
 
+    } @else if (_service.isError | async) {
+
+    <p class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> There was an error retrieving the data.<br>
+        <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+            (click)="reload()">Try
+            Again</button>
+    </p>
+    } @else {
+    <app-loading></app-loading>
+    }
 </div>

@@ -17,6 +17,8 @@ import { ViewOnlyNotesComponent } from 'src/app/_observation-note/view-notes/vie
 import { NavigationEvent } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-view-model';
 import { NavigationMenuComponent } from '../navigation-menu/navigation-menu.component';
 import { MockComponent } from 'ng-mocks';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTabsModule } from '@angular/material/tabs';
 
 // todo: test different tab contents....
 
@@ -65,7 +67,7 @@ describe('ObservationReadComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-      imports: [NgbNavModule, ObservationReadComponent],
+      imports: [NgbNavModule, ObservationReadComponent, NoopAnimationsModule],
       providers: [{
         provide: ActivatedRoute,
         useValue: {
@@ -103,38 +105,38 @@ describe('ObservationReadComponent', () => {
 
   describe('when component is created', () => {
 
-    it('should be created and show the loading placeloader', fakeAsync(async () => {
+    it('should be created and show the loading placeloader', async () => {
       await setup({}, {}, '');
 
       expect(component).toBeTruthy();
       const { debugElement } = fixture;
       const loading = debugElement.query(By.css('app-loading'));
       expect(loading).toBeTruthy();
-    }));
+    });
 
-    it('should get the id from the route and call data fetch', fakeAsync(async () => {
+    it('should get the id from the route and call data fetch', async () => {
       const expectedRouteArgument = '10';
 
       await setup({}, {}, expectedRouteArgument);
 
       expect(fakeObservationReadService.getData).toHaveBeenCalledOnceWith(expectedRouteArgument);
-    }));
+    });
 
-    it('should redirect when route argument is null', fakeAsync(async () => {
+    it('should redirect when route argument is null', async () => {
       const expectedRouteArgument = '';
 
       await setup({}, {}, expectedRouteArgument);
 
       expect(fakeObservationReadService.getData).not.toHaveBeenCalled();
       expect(fakeNavService.back).toHaveBeenCalled();
-    }));
+    });
   });
 
 
 
   describe('successful data fetch', () => {
 
-    it('calls data fetch', fakeAsync(async () => {
+    it('calls data fetch', async () => {
       await setup(
         {
           isError: of(false),
@@ -146,9 +148,9 @@ describe('ObservationReadComponent', () => {
         '10'
       );
       expect(fakeObservationReadService.getData).toHaveBeenCalledOnceWith('10');
-    }));
+    });
 
-    it('shows the observation', fakeAsync(async () => {
+    it('shows the observation', async () => {
       await setup(
         {
           isError: of(false),
@@ -165,9 +167,9 @@ describe('ObservationReadComponent', () => {
 
       const menu = findComponent(fixture, 'app-navigation-menu');
       expect(menu).toBeTruthy();
-    }));
+    });
 
-    it('renders the correct title when is NOT the record owner', fakeAsync(async () => {
+    it('renders the correct title when is NOT the record owner', async () => {
       await setup(
         {
           isError: of(false),
@@ -182,9 +184,9 @@ describe('ObservationReadComponent', () => {
       const expectedTitle = ` ${singleObservationView.username}  observed ${singleObservationView.quantity}  ${singleObservationView.englishName}  ${singleObservationView.species}  on `
 
       expectTextToContain(fixture, 'observation-title', expectedTitle);
-    }));
+    });
 
-    it('renders the correct title when is the record owner', fakeAsync(async () => {
+    it('renders the correct title when is the record owner', async () => {
       await setup(
         {
           isError: of(false),
@@ -199,9 +201,9 @@ describe('ObservationReadComponent', () => {
       const p = ` You  observed ${singleObservationView.quantity}  ${singleObservationView.englishName}  ${singleObservationView.species}  on `
 
       expectTextToContain(fixture, 'observation-title', p);
-    }));
+    });
 
-    it('does not show error section', fakeAsync(async () => {
+    it('does not show error section', async () => {
       await setup(
         {
           isError: of(false),
@@ -214,9 +216,9 @@ describe('ObservationReadComponent', () => {
       );
       const error = fixture.nativeElement as HTMLElement;
       expect(error.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
-    }));
+    });
 
-    it('does not show loading section', fakeAsync(async () => {
+    it('does not show loading section', async () => {
       await setup(
         {
           isError: of(false),
@@ -230,7 +232,7 @@ describe('ObservationReadComponent', () => {
       const { debugElement } = fixture;
       const loading = debugElement.query(By.css('app-loading'));
       expect(loading).toBeNull();
-    }));
+    });
 
 
     describe('when error fetching data', () => {

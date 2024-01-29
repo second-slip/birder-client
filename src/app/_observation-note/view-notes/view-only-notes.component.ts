@@ -4,13 +4,13 @@ import { IObservationNote } from '../i-observation-note.dto';
 import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-    selector: 'app-view-only-notes',
-    templateUrl: './view-only-notes.component.html',
-    styleUrls: ['./view-only-notes.component.scss'],
-    standalone: true,
-    imports: [NgIf, NgFor]
+  selector: 'app-view-only-notes',
+  templateUrl: './view-only-notes.component.html',
+  styleUrls: ['./view-only-notes.component.scss'],
+  standalone: true,
+  imports: [NgIf, NgFor]
 })
-export class ViewOnlyNotesComponent   {
+export class ViewOnlyNotesComponent {
   @Input() notes: IObservationNote[];
 }
 

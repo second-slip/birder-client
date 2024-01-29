@@ -8,6 +8,8 @@
 <div *ngIf="notes">
     <ng-container *ngIf="notes.length; else noItems">
 
+        <p>Notes count: {{notes.length}}</p>
+
         <table class="table table-striped">
             <thead>
                 <tr>

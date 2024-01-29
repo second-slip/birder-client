@@ -1,120 +1,56 @@
-<div class="observation-detail-container">
+<div class="standard-container">
 
-    <ng-container *ngIf="(_service.observation | async) as observation; else loadingOrError">
+    @if (_service.observation | async; as observation) {
+    @if (_authService.getAuthUser | async; as authUser) {
 
-        <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
+    <h1>Observation Report</h1>
 
-            <h1>Observation Report</h1>
+    <p data-testid="observation-title"><a routerLink="/user/{{observation.username}}">
+            {{ observation.username === authUser.userName ? 'You' : observation.username }}
+        </a> observed {{ observation.quantity }} <a routerLink="/bird/detail/{{observation.birdId}}">
+            {{ observation.englishName }}
+        </a> <small><em> {{ observation.species }} </em></small>
+        on {{ observation.observationDateTime | date: 'EEEE, d MMMM yyyy \'at\' HH:mm' }}.
+    </p>
 
-            <p data-testid="observation-title"><a routerLink="/user/{{observation.username}}">
-                    {{ observation.username === authUser.userName ? 'You' : observation.username }}
-                </a> observed {{ observation.quantity }} <a routerLink="/bird/detail/{{observation.birdId}}">
-                    {{ observation.englishName }}
-                </a> <small><em> {{ observation.species }} </em></small>
-                on {{ observation.observationDateTime | date: 'EEEE, d MMMM yyyy \'at\' HH:mm' }}.
-            </p>
+    <section>
+        <mat-tab-group>
+            <mat-tab label="Map">
+                <ng-template matTabContent>
+                    <app-read-only-map [position]="observation.position"></app-read-only-map>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Notes">
+                <ng-template matTabContent>
+                    <app-view-only-notes [notes]="observation.notes"></app-view-only-notes>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Photos">
+                <ng-template matTabContent>
+                    <app-lorem-ipsum></app-lorem-ipsum>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Other sightings">
+                <ng-template matTabContent>
+                    <app-lorem-ipsum></app-lorem-ipsum>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </section>
 
-            <ul ngbNav #nav="ngbNav" class="nav-tabs" data-testid="observation">
-                <li [ngbNavItem]="1">
-                    <a ngbNavLink>Map</a>
-                    <ng-template ngbNavContent>
+    <app-navigation-menu [observationId]="observation.observationId"
+        [isRecordOwner]="observation.username===authUser.userName"></app-navigation-menu>
 
-                        <app-read-only-map [position]="observation.position">
-                        </app-read-only-map>
+    }
 
-                        <div class="alert alert-info">
-                            <!-- add margin-top ................ -->
-                            <mat-icon color="primary">info</mat-icon>
-                            <span>You can change the
-                                location in
-                                the <a routerLink="/observation/update/{{observation.observationId}}">edit
-                                    observation</a>
-                                page</span>
-                        </div>
-
-                    </ng-template>
-                </li>
-                <li [ngbNavItem]="2">
-                    <a ngbNavLink>Notes</a>
-                    <ng-template ngbNavContent>
-
-                        Notes count: {{ observation.notes.length }}
-
-                        <app-view-only-notes [notes]="observation.notes">
-                        </app-view-only-notes>
-
-                    </ng-template>
-                </li>
-                <li [ngbNavItem]="3">
-                    <a ngbNavLink>Photos</a>
-                    <ng-template ngbNavContent>
-                        <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id
-                            diam.
-                            Nulla facilisi.
-                            Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt
-                            eu,
-                            congue et odio.
-                            Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices
-                            et.
-                            Sed diam urna,
-                            egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus
-                            faucibus
-                            nisl enim, nec
-                            tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius
-                            natoque
-                            penatibus et
-                            magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet
-                            ultricies in eget
-                            neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>
-                    </ng-template>
-                </li>
-                <li [ngbNavItem]="4">
-                    <a ngbNavLink>Other sightings</a>
-                    <ng-template ngbNavContent>
-                        <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id
-                            diam.
-                            Nulla facilisi.
-                            Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt
-                            eu,
-                            congue et odio.
-                            Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices
-                            et.
-                            Sed diam urna,
-                            egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus
-                            faucibus
-                            nisl enim, nec
-                            tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius
-                            natoque
-                            penatibus et
-                            magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet
-                            ultricies in eget
-                            neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>
-                    </ng-template>
-                </li>
-            </ul>
-
-            <div [ngbNavOutlet]="nav" class="mt-2"></div>
-
-
-            <app-navigation-menu [observationId]="observation.observationId"
-                [isRecordOwner]="observation.username===authUser.userName"></app-navigation-menu>
-
-        </ng-container>
-
-    </ng-container>
-
-    <ng-template #loadingOrError>
-        <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
-            <strong>Whoops!</strong> There was an error retrieving the data.<br>
-            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
-                (click)="reload()">Try
-                Again</button>
-        </div>
-    </ng-template>
-
-
-    <ng-template #loading>
-        <app-loading></app-loading>
-    </ng-template>
-
+    } @else if (_service.isError | async) {
+    <p class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> There was an error retrieving the data.<br>
+        <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+            (click)="reload()">Try
+            Again</button>
+    </p>
+    } @else {
+    <app-loading></app-loading>
+    }
 </div>

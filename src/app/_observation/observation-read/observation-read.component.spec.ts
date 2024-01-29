@@ -2,7 +2,6 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { of } from 'rxjs';
 import { userModel } from 'src/app/testing/auth-test-helpers';
 import { expectText, expectTextToContain, findComponent } from 'src/app/testing/element.spec-helper';
@@ -67,7 +66,7 @@ describe('ObservationReadComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-      imports: [NgbNavModule, ObservationReadComponent, NoopAnimationsModule],
+      imports: [ObservationReadComponent, NoopAnimationsModule],
       providers: [{
         provide: ActivatedRoute,
         useValue: {

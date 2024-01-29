@@ -1,7 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { of } from 'rxjs';
 import { BirdsDddlResponse } from 'src/app/testing/birds-helpers';
 import { findEl } from 'src/app/testing/element.spec-helper';
@@ -40,7 +39,7 @@ describe('SelectSpeciesComponent', () => {
         );
 
         await TestBed.configureTestingModule({
-            imports: [FormsModule, HttpClientTestingModule, NgbModule, FormsModule, ReactiveFormsModule, SelectSpeciesComponent],
+            imports: [FormsModule, HttpClientTestingModule, FormsModule, ReactiveFormsModule, SelectSpeciesComponent],
             providers: [{ provide: SelectSpeciesService, useValue: fakeSelectSpeciesService },
             provideAnimations()]
         }).compileComponents();

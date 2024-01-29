@@ -16,6 +16,67 @@ module.exports = (req, res, next) => {
             });
     }
 
+    // Observation Top api
+    if (req.method === 'GET' && req.originalUrl === '/list/top') {
+        return res.jsonp(
+            {
+                "topObservations": [
+                    {
+                        "birdId": 1004,
+                        "name": "Avocet",
+                        "count": Math.floor(Math.random() * 40) + 1
+                    },
+                    {
+                        "birdId": 1022,
+                        "name": "Blue Tit",
+                        "count": Math.floor(Math.random() * 40) + 1
+                    },
+                    {
+                        "birdId": 1023,
+                        "name": "Brambling",
+                        "count": Math.floor(Math.random() * 40) + 1
+                    },
+                    {
+                        "birdId": 1037,
+                        "name": "Collared Dove",
+                        "count": Math.floor(Math.random() * 40) + 1
+                    },
+                    {
+                        "birdId": 1090,
+                        "name": "Grey Heron",
+                        "count": Math.floor(Math.random() * 40) + 1
+                    }
+                ],
+                "topMonthlyObservations": [
+                    {
+                        "birdId": 1022,
+                        "name": "Blue Tit",
+                        "count": Math.floor(Math.random() * 40) + 1
+                    },
+                    {
+                        "birdId": 1037,
+                        "name": "Collared Dove",
+                        "count": Math.floor(Math.random() * 40) + 1
+                    },
+                    {
+                        "birdId": 1090,
+                        "name": "Grey Heron",
+                        "count": Math.floor(Math.random() * 40) + 1
+                    },
+                    {
+                        "birdId": 1143,
+                        "name": "Mute Swan",
+                        "count": Math.floor(Math.random() * 40) + 1
+                    },
+                    {
+                        "birdId": 1225,
+                        "name": "Tufted Duck",
+                        "count": Math.floor(Math.random() * 40) + 1
+                    }
+                ]
+            });
+    }
+
     // observation api
     if (req.method === 'GET' && req.originalUrl === '/observation') {
 

@@ -494,62 +494,6 @@
       "lastUpdateDate": "2021-10-17T17:10:53.1460089Z"
     }
   ],
-  "topObservations": {
-    "topObservations": [
-      {
-        "birdId": 1004,
-        "name": "Avocet",
-        "count": 1
-      },
-      {
-        "birdId": 1022,
-        "name": "Blue Tit",
-        "count": 1
-      },
-      {
-        "birdId": 1023,
-        "name": "Brambling",
-        "count": 1
-      },
-      {
-        "birdId": 1037,
-        "name": "Collared Dove",
-        "count": 1
-      },
-      {
-        "birdId": 1090,
-        "name": "Grey Heron",
-        "count": 1
-      }
-    ],
-    "topMonthlyObservations": [
-      {
-        "birdId": 1022,
-        "name": "Blue Tit",
-        "count": 1
-      },
-      {
-        "birdId": 1037,
-        "name": "Collared Dove",
-        "count": 1
-      },
-      {
-        "birdId": 1090,
-        "name": "Grey Heron",
-        "count": 1
-      },
-      {
-        "birdId": 1143,
-        "name": "Mute Swan",
-        "count": 1
-      },
-      {
-        "birdId": 1225,
-        "name": "Tufted Duck",
-        "count": 1
-      }
-    ]
-  },
   "networkSuggestions": [
     {
       "userName": "Drogba",

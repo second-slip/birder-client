@@ -4,7 +4,6 @@
   "/observationfeed/user\\?pageIndex=:pageIndex&pageSize=:pageSize": "/observationsfeed?_page=:pageIndex&_limit=:pageSize",
   "/observationfeed/network\\?pageIndex=:pageIndex&pageSize=:pageSize": "/observationsfeed?_page=:pageIndex&_limit=:pageSize",
   "/list/life": "/lifeList",
-  "/list/top": "/topObservations",
   "/tweets/archive\\?pageIndex=:pageIndex&pageSize=:pageSize": "/tweetArchive",
   "/network/Followers\\?requestedUsername=:requestedUsername": "/network/followers",
   "/network/Following\\?requestedUsername=:requestedUsername": "/network/following",

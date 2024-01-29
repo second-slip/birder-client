@@ -8,6 +8,7 @@ import { FlickrComponent } from '../flickr/flickr.component';
 import { BirdInfoComponent } from '../bird-info/bird-info.component';
 import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLink, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from '@ng-bootstrap/ng-bootstrap';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { LoremIpsumComponent } from 'src/app/lorem-ipsum/lorem-ipsum.component';
 
 @Component({
     selector: 'app-bird-detail',
@@ -16,7 +17,7 @@ import { NgIf, AsyncPipe } from '@angular/common';
     providers: [BirdDetailService],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgIf, NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLink, NgbNavLinkBase, NgbNavContent, BirdInfoComponent, FlickrComponent, RecordingsComponent, NgbNavOutlet, RouterLink, LoadingComponent, AsyncPipe]
+    imports: [NgIf, LoremIpsumComponent, NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLink, NgbNavLinkBase, NgbNavContent, BirdInfoComponent, FlickrComponent, RecordingsComponent, NgbNavOutlet, RouterLink, LoadingComponent, AsyncPipe]
 })
 export class BirdDetailComponent implements OnInit {
   private _birdId: string;

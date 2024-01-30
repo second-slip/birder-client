@@ -4,7 +4,6 @@ import { Subject, takeUntil } from 'rxjs';
 import { GeocodeService } from '../geocode.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { MatIconModule } from '@angular/material/icon';
-import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -13,7 +12,7 @@ import { FormsModule } from '@angular/forms';
     styleUrls: ['./read-write-map.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [FormsModule, NgbPopover, MatIconModule, GoogleMapsModule, LoadingComponent]
+    imports: [FormsModule, MatIconModule, GoogleMapsModule, LoadingComponent]
 })
 export class ReadWriteMapComponent implements OnInit, OnDestroy {
   @Input() latitude: number;

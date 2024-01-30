@@ -7,19 +7,20 @@
         data-testid="searchAddress" [(ngModel)]="searchAddress" required>
 
     <button type="submit" class="btn btn-primary btn-search-address" [disabled]="!searchAddress"
-        triggers="mouseenter:mouseleave"
-        ngbPopover='Type a place name (e.g. Canterbury, UK); or a specific address (e.g. 1 High St, Canterbury CT1 2JH)'
-        popoverTitle="Search help" aria-label="Search for a location" title="Search for a location"
+        triggers="mouseenter:mouseleave" aria-label="Search for a location" title="Search for a location"
         (click)="findAddress()">
         <mat-icon>search</mat-icon>
     </button>
 
+    <!-- ngbPopover='Type a place name (e.g. Canterbury, UK); or a specific address (e.g. 1 High St, Canterbury CT1 2JH)' popoverTitle="Search help"  -->
+
     <button type="submit" class="btn btn-primary btn-get-location" type="button" (click)="getCurrentPosition()"
         aria-label="Get your current location" matTooltip="Get your current location" triggers="mouseenter:mouseleave"
-        ngbPopover='Click here to find your current location' popoverTitle="Get your current location"
         data-testid="get-current-location">
         <mat-icon>my_location</mat-icon>
     </button>
+
+    <!-- ngbPopover='Click here to find your current location' popoverTitle="Get your current location" -->
 
 </div>
 

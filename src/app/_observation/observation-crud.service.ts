@@ -16,8 +16,8 @@ export class ObservationCrudService {
   constructor(private readonly _http: HttpClient) { }
 
   public getObservation(id: string): Observable<IUpdateObservation> {
-    const options = id ?
-      { params: new HttpParams().append('id', id.toString()) } : {};
+    const options =
+      { params: new HttpParams().append('id', id.toString()) };
 
     return this._http.get<IUpdateObservation>('api/observationread/update', options);
   }
@@ -27,9 +27,8 @@ export class ObservationCrudService {
   }
 
   public updateObservation(id: string, viewModel: IUpdateObservation): Observable<{ observationId: string }> {
-    const options = id ?
-      { params: new HttpParams().set('id', id.toString()) } :
-      { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    const options =
+      { params: new HttpParams().set('id', id.toString()) };
 
     return this._http.put<{ observationId: string }>('api/observation/update', viewModel, options);
   }

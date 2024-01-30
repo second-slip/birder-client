@@ -26,6 +26,7 @@ import { ObservationUpdateComponent } from "./_observation/observation-update/ob
 import { TweetDayArchiveComponent } from "./_tweet/tweet-day-archive/tweet-day-archive.component";
 import { UserProfileComponent } from "./_user/user-profile/user-profile.component";
 import { AboutComponent } from "./_about/about/about.component";
+import { NetworkListComponent } from "./_network/network-list/network-list.component";
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -71,8 +72,8 @@ export const routes: Routes = [
                     { path: 'bird/detail/:id', component: BirdDetailComponent },
                     { path: 'lists/life/:username', component: LifeListComponent },
                     { path: 'user/:username', component: UserProfileComponent },
-                    { path: 'followers/:username', component: FollowersComponent },
-                    { path: 'following/:username', component: FollowingComponent },
+                    { path: 'followers/:username/:tab', component: NetworkListComponent },
+                    { path: 'following/:username/:tab', component: NetworkListComponent },
                     { path: 'network', component: NetworkComponent },
                     { path: 'logout', component: LogoutComponent },
                     { path: 'tweet/archive', component: TweetDayArchiveComponent }

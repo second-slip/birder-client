@@ -1,44 +1,23 @@
-<div class="followers-container">
+<div class="standard-container">
 
-    <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
+    @if (_service.getFollowers | async; as followers) {
 
-        <h1 data-testid="title">{{ authUser.userName === username ? 'Your followers' : username + '\&#39;s followers' }}</h1>
+    <p>followers: {{followers.length}}</p>
 
-        <ul ngbNav #nav="ngbNav" [activeId]="2" class="nav-tabs nav-justified" data-testid="nav-menu">
-            <li [ngbNavItem]="1">
-                <a ngbNavLink routerLink="/following/{{username}}">Following</a>
-            </li>
-            <li [ngbNavItem]="2">
-                <a ngbNavLink>Followers</a>
-            </li>
-        </ul>
-
-    </ng-container>
-
-    <ng-container *ngIf="(_service.getFollowers | async) as followers; else loadingOrError">
-        <div *ngIf="followers.length" data-testid="followers-list">
-            <div *ngFor="let user of followers">
-                <app-network-user [user]="user"></app-network-user>
-            </div>
-        </div>
-
-        <div *ngIf="!followers.length" data-testid="followers-list-is-zero" class="alert alert-info">
-                You don't yet have any followers
-        </div>
-
-    </ng-container>
-
-    <ng-template #loadingOrError>
-        <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
-            <strong>Whoops!</strong> There was an error retrieving the data.<br>
-            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button" (click)="reload()">Try
-                Again</button>
-        </div>
-    </ng-template>
-
-
-    <ng-template #loading>
-        <app-loading></app-loading>
-    </ng-template>
-
+    @for (follower of followers; track $index) {
+    <app-network-user [user]="follower" data-testid="followers-list"></app-network-user>
+    } @empty {
+    <p data-testid="followers-list-is-zero" class="alert alert-info">
+        You don't yet have any followers
+    </p>
+    }
+    } @else if (_service.isError | async) {
+    <p class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> There was an error retrieving the data.<br>
+        <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+            (click)="reload()">Try Again</button>
+    </p>
+    } @else {
+    <app-loading></app-loading>
+    }
 </div>

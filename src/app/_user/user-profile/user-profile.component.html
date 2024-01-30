@@ -15,11 +15,11 @@
                 </div>
 
                 <!-- network summary -->
-                <p class="summary" data-testid="network-summary"><a routerLink="/followers/{{profile.user.userName}}">{{
+                <p class="summary" data-testid="network-summary"><a routerLink="/followers/{{profile.user.userName}}/1">{{
                         profile.followersCount }} {{
                         profile.followersCount | followersPlural }}</a>
                     /
-                    <a routerLink="/following/{{profile.user.userName}}">{{ profile.followingCount }} following</a>
+                    <a routerLink="/following/{{profile.user.userName}}/0">{{ profile.followingCount }} following</a>
                 </p>
 
                 <!-- observations summary (own profile) -->

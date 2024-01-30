@@ -1,14 +1,9 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { of } from 'rxjs';
-import { userModel } from 'src/app/testing/auth-test-helpers';
 import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
 import { fakeNetworkUserModelArray } from 'src/app/testing/network-test-helpers';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
-
 import { FollowersComponent } from './followers.component';
 import { FollowersService } from './followers.service';
 import { NetworkUserComponent } from '../network-user/network-user.component';
@@ -18,12 +13,11 @@ describe('FollowersComponent', () => {
   let component: FollowersComponent;
   let fixture: ComponentFixture<FollowersComponent>;
   let fakeService: jasmine.SpyObj<FollowersService>;
-  let fakeAuthService: jasmine.SpyObj<AuthenticationService>;
 
   const setup = async (
     fakeMethodValues?: jasmine.SpyObjMethodNames<FollowersService>,
     fakePropertyValues?: jasmine.SpyObjPropertyNames<FollowersService>,
-    fakeRouteArgument?: string) => {
+    fakeInput?: string) => {
 
     fakeService = jasmine.createSpyObj<FollowersService>(
       'FollowersService',
@@ -38,58 +32,28 @@ describe('FollowersComponent', () => {
       }
     );
 
-    fakeAuthService = jasmine.createSpyObj<AuthenticationService>(
-      'AuthenticationService',
-      {
-        checkAuthStatus: undefined,
-        logout: undefined,
-        // ...fakeAuthReturnValues
-      },
-      {
-        isAuthorisedObservable: of(true),
-        getAuthUser: of(userModel),
-        //...fakeAuthPropertyValues
-      },
-    )
-
     await TestBed.configureTestingModule({
-      providers: [{
-        provide: ActivatedRoute,
-        useValue: {
-          paramMap: of(new Map(Object.entries({
-            username: fakeRouteArgument
-          })))
-          // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
-          // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
-        }
-      }],
-      imports: [NgbNavModule, FollowersComponent],
-      schemas: [NO_ERRORS_SCHEMA]
+      imports: [FollowersComponent]
     }).overrideComponent(FollowersComponent,
       {
         remove: { imports: [NetworkUserComponent], providers: [FollowersService, AuthenticationService] },
         add: {
           imports: [MockComponent(NetworkUserComponent)],
           providers: [
-            { provide: FollowersService, useValue: fakeService },
-            { provide: AuthenticationService, useValue: fakeAuthService }
+            { provide: FollowersService, useValue: fakeService }
           ]
         }
-        // set: {
-        //   providers: [
-        //     { provide: FollowersService, useValue: fakeService },
-        //     { provide: AuthenticationService, useValue: fakeAuthService }
-        //   ]
-        // }
       }).compileComponents();
 
     fixture = TestBed.createComponent(FollowersComponent);
     component = fixture.componentInstance;
+
+    component.username = fakeInput ?? '';
     fixture.detectChanges();
   };
 
   it('"SMOKE TEST": should be created and show the loading placeloader', fakeAsync(async () => {
-    await setup({}, {});
+    await setup();
 
     expect(component).toBeTruthy();
     const { debugElement } = fixture;
@@ -221,39 +185,6 @@ describe('FollowersComponent', () => {
         const { debugElement } = fixture;
         const loading = debugElement.query(By.css('app-loading'));
         expect(loading).toBeNull();
-      }));
-
-
-    });
-
-    describe('Header section', () => {
-
-      it('shows the correct title variant when user views other users followers', fakeAsync(async () => {
-        await setup({},
-          {
-            isError: of(false),
-            getFollowers: of(fakeNetworkUserModelArray)
-          },
-          'test-username');
-
-        const compiled = fixture.nativeElement as HTMLElement;
-        expect(compiled.querySelector('[data-testid="title"]')?.textContent).toBeDefined();
-        expectText(fixture, 'title', "test-username's followers");
-        expect(compiled.querySelector('[data-testid="nav-menu"]')?.textContent).toBeDefined();
-      }));
-
-      it('shows the correct title variant when user views other users followers', fakeAsync(async () => {
-        await setup({},
-          {
-            isError: of(false),
-            getFollowers: of(fakeNetworkUserModelArray)
-          },
-          'AuthUser'); // <-- username used in userModel
-
-        const compiled = fixture.nativeElement as HTMLElement;
-        expect(compiled.querySelector('[data-testid="title"]')?.textContent).toBeDefined();
-        expectText(fixture, 'title', "Your followers");
-        expect(compiled.querySelector('[data-testid="nav-menu"]')?.textContent).toBeDefined();
       }));
     });
   })

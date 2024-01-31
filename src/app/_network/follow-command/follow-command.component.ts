@@ -1,17 +1,15 @@
-import { Component, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { first, Subject, takeUntil } from 'rxjs';
 import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 import { INetworkUser } from '../i-network-user.dto';
 import { FollowCommandService } from './follow-command.service';
-import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-follow-command',
     templateUrl: './follow-command.component.html',
     styleUrls: ['./follow-command.component.scss'],
-    encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgIf]
+    imports: []
 })
 export class FollowCommandComponent implements OnDestroy {
   @Input() user: INetworkUser

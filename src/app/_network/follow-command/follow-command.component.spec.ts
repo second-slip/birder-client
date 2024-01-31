@@ -5,7 +5,6 @@ import { expectText } from 'src/app/testing/element.spec-helper';
 import { fakeNetworkUserModel, userName } from 'src/app/testing/network-test-helpers';
 import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 import { INetworkUser } from '../i-network-user.dto';
-
 import { FollowCommandComponent } from './follow-command.component';
 import { FollowCommandService } from './follow-command.service';
 

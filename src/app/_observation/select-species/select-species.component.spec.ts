@@ -60,15 +60,15 @@ describe('SelectSpeciesComponent', () => {
 
     describe('when component is loaded', () => {
 
-        it('should create', fakeAsync(async () => {
+        it('should create', async () => {
             await setup();
             expect(component).toBeTruthy();
-        }));
+        });
 
-        it('should call the data fetch method', fakeAsync(async () => {
+        it('should call the data fetch method', async () => {
             await setup();
             expect(fakeSelectSpeciesService.getData).toHaveBeenCalledTimes(1);
-        }));
+        });
 
         it('should load progress spinner when data source is empty (loading)', async () => {
             await setup({
@@ -87,16 +87,16 @@ describe('SelectSpeciesComponent', () => {
 
     describe('when error fetching the data', () => {
 
-        it('should render the error template content', fakeAsync(async () => {
+        it('should render the error template content', async () => {
             await setup({ isError: of(true) });
             expect(findEl(fixture, 'error')).toBeDefined();
-        }));
+        });
 
-        it('should show the error message', fakeAsync(async () => {
+        it('should show the error message', async () => {
             await setup({ isError: of(true) });
             const compiled = fixture.nativeElement as HTMLElement;
             expect(compiled.querySelector('[data-testid="error-message"]')?.textContent).toBe('There was a problem retrieving the birds species list.');
-        }));
+        });
 
         it('should render the Reload button', async () => {
             await setup({ isError: of(true) });
@@ -105,7 +105,7 @@ describe('SelectSpeciesComponent', () => {
             expect(await btn.getText()).toContain('Reload');
         });
 
-        it('should request data again on request (test with Button Harness)', fakeAsync(async () => {
+        it('should request data again on request (test with Button Harness)', async () => {
             await setup({ isError: of(true) });
 
             expect(fakeSelectSpeciesService.getData).toHaveBeenCalledTimes(1);
@@ -114,12 +114,12 @@ describe('SelectSpeciesComponent', () => {
             await btn.click();
 
             expect(fakeSelectSpeciesService.getData).toHaveBeenCalledTimes(2);
-        }));
+        });
     });
 
     describe('when data are fetched successfully', () => {
 
-        it('does not show error content', fakeAsync(async () => {
+        it('does not show error content', async () => {
             await setup({
                 isError: of(false),
                 getBirds: BirdsDddlResponse
@@ -127,9 +127,9 @@ describe('SelectSpeciesComponent', () => {
 
             const compiled = fixture.nativeElement as HTMLElement;
             expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
-        }));
+        });
 
-        it('Should load input with correct setup', fakeAsync(async () => {
+        it('Should load input with correct setup', async () => {
             await setup({
                 isError: of(false),
                 getBirds: BirdsDddlResponse
@@ -141,9 +141,9 @@ describe('SelectSpeciesComponent', () => {
             expect(await input.isDisabled()).toBe(false);
             expect(await input.getValue()).toBe('');
 
-        }));
+        });
 
-        it('should not show loading spinner when data are loaded', fakeAsync(async () => {
+        it('should not show loading spinner when data are loaded', async () => {
             await setup({
                 isError: of(false),
                 getBirds: BirdsDddlResponse
@@ -151,7 +151,7 @@ describe('SelectSpeciesComponent', () => {
 
             const progressSpinners = await loader.getAllHarnesses(MatProgressSpinnerHarness);
             expect(progressSpinners.length).toBe(0);
-        }));
+        });
 
         it('autocomplete should focus and blur an input', async () => {
             await setup({
@@ -167,7 +167,7 @@ describe('SelectSpeciesComponent', () => {
             expect(await input.isFocused()).toBe(false);
         });
 
-        it('should be able to get ALL filtered options', fakeAsync(async () => { // async () => {
+        it('should be able to get ALL filtered options', async () => { // async () => {
             await setup({
                 isError: of(false),
                 getBirds: BirdsDddlResponse
@@ -178,7 +178,7 @@ describe('SelectSpeciesComponent', () => {
             const options = await input.getOptions();
 
             expect(options.length).toBe(40);
-        }));
+        });
 
         it('filter should return one option when appropriate', async () => {
             await setup({
@@ -283,7 +283,7 @@ describe('SelectSpeciesComponent', () => {
 
         describe('display function tests', () => {
 
-            it('should return englishName from BirdSummary object', fakeAsync(async () => {
+            it('should return englishName from BirdSummary object', async () => {
                 await setup({
                     isError: of(false),
                     getBirds: BirdsDddlResponse
@@ -305,7 +305,7 @@ describe('SelectSpeciesComponent', () => {
                 let actual = fixture.componentInstance.displayFn(birdSummaryObject);
 
                 expect(actual).toBe(birdSummaryObject.englishName);
-            }));
+            });
         });
     });
 });

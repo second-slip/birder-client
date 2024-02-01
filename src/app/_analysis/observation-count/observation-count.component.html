@@ -1,34 +1,24 @@
-<ng-container *ngIf="(_service.count | async) as analysis; else loadingOrError">
-
-    <div *ngIf="analysis.totalObservationsCount" data-testid="analysis-count-more-than-one">
-        <p class="analysis-text" data-testid="analysis-text">You have spotted <span class="count-text">{{
-                analysis.uniqueSpeciesCount }}</span>
-            species <br>in
-            <span class="count-text">{{ analysis.totalObservationsCount }}</span>
-            {{ analysis.totalObservationsCount | observationPlural }}
-        </p>
-
-        <!-- <p class="analysis-text" data-testid="analysis-count-more-than-one">
-            {{ analysis.uniqueSpeciesCount | observationPlural: analysis.totalObservationsCount }}
-        </p> -->
-    </div>
-
-    <p *ngIf="!analysis.totalObservationsCount" class="alert alert-info" data-testid="analysis-count-zero">
+@if(_service.count | async; as analysis) {
+<div class="side-bar-container centre">
+    @if(analysis.totalObservationsCount) {
+    <p class="analysis-text" data-testid="analysis-text">You have spotted <span class="count-text">{{
+            analysis.uniqueSpeciesCount }}</span>
+        species <br>in
+        <span class="count-text">{{ analysis.totalObservationsCount }}</span>
+        {{ analysis.totalObservationsCount | observationPlural }}
+    </p>
+    } @else {
+    <p class="alert alert-info" data-testid="analysis-count-zero">
         You have not yet logged any observations...<br>
         <a routerLink="/observation/create">Click here</a> to add your first one
     </p>
-
-</ng-container>
-
-<ng-template #loadingOrError>
-    <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
-        <strong>Whoops!</strong> There was an error retrieving the data.<br>
-        <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
-            (click)="reload()">Try Again</button>
-    </div>
-</ng-template>
-
-
-<ng-template #loading>
-    <app-loading></app-loading>
-</ng-template>
+    }
+</div>
+} @else if (_service.isError | async) {
+<p class="alert alert-danger" data-testid="error">
+    <strong>Whoops!</strong> There was an error retrieving the data.<br>
+    <button mat-button mat-raised-button type="button" class="btn" (click)="reload()">Try Again</button>
+</p>
+} @else {
+<app-loading></app-loading>
+}

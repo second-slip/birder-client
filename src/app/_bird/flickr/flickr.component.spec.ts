@@ -5,7 +5,6 @@ import { expectText } from 'src/app/testing/element.spec-helper';
 import { photoUrlsArray } from 'src/app/testing/flickr-recordings-api-tests-helper';
 import { FlickrComponent } from './flickr.component';
 import { FlickrService } from './flickr.service';
-import { NgbCarousel, NgbSlide } from '@ng-bootstrap/ng-bootstrap';
 
 describe('FlickrComponent', () => {
   let component: FlickrComponent;
@@ -29,7 +28,7 @@ describe('FlickrComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-      imports: [FlickrComponent, NgbCarousel, NgbSlide]
+      imports: [FlickrComponent]
     })
       .overrideComponent(FlickrComponent,
         {
@@ -149,9 +148,10 @@ describe('FlickrComponent', () => {
         images: of(null),
         isError: of(true)
       });
-      expectText(fixture, 'error', 'Whoops! An error occurred. Please try again. ');
+
       const error = fixture.nativeElement as HTMLElement;
-      expect(error.querySelector('[data-testid="error"]')?.textContent).toBeDefined();
+      expect(error.querySelector('[data-testid="error"]')).toBeTruthy();
+      expect(error.querySelector('[data-testid="error"]')?.textContent).toContain('Whoops! An error occurred. Please try again.');
     }));
 
     it('does not show loading section', fakeAsync(async () => {

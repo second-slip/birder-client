@@ -1,30 +1,22 @@
-<div class="container" *ngIf="_service.images | async as images; else loadingOrError">
-
-    <ngb-carousel *ngIf="images.length; else noImages" data-testid="images">
-        <ng-template ngbSlide *ngFor="let image of images">
-            <div class="img-wrapper">
-                <img class="img-fluid" [src]="image.url" alt="error">
-            </div>
-            <div class="carousel-caption"></div>
-        </ng-template>
-    </ngb-carousel>
-    <div class="photos-info">These photos are from Flickr</div>
-
-
-    <ng-template #noImages>
-        <div data-testid="no-images" class="alert alert-info">
-            <strong>We're sorry!</strong> There are no recordings available for this species
-        </div>
-    </ng-template>
-
-</div>
-
-<ng-template #loadingOrError>
-    <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
-        <strong>Whoops!</strong> An error occurred. Please try again.
+@if (_service.images | async; as images) {
+<div class="standard-container" data-testid="images">
+    @for (image of images; track $index) {
+    <div class="img-wrapper">
+        <img class="img-fluid" [src]="image.url" alt="error">
     </div>
-</ng-template>
+    <div class="carousel-caption"></div>
+    } @empty {
+    <div data-testid="no-images" class="alert alert-info">
+        <strong>We're sorry!</strong> There are no recordings available for this species
+    </div>
+    }
+    <div class="photos-info">These photos are from Flickr</div>
+</div>
+} @else if (_service.isError | async) {
 
-<ng-template #loading>
-    <app-loading></app-loading>
-</ng-template>
+<p class="alert alert-danger" data-testid="error">
+    <strong>Whoops!</strong> An error occurred. Please try again.
+</p>
+} @else {
+<app-loading></app-loading>
+}

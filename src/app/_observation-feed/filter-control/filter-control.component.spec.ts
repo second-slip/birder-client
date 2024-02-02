@@ -2,9 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { IAuthUser } from 'src/app/_auth/i-auth-user.dto';
 import { of } from 'rxjs';
-
 import { FilterControlComponent } from './filter-control.component';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { provideRouter } from '@angular/router';
 import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 
@@ -37,7 +35,7 @@ describe('FilterControlComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NgbDropdownModule, FilterControlComponent],
+      imports: [FilterControlComponent],
       providers: [
         { provide: AuthenticationService, useValue: fakeAuthService },
         provideRouter(blankRoutesArray)

@@ -1,15 +1,16 @@
 import { Component, Input } from '@angular/core';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { RouterLink } from '@angular/router';
-import { NgbDropdown, NgbDropdownAnchor, NgbDropdownMenu, NgbDropdownItem } from '@ng-bootstrap/ng-bootstrap';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
-    selector: 'app-filter-control',
-    templateUrl: './filter-control.component.html',
-    styleUrls: ['./filter-control.component.scss'],
-    standalone: true,
-    imports: [NgIf, NgbDropdown, NgbDropdownAnchor, NgbDropdownMenu, NgbDropdownItem, RouterLink, AsyncPipe]
+  selector: 'app-filter-control',
+  templateUrl: './filter-control.component.html',
+  styleUrls: ['./filter-control.component.scss'],
+  standalone: true,
+  imports: [MatButtonModule, MatMenuModule, RouterLink, AsyncPipe]
 })
 export class FilterControlComponent {
   @Input() currentFilter: string;

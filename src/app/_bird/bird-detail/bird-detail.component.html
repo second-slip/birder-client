@@ -1,48 +1,38 @@
-<div class="bird-detail-container" *ngIf="(_service.getBird | async) as bird; else loadingOrError">
+@if (_service.getBird | async; as bird) {
+
+<div class="standard-container">
 
     <h1 data-testid="main-title">{{ bird.englishName }}<small><i> {{ bird.species }}</i></small></h1>
 
     <hr>
-    <!-- lazy load tab contents...................... -->
 
-    <ul ngbNav #nav="ngbNav" class="nav-tabs" data-testid="bird-detail-tabs">
-        <li [ngbNavItem]="1">
-            <a ngbNavLink>Information</a>
-            <ng-template ngbNavContent>
+    <mat-tab-group>
+        <mat-tab label="Information">
+            <ng-template matTabContent>
                 <app-bird-info [bird]="bird"></app-bird-info>
             </ng-template>
-        </li>
-        <li [ngbNavItem]="2">
-            <a ngbNavLink>Flickr photos</a>
-            <ng-template ngbNavContent>
+        </mat-tab>
+        <mat-tab label="Flickr photos">
+            <ng-template matTabContent>
                 <app-flickr [species]="bird.species"></app-flickr>
             </ng-template>
-        </li>
-        <li [ngbNavItem]="3">
-            <a ngbNavLink>Song Recordings</a>
-            <ng-template ngbNavContent>
+        </mat-tab>
+        <mat-tab label="Song recordings">
+            <ng-template matTabContent>
                 <app-recordings [species]="bird.species"></app-recordings>
-
             </ng-template>
-        </li>
-        <li [ngbNavItem]="4">
-            <a ngbNavLink>Observations</a>
-            <ng-template ngbNavContent>
-                <!-- <app-bird-observations-list [birdId]="bird?.birdId"></app-bird-observations-list> -->
+        </mat-tab>
+        <mat-tab label="Observations">
+            <ng-template matTabContent>
                 <app-lorem-ipsum></app-lorem-ipsum>
             </ng-template>
-        </li>
-        <li [ngbNavItem]="5">
-            <a ngbNavLink>Distribution map</a>
-            <ng-template ngbNavContent>
+        </mat-tab>
+        <mat-tab label="Distribution map">
+            <ng-template matTabContent>
                 <app-lorem-ipsum></app-lorem-ipsum>
-                <!-- <app-distribution-map-user></app-distribution-map-user> -->
             </ng-template>
-        </li>
-    </ul>
-
-    <div [ngbNavOutlet]="nav" class="mt-2"></div>
-
+        </mat-tab>
+    </mat-tab-group>
 
     <div class="navigation-menu">
         <hr>
@@ -52,18 +42,12 @@
     </div>
 
 </div>
-
-
-<ng-template #loadingOrError>
-    <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
-        <strong>Whoops!</strong> There was an error retrieving the data.<br>
-        <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
-            (click)="reload()">Try
-            Again</button>
-    </div>
-</ng-template>
-
-
-<ng-template #loading>
-    <app-loading></app-loading>
-</ng-template>
+} @else if (_service.isError | async) {
+<div class="alert alert-danger" data-testid="error">
+    <strong>Whoops!</strong> There was an error retrieving the data.<br>
+    <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+        (click)="reload()">Try Again</button>
+</div>
+} @else {
+<app-loading></app-loading>
+}

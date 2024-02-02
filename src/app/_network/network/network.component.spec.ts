@@ -1,11 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { NetworkComponent } from './network.component';
 import { NetworkFindComponent } from '../network-find/network-find.component';
 import { NetworkSuggestionComponent } from '../network-suggestion/network-suggestion.component';
 import { MockComponent } from 'ng-mocks';
 import { NetworkSummaryComponent } from '../network-summary/network-summary.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('NetworkComponent', () => {
   let component: NetworkComponent;
@@ -13,7 +12,7 @@ describe('NetworkComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NgbNavModule, NetworkComponent]
+      imports: [NoopAnimationsModule, NetworkComponent]
     })
       .overrideComponent(NetworkComponent, {
         remove: { imports: [NetworkFindComponent, NetworkSuggestionComponent, NetworkSummaryComponent] },

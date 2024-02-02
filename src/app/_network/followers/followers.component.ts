@@ -1,11 +1,9 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { FollowersService } from './followers.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { NetworkUserComponent } from '../network-user/network-user.component';
-import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLink, NgbNavLinkBase } from '@ng-bootstrap/ng-bootstrap';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-followers',
@@ -13,7 +11,7 @@ import { NgIf, AsyncPipe } from '@angular/common';
   styleUrls: ['./followers.component.scss'],
   providers: [FollowersService],
   standalone: true,
-  imports: [NgIf, NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLink, NgbNavLinkBase, RouterLink, NetworkUserComponent, LoadingComponent, AsyncPipe]
+  imports: [RouterLink, NetworkUserComponent, LoadingComponent, AsyncPipe]
 })
 export class FollowersComponent implements OnInit {
   @Input() username: string;

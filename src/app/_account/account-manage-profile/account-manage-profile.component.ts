@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
@@ -16,7 +16,6 @@ import { NgIf, NgFor } from '@angular/common';
     selector: 'app-account-manage-profile',
     templateUrl: './account-manage-profile.component.html',
     styleUrls: ['./account-manage-profile.component.scss'],
-    encapsulation: ViewEncapsulation.None,
     standalone: true,
     imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor, LoadingComponent]
 })

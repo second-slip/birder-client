@@ -1,34 +1,26 @@
-<div class="main-container">
+<div class="standard-container">
     <h1>Account Manager</h1>
 
-    <div class="d-flex">
-        <ul ngbNav #nav="ngbNav" class="nav-pills" orientation="vertical">
-            <li ngbNavItem="0">
-                <a ngbNavLink>Profile</a>
-                <ng-template ngbNavContent>
-                    <app-account-manage-profile></app-account-manage-profile>
-                </ng-template>
-            </li>
-            <li ngbNavItem="1">
-                <a ngbNavLink>Password</a>
-                <ng-template ngbNavContent>
-                    <app-account-manage-password></app-account-manage-password>
-                </ng-template>
-            </li>
-            <li ngbNavItem="2">
-                <a ngbNavLink>Location</a>
-                <ng-template ngbNavContent>
-                    <app-account-manage-location></app-account-manage-location>
-                </ng-template>
-            </li>
-            <li ngbNavItem="3">
-                <a ngbNavLink>Avatar</a>
-                <ng-template ngbNavContent>
-                    <app-account-manage-avatar></app-account-manage-avatar>
-                </ng-template>
-            </li>
-        </ul>
-
-        <div [ngbNavOutlet]="nav" class="p-2 flex-fill"></div>
-    </div>
+    <mat-tab-group>
+        <mat-tab label="Profile">
+            <ng-template matTabContent>
+                <app-account-manage-profile></app-account-manage-profile>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Password">
+            <ng-template matTabContent>
+                <app-account-manage-password></app-account-manage-password>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Location">
+            <ng-template matTabContent>
+                <app-account-manage-location></app-account-manage-location>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Avatar">
+            <ng-template matTabContent>
+                <app-account-manage-avatar></app-account-manage-avatar>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
@@ -14,7 +14,6 @@ import { NgIf, NgFor } from '@angular/common';
     selector: 'app-account-manage-password',
     templateUrl: './account-manage-password.component.html',
     styleUrls: ['./account-manage-password.component.scss'],
-    encapsulation: ViewEncapsulation.None,
     standalone: true,
     imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor, LoadingComponent]
 })

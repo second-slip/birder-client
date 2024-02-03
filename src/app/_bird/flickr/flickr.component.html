@@ -1,6 +1,5 @@
 <div class="standard-container">
     @if (_service.images | async; as images) {
-    <!-- data-testid="images" -->
     <mat-grid-list cols="3" rowHeight="2:1">
         @for (image of images; track $index) {
         <mat-grid-tile>

@@ -63,3 +63,17 @@ export class FlickrService implements OnDestroy {
     this._subscription.complete();
   }
 }
+
+//   ---> fake images for testing
+// let k: Array<{ url: string }> = [
+//   { url: 'https://picsum.photos/200/300/?random' },
+//   { url: 'https://picsum.photos/200/300/?random' },
+//   { url: 'https://picsum.photos/200/300/?random' },
+//   { url: 'https://picsum.photos/200/300/?random' },
+//   { url: 'https://picsum.photos/200/300/?random' },
+//   { url: 'https://picsum.photos/200/300/?random' },
+//   { url: 'https://picsum.photos/200/300/?random' },
+//   { url: 'https://picsum.photos/200/300/?random' },
+//   { url: 'https://picsum.photos/200/300/?random' }
+// ];
+// this._images$.next(k);

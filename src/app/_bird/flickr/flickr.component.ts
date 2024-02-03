@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FlickrService } from './flickr.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { AsyncPipe } from '@angular/common';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-flickr',
@@ -9,7 +10,7 @@ import { AsyncPipe } from '@angular/common';
   styleUrls: ['./flickr.component.scss'],
   providers: [FlickrService],
   standalone: true,
-  imports: [LoadingComponent, AsyncPipe]
+  imports: [LoadingComponent, AsyncPipe, MatGridListModule]
 })
 export class FlickrComponent implements OnInit {
   @Input() species: string;
@@ -17,6 +18,10 @@ export class FlickrComponent implements OnInit {
   constructor(readonly _service: FlickrService) { }
 
   ngOnInit(): void {
+    this._getImages();
+  }
+  
+  retry(): void {
     this._getImages();
   }
 

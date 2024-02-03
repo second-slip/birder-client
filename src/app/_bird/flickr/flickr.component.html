@@ -1,22 +1,25 @@
-@if (_service.images | async; as images) {
-<div class="standard-container" data-testid="images">
-    @for (image of images; track $index) {
-    <div class="img-wrapper">
-        <img class="img-fluid" [src]="image.url" alt="error">
-    </div>
-    <div class="carousel-caption"></div>
-    } @empty {
-    <div data-testid="no-images" class="alert alert-info">
-        <strong>We're sorry!</strong> There are no recordings available for this species
-    </div>
+<div class="standard-container">
+    @if (_service.images | async; as images) {
+    <!-- data-testid="images" -->
+    <mat-grid-list cols="3" rowHeight="2:1">
+        @for (image of images; track $index) {
+        <mat-grid-tile>
+            <img [src]='image.url' class="tile-image">
+        </mat-grid-tile>
+        }
+        @empty {
+        <div data-testid="no-images" class="alert alert-info">
+            <strong>We're sorry!</strong> There are no recordings available for this species
+        </div>
+        }
+        <!-- <div class="photos-info">These photos are from Flickr</div> -->
+    </mat-grid-list>
+    } @else if (_service.isError | async) {
+    <p class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> There was an error retrieving the data.<br>
+        <button mat-button mat-raised-button type="button" class="btn" (click)="retry()">Try Again</button>
+    </p>
+    } @else {
+    <app-loading></app-loading>
     }
-    <div class="photos-info">These photos are from Flickr</div>
 </div>
-} @else if (_service.isError | async) {
-
-<p class="alert alert-danger" data-testid="error">
-    <strong>Whoops!</strong> An error occurred. Please try again.
-</p>
-} @else {
-<app-loading></app-loading>
-}

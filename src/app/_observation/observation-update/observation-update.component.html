@@ -44,7 +44,7 @@
                     }
                 </mat-form-field>
 
-                <app-select-date-time [dateForm]="dateForm"></app-select-date-time>
+                <app-select-date-time [dateTime]="observation.observationDateTime.toISOString()"></app-select-date-time>
 
                 <button matStepperNext type="button" class="btn btn-light btn-small">Next</button>
             </mat-step>

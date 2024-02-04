@@ -82,6 +82,11 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
       });
   }
 
+  getTimeAsString(date: Date) {
+    return `${date.getHours()}:${(date.getMinutes() < 10 ? "0" : "") +
+      date.getMinutes()}`;
+  }
+
   private _createForms(observation: IUpdateObservation): void {
     try {
       this.selectSpeciesForm = this._formBuilder.group({
@@ -92,7 +97,10 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
       });
 
       this.dateForm = this._formBuilder.group({
-        observationDateTime: new FormControl(observation.observationDateTime, Validators.compose([
+        observationDate: new FormControl(observation.observationDateTime, Validators.compose([
+          Validators.required
+        ])),
+        observationTime: new FormControl(this.getTimeAsString(new Date(observation.observationDateTime)), Validators.compose([
           Validators.required
         ]))
       });

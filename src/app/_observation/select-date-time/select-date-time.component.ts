@@ -1,73 +1,80 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { NgbDate, NgbDateStruct, NgbTimeStruct, NgbInputDatepicker, NgbTimepicker } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
-
-// ideally, it is better to write a proper validator
-// but added complexity because the ngb controls are binded to NgbDate & NgbTimeStruct types
-
-// todo: might be better to change to Angular Material for better testability
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
-    selector: 'app-select-date-time',
-    templateUrl: './select-date-time.component.html',
-    styleUrls: ['./select-date-time.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [FormsModule, ReactiveFormsModule, NgbInputDatepicker, NgIf, NgbTimepicker]
+  selector: 'app-select-date-time',
+  templateUrl: './select-date-time.component.html',
+  styleUrls: ['./select-date-time.component.scss'],
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, CommonModule],
+  providers: [provideNativeDateAdapter()]
 })
 export class SelectDateTimeComponent implements OnInit {
-  @Input() dateForm: FormGroup;
+  @Input() dateTime: string = new Date().toISOString();
+  // @Input() isValid: boolean; // = true; // this.hello();
 
-  public date: NgbDate;
-  public time: NgbTimeStruct;
-  public minDate: NgbDateStruct;
-  public maxDate: NgbDateStruct;
-  public spinners = true;
+  @Output()
+  public dateTimeValid = new EventEmitter<boolean>();
+
+  public form: FormGroup;
+  public minDate: Date;
+  public maxDate: Date;
 
   ngOnInit(): void {
-    this._setInitialValues();
-  }
+    this._createForm(this.dateTime);
 
-  private _setInitialValues(): void {
-    const formValue = new Date(this.dateForm.value.observationDateTime);
+    const currentYear = new Date().getFullYear();
+    this.minDate = new Date(currentYear - 20, 0, 1);
+    this.maxDate = new Date();
 
-    this.date = new NgbDate(formValue.getFullYear(), formValue.getMonth() + 1, formValue.getDate());
-    this.time = { hour: formValue.getHours(), minute: formValue.getMinutes(), second: 0 };
-
-    const now = new Date();
-
-    this.maxDate = {
-      year: now.getFullYear(),
-      month: now.getMonth() + 1,
-      day: now.getDate()
-    }
-
-    this.minDate =  {
-      year: now.getFullYear() - 20,
-      month: now.getMonth() + 1,
-      day: now.getDate()
-    }
-  }
-
-  public updateFormValue(): void {
-    this._updateFormValue();
-  }
-
-  private _updateFormValue(): void {
-
-    if (this.time == null || this.date == null)
-    {
-      this.dateForm.setErrors({ 'invalid': true });
-      // this.dateForm.controls['observationDateTime'].setValue(null);
-    }
-
-    const newDateTime = new Date(this.date.year, this.date.month - 1, this.date.day, this.time.hour, this.time.minute);
-
-    this.dateForm.setValue(
-      {
-        observationDateTime: newDateTime
+    this.form.valueChanges.subscribe(
+      () => {
+        this._notify();
+        this._updateDateTime();
       }
     );
+  }
+
+  private _updateDateTime(): void {
+    const date = new Date(this.form.value.observationDate);
+    const time = this.form.value.observationTime;
+
+    try {
+      var dmy = time.split(":");
+      date.setHours(dmy[0]);
+      date.setMinutes(dmy[1]);
+
+      // todo only return if valid date???????
+      this.dateTime = date.toISOString();
+    }
+    catch {
+      // alert('hello');
+    }
+  }
+
+  private _getTimeAsString(date: Date) {
+    return `${date.getHours()}:${(date.getMinutes() < 10 ? "0" : "") +
+      date.getMinutes()}`;
+  }
+
+  private _notify(): void {
+    this.dateTimeValid.emit(this.form.valid);
+  }
+
+  private _createForm(dateTime: string): void {
+    this.form = new FormGroup({
+      observationDate: new FormControl(new Date(dateTime).toISOString(), Validators.compose([
+        Validators.required
+      ])),
+      observationTime: new FormControl(this._getTimeAsString(new Date(dateTime)), Validators.compose([
+        Validators.required,
+        Validators.pattern('^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$')
+      ]))
+    });
   }
 }

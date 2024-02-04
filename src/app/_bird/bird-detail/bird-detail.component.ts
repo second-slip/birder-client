@@ -21,6 +21,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 export class BirdDetailComponent implements OnInit {
   private _birdId: string;
 
+  // implmeent input binding
+
   constructor(readonly _service: BirdDetailService
     , private readonly _navigation: NavigationService
     , private readonly _route: ActivatedRoute) { }

@@ -1,37 +1,52 @@
-<form [formGroup]="dateForm" novalidate>
+<form [formGroup]="form" novalidate>
 
-    <!-- <label for="observationDateTime">Observation Date and Time</label> -->
-    <div class="date-time-controls">
-        <!-- <label for="observationDateTime">Date:</label> -->
-        <div class="p-2">
-            <div class="input-group">
-                <input class="form-control" placeholder="dd-mm-yyyy" readonly="readonly" name="dp" [(ngModel)]="date"
-                    [ngModelOptions]="{standalone: true}" ngbDatepicker #d="ngbDatepicker" [minDate]="minDate"
-                    [maxDate]="maxDate" (dateSelect)="updateFormValue()" required aria-required="true" data-testid="date" />
-                <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"></button>
-            </div>
-            <div *ngIf="!dateForm.valid && time">
-                <small class="text-danger" data-testid="form-invalid-date-error-message">Pick a date using the control.</small>
-            </div>
-        </div>
+    <mat-form-field>
+        <mat-label>Choose the date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="observationDate" [min]="minDate" [max]="maxDate">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker disabled="false"></mat-datepicker>
+        @if (form.get('observationDate')?.hasError('required'))
+        {
+        <mat-error class="validation-required-email">This field is required.</mat-error>
+        }
+        @if (form.get('observationDate')?.hasError('matDatepickerMin'))
+        {
+        <mat-error class="validation-required-email">The earliest date you can choose is: {{ minDate | date:
+            'dd/MM/yyyy' }}.</mat-error>
+        }
+        @if (form.get('observationDate')?.hasError('matDatepickerMax'))
+        {
+        <mat-error class="validation-required-email">The latest date you can choose is: {{ maxDate | date: 'dd/MM/yyyy'
+            }}.</mat-error>
+        }
+    </mat-form-field>
 
-        <!-- <label for="time">Time:</label> -->
-        <div class="p-2">
-            <div class="input-group">
-                <ngb-timepicker class="hello" [(ngModel)]="time" [ngModelOptions]="{standalone: true}" [spinners]="spinners"
-                    (ngModelChange)="updateFormValue()" required readonly aria-required="true" data-testid="time"></ngb-timepicker>
-            </div>
-            <div *ngIf="!dateForm.valid && !time">
-                <small class="text-danger" data-testid="form-invalid-time-error-message">Pick a time using the control.</small>
-            </div>
-        </div>
-    </div>
+    <mat-form-field class="example-full-width">
+        <mat-label>Choose the time</mat-label>
+        <input matInput type="time" formControlName="observationTime">
+        <mat-hint>HH:MM</mat-hint>
+        @if (form.get('observationTime')?.hasError('required'))
+        {
+        <mat-error class="validation-required-email">The time is required, and should be in the "HH:MM" format (i.e:
+            15:34).</mat-error>
+        }
+        @if (form.get('observationTime')?.hasError('pattern'))
+        {
+        <mat-error class="validation-required-email">This field is required. The time must be in the format
+            HH:MM.</mat-error>
+        }
+    </mat-form-field>
+
 </form>
 
-<!-- <div class="p-2">
-    <p>{{ date | json }}</p>
-    <p>{{ time | json }}</p>
-    <p>form value: {{ dateForm.value | json }}</p>
-    <p>form errors: {{ dateForm.errors | json }}</p>
-    <p>{{ dateForm.valid | json}}</p>
-</div> -->
+<br>
+<br>
+
+<p>dateForm value: {{ form.value | json }}</p>
+<hr>
+<p>dateTime value: {{ dateTime | json }}</p>
+<hr>
+<p>dateForm valid?: {{ form.valid | json }}</p>
+<p>form errors: {{ form.get('observationDate')?.errors| json }}</p>
+<hr>
+<p>dateTimeValid: {{ dateTimeValid | async }} </p>

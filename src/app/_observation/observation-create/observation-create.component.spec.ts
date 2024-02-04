@@ -1,4 +1,3 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { of, throwError } from 'rxjs';
@@ -10,7 +9,7 @@ import { ObservationCreateComponent } from './observation-create.component';
 import { SelectSpeciesComponent } from '../select-species/select-species.component';
 import { SelectDateTimeComponent } from '../select-date-time/select-date-time.component';
 import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
-import { MockComponent } from 'ng-mocks';
+import { MockComponent, MockRender } from 'ng-mocks';
 import { MatStepperModule } from '@angular/material/stepper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Router, Routes } from '@angular/router';
@@ -23,6 +22,7 @@ import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { By } from '@angular/platform-browser';
 import { userModel } from 'src/app/testing/auth-test-helpers';
 import { fakeIBirdSummary } from 'src/app/testing/birds-helpers';
+import { findComponent } from 'src/app/testing/element.spec-helper';
 
 const routes: Routes = [
   { path: 'login', component: ObservationReadComponent }
@@ -33,6 +33,8 @@ describe('ObservationCreateComponent', () => {
   let fixture: ComponentFixture<ObservationCreateComponent>;
   let loader: HarnessLoader;
   let router: Router;
+
+  let counter1: SelectDateTimeComponent;
 
   let fakeAuthService: AuthenticationService;
   let fakeAnnounceChangesService: jasmine.SpyObj<AnnounceChangesService>;
@@ -73,11 +75,12 @@ describe('ObservationCreateComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule, MatStepperModule, BrowserAnimationsModule, ObservationCreateComponent],
+      // declarations: [SelectSpeciesComponent],
       providers: [{ provide: AnnounceChangesService, useValue: fakeAnnounceChangesService },
       { provide: ObservationCrudService, useValue: fakeObservationCrudService },
       { provide: AuthenticationService, useValue: fakeAuthService },
       provideRouter(routes)],
-      schemas: [NO_ERRORS_SCHEMA]
+      // schemas: [NO_ERRORS_SCHEMA]
     })
       .overrideComponent(ObservationCreateComponent, {
         remove: { imports: [SelectSpeciesComponent, SelectDateTimeComponent, ReadWriteMapComponent] },
@@ -100,12 +103,28 @@ describe('ObservationCreateComponent', () => {
     });
 
     fixture.detectChanges();
+
+    const counterEl = fixture.debugElement.query(
+      // Original class!
+      By.directive(SelectDateTimeComponent)
+    );
+    counter1 = counterEl.componentInstance;
+    let dt = new Date(new Date().getFullYear() - 10, 0, 1).toISOString();
+    counter1.dateTime = dt;
+    // counter1.isValid = true;
+
+    // fixture.detectChanges();
+
   };
 
 
   it('SMOKE TEST: should be created', fakeAsync(async () => {
     await setup();
     expect(component).toBeTruthy();
+    expect(counter1).toBeTruthy();
+    console.log(counter1);
+    // expect(counter1.isValid).toBe(true);
+    expect(counter1.dateTime).toBe(new Date(new Date().getFullYear() - 10, 0, 1).toISOString())
   }));
 
   // describe('STEPPER CONTROL TESTS', () => { 
@@ -225,6 +244,13 @@ describe('ObservationCreateComponent', () => {
 
       fixture.componentInstance.addObservationForm.get('quantity')?.setValue('1');
 
+      counter1.dateTimeValid.next(true);
+      // const counter = findComponent(fixture, 'app-select-date-time');
+      // const count = 5;
+      // counter.triggerEventHandler('dateTimeValid', true);
+
+      // fixture.componentInstance.
+
       fixture.detectChanges();
 
       const compiled = fixture.nativeElement as HTMLElement;
@@ -247,6 +273,7 @@ describe('ObservationCreateComponent', () => {
 
       fixture.componentInstance.selectSpeciesForm.get('bird')?.setValue(fakeIBirdSummary);
       fixture.componentInstance.addObservationForm.get('quantity')?.setValue('1');
+      counter1.dateTimeValid.next(true);
 
       const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Save' }));
       await submitBtn.click();
@@ -263,6 +290,7 @@ describe('ObservationCreateComponent', () => {
 
       fixture.componentInstance.selectSpeciesForm.get('bird')?.setValue(fakeIBirdSummary);
       fixture.componentInstance.addObservationForm.get('quantity')?.setValue('1');
+      counter1.dateTimeValid.next(true);
 
       const compiled = fixture.nativeElement as HTMLElement;
       expect(compiled.querySelector('[data-testid="form-submission-error-msg"]')).toBeFalsy();

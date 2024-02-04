@@ -10,7 +10,6 @@ import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { ObservationCrudService } from '../observation-crud.service';
 import { ObservationReadComponent } from '../observation-read/observation-read.component';
-
 import { ObservationUpdateComponent } from './observation-update.component';
 import { userModel } from 'src/app/testing/auth-test-helpers';
 import { HarnessLoader } from '@angular/cdk/testing';

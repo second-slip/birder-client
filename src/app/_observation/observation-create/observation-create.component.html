@@ -6,7 +6,7 @@
 
         <mat-vertical-stepper [linear]="false" #stepper>
 
-            <mat-step [stepControl]="dateForm && selectSpeciesForm && addObservationForm"
+            <mat-step [stepControl]="selectSpeciesForm && addObservationForm"
                 errorMessage="This section is not completed">
 
                 <ng-template matStepLabel><span>Details: what and when?</span></ng-template>
@@ -33,7 +33,7 @@
                     }
                 </mat-form-field>
 
-                <app-select-date-time [dateForm]="dateForm"></app-select-date-time>
+                <app-select-date-time (dateTimeValid)="handleFormChange($event)"></app-select-date-time>
 
                 <button matStepperNext type="button" class="btn btn-light btn-small">Next</button>
             </mat-step>
@@ -70,7 +70,7 @@
             <mat-step>
                 <ng-template matStepLabel><span>Done</span></ng-template>
 
-                @if(addObservationForm.valid && selectSpeciesForm.valid && dateForm.valid) {
+                @if(isFormValid()) {
                 <div class="alert alert-info" data-testid="valid-form-section">
                     The form is complete. Choose 'Save' to add your observation.
                     <p>
@@ -81,7 +81,7 @@
                         </button>
                         } @else {
                         <button mat-button mat-raised-button type="submit" color="primary" class="btn"
-                            [disabled]="!addObservationForm.valid || !addObservationForm.valid || !dateForm.valid">
+                            [disabled]="!isFormValid()">
                             Save
                         </button>
                         }

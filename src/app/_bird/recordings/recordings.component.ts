@@ -31,7 +31,7 @@ export class RecordingsComponent implements OnInit {
     this._service.getData(this.species);
   }
 
-  handlePageEvent(e: PageEvent) {
+  public handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.pageSize = e.pageSize;
     this.page = e.pageIndex;

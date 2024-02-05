@@ -6,11 +6,15 @@ import { recordingsResponse } from 'src/app/testing/flickr-recordings-api-tests-
 import { RecordingsComponent } from './recordings.component';
 import { RecordingsService } from './recordings.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatPaginatorHarness } from '@angular/material/paginator/testing';
 
 describe('RecordingsComponent', () => {
   let component: RecordingsComponent;
   let fixture: ComponentFixture<RecordingsComponent>;
   let fakeRecordingsService: jasmine.SpyObj<RecordingsService>;
+  let loader: HarnessLoader;
 
   const setup = async (
     fakePropertyValues?: jasmine.SpyObjPropertyNames<RecordingsService>) => {
@@ -28,8 +32,8 @@ describe('RecordingsComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-    imports: [RecordingsComponent, NoopAnimationsModule]
-})
+      imports: [RecordingsComponent, NoopAnimationsModule]
+    })
       .overrideComponent(RecordingsComponent,
         {
           set: {
@@ -40,6 +44,7 @@ describe('RecordingsComponent', () => {
 
     fixture = TestBed.createComponent(RecordingsComponent);
     component = fixture.componentInstance;
+    loader = TestbedHarnessEnvironment.loader(fixture);
     fixture.detectChanges();
   };
 
@@ -82,6 +87,52 @@ describe('RecordingsComponent', () => {
       const loading = debugElement.query(By.css('app-loading'));
       expect(loading).toBeNull();
     }));
+
+    describe('pagination control', () => {
+      it('should load all paginator harnesses', async () => {
+        await setup();
+
+        const paginators = await loader.getAllHarnesses(MatPaginatorHarness);
+        expect(paginators.length).toBe(1);
+      });
+
+      it('should be able to navigate between pages', async () => {
+        await setup();
+
+        spyOn(component, 'handlePageEvent').and.callThrough();
+
+        const paginator = await loader.getHarness(MatPaginatorHarness);
+
+        expect(component.page).toBe(0);
+        await paginator.goToNextPage();
+        expect(component.handlePageEvent).toHaveBeenCalledTimes(1);
+        expect(component.page).toBe(1);
+        await paginator.goToPreviousPage();
+        expect(component.handlePageEvent).toHaveBeenCalledTimes(2);
+        expect(component.page).toBe(0);
+      });
+
+      it('should be able to go to the last page', async () => {
+        await setup();
+
+        const paginator = await loader.getHarness(MatPaginatorHarness);
+
+        expect(component.page).toBe(0);
+        await paginator.goToLastPage();
+        // recordingsResponse.length = 55
+        expect(component.page).toBe(5);
+      });
+
+      it('should be able to set the page size', async () => {
+        await setup();
+
+        const paginator = await loader.getHarness(MatPaginatorHarness);
+
+        expect(component.pageSize).toBe(10);
+        await paginator.setPageSize(25);
+        expect(component.pageSize).toBe(25);
+      });
+    });
   });
 
 

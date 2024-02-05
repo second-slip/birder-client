@@ -38,16 +38,17 @@ describe('NetworkListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [NetworkListComponent, NoopAnimationsModule, MockComponent(FollowersComponent), MockComponent(FollowingComponent)],
       providers: [{ provide: AuthenticationService, useValue: fakeAuthService },
-      {
-        provide: ActivatedRoute,
-        useValue: {
-          paramMap: of(new Map(Object.entries({
-            username: 'andrew'
-          })))
-          // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
-          // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
-        }
-      }]
+      // {
+      //   provide: ActivatedRoute,
+      //   useValue: {
+      //     paramMap: of(new Map(Object.entries({
+      //       username: 'andrew'
+      //     })))
+      //     // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
+      //     // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
+      //   }
+      // }
+    ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(NetworkListComponent);

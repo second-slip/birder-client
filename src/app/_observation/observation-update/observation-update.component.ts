@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
@@ -31,7 +31,9 @@ import { MatInputModule } from '@angular/material/input';
     SelectDateTimeComponent, SelectSpeciesComponent, ReadWriteMapComponent, LoadingComponent, AsyncPipe]
 })
 export class ObservationUpdateComponent implements OnInit, OnDestroy {
-  private _observationId: string;
+  @Input() 
+  id: string;
+
   private _subscription = new Subject();
   public loadingError: boolean = false;
   public updateError: boolean = false;
@@ -40,7 +42,6 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
   public selectSpeciesForm: FormGroup;
   public updateObservationForm: FormGroup;
   public isDateTimeValid: boolean;
-  // public dateForm: FormGroup;
 
   @ViewChild(ReadWriteMapComponent)
   private _mapComponent: ReadWriteMapComponent;
@@ -57,14 +58,11 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
     , private readonly _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this._route.paramMap.subscribe(pmap => {
-      this._getData(pmap.get('id'));
-    });
+    this._getData(this.id);
   }
 
   private _getData(id: string | null): void {
     if (id) {
-      this._observationId = id;
       this._getObservation();
     }
     else {
@@ -73,22 +71,18 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
   }
 
   private _getObservation(): void {
-    this._observationCrudService.getObservation(this._observationId)
+    this._observationCrudService.getObservation(this.id)
       .pipe(takeUntil(this._subscription))
       .subscribe({
         next: (r) => {
-          this._createForms(r);
           this.observation = r;
+          this.observation.observationDateTime = new Date(this.observation.observationDateTime);
+          this._createForms(r);
         },
         error: (e) => {
           this.loadingError = true;
         }
       });
-  }
-
-  getTimeAsString(date: Date) {
-    return `${date.getHours()}:${(date.getMinutes() < 10 ? "0" : "") +
-      date.getMinutes()}`;
   }
 
   private _createForms(observation: IUpdateObservation): void {
@@ -99,15 +93,6 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
           BirdsListValidator()
         ]))
       });
-
-      // this.dateForm = this._formBuilder.group({
-      //   observationDate: new FormControl(observation.observationDateTime, Validators.compose([
-      //     Validators.required
-      //   ])),
-      //   observationTime: new FormControl(this.getTimeAsString(new Date(observation.observationDateTime)), Validators.compose([
-      //     Validators.required
-      //   ]))
-      // });
 
       this.updateObservationForm = this._formBuilder.group({
         observationId: new FormControl(observation.observationId),
@@ -128,7 +113,7 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
 
     const model = this._mapToModel();
 
-    this._observationCrudService.updateObservation(this._observationId, model)
+    this._observationCrudService.updateObservation(this.id, model)
       .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
       .subscribe({
         next: (r) => {
@@ -182,8 +167,8 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
   }
 
   public reload(): void {
-    if (this._observationId) {
-      this._getData(this._observationId);
+    if (this.id) {
+      this._getData(this.id);
     } else {
       this._redirect();
     }

@@ -9,6 +9,7 @@ import { LifeListComponent } from './life-list.component';
 import { LifeListService } from './life-list.service';
 import { provideRouter } from '@angular/router';
 import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('LifeListComponent', () => {
   let component: LifeListComponent;
@@ -41,7 +42,7 @@ describe('LifeListComponent', () => {
       });
 
     await TestBed.configureTestingModule({
-      imports: [LifeListComponent],
+      imports: [LifeListComponent, NoopAnimationsModule],
       providers: [{ provide: ObservationCountService, useValue: fakeCountService },
         provideRouter(blankRoutesArray)],
       schemas: [NO_ERRORS_SCHEMA]

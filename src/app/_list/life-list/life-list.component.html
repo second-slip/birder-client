@@ -1,71 +1,63 @@
-<div class="life-list-container">
+<div class="standard-container">
 
     <h1>Your Life List</h1>
 
-    <ng-container *ngIf="(_analysisService.count | async) as analysis">
-        <p>You have spotted {{ analysis.uniqueSpeciesCount }} species:</p>
-    </ng-container>
+    @if (_analysisService.count | async; as analysis) {
+    <p>You have spotted {{ analysis.uniqueSpeciesCount }} species:</p>
+    }
 
-    <ng-container *ngIf="(_service.lifeList | async) as list; else loadingOrError">
+    @if (_service.lifeList | async; as list) {
 
-        <p *ngIf="!list.length" data-testid="no-items" class="alert alert-info">
-                <strong>Nothing yet to show</strong><br>
-                You have not yet logged any observations...<br>
-                Why not <a routerLink="/observation/create">click here</a> to add your first one?
-        </p>
+    @if (list.length) {
+    <table class="table table-striped" data-testid="life-list-table">
+        <thead>
+            <tr>
+                <!-- <th scope="col">#</th> -->
+                <th scope="col">Count</th>
+                <th scope="col">Species</th>
+                <th class="hide-small" scope="col">Status / Population</th>
+                <th scope="col">Risk Flag</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let record of list | slice: (page) * pageSize : (page) * pageSize + pageSize; index as i">
+                <!-- better adding rank on the server! -->
+                <!-- add equal rank positions too -->
+                <!-- <th scope="row">{{ i + 1 }}</th> -->
+                <td>{{ record.count }}</td>
+                <td><a routerLink="/bird/detail/{{record.birdId}}">{{ record.englishName }}</a>
+                    <br><small><em>{{ record.species }}</em></small>
+                </td>
+                <td class="hide-small"><small>{{ record.btoStatusInBritain }} <br> {{
+                        record.populationSize
+                        }}</small></td>
+                <td [style.color]="record.conservationListColourCode"><small>{{
+                        record.conservationStatus
+                        }}</small>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    } @else {
+    <p data-testid="no-items" class="alert alert-info">
+        <strong>Nothing yet to show</strong><br>
+        You have not yet logged any observations...<br>
+        Why not <a routerLink="/observation/create">click here</a> to add your first one?
+    </p>
+    }
 
-        <table class="table table-striped" *ngIf="list.length" data-testid="life-list-table">
-            <thead>
-                <tr>
-                    <!-- <th scope="col">#</th> -->
-                    <th scope="col">Count</th>
-                    <th scope="col">Species</th>
-                    <th class="hide-small" scope="col">Status / Population</th>
-                    <th scope="col">Risk Flag</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr
-                    *ngFor="let record of list | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
-                    <!-- better adding rank on the server! -->
-                    <!-- add equal rank positions too -->
-                    <!-- <th scope="row">{{ i + 1 }}</th> -->
-                    <td>{{ record.count | number }}</td>
-                    <td><a routerLink="/bird/detail/{{record.birdId}}">{{ record.englishName }}</a>
-                        <br><small><em>{{ record.species }}</em></small>
-                    </td>
-                    <td class="hide-small"><small>{{ record.btoStatusInBritain }} <br> {{
-                            record.populationSize
-                            }}</small></td>
-                    <td [style.color]="record.conservationListColourCode"><small>{{
-                            record.conservationStatus
-                            }}</small>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <hr>
+    <mat-paginator [pageIndex]="page" [length]="list.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25]"
+        aria-label="Select page" (page)="handlePageEvent($event)">
+    </mat-paginator>
 
-        <hr>
-
-        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="list.length"
-            class="d-flex justify-content-center" size="sm" [maxSize]="9" [rotate]="true" [boundaryLinks]="true"
-            (pageChange)="changePage()">
-        </ngb-pagination>
-
-    </ng-container>
-
-
-    <ng-template #loadingOrError>
-        <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
-            <strong>Whoops!</strong> There was an error retrieving the data.<br>
-            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
-                (click)="reload()">Try
-                Again</button>
-        </div>
-    </ng-template>
-
-    <ng-template #loading>
-        <app-loading></app-loading>
-    </ng-template>
-
+    } @else if (_service.isError | async) {
+    <p class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> There was an error retrieving the data.<br>
+        <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+            (click)="reload()">Try Again</button>
+    </p>
+    } @else {
+    <app-loading></app-loading>
+    }
 </div>

@@ -1,8 +1,7 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { ActivatedRoute, provideRouter, Router, Routes } from '@angular/router';
+import { provideRouter, Router, Routes, withComponentInputBinding } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { singleObservationAuthUser, updateObservationModel } from 'src/app/testing/observation-test-helpers';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
@@ -89,7 +88,7 @@ describe('ObservationUpdateComponent', () => {
     await TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule, BrowserAnimationsModule, ObservationUpdateComponent], //MatStepperModule
       providers: [
-        provideRouter(routes),
+        provideRouter(routes, withComponentInputBinding()),
         // {
         //   provide: ActivatedRoute,
         //   useValue: {
@@ -104,8 +103,7 @@ describe('ObservationUpdateComponent', () => {
         { provide: ObservationCrudService, useValue: fakeObservationCrudService },
         { provide: NavigationService, useValue: fakeNavService },
         { provide: AuthenticationService, useValue: fakeAuthService }
-      ],
-      // schemas: [NO_ERRORS_SCHEMA]
+      ]
     })
       .overrideComponent(ObservationUpdateComponent, {
         remove: { imports: [SelectSpeciesComponent, SelectDateTimeComponent, ReadWriteMapComponent] },
@@ -127,7 +125,7 @@ describe('ObservationUpdateComponent', () => {
 
   describe('when component is created', () => {
 
-    it('should be created and show the loading placeloader', fakeAsync(async () => {
+    it('should be created and show the loading placeloader', async () => {
       await setup();
 
       expect(component).toBeTruthy();
@@ -135,9 +133,9 @@ describe('ObservationUpdateComponent', () => {
       const { debugElement } = fixture;
       const loading = debugElement.query(By.css('app-loading'));
       expect(loading).toBeTruthy();
-    }));
+    });
 
-    it('should get the id from the route and call data fetch', fakeAsync(async () => {
+    it('should get the id from the route and call data fetch', async () => {
       const expectedRouteArgument = '10';
 
       await setup({
@@ -145,16 +143,16 @@ describe('ObservationUpdateComponent', () => {
       }, {}, expectedRouteArgument);
 
       expect(fakeObservationCrudService.getObservation).toHaveBeenCalledOnceWith(expectedRouteArgument);
-    }));
+    });
 
-    it('should redirect when route argument is null', fakeAsync(async () => {
+    it('should redirect when route argument is null', async () => {
       const expectedRouteArgument = '';
 
       await setup({}, {}, expectedRouteArgument);
 
       expect(fakeObservationCrudService.getObservation).not.toHaveBeenCalled();
       expect(fakeNavService.back).toHaveBeenCalled();
-    }));
+    });
   });
 
   describe('when record cannot be fetched', () => {

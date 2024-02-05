@@ -1,47 +1,43 @@
-<div class="container" *ngIf="_service.recordings | async as recordings; else loadingOrError">
+<div class="standard-container">
+
+    @if (_service.recordings | async; as recordings) {
 
     <h2>Bird song recordings</h2>
 
-    <div *ngIf="recordings.length; else noRecordings">
+    @if (recordings.length) {
 
-        <div *ngFor="let item of recordings | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i"
-            data-testid="recordings">
-            <div>
-                <audio controls>
-                    <source src="{{item.url}}" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
-            </div>
+    <div *ngFor="let item of recordings | slice: (page) * pageSize : (page) * pageSize + pageSize; index as i"
+        data-testid="recordings">
+        <div>
+            <audio controls>
+                <source src="{{item.url}}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
         </div>
-
-        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="recordings.length"
-            class="d-flex justify-content-center" size="sm" [maxSize]="9" [rotate]="true" [boundaryLinks]="true">
-        </ngb-pagination>
-
-        <div class="small-italic">
-            Total recordings: {{ recordings.length }}
-        </div>
-
-        <div><small>The recordings are from <em><a href='https://www.xeno-canto.org/'
-                        target='_blank'>xeno-canto.org</a></em></small></div>
-
     </div>
 
-    <ng-template #noRecordings>
-        <p data-testid="no-recordings" class="alert alert-info">
-            <strong>We're sorry!</strong> There are no recordings available for this species
-        </p>
-    </ng-template>
+    <mat-paginator [pageIndex]="page" [length]="recordings.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25]"
+        aria-label="Select page" (page)="handlePageEvent($event)">
+    </mat-paginator>
+
+    <div class="small-italic">
+        Total recordings: {{ recordings.length }}
+    </div>
+
+    <div><small>The recordings are from <em><a href='https://www.xeno-canto.org/'
+                    target='_blank'>xeno-canto.org</a></em></small></div>
+    } @else {
+    <p data-testid="no-recordings" class="alert alert-info">
+        <strong>We're sorry!</strong> There are no recordings available for this species
+    </p>
+    }
+
+    } @else if (_service.isError | async) {
+    <p class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> An error occurred. Please try again.
+    </p>
+    } @else {
+    <app-loading></app-loading>
+    }
 
 </div>
-
-
-<ng-template #loadingOrError>
-    <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
-        <strong>Whoops!</strong> An error occurred. Please try again.
-    </div>
-</ng-template>
-
-<ng-template #loading>
-    <app-loading></app-loading>
-</ng-template>

@@ -1,23 +1,23 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { RecordingsService } from './recordings.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
-import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
-import { NgIf, NgFor, AsyncPipe, SlicePipe } from '@angular/common';
+import { NgFor, AsyncPipe, SlicePipe } from '@angular/common';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-recordings',
   templateUrl: './recordings.component.html',
   styleUrls: ['./recordings.component.scss'],
   providers: [RecordingsService],
-  encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [NgIf, NgFor, NgbPagination, LoadingComponent, AsyncPipe, SlicePipe]
+  imports: [NgFor, LoadingComponent, AsyncPipe, SlicePipe, MatPaginatorModule]
 })
 export class RecordingsComponent implements OnInit {
   @Input() species: string;
 
-  public page: number = 1;
+  public page = 0;
   public pageSize = 10;
+  public pageEvent: PageEvent;
 
   constructor(readonly _service: RecordingsService) { }
 
@@ -29,5 +29,17 @@ export class RecordingsComponent implements OnInit {
 
   private _getRecordings(): void {
     this._service.getData(this.species);
+  }
+
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.pageSize = e.pageSize;
+    this.page = e.pageIndex;
+
+    this._changePage();
+  }
+
+  private _changePage(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

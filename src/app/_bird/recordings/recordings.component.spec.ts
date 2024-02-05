@@ -3,9 +3,9 @@ import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { expectText } from 'src/app/testing/element.spec-helper';
 import { recordingsResponse } from 'src/app/testing/flickr-recordings-api-tests-helper';
-
 import { RecordingsComponent } from './recordings.component';
 import { RecordingsService } from './recordings.service';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('RecordingsComponent', () => {
   let component: RecordingsComponent;
@@ -28,7 +28,7 @@ describe('RecordingsComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-    imports: [RecordingsComponent]
+    imports: [RecordingsComponent, NoopAnimationsModule]
 })
       .overrideComponent(RecordingsComponent,
         {

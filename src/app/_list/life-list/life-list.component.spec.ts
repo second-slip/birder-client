@@ -44,7 +44,7 @@ describe('LifeListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [LifeListComponent, NoopAnimationsModule],
       providers: [{ provide: ObservationCountService, useValue: fakeCountService },
-        provideRouter(blankRoutesArray)],
+      provideRouter(blankRoutesArray)],
       schemas: [NO_ERRORS_SCHEMA]
     }).overrideComponent(LifeListComponent,
       {

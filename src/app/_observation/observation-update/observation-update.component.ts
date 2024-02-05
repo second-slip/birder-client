@@ -39,10 +39,14 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
   public observation: IUpdateObservation
   public selectSpeciesForm: FormGroup;
   public updateObservationForm: FormGroup;
-  public dateForm: FormGroup;
+  public isDateTimeValid: boolean;
+  // public dateForm: FormGroup;
 
   @ViewChild(ReadWriteMapComponent)
   private _mapComponent: ReadWriteMapComponent;
+
+  @ViewChild(SelectDateTimeComponent)
+  private _dateComponent: SelectDateTimeComponent;
 
   constructor(readonly _authService: AuthenticationService
     , private readonly _router: Router
@@ -96,14 +100,14 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
         ]))
       });
 
-      this.dateForm = this._formBuilder.group({
-        observationDate: new FormControl(observation.observationDateTime, Validators.compose([
-          Validators.required
-        ])),
-        observationTime: new FormControl(this.getTimeAsString(new Date(observation.observationDateTime)), Validators.compose([
-          Validators.required
-        ]))
-      });
+      // this.dateForm = this._formBuilder.group({
+      //   observationDate: new FormControl(observation.observationDateTime, Validators.compose([
+      //     Validators.required
+      //   ])),
+      //   observationTime: new FormControl(this.getTimeAsString(new Date(observation.observationDateTime)), Validators.compose([
+      //     Validators.required
+      //   ]))
+      // });
 
       this.updateObservationForm = this._formBuilder.group({
         observationId: new FormControl(observation.observationId),
@@ -137,7 +141,7 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
 
   private _mapToModel(): IUpdateObservation {
     const quantity = <Number>(this.updateObservationForm.value.quantity);
-    const dateTime = <Date>(new Date(this.dateForm.value.observationDateTime));
+    const dateTime = <Date>(new Date(this._dateComponent.dateTime));
     const selectedBird = <IBirdSummary>(this.selectSpeciesForm.value);
     const position = <IObservationPosition>{
       latitude: this._mapComponent.latitude,
@@ -163,6 +167,14 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
     }
 
     return observation;
+  }
+
+  public isFormValid(): boolean {
+    return (this.updateObservationForm.valid && this.selectSpeciesForm.valid && this.isDateTimeValid)
+  }
+
+  public handleFormChange(dateTimeValid: boolean): void {
+    this.isDateTimeValid = dateTimeValid;
   }
 
   public redirect(): void {

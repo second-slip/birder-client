@@ -19,7 +19,6 @@ import { SelectSpeciesComponent } from '../select-species/select-species.compone
 import { SelectDateTimeComponent } from '../select-date-time/select-date-time.component';
 import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
 import { MockComponent } from 'ng-mocks';
-import { MatStepperModule } from '@angular/material/stepper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
@@ -30,6 +29,8 @@ describe('ObservationUpdateComponent', () => {
   let fixture: ComponentFixture<ObservationUpdateComponent>;
   let loader: HarnessLoader;
   let router: Router;
+
+  let dateTimePicker: SelectDateTimeComponent;
 
   // let fakeObservationReadService: jasmine.SpyObj<ObservationCreateComponent>;
   let fakeAuthService: AuthenticationService;
@@ -104,7 +105,7 @@ describe('ObservationUpdateComponent', () => {
         { provide: NavigationService, useValue: fakeNavService },
         { provide: AuthenticationService, useValue: fakeAuthService }
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      // schemas: [NO_ERRORS_SCHEMA]
     })
       .overrideComponent(ObservationUpdateComponent, {
         remove: { imports: [SelectSpeciesComponent, SelectDateTimeComponent, ReadWriteMapComponent] },
@@ -260,6 +261,16 @@ describe('ObservationUpdateComponent', () => {
         getAuthUser: of(userModel)
       }, expectedRouteArgument);
 
+      const counterEl = fixture.debugElement.query(
+        By.directive(SelectDateTimeComponent)
+      );
+      dateTimePicker = counterEl.componentInstance;
+      let dt = new Date(new Date().getFullYear() - 10, 0, 1).toISOString();
+      dateTimePicker.dateTime = dt;
+      dateTimePicker.dateTimeValid.next(true);
+
+      fixture.detectChanges();
+
       const compiled = fixture.nativeElement as HTMLElement;
       expect(compiled.querySelector('[data-testid="valid-form-menu"]')).toBeTruthy();
       expect(compiled.querySelector('[data-testid="valid-form-menu"]')?.textContent).toContain('The form is complete. Choose "Update" to save the changes.');
@@ -307,7 +318,7 @@ describe('ObservationUpdateComponent', () => {
 
       const compiled = fixture.nativeElement as HTMLElement;
       expect(compiled.querySelector('[data-testid="not-authorised"]')).toBeTruthy();
-      
+
       const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Go back' }));
       await submitBtn.click();
 
@@ -424,6 +435,16 @@ describe('ObservationUpdateComponent', () => {
         getAuthUser: of(userModel)
       }, expectedRouteArgument);
 
+      const counterEl = fixture.debugElement.query(
+        By.directive(SelectDateTimeComponent)
+      );
+      dateTimePicker = counterEl.componentInstance;
+      let dt = new Date(new Date().getFullYear() - 10, 0, 1).toISOString();
+      dateTimePicker.dateTime = dt;
+      dateTimePicker.dateTimeValid.next(true);
+
+      fixture.detectChanges();
+
       const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Update' }));
       await submitBtn.click();
 
@@ -441,6 +462,16 @@ describe('ObservationUpdateComponent', () => {
       }, {
         getAuthUser: of(userModel)
       }, expectedRouteArgument);
+
+      const counterEl = fixture.debugElement.query(
+        By.directive(SelectDateTimeComponent)
+      );
+      dateTimePicker = counterEl.componentInstance;
+      let dt = new Date(new Date().getFullYear() - 10, 0, 1).toISOString();
+      dateTimePicker.dateTime = dt;
+      dateTimePicker.dateTimeValid.next(true);
+
+      fixture.detectChanges();
 
       const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Update' }));
       await submitBtn.click();

@@ -34,7 +34,7 @@ describe('ObservationCreateComponent', () => {
   let loader: HarnessLoader;
   let router: Router;
 
-  let counter1: SelectDateTimeComponent;
+  let dateTimePicker: SelectDateTimeComponent;
 
   let fakeAuthService: AuthenticationService;
   let fakeAnnounceChangesService: jasmine.SpyObj<AnnounceChangesService>;
@@ -105,33 +105,26 @@ describe('ObservationCreateComponent', () => {
     fixture.detectChanges();
 
     const counterEl = fixture.debugElement.query(
-      // Original class!
       By.directive(SelectDateTimeComponent)
     );
-    counter1 = counterEl.componentInstance;
+    dateTimePicker = counterEl.componentInstance;
     let dt = new Date(new Date().getFullYear() - 10, 0, 1).toISOString();
-    counter1.dateTime = dt;
-    // counter1.isValid = true;
-
-    // fixture.detectChanges();
-
+    dateTimePicker.dateTime = dt;
   };
 
 
   it('SMOKE TEST: should be created', fakeAsync(async () => {
     await setup();
     expect(component).toBeTruthy();
-    expect(counter1).toBeTruthy();
-    console.log(counter1);
-    // expect(counter1.isValid).toBe(true);
-    expect(counter1.dateTime).toBe(new Date(new Date().getFullYear() - 10, 0, 1).toISOString())
+    expect(dateTimePicker).toBeTruthy();
+    console.log(dateTimePicker);
+    // expect(dateTimePicker.isValid).toBe(true);
+    expect(dateTimePicker.dateTime).toBe(new Date(new Date().getFullYear() - 10, 0, 1).toISOString())
   }));
 
   // describe('STEPPER CONTROL TESTS', () => { 
 
   // });
-
-
 
 
   describe('initial form setup (form invalid)', () => {
@@ -176,8 +169,6 @@ describe('ObservationCreateComponent', () => {
       expect(counter).toBeTruthy();
     });
   });
-
-
 
 
   describe('filling out the form', () => {
@@ -230,21 +221,11 @@ describe('ObservationCreateComponent', () => {
     it('should render the valid form section when form is valid', async () => {
       await setup();
 
-      // const controls = component.selectSpeciesForm.controls;
-      // for (const control in controls) {
-      //   // Clear sync validators - use clearAsyncValidators() for async
-      //   // validators
-      //   controls[control].clearValidators();
-      //   // should update just the control and not everything
-      //   controls[control].updateValueAndValidity({ onlySelf: true });
-      // }
-      // component.selectSpeciesForm.updateValueAndValidity();
 
       fixture.componentInstance.selectSpeciesForm.get('bird')?.setValue(fakeIBirdSummary);
-
       fixture.componentInstance.addObservationForm.get('quantity')?.setValue('1');
 
-      counter1.dateTimeValid.next(true);
+      dateTimePicker.dateTimeValid.next(true);
       // const counter = findComponent(fixture, 'app-select-date-time');
       // const count = 5;
       // counter.triggerEventHandler('dateTimeValid', true);
@@ -273,7 +254,7 @@ describe('ObservationCreateComponent', () => {
 
       fixture.componentInstance.selectSpeciesForm.get('bird')?.setValue(fakeIBirdSummary);
       fixture.componentInstance.addObservationForm.get('quantity')?.setValue('1');
-      counter1.dateTimeValid.next(true);
+      dateTimePicker.dateTimeValid.next(true);
 
       const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Save' }));
       await submitBtn.click();
@@ -290,7 +271,7 @@ describe('ObservationCreateComponent', () => {
 
       fixture.componentInstance.selectSpeciesForm.get('bird')?.setValue(fakeIBirdSummary);
       fixture.componentInstance.addObservationForm.get('quantity')?.setValue('1');
-      counter1.dateTimeValid.next(true);
+      dateTimePicker.dateTimeValid.next(true);
 
       const compiled = fixture.nativeElement as HTMLElement;
       expect(compiled.querySelector('[data-testid="form-submission-error-msg"]')).toBeFalsy();

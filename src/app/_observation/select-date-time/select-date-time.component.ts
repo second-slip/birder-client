@@ -15,8 +15,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
   providers: [provideNativeDateAdapter()]
 })
 export class SelectDateTimeComponent implements OnInit {
-  @Input() dateTime: string = new Date().toISOString();
-  // @Input() isValid: boolean; // = true; // this.hello();
+  @Input()
+  dateTime: string = new Date().toISOString();
 
   @Output()
   public dateTimeValid = new EventEmitter<boolean>();
@@ -49,7 +49,6 @@ export class SelectDateTimeComponent implements OnInit {
       date.setHours(dmy[0]);
       date.setMinutes(dmy[1]);
 
-      // todo only return if valid date???????
       this.dateTime = date.toISOString();
     }
     catch {

@@ -19,7 +19,6 @@ import { MatInputModule } from '@angular/material/input';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
 
-
 @Component({
   selector: 'app-observation-create',
   templateUrl: './observation-create.component.html',
@@ -46,11 +45,6 @@ export class ObservationCreateComponent implements OnInit {
   // @ViewChild(AddNotesComponent)
   // private _notesComponent: AddNotesComponent;
 
-  public handleFormChange(dateTimeValid: boolean): void {
-    // console.log('countChange event from CounterComponent', dateTimeValid);
-    this.isDateTimeValid = dateTimeValid;
-  }
-
   constructor(private readonly _router: Router
     , private readonly _formBuilder: FormBuilder
     , private readonly _service: ObservationCrudService
@@ -65,9 +59,6 @@ export class ObservationCreateComponent implements OnInit {
     this.requesting = true;
 
     const model = this._mapToModel();
-    // console.log('~~~~~~~~~~~~~~~');
-    // console.log(this._dateComponent.dateTime);
-    // console.log(this._dateComponent.isValid);
 
     this._service.addObservation(model)
       .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
@@ -81,9 +72,11 @@ export class ObservationCreateComponent implements OnInit {
   }
 
   public isFormValid(): boolean {
-    // console.log('########## ' + this._dateComponent.isValid);
-    // console.log(this._dateComponent.dateTime);
     return (this.addObservationForm.valid && this.selectSpeciesForm.valid && this.isDateTimeValid)
+  }
+
+  public handleFormChange(dateTimeValid: boolean): void {
+    this.isDateTimeValid = dateTimeValid;
   }
 
   private _mapToModel(): ICreateObservation {
@@ -96,7 +89,6 @@ export class ObservationCreateComponent implements OnInit {
       formattedAddress: this._mapComponent.formattedAddress,
       shortAddress: this._mapComponent.shortAddress
     };
-    // console.log(position);
     // const notes: IObservationNote[] = this._notesComponent.notes.map(note => (
     //   { // One can also get the updated notes from this.obervation (object is passed by reference to notes child component)
     //     id: 0,

@@ -1,4 +1,4 @@
-<div class="bird-index-container">
+<div class="standard-container">
 
     <h1>Index of British bird species</h1>
 
@@ -18,82 +18,71 @@
     </div>
     <!-- <pre>filter: {{speciesFilter}}</pre> -->
 
-    <ng-container *ngIf="(_service.getBirds | async) as birds; else loadingOrError">
+    @if (_service.getBirds | async; as birds) {
 
-        <div *ngIf="birds.length" data-testid="main-content">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <!-- <th scope="col">#</th> -->
-                        <!-- <th scope="col"></th> -->
-                        <th scope="col">Species</th>
-                        <th scope="col">Status / Population<sup>1</sup></th>
-                        <th scope="col">Risk Flag<sup>2</sup></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let record of birds; index as i">
-                        <!-- <th scope="row">{{ i + 1 }}</th> -->
-                        <!-- <td>{{ record.birdId }}</td> -->
-                        <td><a routerLink="/bird/detail/{{record.birdId}}">{{ record.englishName }}</a>
-                            <br><small><em>{{ record.species }}</em></small>
-                        </td>
-                        <td><small>{{ record.btoStatusInBritain }} <br> {{ record.populationSize }}</small></td>
-                        <td [style.color]="record.conservationListColourCode"><small>{{ record.conservationStatus
-                                }}</small>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    @if (birds.length) {
+    <table class="table table-striped" data-testid="main-content">
+        <thead>
+            <tr>
+                <!-- <th scope="col">#</th> -->
+                <!-- <th scope="col"></th> -->
+                <th scope="col">Species</th>
+                <th scope="col">Status / Population<sup>1</sup></th>
+                <th scope="col">Risk Flag<sup>2</sup></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let record of birds; index as i">
+                <!-- <th scope="row">{{ i + 1 }}</th> -->
+                <!-- <td>{{ record.birdId }}</td> -->
+                <td><a routerLink="/bird/detail/{{record.birdId}}">{{ record.englishName }}</a>
+                    <br><small><em>{{ record.species }}</em></small>
+                </td>
+                <td><small>{{ record.btoStatusInBritain }} <br> {{ record.populationSize }}</small></td>
+                <td [style.color]="record.conservationListColourCode"><small>{{ record.conservationStatus
+                        }}</small>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-            <ng-container *ngIf="(_service.getTotalItems | async) as total">
-                <ngb-pagination class="d-flex justify-content-center" [collectionSize]="total" [(page)]="page"
-                    [pageSize]="pageSize" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
-                    (pageChange)="changePage()">
-                </ngb-pagination>
-                <!-- <pre>Current page: {{page}}</pre> -->
-            </ng-container>
-            <hr>
+    @if (_service.getTotalItems | async; as total) {
+    <mat-paginator [pageIndex]="page" [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25]"
+        aria-label="Select page" (page)="handlePageEvent($event)">
+    </mat-paginator>
+    <!-- <pre>Current page: {{page}}</pre> -->
+    }
+    <hr>
 
-            <ng-container>
-                <small><br><sup>1</sup> The British list of 616 species occurring in Britain is kept by the British
-                    Ornithologists'
-                    Union (BOU). See <a href="https://www.bto.org/about-birds/birdfacts/british-list" target="_blank">
-                        here</a>
-                    for
-                    the full data and the explanation.
-                    <br><sup>2</sup> Data are from <i>Birds of Conservation Concern 4: the population status of birds in
-                        the
-                        UK,
-                        Channel Islands and Isle of Man.</i> View a summary <a
-                        href="https://www.bto.org/sites/default/files/publications/state-of-uk-birds-2016.pdf"
-                        target="_blank">
-                        here</a>.</small>
-            </ng-container>
-        </div>
-
-        <ng-container *ngIf="!birds.length">
-            <p class="alert alert-info" data-testid="error-content-zero">
-                <strong>Whoops!</strong>&nbsp;An error occurred<br>
-                <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
-                    Again</button>
-            </p>
-        </ng-container>
-
-    </ng-container>
-
-
-    <ng-template #loadingOrError>
-        <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
-            <strong>Whoops!</strong> There was an error retrieving the data.<br>
-            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
-                (click)="reload()">Try
-                Again</button>
-        </div>
-    </ng-template>
-
-    <ng-template #loading>
-        <app-loading></app-loading>
-    </ng-template>
-
+    <section>
+        <small><br><sup>1</sup> The British list of 616 species occurring in Britain is kept by the British
+            Ornithologists'
+            Union (BOU). See <a href="https://www.bto.org/about-birds/birdfacts/british-list" target="_blank">
+                here</a>
+            for
+            the full data and the explanation.
+            <br><sup>2</sup> Data are from <i>Birds of Conservation Concern 4: the population status of birds in
+                the
+                UK,
+                Channel Islands and Isle of Man.</i> View a summary <a
+                href="https://www.bto.org/sites/default/files/publications/state-of-uk-birds-2016.pdf" target="_blank">
+                here</a>.</small>
+    </section>
+    } @else {
+    <p class="alert alert-info" data-testid="error-content-zero">
+        <strong>Whoops!</strong>&nbsp;An error occurred<br>
+        <button type="button" class="btn btn-primary btn-sm" data-testid="reload-button" (click)="reload()">Try
+            Again</button>
+    </p>
+    }
+    } @else if (_service.isError | async) {
+    <p class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> There was an error retrieving the data.<br>
+        <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+            (click)="reload()">Try
+            Again</button>
+    </p>
+    } @else {
+    <app-loading></app-loading>
+    }
 </div>

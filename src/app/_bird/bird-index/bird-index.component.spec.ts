@@ -8,6 +8,7 @@ import { BirdIndexComponent } from './bird-index.component';
 import { BirdIndexService } from './bird-index.service';
 import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 import { provideRouter } from '@angular/router';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('BirdIndexComponent unit tests', () => {
 
@@ -31,7 +32,7 @@ describe('BirdIndexComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                imports: [BirdIndexComponent],
+                imports: [BirdIndexComponent, NoopAnimationsModule],
                 providers: [provideRouter(blankRoutesArray)],
                 schemas: [NO_ERRORS_SCHEMA]
             })
@@ -94,7 +95,7 @@ describe('BirdIndexComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                imports: [BirdIndexComponent],
+                imports: [BirdIndexComponent, NoopAnimationsModule],
                 providers: [provideRouter(blankRoutesArray)],
                 schemas: [NO_ERRORS_SCHEMA]
             })
@@ -157,7 +158,7 @@ describe('BirdIndexComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                imports: [BirdIndexComponent],
+                imports: [BirdIndexComponent, NoopAnimationsModule],
                 providers: [provideRouter(blankRoutesArray)],
                 schemas: [NO_ERRORS_SCHEMA]
             })
@@ -218,7 +219,7 @@ describe('BirdIndexComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                imports: [BirdIndexComponent],
+                imports: [BirdIndexComponent, NoopAnimationsModule],
                 providers: [provideRouter(blankRoutesArray)],
                 schemas: [NO_ERRORS_SCHEMA]
             })
@@ -280,7 +281,7 @@ describe('BirdIndexComponent unit tests', () => {
             );
 
             await TestBed.configureTestingModule({
-                imports: [BirdIndexComponent],
+                imports: [BirdIndexComponent, NoopAnimationsModule],
                 providers: [provideRouter(blankRoutesArray)],
                 schemas: [NO_ERRORS_SCHEMA]
             })

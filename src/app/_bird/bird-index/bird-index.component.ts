@@ -1,24 +1,24 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BirdIndexService } from './bird-index.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
-import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 import { RouterLink } from '@angular/router';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { NgFor, AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
-    selector: 'app-bird-index',
-    templateUrl: './bird-index.component.html',
-    styleUrls: ['./bird-index.component.scss'],
-    providers: [BirdIndexService],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [FormsModule, NgIf, NgFor, RouterLink, NgbPagination, LoadingComponent, AsyncPipe]
+  selector: 'app-bird-index',
+  templateUrl: './bird-index.component.html',
+  styleUrls: ['./bird-index.component.scss'],
+  providers: [BirdIndexService],
+  standalone: true,
+  imports: [FormsModule, NgFor, RouterLink, LoadingComponent, AsyncPipe, MatPaginatorModule]
 })
 export class BirdIndexComponent implements OnInit {
-  public page = 1;
-  public pageSize = 30;
+  public page = 0;
+  public pageSize = 25;
   public speciesFilter: string = '0';
+  public pageEvent: PageEvent;
 
   constructor(readonly _service: BirdIndexService) { }
 
@@ -34,8 +34,17 @@ export class BirdIndexComponent implements OnInit {
     this._getData();
   }
 
-  public changePage(): void {
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.pageSize = e.pageSize;
+    this.page = e.pageIndex;
+
     this._getData();
+    this._changePage();
+  }
+
+  private _changePage(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   public onChangeFilter(): void {

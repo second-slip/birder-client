@@ -9,15 +9,12 @@ import { singleObservationView, singleObservationViewAuthUser } from 'src/app/te
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { ObservationReadService } from '../observation-read.service';
-
 import { ObservationReadComponent } from './observation-read.component';
 import { ReadOnlyMapComponent } from 'src/app/_map/read-only-map/read-only-map.component';
 import { ViewOnlyNotesComponent } from 'src/app/_observation-note/view-notes/view-only-notes.component';
-import { NavigationEvent } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-view-model';
 import { NavigationMenuComponent } from '../navigation-menu/navigation-menu.component';
 import { MockComponent } from 'ng-mocks';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
 
 // todo: test different tab contents....
 

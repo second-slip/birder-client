@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RecordingsService } from './recordings.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
-import { NgFor, AsyncPipe, SlicePipe } from '@angular/common';
+import { AsyncPipe, SlicePipe } from '@angular/common';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
@@ -10,7 +10,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
   styleUrls: ['./recordings.component.scss'],
   providers: [RecordingsService],
   standalone: true,
-  imports: [NgFor, LoadingComponent, AsyncPipe, SlicePipe, MatPaginatorModule]
+  imports: [LoadingComponent, AsyncPipe, SlicePipe, MatPaginatorModule]
 })
 export class RecordingsComponent implements OnInit {
   @Input() species: string;

@@ -6,14 +6,13 @@
 
     @if (recordings.length) {
 
-    <div *ngFor="let item of recordings | slice: (page) * pageSize : (page) * pageSize + pageSize; index as i"
-        data-testid="recordings">
-        <div>
-            <audio controls>
-                <source src="{{item.url}}" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
-        </div>
+    <div data-testid="recordings">
+        @for (item of recordings | slice: (page) * pageSize : (page) * pageSize + pageSize; track $index) {
+        <audio controls>
+            <source src="{{item.url}}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        }
     </div>
 
     <mat-paginator [pageIndex]="page" [length]="recordings.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25]"

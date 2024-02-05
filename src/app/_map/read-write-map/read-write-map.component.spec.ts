@@ -94,7 +94,6 @@ describe('ReadWriteMapComponent', () => {
         // button click...
         fixture.debugElement.query(By.css('.btn-get-location')).triggerEventHandler('click', null);
 
-
         expect(window.navigator.geolocation.getCurrentPosition).toHaveBeenCalled();
 
         expect(fakeService.reverseGeocode).toHaveBeenCalled();

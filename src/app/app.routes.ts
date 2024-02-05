@@ -15,8 +15,6 @@ import { HomeComponent } from "./_home/home/home.component";
 import { LayoutNoSidebarComponent } from "./_layout/layout-no-sidebar/layout-no-sidebar.component";
 import { LayoutSidebarComponent } from "./_layout/layout-sidebar/layout-sidebar.component";
 import { LifeListComponent } from "./_list/life-list/life-list.component";
-import { FollowersComponent } from "./_network/followers/followers.component";
-import { FollowingComponent } from "./_network/following/following.component";
 import { NetworkComponent } from "./_network/network/network.component";
 import { ObservationFeedComponent } from "./_observation-feed/observation-feed/observation-feed.component";
 import { ObservationCreateComponent } from "./_observation/observation-create/observation-create.component";

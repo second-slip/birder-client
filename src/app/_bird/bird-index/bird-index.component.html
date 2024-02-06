@@ -48,7 +48,7 @@
 
     @if (_service.getTotalItems | async; as total) {
     <mat-paginator [pageIndex]="page" [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25]"
-        aria-label="Select page" (page)="handlePageEvent($event)">
+        aria-label="Select page" [showFirstLastButtons]="true" (page)="handlePageEvent($event)">
     </mat-paginator>
     <!-- <pre>Current page: {{page}}</pre> -->
     }

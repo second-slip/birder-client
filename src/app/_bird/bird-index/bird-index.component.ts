@@ -34,7 +34,7 @@ export class BirdIndexComponent implements OnInit {
     this._getData();
   }
 
-  handlePageEvent(e: PageEvent) {
+  public handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.pageSize = e.pageSize;
     this.page = e.pageIndex;

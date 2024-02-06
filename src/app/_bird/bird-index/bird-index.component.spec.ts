@@ -9,6 +9,9 @@ import { BirdIndexService } from './bird-index.service';
 import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 import { provideRouter } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatPaginatorHarness } from '@angular/material/paginator/testing';
 
 describe('BirdIndexComponent unit tests', () => {
 
@@ -79,6 +82,7 @@ describe('BirdIndexComponent unit tests', () => {
         let fixture: ComponentFixture<BirdIndexComponent>;
         let debugElement: DebugElement;
         let fakeBirdIndexService: BirdIndexService;
+        let loader: HarnessLoader;
 
         beforeEach(async () => {
 
@@ -90,7 +94,7 @@ describe('BirdIndexComponent unit tests', () => {
                 {
                     isError: of(false),
                     getBirds: of(fakeIBirdArray),
-                    getTotalItems: undefined //
+                    getTotalItems: of(fakeIBirdArray.length) //
                 }
             );
 
@@ -110,6 +114,7 @@ describe('BirdIndexComponent unit tests', () => {
             fixture = TestBed.createComponent(BirdIndexComponent);
             fixture.detectChanges();
             debugElement = fixture.debugElement;
+            loader = TestbedHarnessEnvironment.loader(fixture);
         });
 
         it('should call getData on init', () => {
@@ -135,6 +140,56 @@ describe('BirdIndexComponent unit tests', () => {
             const compiled = fixture.nativeElement as HTMLElement;
             expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
         });
+
+        describe('pagination control', () => {
+            it('should load all paginator harnesses', async () => {
+            //   await setup();
+      
+              const paginators = await loader.getAllHarnesses(MatPaginatorHarness);
+              expect(paginators.length).toBe(1);
+            });
+      
+            it('should be able to navigate between pages', async () => {
+            //   await setup();
+      
+              spyOn(fixture.componentInstance, 'handlePageEvent').and.callThrough();
+      
+              const paginator = await loader.getHarness(MatPaginatorHarness);
+
+              expect(fakeBirdIndexService.getData).toHaveBeenCalledTimes(1);
+      
+              expect(fixture.componentInstance.page).toBe(0);
+              await paginator.goToNextPage();
+              expect(fixture.componentInstance.handlePageEvent).toHaveBeenCalledTimes(1);
+              expect(fakeBirdIndexService.getData).toHaveBeenCalledTimes(2);
+              expect(fixture.componentInstance.page).toBe(1);
+              await paginator.goToPreviousPage();
+              expect(fixture.componentInstance.handlePageEvent).toHaveBeenCalledTimes(2);
+              expect(fakeBirdIndexService.getData).toHaveBeenCalledTimes(3);
+              expect(fixture.componentInstance.page).toBe(0);
+            });
+      
+            it('should be able to go to the last page', async () => {
+            //   await setup();
+      
+              const paginator = await loader.getHarness(MatPaginatorHarness);
+      
+              expect(fixture.componentInstance.page).toBe(0);
+              await paginator.goToLastPage();
+              // recordingsResponse.length = 55
+              expect(fixture.componentInstance.page).toBe(1); // zero base, so second page
+            });
+      
+            it('should be able to set the page size', async () => {
+            //   await setup();
+      
+              const paginator = await loader.getHarness(MatPaginatorHarness);
+      
+              expect(fixture.componentInstance.pageSize).toBe(25);
+              await paginator.setPageSize(10);
+              expect(fixture.componentInstance.pageSize).toBe(10);
+            });
+          });
     });
 
     describe('BirdIndexComponent service is called successfully with count = 0', () => {

@@ -17,6 +17,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 export class LifeListComponent implements OnInit {
   public page = 0;
   public pageSize = 5;
+  public pageEvent: PageEvent;
 
   constructor(readonly _service: LifeListService
     , readonly _analysisService: ObservationCountService) { }
@@ -33,9 +34,7 @@ export class LifeListComponent implements OnInit {
     this._getData();
   }
 
-  pageEvent: PageEvent;
-
-  handlePageEvent(e: PageEvent) {
+  public handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.pageSize = e.pageSize;
     this.page = e.pageIndex;

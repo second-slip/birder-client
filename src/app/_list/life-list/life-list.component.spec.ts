@@ -3,19 +3,23 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { expectText, findComponent, findEl } from 'src/app/testing/element.spec-helper';
-import { lifeListModel } from 'src/app/testing/list-test-helpers';
+import { lifeListLongList, lifeListModel } from 'src/app/testing/list-test-helpers';
 import { ObservationCountService } from 'src/app/_analysis/observation-count/observation-count.service';
 import { LifeListComponent } from './life-list.component';
 import { LifeListService } from './life-list.service';
 import { provideRouter } from '@angular/router';
 import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatPaginatorHarness } from '@angular/material/paginator/testing';
 
 describe('LifeListComponent', () => {
   let component: LifeListComponent;
   let fixture: ComponentFixture<LifeListComponent>;
   let fakeCountService: jasmine.SpyObj<ObservationCountService>;
   let fakeListService: jasmine.SpyObj<LifeListService>;
+  let loader: HarnessLoader;
 
   fakeCountService = jasmine.createSpyObj<ObservationCountService>(
     'ObservationCountService',
@@ -55,6 +59,7 @@ describe('LifeListComponent', () => {
 
     fixture = TestBed.createComponent(LifeListComponent);
     component = fixture.componentInstance;
+    loader = TestbedHarnessEnvironment.loader(fixture);
     fixture.detectChanges();
   };
 
@@ -130,6 +135,68 @@ describe('LifeListComponent', () => {
 
       expect(findEl(fixture, 'no-items')).toBeTruthy();
     }));
+
+    describe('pagination control', () => {
+      it('should load all paginator harnesses', async () => {
+        await setup(
+          {
+            isError: of(false),
+            lifeList: of(lifeListLongList)
+          });
+
+        const paginators = await loader.getAllHarnesses(MatPaginatorHarness);
+        expect(paginators.length).toBe(1);
+      });
+
+      it('should be able to navigate between pages', async () => {
+        await setup(
+          {
+            isError: of(false),
+            lifeList: of(lifeListLongList)
+          });
+
+        spyOn(component, 'handlePageEvent').and.callThrough();
+
+        const paginator = await loader.getHarness(MatPaginatorHarness);
+
+        expect(component.page).toBe(0);
+        await paginator.goToNextPage();
+        expect(component.handlePageEvent).toHaveBeenCalledTimes(1);
+        expect(component.page).toBe(1);
+        await paginator.goToPreviousPage();
+        expect(component.handlePageEvent).toHaveBeenCalledTimes(2);
+        expect(component.page).toBe(0);
+      });
+
+      it('should be able to go to the last page', async () => {
+        await setup(
+          {
+            isError: of(false),
+            lifeList: of(lifeListLongList)
+          });
+
+        const paginator = await loader.getHarness(MatPaginatorHarness);
+
+        expect(component.page).toBe(0);
+        await paginator.goToLastPage();
+        // list.length = 40
+        expect(component.page).toBe(7);
+      });
+
+      it('should be able to set the page size', async () => {
+        await setup(
+          {
+            isError: of(false),
+            lifeList: of(lifeListLongList)
+          });
+
+        const paginator = await loader.getHarness(MatPaginatorHarness);
+
+        expect(component.pageSize).toBe(5);
+        await paginator.setPageSize(25);
+        expect(component.pageSize).toBe(25);
+      });
+    });
   });
 
 

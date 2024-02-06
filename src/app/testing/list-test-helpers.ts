@@ -1,6 +1,24 @@
 import { ILifeList } from "../_list/life-list/i-life-list.dto";
 
-
+function generateLifeListArray(): ILifeList[] {
+    const data = [];
+    for (let i = 0; i < 40; i++) {
+        data.push(
+            {
+                birdId: 1044,
+                englishName: 'Coot',
+                species: 'Fulica atra',
+                populationSize: '10,000 - 100,000 Pairs',
+                btoStatusInBritain: 'Resident Breeder, Winter Visitor',
+                conservationStatus: 'Green',
+                conservationListColourCode: 'Green',
+                count: 4
+            }
+        );
+    }
+    return data;
+}
+export const lifeListLongList = generateLifeListArray();
 
 export const lifeListModel: ILifeList[] = [
     {

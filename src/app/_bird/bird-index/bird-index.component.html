@@ -22,30 +22,32 @@
     @if (_service.getBirds | async; as birds) {
 
     @if (birds.length) {
+
     <table class="table table-striped" data-testid="main-content">
         <thead>
             <tr>
                 <!-- <th scope="col">#</th> -->
-                <!-- <th scope="col"></th> -->
                 <th scope="col">Species</th>
                 <th scope="col">Status / Population<sup>1</sup></th>
                 <th scope="col">Risk Flag<sup>2</sup></th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let record of birds; index as i">
-                <!-- <th scope="row">{{ i + 1 }}</th> -->
-                <!-- <td>{{ record.birdId }}</td> -->
+            @for (record of birds; track $index) {
+            <tr>
+                <!-- <td scope="row">{{$index + 1}}</td> -->
                 <td><a routerLink="/bird/detail/{{record.birdId}}">{{ record.englishName }}</a>
-                    <br><small><em>{{ record.species }}</em></small>
+                    <br><small><em>{{ record.species }} </em></small>
                 </td>
                 <td><small>{{ record.btoStatusInBritain }} <br> {{ record.populationSize }}</small></td>
                 <td [style.color]="record.conservationListColourCode"><small>{{ record.conservationStatus
                         }}</small>
                 </td>
             </tr>
+            }
         </tbody>
     </table>
+
 
     @if (_service.getTotalItems | async; as total) {
     <mat-paginator [pageIndex]="page" [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25]"

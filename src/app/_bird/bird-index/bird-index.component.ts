@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BirdIndexService } from './bird-index.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { RouterLink } from '@angular/router';
-import { NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
@@ -12,7 +12,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
   styleUrls: ['./bird-index.component.scss'],
   providers: [BirdIndexService],
   standalone: true,
-  imports: [FormsModule, NgFor, RouterLink, LoadingComponent, AsyncPipe, MatPaginatorModule]
+  imports: [FormsModule, RouterLink, LoadingComponent, AsyncPipe, MatPaginatorModule]
 })
 export class BirdIndexComponent implements OnInit {
   public page = 0;

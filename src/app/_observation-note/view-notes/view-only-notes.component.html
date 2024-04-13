@@ -1,38 +1,37 @@
-<div *ngIf="!notes">
-    <p class="centre">
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        <strong>&nbsp;Loading</strong>
-    </p>
-</div>
+@if (!notes) {
+<p class="centre">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    <strong>&nbsp;Loading</strong>
+</p>
+} @else {
 
-<div *ngIf="notes">
-    <ng-container *ngIf="notes.length; else noItems">
+@if (notes.length) {
 
-        <p>Notes count: {{notes.length}}</p>
+<p>Notes count: {{notes.length}}</p>
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Note</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let note of notes; index as i">
-                    <th scope="row">{{ i + 1 }}</th>
-                    <td>{{ note.noteType }}</td>
-                    <td>{{ note.note }}</td>
-                </tr>
-            </tbody>
-        </table>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th scope="col">Type</th>
+            <th scope="col">Note</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (note of notes; track $index) {
+        <tr>
+            <th scope="row">{{ $index + 1 }}</th>
+            <td>{{ note.noteType }}</td>
+            <td>{{ note.note }}</td>
+        </tr>
+        }
+    </tbody>
+</table>
 
-        <hr>
-    </ng-container>
-
-    <ng-template #noItems>
-        <p class="alert alert-info">
-            No notes linked to this observation
-        </p>
-    </ng-template>
-</div>
+<hr>
+} @else {
+<p class="alert alert-info">
+    No notes linked to this observation
+</p>
+}
+}

@@ -35,7 +35,6 @@
         <tbody>
             @for (record of birds; track $index) {
             <tr>
-                <!-- <td scope="row">{{$index + 1}}</td> -->
                 <td><a routerLink="/bird/detail/{{record.birdId}}">{{ record.englishName }}</a>
                     <br><small><em>{{ record.species }} </em></small>
                 </td>

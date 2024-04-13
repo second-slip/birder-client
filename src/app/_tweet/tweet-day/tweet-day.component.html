@@ -1,26 +1,23 @@
-<ng-container *ngIf="(_service.getTweet | async) as tweet; else loadingOrError">
-    <h1 data-testid="main-title">Tweet of the Day</h1>
-    <h2 class="english-name" data-testid="english-name">
-        <a data-testid="bird-detail-link" routerLink="/bird/detail/{{tweet.birdId}}">{{tweet.englishName}}</a>
-    </h2>
-    <p class="scientific-name" data-testid="scientific-name">{{tweet.species}}</p>
-    <audio controls>
-        <source src="{{tweet.songUrl}}" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    <a class="archive-link" data-testid="archive-link" routerLink="/tweet/archive">View previous days' tweets</a>
-</ng-container>
+@if (_service.getTweet | async; as tweet) {
 
-<ng-template #loadingOrError>
-    <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
-        <strong>Whoops!</strong> There was an error retrieving the data.<br>
-        <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
-            (click)="reload()">Try
-            Again</button>
-    </div>
-</ng-template>
+<h1 data-testid="main-title">Tweet of the Day</h1>
+<h2 class="english-name" data-testid="english-name">
+    <a data-testid="bird-detail-link" routerLink="/bird/detail/{{tweet.birdId}}">{{tweet.englishName}}</a>
+</h2>
+<p class="scientific-name" data-testid="scientific-name">{{tweet.species}}</p>
+<audio controls>
+    <source src="{{tweet.songUrl}}" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+<a class="archive-link" data-testid="archive-link" routerLink="/tweet/archive">View previous days' tweets</a>
+} @else if (_service.isError | async) {
 
-
-<ng-template #loading>
-    <app-loading></app-loading>
-</ng-template>
+<div class="alert alert-danger" data-testid="error">
+    <strong>Whoops!</strong> There was an error retrieving the data.<br>
+    <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+        (click)="reload()">Try
+        Again</button>
+</div>
+}@else {
+<app-loading></app-loading>
+}

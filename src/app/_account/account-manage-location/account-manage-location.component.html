@@ -2,6 +2,12 @@
     <h1>Update your default location</h1>
     <p>Set your default location with this form.</p>
 
+    <!-- @if (_authService.getAuthUser | async; as authUser) {
+        <app-read-write-map [latitude]="authUser.defaultLocationLatitude"
+            [longitude]="authUser.defaultLocationLongitude">
+        </app-read-write-map>
+        } -->
+
     <ng-container *ngIf="(_authService.getAuthUser | async) as authUser">
         <app-read-write-map [latitude]="authUser.defaultLocationLatitude"
             [longitude]="authUser.defaultLocationLongitude">

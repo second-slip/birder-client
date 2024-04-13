@@ -35,15 +35,10 @@ jobs:
     - run: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
     
     - name: Upload coverage reports to Codecov
-      # uses: codecov/codecov-action@v3
       uses: codecov/codecov-action@v4
         with:
-          # fail_ci_if_error: true # optional (default = false)
-          # files: ./coverage1.xml,./coverage2.xml # optional
-          # flags: unittests # optional
-          # name: codecov-umbrella # optional
           token: ${{ secrets.CODECOV_TOKEN }} # required
-          # verbose: true # optional (default = false)
+
     
     - name: Check favicon is up-to-date
       run: real-favicon check-for-update --fail-on-update faviconData.json

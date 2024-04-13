@@ -5,14 +5,14 @@ import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
 import { AccountService } from '../account.service';
 import { IManageLocation } from './i-manage-location.dto';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'app-account-manage-location',
     templateUrl: './account-manage-location.component.html',
     styleUrls: ['./account-manage-location.component.scss'],
     standalone: true,
-    imports: [NgIf, ReadWriteMapComponent, RouterLink, AsyncPipe]
+    imports: [ReadWriteMapComponent, RouterLink, AsyncPipe]
 })
 export class AccountManageLocationComponent implements OnInit, OnDestroy {
   @ViewChild(ReadWriteMapComponent)

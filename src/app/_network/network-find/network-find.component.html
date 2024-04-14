@@ -10,41 +10,37 @@
         <label for="searchTerm" class="sr-only">Search</label>
         <input type="text" class="form-control" id="searchTerm" name="searchTerm" placeholder="type search criterion"
             [(ngModel)]="searchTerm" required data-testid="searchTerm">
-        <button type="submit" class="btn btn-primary" [disabled]="!searchForm.valid" data-testid="submit">Search</button>
-        <!-- <button *ngIf="(searching)" class="btn btn-primary" type="submit" disabled>
-      Searching the Birder network
-      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    </button> -->
+        <button type="submit" class="btn btn-primary" [disabled]="!searchForm.valid"
+            data-testid="submit">Search</button>
     </form>
 
     <hr>
 
-    <ng-container *ngIf="(_service.getSearchResults | async) as results; else loadingOrError">
+    @if (_service.getSearchResults | async; as results) {
 
-        <h3>Search results</h3>
+    <h3>Search results</h3>
 
-        <div *ngIf="results.length" data-testid="search-results">
-            <div *ngFor="let user of results">
-                <app-network-user [user]="user"></app-network-user>
-            </div>
-        </div>
+    @for (user of results; track $index) {
 
-        <div *ngIf="!results.length" data-testid="no-search-results" class="alert alert-info">
-                No results...
-        </div>
-    </ng-container>
-
-    <ng-template #loadingOrError>
-        <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
-            <strong>Whoops!</strong> There was an error retrieving the data.<br>
-            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
-                (click)="reload()" [disabled]="!searchForm.valid">Try
-                Again</button>
-        </div>
-    </ng-template>
-
-    <ng-template #loading>
-        <app-loading *ngIf="searchRequested"></app-loading>
-    </ng-template>
-
+    <div data-testid="search-results">
+        <app-network-user [user]="user"></app-network-user>
+    </div>
+    } @empty {
+    <div data-testid="no-search-results" class="alert alert-info">
+        No results...
+    </div>
+    }
+    }
+    @else if (_service.isError | async) {
+    <div class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> There was an error retrieving the data.<br>
+        <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+            (click)="reload()" [disabled]="!searchForm.valid">Try
+            Again</button>
+    </div>
+    } @else {
+    @if (searchRequested) {
+    <app-loading></app-loading>
+    }
+    }
 </div>

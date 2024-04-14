@@ -1,9 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { NetworkFindService } from './network-find.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
-
 import { NetworkUserComponent } from '../network-user/network-user.component';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -13,7 +12,7 @@ import { FormsModule } from '@angular/forms';
     providers: [NetworkFindService],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [FormsModule, NgIf, NgFor, NetworkUserComponent,  LoadingComponent, AsyncPipe]
+    imports: [FormsModule, NetworkUserComponent,  LoadingComponent, AsyncPipe]
 })
 export class NetworkFindComponent {
   public searchTerm = '';

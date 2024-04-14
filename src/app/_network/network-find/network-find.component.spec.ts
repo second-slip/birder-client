@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
@@ -9,7 +9,6 @@ import { NetworkFindComponent } from './network-find.component';
 import { NetworkFindService } from './network-find.service';
 import { MockComponent } from 'ng-mocks';
 import { NetworkUserComponent } from '../network-user/network-user.component';
-import { LoadingComponent } from 'src/app/_loading/loading/loading.component';
 import { provideRouter } from '@angular/router';
 import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 

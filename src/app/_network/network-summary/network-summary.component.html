@@ -1,31 +1,27 @@
 <div class="network-container">
 
-  <ng-container *ngIf="(_service.getSummary | async) as summary; else loadingOrError">
+  @if (_service.getSummary | async; as summary) {
 
-    <h1 data-testid="h1-title" *ngIf="showTitle">Your Birder Network</h1>
+  @if (showTitle) {
+  <h1 data-testid="h1-title">Your Birder Network</h1>
+  }
 
-    <ng-container class="summary network" *ngIf="(_authService.getAuthUser | async) as authUser">
-      <p data-testid="summary"><a routerLink="/followers/{{authUser.userName}}/1">{{ summary.followersCount }} {{
-          summary.followersCount > 1 ? 'followers' : 'follower' }}</a>
-        /
-        <a routerLink="/following/{{authUser.userName}}/0">{{ summary.followingCount }} following</a>
-      </p>
-    </ng-container>
+  @if (_authService.getAuthUser | async; as authUser) {
+  <p data-testid="summary"><a routerLink="/followers/{{authUser.userName}}/1">{{ summary.followersCount }} {{
+      summary.followersCount > 1 ? 'followers' : 'follower' }}</a>
+    /
+    <a routerLink="/following/{{authUser.userName}}/0">{{ summary.followingCount }} following</a>
+  </p>
+  }
 
-  </ng-container>
-
-  <ng-template #loadingOrError>
-    <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
-      <strong>Whoops!</strong> There was an error retrieving the data.<br>
-      <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
-        (click)="reload()">Try
-        Again</button>
-    </div>
-  </ng-template>
-
-
-  <ng-template #loading>
-    <app-loading></app-loading>
-  </ng-template>
-
+  } @else if (_service.isError | async) {
+  <div class="alert alert-danger" data-testid="error">
+    <strong>Whoops!</strong> There was an error retrieving the data.<br>
+    <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+      (click)="reload()">Try
+      Again</button>
+  </div>
+  } @else {
+  <app-loading></app-loading>
+  }
 </div>

@@ -4,7 +4,7 @@ import { ObservationFeedService } from '../../_observation-feed/observation-feed
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { ObservationFeedItemComponent } from '../observation-feed-item/observation-feed-item.component';
 import { InfiniteScrollComponent } from '../../infinite-scroll/infinite-scroll.component';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { FilterControlComponent } from '../filter-control/filter-control.component';
 
 @Component({
@@ -14,7 +14,7 @@ import { FilterControlComponent } from '../filter-control/filter-control.compone
     providers: [ObservationFeedService],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [FilterControlComponent, NgIf, InfiniteScrollComponent, NgFor, ObservationFeedItemComponent, RouterLink, LoadingComponent, AsyncPipe]
+    imports: [FilterControlComponent, InfiniteScrollComponent, ObservationFeedItemComponent, RouterLink, LoadingComponent, AsyncPipe]
 })
 export class ObservationFeedComponent implements OnInit {
   private _url: string = '';

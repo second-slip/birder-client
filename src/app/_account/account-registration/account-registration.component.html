@@ -1,21 +1,26 @@
-<div class="register-container" *ngIf="userRegisterForm; else loading">
+<div class="register-container">
 
     <h1>New Account Registration</h1>
 
+    @if (submitProgress !== 'success') {
+
     <form [formGroup]="userRegisterForm" novalidate (ngSubmit)="onSubmit(userRegisterForm.value)" autocomplete="off"
-        data-testid="userRegisterForm" *ngIf="submitProgress !== 'success'">
+        data-testid="userRegisterForm">
 
         <div class="form-group">
             <label for="username">Username</label>
             <div class="is-loading">
                 <input class="form-control" id="username" type="text" placeholder="username" formControlName="username"
                     required data-testid="username">
-                <!-- <mat-icon *ngIf="(isUsernameAvailable) && (userRegisterForm.get('username').valid)" matSuffix color="primary" matTooltip="This username is available">check</mat-icon>
-                      <mat-icon *ngIf="(!isUsernameAvailable) && (userRegisterForm.get('username').valid)" matSuffix color="warn" matTooltip="This username is taken">cancel</mat-icon> -->
+                <!-- <mat-icon *If="(isUsernameAvailable) && (userRegisterForm.get('username').valid)" matSuffix color="primary" matTooltip="This username is available">check</mat-icon>
+                      <mat-icon *If="(!isUsernameAvailable) && (userRegisterForm.get('username').valid)" matSuffix color="warn" matTooltip="This username is taken">cancel</mat-icon> -->
+                @if (userRegisterForm.get('username')?.pending) {
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
-                    *ngIf="(userRegisterForm.get('username')?.pending)" style="float: right; margin-left: 8px"></span>
+                    style="float: right; margin-left: 8px"></span>
+                }
             </div>
-            <div *ngFor="let validation of _validation.account_validation_messages.username" data-testid="username-error">
+            <div *ngFor="let validation of _validation.account_validation_messages.username"
+                data-testid="username-error">
                 <small class="text-danger"
                     *ngIf="userRegisterForm.get('username')?.hasError(validation.type) && (userRegisterForm.get('username')?.dirty || userRegisterForm.get('username')?.touched)">
                     {{validation.message}}
@@ -44,7 +49,8 @@
                 <label for="password">Password</label>
                 <input class="form-control" id="password" type="password" placeholder="Password"
                     formControlName="password" required data-testid="password">
-                <div *ngFor="let validation of _validation.account_validation_messages.password" data-testid="password-error">
+                <div *ngFor="let validation of _validation.account_validation_messages.password"
+                    data-testid="password-error">
                     <small class="text-danger"
                         *ngIf="userRegisterForm.get('passwordGroup')?.get('password')?.hasError(validation.type) && (userRegisterForm.get('passwordGroup')?.get('password')?.dirty || userRegisterForm.get('passwordGroup')?.get('password')?.touched)">
                         {{validation.message}}
@@ -68,29 +74,32 @@
 
         <!-- <pre>{{userRegisterForm.value | json}}</pre> -->
 
-        <button *ngIf="!requesting" type="submit" class="btn btn-primary" [disabled]="!userRegisterForm.valid"
-            data-testid="submit">
-            Register
-        </button>
-        <button *ngIf="requesting" class="btn btn-primary" type="button" disabled>
+        @if (requesting) {
+        <button class="btn btn-primary" type="button" disabled>
             Registering...
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         </button>
+        } @else {
+        <button type="submit" class="btn btn-primary" [disabled]="!userRegisterForm.valid" data-testid="submit">
+            Register
+        </button>
+        }
 
     </form>
+    }
 
-    <div *ngIf="submitProgress === 'success'" class="alert alert-success" data-testid="success">
+    @if (submitProgress === 'success') {
+    <div class="alert alert-success" data-testid="success">
         <strong>Success!</strong> You have successfully registered
         <div>
             <a type="button" class="btn btn-primary" [routerLink]='["/login"]'>Login</a>
         </div>
     </div>
+    }
 
-    <div *ngIf="submitProgress === 'error'" class="alert alert-danger" data-testid="error">
+    @if (submitProgress === 'error') {
+    <div class="alert alert-danger" data-testid="error">
         <strong>Whoops!</strong> An error occurred. Please try again.<br>
     </div>
+    }
 </div>
-
-<ng-template #loading>
-    <app-loading></app-loading>
-</ng-template>

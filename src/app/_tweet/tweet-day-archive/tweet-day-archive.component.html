@@ -2,62 +2,61 @@
 
     <h1>Tweet of the Day archive</h1>
 
-    <ng-container *ngIf="(_service.getTweets | async) as tweets; else loadingOrError">
+    @if (_service.getTweets | async; as tweets) {
 
-        <table class="table table-striped" data-testid="tweet-table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Species</th>
-                    <!-- <th class="hide-small" scope="col">Status / Population</th> -->
-                    <th scope="col">Recording</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let record of tweets; index as i">
-                    <!-- *ngFor="let record of tweets.items; index as i"> -->
-                    <th scope="row">{{ i + 1 }}</th>
-                    <td>{{ record.displayDay | date: 'dd/MM/yyyy' }}</td>
-                    <td><a routerLink="/bird/detail/{{record.birdId}}">{{ record.englishName }}</a>
-                        <br><small><em>{{ record.species }}</em></small>
-                    </td>
-                    <!-- <td class="hide-small"><small>{{ record.bird.btoStatusInBritain }} <br> {{
+    <table class="table table-striped" data-testid="tweet-table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Date</th>
+                <th scope="col">Species</th>
+                <!-- <th class="hide-small" scope="col">Status / Population</th> -->
+                <th scope="col">Recording</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (record of tweets; track $index) {
+            <tr>
+                <!-- *ngFor="let record of tweets.items; index as i"> -->
+                <th scope="row">{{ $index + 1 }}</th>
+                <td>{{ record.displayDay | date: 'dd/MM/yyyy' }}</td>
+                <td><a routerLink="/bird/detail/{{record.birdId}}">{{ record.englishName }}</a>
+                    <br><small><em>{{ record.species }}</em></small>
+                </td>
+                <!-- <td class="hide-small"><small>{{ record.bird.btoStatusInBritain }} <br> {{
                             record.bird.populationSize
                             }}</small></td> -->
-                    <td><audio class="player" controls>
-                            <source src="{{record.songUrl}}" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                <td><audio class="player" controls>
+                        <source src="{{record.songUrl}}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
 
-        <p *ngIf="(_service.allLoaded | async)" class="alert alert-info no-more-items" data-testid="all-loaded">
-            <strong>No more Tweets</strong>&nbsp;You have reached the end of the archive...
-        </p>
+    @if (_service.allLoaded | async) {
+    <p class="alert alert-info no-more-items" data-testid="all-loaded">
+        <strong>No more Tweets</strong>&nbsp;You have reached the end of the archive...
+    </p>
+    } @else {
+    <button type="button" class="btn btn-primary btn-lg btn-block" (click)="getMoreTweets()">Load more Tweets</button>
+    }
 
-        <button *ngIf="!(_service.allLoaded | async)" type="button" class="btn btn-primary btn-lg btn-block"
-            (click)="getMoreTweets()">Load more Tweets</button>
+    @if (_service.isLoading | async) {
+    <app-loading></app-loading>
+    }
 
-        <p *ngIf="_service.isLoading | async">
-            <app-loading></app-loading>
-        </p>
-
-    </ng-container>
-
-    <ng-template #loadingOrError>
-        <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
-            <strong>Whoops!</strong> There was an error retrieving the data.<br>
-            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
-                (click)="reload()">Try
-                Again</button>
-        </div>
-    </ng-template>
-
-    <ng-template #loading>
-        <app-loading></app-loading>
-    </ng-template>
+    } @else if (_service.isError | async) {
+    <div class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> There was an error retrieving the data.<br>
+        <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+            (click)="reload()">Try
+            Again</button>
+    </div>
+    } @else {
+    <app-loading></app-loading>
+    }
 
 </div>

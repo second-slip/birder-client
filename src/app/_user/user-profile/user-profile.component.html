@@ -1,93 +1,89 @@
 <div class="user-profile-container">
 
-    <ng-container *ngIf="(_service.getUserProfile | async) as profile; else loadingOrError">
+    @if (_service.getUserProfile | async; as profile) {
+    <!-- <ng-container *ngIf="(_service.getUserProfile | async) as profile; else loadingOrError"> -->
 
-        <div class="flex-container" data-testid="user-profile">
+    <div class="flex-container" data-testid="user-profile">
 
-            <img class="avatar" src="{{profile.user.avatar}}"
-                onerror="this.src='https://img.icons8.com/color/96/000000/user.png';" alt="Smiley face" height="126"
-                width="126">
-            <div>
+        <img class="avatar" src="{{profile.user.avatar}}"
+            onerror="this.src='https://img.icons8.com/color/96/000000/user.png';" alt="Smiley face" height="126"
+            width="126">
+        <div>
 
-                <div class="flex-container">
-                    <h1 data-testid="h1-user-name">{{ profile.user.userName }}</h1>
-                    <app-follow-command [user]="profile.user"></app-follow-command>
-                </div>
+            <div class="flex-container">
+                <h1 data-testid="h1-user-name">{{ profile.user.userName }}</h1>
+                <app-follow-command [user]="profile.user"></app-follow-command>
+            </div>
 
-                <!-- network summary -->
-                <p class="summary" data-testid="network-summary"><a routerLink="/followers/{{profile.user.userName}}/1">{{
-                        profile.followersCount }} {{
-                        profile.followersCount | followersPlural }}</a>
-                    /
-                    <a routerLink="/following/{{profile.user.userName}}/0">{{ profile.followingCount }} following</a>
-                </p>
+            <!-- network summary -->
+            <p class="summary" data-testid="network-summary"><a routerLink="/followers/{{profile.user.userName}}/1">{{
+                    profile.followersCount }} {{
+                    profile.followersCount | followersPlural }}</a>
+                /
+                <a routerLink="/following/{{profile.user.userName}}/0">{{ profile.followingCount }} following</a>
+            </p>
 
-                <!-- observations summary (own profile) -->
-                <ng-container *ngIf="profile.user.isOwnProfile">
-                    <p class="summary" *ngIf="(_analysisService.count | async) as analysis"
-                        data-testid="obs-summary-own">
-                        <!-- {{ analysis.uniqueSpeciesCount }} species in {{
+            <!-- observations summary (own profile) -->
+            @if (profile.user.isOwnProfile) {
+            @if (_analysisService.count | async; as analysis) {
+            <p class="summary" data-testid="obs-summary-own">
+                <!-- {{ analysis.uniqueSpeciesCount }} species in {{
                         analysis.totalObservationsCount }}
                         observations -->
-                        {{ analysis.uniqueSpeciesCount | observationSummary: analysis.totalObservationsCount }}
-                    </p>
-                </ng-container>
+                {{ analysis.uniqueSpeciesCount | observationSummary: analysis.totalObservationsCount }}
+            </p>
+            }
+            } @else {
 
-                <!-- observations summary (other profile) -->
-                <ng-container *ngIf="!profile.user.isOwnProfile">
-                    <!-- <p class="summary" data-testid="obs-summary-other">{{ profile?.observationCount?.uniqueSpeciesCount
+            <!-- observations summary (other profile) -->
+
+            <!-- <p class="summary" data-testid="obs-summary-other">{{ profile?.observationCount?.uniqueSpeciesCount
                         }} species in {{
                         profile?.observationCount?.totalObservationsCount }}
                     </p> -->
-                    <p class="summary" data-testid="obs-summary-other">
-                        {{ profile.observationCount.uniqueSpeciesCount | observationSummary:
-                        profile.observationCount.totalObservationsCount }}
-                    </p>
-                </ng-container>
+            <p class="summary" data-testid="obs-summary-other">
+                {{ profile.observationCount.uniqueSpeciesCount | observationSummary:
+                profile.observationCount.totalObservationsCount }}
+            </p>
+            }
 
-                <p class="register-large summary">Joined on {{ profile.registrationDate | date: 'EEEE, d MMMM yyyy'}}
-                </p>
+            <p class="register-large summary">Joined on {{ profile.registrationDate | date: 'EEEE, d MMMM yyyy'}}
+            </p>
 
-                <p class="register-small summary">Joined on {{ profile.registrationDate | date: 'dd/MM/yy'}}</p>
+            <p class="register-small summary">Joined on {{ profile.registrationDate | date: 'dd/MM/yy'}}</p>
 
-            </div>
         </div>
+    </div>
 
-        <hr>
+    <hr>
 
-        <mat-tab-group>
-            <mat-tab label="Observations">
-                <ng-template matTabContent>
-                    <p>{{ placeholder }}</p>
-                </ng-template>
-            </mat-tab>
-            <mat-tab label="Distribution map">
-                <ng-template matTabContent>
-                    <p>{{ placeholder }}</p>
-                </ng-template>
-            </mat-tab>
-            <mat-tab label="Achievements">
-                <ng-template matTabContent>
-                    <p>{{ placeholder }}</p>
-                </ng-template>
-            </mat-tab>
-        </mat-tab-group>
+    <mat-tab-group>
+        <mat-tab label="Observations">
+            <ng-template matTabContent>
+                <p>{{ placeholder }}</p>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Distribution map">
+            <ng-template matTabContent>
+                <p>{{ placeholder }}</p>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Achievements">
+            <ng-template matTabContent>
+                <p>{{ placeholder }}</p>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
 
-    </ng-container>
-
-
-    <ng-template #loadingOrError>
-        <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
-            <strong>Whoops!</strong> There was an error retrieving the data.<br>
-            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
-                (click)="reload()">Try
-                Again</button>
-        </div>
-    </ng-template>
-
-
-    <ng-template #loading>
-        <app-loading></app-loading>
-    </ng-template>
+    } @else if (_service.isError | async) {
+    <div class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> There was an error retrieving the data.<br>
+        <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+            (click)="reload()">Try
+            Again</button>
+    </div>
+    } @else {
+    <app-loading></app-loading>
+    }
 
 </div>

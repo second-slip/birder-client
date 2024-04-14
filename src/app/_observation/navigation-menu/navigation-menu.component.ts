@@ -1,5 +1,4 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -8,7 +7,7 @@ import { RouterLink } from '@angular/router';
     styleUrls: ['./navigation-menu.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [RouterLink, NgIf]
+    imports: [RouterLink]
 })
 export class NavigationMenuComponent {
   @Input() observationId: number;

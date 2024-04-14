@@ -5,34 +5,47 @@
         <br>It is advised to check your 'spam' or 'junk' folder first.
     </p>
 
-    <div *ngIf="submitProgress !== 'success'">
-        <form [formGroup]="resendConfirmEmailForm" novalidate (ngSubmit)="onSubmit(resendConfirmEmailForm.value)" data-testid="resendConfirmEmailForm">
+    @if (submitProgress !== 'success') {
 
-            <div class="form-group">
-                <input class="form-control" type="email" placeholder="Email" data-testid="email" formControlName="email" required>
-                <div *ngFor="let validation of resend_confirm_email_validation_messages.email" data-testid="email-error">
-                    <small class="text-danger"
-                        *ngIf="resendConfirmEmailForm.get('email')?.hasError(validation.type) && (resendConfirmEmailForm.get('email')?.dirty || resendConfirmEmailForm.get('email')?.touched)">
-                        {{validation.message}}</small>
-                </div>
+    <form [formGroup]="resendConfirmEmailForm" novalidate (ngSubmit)="onSubmit(resendConfirmEmailForm.value)"
+        data-testid="resendConfirmEmailForm">
+
+        <div class="form-group">
+            <input class="form-control" type="email" placeholder="Email" data-testid="email" formControlName="email"
+                required>
+            @for (validation of resend_confirm_email_validation_messages.email; track $index) {
+            <div data-testid="email-error">
+                @if (resendConfirmEmailForm.get('email')?.hasError(validation.type) &&
+                (resendConfirmEmailForm.get('email')?.dirty || resendConfirmEmailForm.get('email')?.touched)) {
+                <small class="text-danger">{{validation.message}}</small>
+                }
             </div>
+            }
+        </div>
 
-            <button *ngIf="!requesting" type="submit" class="btn btn-primary btn-sm"
-                [disabled]="!resendConfirmEmailForm.valid" data-testid="submit">
-                Submit
-            </button>
-            <button *ngIf="requesting" class="btn btn-primary btn-sm" type="submit" disabled>
-                Generating email...
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            </button>
-        </form>
-    </div>
+        @if (requesting) {
+        <button class="btn btn-primary btn-sm" type="submit" disabled>
+            Generating email...
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        </button>
+        } @else {
+        <button type="submit" class="btn btn-primary btn-sm" [disabled]="!resendConfirmEmailForm.valid"
+            data-testid="submit">
+            Submit
+        </button>
+        }
+    </form>
+    }
 
-    <div *ngIf="submitProgress === 'error'" class="alert alert-danger" data-testid="error">
+    @if(submitProgress === 'error') {
+    <div class="alert alert-danger" data-testid="error">
         An error occurred. Please try again
     </div>
+    }
 
-    <div *ngIf="submitProgress === 'success'" class="alert alert-success" data-testid="success">
+    @if (submitProgress === 'success') {
+    <div class="alert alert-success" data-testid="success">
         <strong>Success!</strong> An email confirmation has been sent to your inbox.
     </div>
+    }
 </div>

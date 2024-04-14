@@ -1,33 +1,29 @@
 <div class="suggestion-container">
 
-    <ng-container *ngIf="(_service.getNetworkSuggestions | async) as suggestions; else loadingOrError">
+    @if (_service.getNetworkSuggestions | async; as suggestions) {
 
-        <h2 class="heading">Suggested Users</h2>
+    <h2 class="heading">Suggested Users</h2>
 
-        <div *ngIf="suggestions.length" data-testid="suggestions-list">
-            <div *ngFor="let user of suggestions">
-                <app-network-user [user]="user"></app-network-user>
-            </div>
-        </div>
+    @for (user of suggestions; track $index) {
+    <div data-testid="suggestions-list">
+        <app-network-user [user]="user"></app-network-user>
+    </div>
+    } @empty {
+    <p data-testid="suggestions-list-is-zero" class="alert alert-info">
+        No suggestions at this time...
+    </p>
+    }
+    } @else if (_service.isError | async) {
 
-        <div *ngIf="!suggestions.length" data-testid="suggestions-list-is-zero" class="alert alert-info">
-                No suggestions at this time...
-        </div>
+    <p class="alert alert-danger" data-testid="error">
+        <strong>Whoops!</strong> There was an error retrieving the data.<br>
+        <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+            (click)="reload()">Try
+            Again</button>
+    </p>
+    } @else {
 
-    </ng-container>
-
-    <ng-template #loadingOrError>
-        <div *ngIf="(_service.isError | async); else loading" class="alert alert-danger" data-testid="error">
-            <strong>Whoops!</strong> There was an error retrieving the data.<br>
-            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
-                (click)="reload()">Try
-                Again</button>
-        </div>
-    </ng-template>
-
-
-    <ng-template #loading>
-        <app-loading></app-loading>
-    </ng-template>
+    <app-loading></app-loading>
+    }
 
 </div>

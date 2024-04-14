@@ -3,7 +3,6 @@ import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators, F
 import { finalize, first, Subject, takeUntil } from 'rxjs';
 import { AccountService } from '../account.service';
 import { IUserEmail } from '../i-user-email.dto';
-import { NgIf, NgFor } from '@angular/common';
 
 @Component({
     selector: 'app-confirm-email-resend',
@@ -11,7 +10,7 @@ import { NgIf, NgFor } from '@angular/common';
     styleUrls: ['./confirm-email-resend.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor]
+    imports: [FormsModule, ReactiveFormsModule]
 })
 export class ConfirmEmailResendComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();

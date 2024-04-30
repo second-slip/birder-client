@@ -16,12 +16,12 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 })
 export class SelectDateTimeComponent implements OnInit {
   @Input()
-  dateTime: string = new Date().toISOString();
+  dateTime: string = new Date().toISOString(); // note: not tracking formvalue as date & time are separate; combined in server model (change one day)
 
   @Output()
   public dateTimeValid = new EventEmitter<boolean>(true);
 
-  public form: FormGroup;
+  public form: FormGroup;  
   public minDate: Date;
   public maxDate: Date;
 

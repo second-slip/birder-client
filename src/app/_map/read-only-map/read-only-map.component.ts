@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MapInfoWindow, MapMarker, GoogleMapsModule } from '@angular/google-maps';
 import { IObservationPosition } from '../i-observation-position.dto';
-import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -10,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
     styleUrls: ['./read-only-map.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [MatIconModule, GoogleMapsModule, LoadingComponent]
+    imports: [MatIconModule, GoogleMapsModule]
 })
 export class ReadOnlyMapComponent implements OnInit {
   @Input() position: IObservationPosition;

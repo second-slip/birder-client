@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, DeferBlockBehavior, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
@@ -50,6 +50,7 @@ describe('UserProfileComponent', () => {
         );
 
         await TestBed.configureTestingModule({
+            deferBlockBehavior: DeferBlockBehavior.Playthrough,
             providers: [
                 // provideAnimations(),
                 { provide: ObservationCountService, useValue: fakeCountService },

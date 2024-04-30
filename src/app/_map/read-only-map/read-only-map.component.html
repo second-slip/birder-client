@@ -11,10 +11,8 @@
     </map-marker>
 </google-map>
 
-} @else if (markerStatus === 'error') {
+} @else {
 <div class="alert alert-danger" data-testid="error">
     <strong>Whoops!</strong> There was an error displaying the map.<br>
 </div>
-} @else {
-<app-loading></app-loading>
 }

@@ -14,25 +14,54 @@
     </p>
 
     <mat-tab-group>
-        <mat-tab label="Map">
+        <!-- <mat-tab label="Map">
             <ng-template matTabContent>
                 <app-read-only-map [position]="observation.position"></app-read-only-map>
             </ng-template>
+        </mat-tab> -->
+        <mat-tab label="Map">
+            <div #map>
+                <!-- on idle / (on idle) is implicit -->
+                @defer {
+                <app-read-only-map [position]="observation.position"></app-read-only-map>
+                }
+                @placeholder (minimum 500ms) {
+                <app-loading></app-loading>
+                }
+            </div>
         </mat-tab>
         <mat-tab label="Notes">
-            <ng-template matTabContent>
+            <div #notes>
+                @defer (on viewport(notes)) {
                 <app-view-only-notes [notes]="observation.notes"></app-view-only-notes>
-            </ng-template>
+                }
+                @placeholder (minimum 500ms) {
+                <p>loading...</p>
+                }
+            </div>
         </mat-tab>
         <mat-tab label="Photos">
+            <div #photos>
+                @defer (on viewport(photos)) {
+                <app-lorem-ipsum></app-lorem-ipsum>
+                }
+                @placeholder (minimum 500ms) {
+                <p>loading...</p>
+                }
+            </div>
             <ng-template matTabContent>
                 <app-lorem-ipsum></app-lorem-ipsum>
             </ng-template>
         </mat-tab>
         <mat-tab label="Other sightings">
-            <ng-template matTabContent>
+            <div #otherSightings>
+                @defer (on viewport(otherSightings)) {
                 <app-lorem-ipsum></app-lorem-ipsum>
-            </ng-template>
+                }
+                @placeholder (minimum 500ms) {
+                <p>loading...</p>
+                }
+            </div>
         </mat-tab>
     </mat-tab-group>
 

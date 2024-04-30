@@ -2,7 +2,7 @@
 
     <mat-form-field>
         <mat-label>Choose the date</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="observationDate" [min]="minDate" [max]="maxDate">
+        <input matInput [matDatepicker]="picker" formControlName="observationDate" [min]="minDate" [max]="maxDate" readonly>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker disabled="false"></mat-datepicker>
         @if (form.get('observationDate')?.hasError('required'))

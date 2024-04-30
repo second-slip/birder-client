@@ -19,7 +19,7 @@ export class SelectDateTimeComponent implements OnInit {
   dateTime: string = new Date().toISOString();
 
   @Output()
-  public dateTimeValid = new EventEmitter<boolean>();
+  public dateTimeValid = new EventEmitter<boolean>(true);
 
   public form: FormGroup;
   public minDate: Date;
@@ -34,8 +34,8 @@ export class SelectDateTimeComponent implements OnInit {
 
     this.form.valueChanges.subscribe(
       () => {
-        this._notify();
         this._updateDateTime();
+        this._notify();
       }
     );
   }
@@ -52,7 +52,7 @@ export class SelectDateTimeComponent implements OnInit {
       this.dateTime = date.toISOString();
     }
     catch {
-      // alert('hello');
+      this._notify();
     }
   }
 
@@ -75,5 +75,6 @@ export class SelectDateTimeComponent implements OnInit {
         Validators.pattern('^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$')
       ]))
     });
+    this._notify(); // initial value of event emitter subject
   }
 }

@@ -56,19 +56,24 @@ export class ObservationCreateComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.requesting = true;
 
-    const model = this._mapToModel();
+    try {
+      const model = this._mapToModel();
 
-    this._service.addObservation(model)
-      .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
-      .subscribe({
-        next: (r) => {
-          this._announcement.announceObservationsChanged();
-          this._router.navigate([`/observation/detail/${r.observationId}`]);
-        },
-        error: (e) => { this.error = true; }
-      });
+      this.requesting = true;
+
+      this._service.addObservation(model)
+        .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
+        .subscribe({
+          next: (r) => {
+            this._announcement.announceObservationsChanged();
+            this._router.navigate([`/observation/detail/${r.observationId}`]);
+          },
+          error: (e) => { this.error = true; }
+        });
+    } catch {
+      this.error = true;
+    }
   }
 
   public isFormValid(): boolean {
@@ -107,7 +112,6 @@ export class ObservationCreateComponent implements OnInit {
   }
 
   private _createForms(): void {
-
     this.selectSpeciesForm = this._formBuilder.group({
       bird: new FormControl('', Validators.compose([
         Validators.required,

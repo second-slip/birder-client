@@ -41,6 +41,8 @@
             <mat-step>
                 <ng-template matStepLabel><span>Location</span></ng-template>
 
+                <!-- CANNOT be lazy loaded.  The component needs to be loaded to generate location form -->
+
                 @if (_authService.getAuthUser | async; as authUser) {
                 <app-read-write-map [latitude]="authUser.defaultLocationLatitude"
                     [longitude]="authUser.defaultLocationLongitude">

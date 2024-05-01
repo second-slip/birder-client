@@ -31,7 +31,7 @@ import { MatInputModule } from '@angular/material/input';
     SelectDateTimeComponent, SelectSpeciesComponent, ReadWriteMapComponent, LoadingComponent, AsyncPipe]
 })
 export class ObservationUpdateComponent implements OnInit, OnDestroy {
-  @Input() 
+  @Input()
   id: string;
 
   private _subscription = new Subject();
@@ -109,19 +109,23 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
-    this.requesting = true;
+    try {
+      const model = this._mapToModel();
 
-    const model = this._mapToModel();
+      this.requesting = true
 
-    this._observationCrudService.updateObservation(this.id, model)
-      .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
-      .subscribe({
-        next: (r) => {
-          this._announcement.announceObservationsChanged();
-          this._router.navigate([`/observation/detail/${r.observationId}`]);
-        },
-        error: (e) => { this.updateError = true; }
-      });
+      this._observationCrudService.updateObservation(this.id, model)
+        .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
+        .subscribe({
+          next: (r) => {
+            this._announcement.announceObservationsChanged();
+            this._router.navigate([`/observation/detail/${r.observationId}`]);
+          },
+          error: (e) => { this.updateError = true; }
+        });
+    } catch {
+      this.updateError = true;
+    }
   }
 
   private _mapToModel(): IUpdateObservation {

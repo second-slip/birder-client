@@ -72,6 +72,10 @@ body {
         margin: 3% 3%; //(top, bottom) / (right, left)
     }
 
+    .standard-container-full-width { //i.e. no sidebar
+        margin: 3% 3%; //(top, bottom) / (right, left)
+    }
+
     .form-field {
         width: 100%;
     }
@@ -86,6 +90,10 @@ body {
 
     .standard-container {
         margin: 3% 1%; //(top, bottom) / (right, left)
+    }
+
+    .standard-container-full-width { //i.e. no sidebar
+        margin: 3% 15%; //(top, bottom) / (right, left)
     }
 
     .form-field {

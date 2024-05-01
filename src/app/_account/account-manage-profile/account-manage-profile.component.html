@@ -1,19 +1,27 @@
-<div class="standard-container" *ngIf="manageProfileForm; else loading">
+<!-- todo: error handling? -->
+
+@if (manageProfileForm) {
+
+<div class="standard-container-full-width">
 
     <h1>Update your profile</h1>
 
     <p>Submit this form to change your username or email.</p>
 
+    @if (submitProgress !== 'success') {
+
     <form [formGroup]="manageProfileForm" novalidate (ngSubmit)="onSubmit(manageProfileForm.value)" autocomplete="off"
-    data-testid="manageProfileForm" *ngIf="submitProgress !== 'success'">
+        data-testid="manageProfileForm">
 
         <div class="form-group">
             <label for="username">Username</label>
             <div class="is-loading">
                 <input class="form-control" id="username" type="text" placeholder="username" formControlName="username"
                     required data-testid="username">
+                @if (manageProfileForm.get('username')?.pending) {
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
-                    *ngIf="(manageProfileForm.get('username')?.pending)" style="float: right; margin-left: 8px"></span>
+                    style="float: right; margin-left: 8px"></span>
+                }
             </div>
             <div *ngFor="let validation of _validation.account_validation_messages.username"
                 data-testid="username-error">
@@ -39,26 +47,30 @@
             </p>
         </div>
 
-        <button *ngIf="!requesting" type="submit" class="btn btn-primary" [disabled]="!manageProfileForm.valid"
-            data-testid="submit">
-            Save
-        </button>
-        <button *ngIf="requesting" class="btn btn-primary" type="submit" disabled>
+        @if (requesting) {
+        <button class="btn btn-primary" type="submit" disabled>
             Saving...
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         </button>
-
+        } @else {
+        <button type="submit" class="btn btn-primary" [disabled]="!manageProfileForm.valid" data-testid="submit">
+            Save
+        </button>
+        }
     </form>
+    }
 
-    <div *ngIf="submitProgress === 'success'" class="alert alert-success" data-testid="success">
+    @if (submitProgress === 'success') {
+    <p class="alert alert-success" data-testid="success">
         <strong>Success!</strong> You have updated your profile
-    </div>
-
-    <div *ngIf="submitProgress === 'error'" class="alert alert-danger" data-testid="error">
+    </p>
+    }
+    @if (submitProgress === 'error') {
+    <p *ngIf="submitProgress === 'error'" class="alert alert-danger" data-testid="error">
         <strong>Whoops!</strong> An error occurred. Please try again.<br>
-    </div>
+    </p>
+    }
 </div>
-
-<ng-template #loading>
-    <app-loading></app-loading>
-</ng-template>
+} @else {
+<app-loading></app-loading>
+}

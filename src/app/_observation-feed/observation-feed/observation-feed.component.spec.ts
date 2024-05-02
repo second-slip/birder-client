@@ -29,7 +29,7 @@ describe('ObservationFeedComponent', () => {
                 ...fakeMethodValues
             },
             {
-                isLoading: of(false),
+                isLoading: of(true),
                 isError: of(false),
                 allLoaded: of(false),
                 observations: of(null),
@@ -73,14 +73,16 @@ describe('ObservationFeedComponent', () => {
         fixture.detectChanges();
     };
 
-    it('should be created and show the loading placeloader', fakeAsync(async () => {
+    it('should be created and show the loading placeloader', async () => {
         await setup({}, {});
+
+        // await fixture.whenStable();
 
         expect(component).toBeTruthy();
         const { debugElement } = fixture;
         const loading = debugElement.query(By.css('app-loading'));
         expect(loading).toBeTruthy();
-    }));
+    });
 
     it('should setup the "public" feed', fakeAsync(async () => {
         await setup({}, {}, 'public');

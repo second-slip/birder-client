@@ -37,7 +37,7 @@ export class ObservationFeedComponent implements OnInit {
   }
 
   public reload(): void {
-    this._page = 1;
+    // this._page = 1;
     this._getData();
   }
 

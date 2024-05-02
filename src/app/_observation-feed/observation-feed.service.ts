@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, finalize, Observable, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, finalize, Observable, shareReplay, Subject, takeUntil } from 'rxjs';
 import { IObservationFeed } from './i-observation-feed.dto';
 
 @Injectable()
@@ -21,6 +21,10 @@ export class ObservationFeedService implements OnDestroy {
     return this._allLoaded$.asObservable();
   }
 
+  private get allLoadedValue(): boolean {
+    return this._allLoaded$.value;
+  }
+
   public get isLoading(): Observable<boolean> {
     return this._isLoading$.asObservable();
   }
@@ -31,6 +35,8 @@ export class ObservationFeedService implements OnDestroy {
 
   public getData(pageIndex: number, url: string, pageSize: number = 10): void {
 
+    if (this.allLoadedValue) return;
+
     this._isLoading$.next(true);
 
     const parameters = new HttpParams()
@@ -38,7 +44,7 @@ export class ObservationFeedService implements OnDestroy {
       .set('pageSize', pageSize.toString());
 
     this._httpClient.get<IObservationFeed[]>(url, { params: parameters })
-      .pipe(finalize(() => { this._isLoading$.next(false) }), takeUntil(this._subscription))
+      .pipe(shareReplay(), finalize(() => { this._isLoading$.next(false) }), takeUntil(this._subscription))
       .subscribe({
         next: (items: IObservationFeed[]) => {
           this._observations$.next([...this._observations$.getValue() || [], ...items]); // spread syntax, or concat?

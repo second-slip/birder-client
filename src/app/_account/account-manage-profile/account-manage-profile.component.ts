@@ -2,11 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
-
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { RestrictedNameValidator } from 'src/app/_validators';
 import { AccountValidationService } from '../account-validation.service';
-
 import { AccountService } from '../account.service';
 import { IManageProfile } from './i-manage-profile.dto';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
@@ -36,7 +34,6 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(formValue: any): void {
-    this.requesting = true;
 
     try {
 
@@ -45,6 +42,8 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
         email: formValue.email,
         emailConfirmationRequired: true
       };
+
+      this.requesting = true;
 
       this._service.postUpdateProfile(model)
         .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))

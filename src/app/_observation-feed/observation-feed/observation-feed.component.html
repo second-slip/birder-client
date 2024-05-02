@@ -5,13 +5,14 @@
         <app-filter-control [currentFilter]="filter"></app-filter-control>
     </div>
 
-    @if (_service.observations | async; as observations) {
+    <!-- @if (_service.observations | async; as observations) { -->
+
+    @for (item of _service.observations | async; track $index) {
+    <!-- {{$index}} -->
+    <app-observation-feed-item [observation]="item"></app-observation-feed-item>
+    }
 
     <app-infinite-scroll (scrolled)="onScroll()">
-
-        @for (item of observations; track $index) {
-        <app-observation-feed-item [observation]="item"></app-observation-feed-item>
-        }
 
         @if (_service.allLoaded | async) {
         <div class="alert alert-info no-more-items" data-testid="all-loaded">
@@ -26,12 +27,21 @@
 
         <!-- info: keep this to show loading when MORE items are added to the infinite scroll feed-->
         @if (_service.isLoading | async) {
-            <app-loading></app-loading>
+        <app-loading></app-loading>
+        }
+
+        @if (_service.isError | async) {
+        <p class="alert alert-danger" data-testid="error">
+            <strong>Whoops!</strong> There was an error retrieving the data.<br>
+            <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+                (click)="reload()">Try
+                Again</button>
+        </p>
         }
 
     </app-infinite-scroll>
 
-    } @else if (_service.isError | async) {
+    <!-- } @else if (_service.isError | async) {
     <p class="alert alert-danger" data-testid="error">
         <strong>Whoops!</strong> There was an error retrieving the data.<br>
         <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
@@ -41,4 +51,4 @@
     } @else {
     <app-loading></app-loading>
     }
-</div>
+</div> -->

@@ -1,14 +1,13 @@
-<div class="feed-container">
+<div class="standard-container">
 
     <div class="d-flex justify-content-between">
         <h1 data-testid="title">{{ title }}</h1>
         <app-filter-control [currentFilter]="filter"></app-filter-control>
     </div>
 
-    <!-- @if (_service.observations | async; as observations) { -->
-
+    <!-- defer in idle; better to swith to when loaded -->
+    @defer {  
     @for (item of _service.observations | async; track $index) {
-    <!-- {{$index}} -->
     <app-observation-feed-item [observation]="item"></app-observation-feed-item>
     }
 
@@ -41,14 +40,7 @@
 
     </app-infinite-scroll>
 
-    <!-- } @else if (_service.isError | async) {
-    <p class="alert alert-danger" data-testid="error">
-        <strong>Whoops!</strong> There was an error retrieving the data.<br>
-        <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
-            (click)="reload()">Try
-            Again</button>
-    </p>
-    } @else {
+    }
+    @placeholder (minimum 500ms) {
     <app-loading></app-loading>
     }
-</div> -->

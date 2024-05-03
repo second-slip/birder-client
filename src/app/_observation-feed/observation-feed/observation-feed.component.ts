@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ObservationFeedService } from '../../_observation-feed/observation-feed.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
@@ -8,13 +8,12 @@ import { AsyncPipe } from '@angular/common';
 import { FilterControlComponent } from '../filter-control/filter-control.component';
 
 @Component({
-    selector: 'app-observation-feed',
-    templateUrl: './observation-feed.component.html',
-    styleUrls: ['./observation-feed.component.scss'],
-    providers: [ObservationFeedService],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [FilterControlComponent, InfiniteScrollComponent, ObservationFeedItemComponent, RouterLink, LoadingComponent, AsyncPipe]
+  selector: 'app-observation-feed',
+  templateUrl: './observation-feed.component.html',
+  styleUrls: ['./observation-feed.component.scss'],
+  providers: [ObservationFeedService],
+  standalone: true,
+  imports: [FilterControlComponent, InfiniteScrollComponent, ObservationFeedItemComponent, RouterLink, LoadingComponent, AsyncPipe]
 })
 export class ObservationFeedComponent implements OnInit {
   private _url: string = '';
@@ -46,19 +45,14 @@ export class ObservationFeedComponent implements OnInit {
   }
 
   private _setup(filter: string | null): void {
-    switch (filter) {
-      case 'network': {
-        this._url = 'api/observationfeed/network';
-        this.filter = filter;
-        this.title = 'Latest observations in your network';
-        break;
-      }
-      default: {
-        this._url = 'api/observationfeed';
-        this.filter = 'public';
-        this.title = 'Latest observations';
-        break;
-      }
+    if (filter === 'network') {
+      this._url = 'api/observationfeed/network';
+      this.filter = filter;
+      this.title = 'Latest observations in your network';
+    } else {
+      this._url = 'api/observationfeed';
+      this.filter = 'public';
+      this.title = 'Latest observations';
     }
   }
 }

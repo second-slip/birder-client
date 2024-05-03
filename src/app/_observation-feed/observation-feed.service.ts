@@ -50,7 +50,7 @@ export class ObservationFeedService implements OnDestroy {
           this._observations$.next([...this._observations$.getValue() || [], ...items]); // spread syntax, or concat?
           this._moreToGet(pageSize, items.length);
         },
-        error: (e: any) => { this._handleError(e); },
+        error: () => { this._handleError(); },
         complete: () => { if (this._isError$) this._isError$.next(false); }
       })
   }
@@ -61,7 +61,7 @@ export class ObservationFeedService implements OnDestroy {
     }
   }
 
-  private _handleError(error: any) {
+  private _handleError() {
     this._isError$.next(true);
   }
 

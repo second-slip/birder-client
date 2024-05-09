@@ -6,7 +6,7 @@
     </div>
 
     <!-- defer in idle; better to swith to when loaded -->
-    @defer {  
+    <!-- @defer { -->
     @for (item of _service.observations | async; track $index) {
     <app-observation-feed-item [observation]="item"></app-observation-feed-item>
     }
@@ -40,7 +40,7 @@
 
     </app-infinite-scroll>
 
-    }
+    <!-- }
     @placeholder (minimum 500ms) {
     <app-loading></app-loading>
-    }
+    } -->

@@ -6,6 +6,7 @@ import { AccountManagePasswordComponent } from '../account-manage-password/accou
 import { AccountManageProfileComponent } from '../account-manage-profile/account-manage-profile.component';
 import { MockComponent } from 'ng-mocks';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ɵDeferBlockBehavior } from '@angular/core';
 
 describe('AccountManagerComponent', () => {
   let component: AccountManagerComponent;

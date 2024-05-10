@@ -359,4 +359,29 @@ describe('ObservationFeedComponent', () => {
             expect(compiled.querySelector('[data-testid="all-loaded"]')?.textContent).toBeUndefined();
         }));
     });
+
+    describe('on scroll', () => {
+
+        it('calls the data service', async () => {
+            await setup({},
+                {
+                    isLoading: of(false),
+                    isError: of(false),
+                    allLoaded: of(false),
+                    observations: of(null)
+                },
+                'public');
+
+                // Arrange
+                expect(fakeObservationFeedService.getData).toHaveBeenCalledOnceWith(1, 'api/observationfeed');
+
+                // Act
+                component.onScroll();
+
+                // Assert
+                expect(fakeObservationFeedService.getData).toHaveBeenCalledTimes(2);
+
+        });
+
+    });
 });

@@ -1,18 +1,18 @@
-@if (markerStatus === 'success') {
+@if (!error) {
 <p class="location" data-testid="location">
     <mat-icon>location_on</mat-icon>
     <span data-testid="location-text">{{ position.formattedAddress }}</span>
 </p>
 
-<google-map height="300px" width="100%" [center]="locationMarker?.position" [options]="options">
-    <map-marker #markerElement="mapMarker" [position]="locationMarker?.position" [options]="locationMarker?.options"
-        (mapClick)="openInfoWindow(markerElement)" data-testid="map-marker">
+<google-map height="300px" width="100%" [center]="options.center" [options]="options" mapId="12ca5813bdac0e3f">
+    <map-advanced-marker #markerElem="mapAdvancedMarker" [position]="locationMarker" data-testid="map-marker"
+        (mapClick)="openInfoWindow(markerElem)">
         <map-info-window data-testid="info-window">{{ position.formattedAddress }}</map-info-window>
-    </map-marker>
+    </map-advanced-marker>
 </google-map>
 
 } @else {
-<div class="alert alert-danger" data-testid="error">
-    <strong>Whoops!</strong> There was an error displaying the map.<br>
-</div>
+<p class="alert alert-danger" data-testid="error">
+    <strong>Whoops!</strong> There is an error displaying the map.<br>
+</p>
 }

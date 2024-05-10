@@ -1,4 +1,4 @@
-@if (markerStatus === 'success') {
+@if (!error) {
 
 <div class="form-inline" (ngSubmit)="findAddress()">
 
@@ -6,7 +6,7 @@
     <input class="form-control" type="text" name="searchAddress" placeholder="Type location here"
         data-testid="searchAddress" [(ngModel)]="searchAddress" required>
 
-    <button type="submit" class="btn btn-primary btn-search-address" [disabled]="!searchAddress"
+    <button type="button" class="btn btn-primary btn-search-address" [disabled]="!searchAddress"
         triggers="mouseenter:mouseleave" aria-label="Search for a location" title="Search for a location"
         (click)="findAddress()">
         <mat-icon>search</mat-icon>
@@ -14,7 +14,7 @@
 
     <!-- popover='Type a place name (e.g. Canterbury, UK); or a specific address (e.g. 1 High St, Canterbury CT1 2JH)' popoverTitle="Search help"  -->
 
-    <button type="submit" class="btn btn-primary btn-get-location" type="button" (click)="getCurrentPosition()"
+    <button type="button" class="btn btn-primary btn-get-location" type="button" (click)="getCurrentPosition()"
         aria-label="Get your current location" matTooltip="Get your current location" triggers="mouseenter:mouseleave"
         data-testid="get-current-location">
         <mat-icon>my_location</mat-icon>
@@ -33,18 +33,18 @@
     <span data-testid="location-text">{{ formattedAddress }}</span>
 </p>
 
-<google-map height="300px" width="100%" [center]="locationMarker?.position" [options]="options">
-    <map-marker #markerElement="mapMarker" [position]="locationMarker?.position" [options]="locationMarker.options"
-        (mapDragend)="markerChanged($event)" (mapClick)="openInfoWindow(markerElement)">
+<google-map height="300px" width="100%" [center]="options.center" [options]="options" mapId="12ca5813bdac0e3f">
+    <map-advanced-marker #markerElem="mapAdvancedMarker" [position]="locationMarker.position" [gmpDraggable]="true"
+        [options]="locationMarker.options" (mapDragend)="markerChanged($event)" (mapClick)="openInfoWindow(markerElem)">
         <map-info-window>{{ formattedAddress }}</map-info-window>
-    </map-marker>
+    </map-advanced-marker>
 </google-map>
 
-} @else if (markerStatus === 'error') {
+} @else if (error) {
 
-<div class="alert alert-danger" data-testid="error">
-    <strong>Whoops!</strong> There was an error displaying the map.<br>
-</div>
+<p class="alert alert-danger" data-testid="error">
+    <strong>Whoops!</strong> There is an error displaying the map.<br>
+</p>
 
 } @else {
 <app-loading></app-loading>

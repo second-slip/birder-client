@@ -6,7 +6,6 @@ import { of, throwError } from 'rxjs';
 import { expectText } from 'src/app/testing/element.spec-helper';
 import { googleMapsApiResponse, testLatitude, testLongitude, testSearchAddress } from 'src/app/testing/map-tests-helpers';
 import { GeocodeService } from '../geocode.service';
-
 import { ReadWriteMapComponent } from './read-write-map.component';
 import { WindowGeolocateService } from '../window-geolocate.service';
 
@@ -282,7 +281,7 @@ describe('ReadWriteMapComponent', () => {
       describe('map intercativity', () => {
         it('calls markerChanged method on marker change', async () => {
           await setup();
-  
+
           spyOn(component, 'markerChanged');
           const event = jasmine.createSpyObj<google.maps.MapMouseEvent>('click', { domEvent: undefined, stop: undefined });
           component.markerChanged(event);
@@ -347,15 +346,15 @@ describe('ReadWriteMapComponent', () => {
 
     // describe('map interactivity', () => {
 
-      // it('calls getCurrentPosition method on button click ', async () => {
-      //   await setup();
+    // it('calls getCurrentPosition method on button click ', async () => {
+    //   await setup();
 
-      //   spyOn(component, 'markerChanged');
-      //   const event = jasmine.createSpyObj<google.maps.MapMouseEvent>('click', { domEvent: undefined, stop: undefined });
-      //   component.markerChanged(event);
-      //   expect(component.markerChanged).toHaveBeenCalledTimes(1);
-      //   expect(component.markerChanged).toHaveBeenCalledOnceWith(event);
-      // });
+    //   spyOn(component, 'markerChanged');
+    //   const event = jasmine.createSpyObj<google.maps.MapMouseEvent>('click', { domEvent: undefined, stop: undefined });
+    //   component.markerChanged(event);
+    //   expect(component.markerChanged).toHaveBeenCalledTimes(1);
+    //   expect(component.markerChanged).toHaveBeenCalledOnceWith(event);
+    // });
 
     // });
   });

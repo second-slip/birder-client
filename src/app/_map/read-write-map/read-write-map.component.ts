@@ -65,7 +65,7 @@ export class ReadWriteMapComponent implements OnInit, OnDestroy {
   }
 
   public markerChanged(event: google.maps.MapMouseEvent): void {
-    if (event.latLng) this._addMarker(event.latLng?.lat(), event.latLng.lng());
+    if (event.latLng) this._addMarker(event.latLng?.lat(), event.latLng?.lng());
   }
 
   public openInfoWindow(marker: MapAdvancedMarker): void {

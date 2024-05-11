@@ -21,7 +21,7 @@ describe('WindowGeolocateService', () => {
       const expected = <GeolocationPosition>{
         coords: { latitude: 0, longitude: 0 },
         timestamp: 5467
-      }
+      };
 
       spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake((...args: any[]) => {
         // const position = { coords: { latitude: 0, longitude: 0 } };

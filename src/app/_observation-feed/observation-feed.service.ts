@@ -21,9 +21,9 @@ export class ObservationFeedService implements OnDestroy {
     return this._allLoaded$.asObservable();
   }
 
-  private get allLoadedValue(): boolean {
-    return this._allLoaded$.value;
-  }
+  // private get allLoadedValue(): boolean {
+  //   return this._allLoaded$.value;
+  // }
 
   public get isLoading(): Observable<boolean> {
     return this._isLoading$.asObservable();
@@ -35,7 +35,7 @@ export class ObservationFeedService implements OnDestroy {
 
   public getData(pageIndex: number, url: string, pageSize: number = 10): void {
 
-    if (this.allLoadedValue) return;
+    if (this._allLoaded$.value) return;  // todo: move to isCached method
 
     this._isLoading$.next(true);
 

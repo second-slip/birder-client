@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { apiKey, apiUrl, googleMapsApiResponse, latitude, longitude, searchTerm } from '../testing/map-tests-helpers';
-
 import { GeocodeService } from './geocode.service';
 
 describe('GeocodeService', () => {
@@ -43,7 +42,6 @@ describe('GeocodeService', () => {
     });
 
     controller.expectOne(`${apiUrl}latlng=${encodeURIComponent(latitude + ',' + longitude)}&key=${apiKey}`).flush(googleMapsApiResponse);
-
     expect(result).toEqual(googleMapsApiResponse);
   });
 
@@ -55,7 +53,6 @@ describe('GeocodeService', () => {
 
     service.geocode(searchTerm).subscribe({ next: fail, error: recordError, complete: fail, });
     service.reverseGeocode(latitude, longitude).subscribe({ next: fail, error: recordError, complete: fail, });
-
 
     const status = 500;
     const statusText = 'Internal Server Error';

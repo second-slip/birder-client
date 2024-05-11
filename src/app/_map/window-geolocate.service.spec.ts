@@ -6,17 +6,13 @@ describe('WindowGeolocateService', () => {
   let service: WindowGeolocateService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA]
-    });
+    TestBed.configureTestingModule({});
     service = TestBed.inject(WindowGeolocateService);
   });
-
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
 
   describe('Get Current Location', () => {
 
@@ -51,7 +47,6 @@ describe('WindowGeolocateService', () => {
       }
 
       spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake((...args: any[]) => {
-        // const position = { coords: { latitude: 0, longitude: 0 } };
         args[0](expected);
       });
 
@@ -70,7 +65,7 @@ describe('WindowGeolocateService', () => {
 
       const expected = <GeolocationPositionError>{
         code: 1,
-        message: 'GeoLocation Error'
+        message: 'GeoLocation Error Message'
       };
 
       spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake((...args: any[]) => {
@@ -90,7 +85,7 @@ describe('WindowGeolocateService', () => {
       // Assert
       expect(window.navigator.geolocation.getCurrentPosition).toHaveBeenCalledTimes(1);
       expect(window.navigator.geolocation.getCurrentPosition).toThrowError()
-      expect(actual).toEqual(expected);
+      expect(actual).toEqual(expected.message);
     });
   });
 });

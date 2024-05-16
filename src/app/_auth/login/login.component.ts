@@ -80,21 +80,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this._authService.checkAuthStatus();
   }
 
-  // ToDo: decide on the best approach.
-  // Not all errors will be the AuthenticationFailureReason - what about connectivity errors etc?
-  private _handleError(error: AuthenticationFailureReason): void {
-    switch (error) {
-      case AuthenticationFailureReason.EmailConfirmationRequired: {
-        this._router.navigate(['/confirm-email']);
-        break;
-      }
-      // case AuthenticationFailureReason.LockedOut: {
-      //   // todo: built component with message to contact admin
-      //   break;
-      // }
-      default: {
-        break;
-      }
+  private _handleError(error: IAuthenticationResult): void {
+    if (error.failureReason == AuthenticationFailureReason.EmailConfirmationRequired) {
+      this._router.navigate(['/confirm-email']);
     }
   }
 

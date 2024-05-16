@@ -2,65 +2,68 @@
 
     <h1>Login</h1>
 
-    <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit(loginForm.value)" data-testid="form"
-        *ngIf="submitProgress !== 'success'">
+    @if (submitProgress !== 'success') {
+    <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit(loginForm.value)" data-testid="form">
 
-        <div class="form-group">
-            <label for="username">Email</label>
-            <input class="form-control" type="email" id="username" placeholder="Email" formControlName="username"
-                required aria-describedby="email-description" data-testid="username">
-            <!-- <div class="field-info">
-                <p class="field-description" id="email-description">
-                    Example: abc@example.org
-                </p>
-            </div> -->
-            <div *ngIf="username?.invalid && (username?.dirty || username?.touched)" class="text-danger">
-                <small *ngIf="username?.errors?.['required']">
-                    Email is required
-                </small>
-                <small *ngIf="username?.errors?.['pattern']">
-                    Enter a valid email
-                </small>
-            </div>
+        <mat-form-field class="full-width" id="username">
+            <mat-label>Email</mat-label>
+            <input matInput id="username" name="username" type="email" formControlName="username">
+            @if (loginForm.get('username')?.hasError('required')) {
+            <mat-error class="validation-required-username">
+                Email is <strong>required</strong>
+            </mat-error>
+            }
+            @if (loginForm.get('username')?.hasError('email')) {
+            <mat-error class="validation-email-username">
+                Email is <strong>not valid</strong>
+            </mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field class="full-width" id="password">
+            <mat-label>Password</mat-label>
+            <input matInput id="password" name="password" type="password" formControlName="password">
+            @if (loginForm.get('password')?.hasError('required')) {
+            <mat-error class="validation-required-password">
+                Password is <strong>required</strong>
+            </mat-error>
+            }
+        </mat-form-field>
+
+        <div>
+            <mat-checkbox id="rememberMe" formControlName="rememberMe" color="primary">Keep me logged in</mat-checkbox>
         </div>
 
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input class="form-control" type="password" id="password" placeholder="Password" formControlName="password"
-                required data-testid="password">
-            <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="text-danger">
-                <small *ngIf="password?.errors?.['required']">
-                    Password is required
-                </small>
-            </div>
-        </div>
+        <section class="buttons">
+            @if (!requesting) {
+            <button mat-stroked-button class="form-submit-btn" color="primary" type="submit"
+                [disabled]="!loginForm.valid">Login</button>
+            }
+            @if (requesting) {
+            <button mat-stroked-button class="form-submit-btn" type="button" disabled>
+                Checking your credentials...
+                <mat-icon><mat-spinner diameter="15">
+                    </mat-spinner></mat-icon>
+            </button>
+            }
 
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="rememberMe" formControlName="rememberMe" /> Keep me
-            logged in
-        </div>
-
-        <button *ngIf="!requesting" type="submit" class="btn btn-primary" [disabled]="!loginForm.valid"
-            data-testid="submit">
-            Login
-        </button>
-        <button *ngIf="requesting" class="btn btn-primary" type="button" disabled>
-            Checking your credentials...
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        </button>
-
-        <a class="btn btn-link" [routerLink]='["/forgot-password"]'>Forgot password?</a>
+            <a mat-stroked class="form-submit-btn link" [routerLink]='["/forgot-password"]'>Forgot password?</a>
+        </section>
 
     </form>
+    }
 
-    <div *ngIf="submitProgress === 'success'" class="alert alert-success" data-testid="success">
+    @if (submitProgress === 'success') {
+    <div class="alert alert-success" data-testid="success">
         <strong>Success!</strong> You have successfully signed in
     </div>
+    }
 
-    <div *ngIf="submitProgress === 'error'" class="alert alert-danger" data-testid="error">
+    @if (submitProgress === 'error') {
+    <div class="alert alert-danger" data-testid="error">
         <strong>Sign in failed</strong> There was an error logging in. Make sure you have typed the correct email and
         password.
         <br>If you have forgotten your password, you can <a [routerLink]='["/forgot-password"]'>reset it</a>.
     </div>
-
+    }
 </div>

@@ -10,18 +10,24 @@ import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { IAuthenticationResult } from '../i-authentication-result.dto';
 import { TokenService } from '../token.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
-import { NgIf } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [NgIf, FormsModule, ReactiveFormsModule, RouterLink, LoadingComponent]
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, RouterLink, LoadingComponent, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatCheckboxModule],
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
+
   public requesting: boolean;
   public loginForm: FormGroup;
   public submitProgress: 'idle' | 'success' | 'error' = 'idle';
@@ -40,8 +46,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public onSubmit(formData: any): void {
     if (!this.loginForm.valid) return;
-    this.requesting = true;
+
+    //  try / catch
     const model = this._mapFormToModel(formData)
+
+    this.requesting = true;
 
     this._service.login(model)
       .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
@@ -79,10 +88,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         this._router.navigate(['/confirm-email']);
         break;
       }
-      case AuthenticationFailureReason.LockedOut: {
-        // todo: built component with message to contact admin
-        break;
-      }
+      // case AuthenticationFailureReason.LockedOut: {
+      //   // todo: built component with message to contact admin
+      //   break;
+      // }
       default: {
         break;
       }
@@ -91,13 +100,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private _createForm(): void {
     this.loginForm = this._formBuilder.group({
-      username: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-      ])),
-      password: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
+      username: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', Validators.required),
       rememberMe: new FormControl(false)
     });
   }
@@ -106,8 +110,4 @@ export class LoginComponent implements OnInit, OnDestroy {
     this._subscription.next('');
     this._subscription.complete();
   }
-
-  get username() { return this.loginForm.get('username'); }
-
-  get password() { return this.loginForm.get('password'); }
 }

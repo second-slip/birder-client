@@ -13,7 +13,7 @@ import { NgIf, NgFor } from '@angular/common';
     selector: 'app-account-registration',
     templateUrl: './account-registration.component.html',
     styleUrls: ['./account-registration.component.scss'],
-    encapsulation: ViewEncapsulation.None,
+    // encapsulation: ViewEncapsulation.None,
     standalone: true,
     imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor, RouterLink, LoadingComponent]
 })

@@ -66,6 +66,12 @@ body {
     margin: 2%;
 }
 
+@media only screen and (max-width: 768px) {
+    .full-page-form-container {
+        margin: 5% 5%; //(top, bottom) / (right, left)
+    }
+}
+
 @media only screen and (max-width: 992px) {
     .wrapper {
         // border: black;
@@ -79,6 +85,10 @@ body {
 
     .standard-container-full-width { //i.e. no sidebar
         margin: 3% 3%; //(top, bottom) / (right, left)
+    }
+
+    .full-page-form-container {
+        margin: 5% 15%; //(top, bottom) / (right, left)
     }
 
     .form-field {
@@ -99,6 +109,10 @@ body {
 
     .standard-container-full-width { //i.e. no sidebar
         margin: 3% 15%; //(top, bottom) / (right, left)
+    }
+
+    .full-page-form-container {
+        margin: 5% 30%; //(top, bottom) / (right, left)
     }
 
     .form-field {

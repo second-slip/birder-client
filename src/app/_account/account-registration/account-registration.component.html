@@ -1,105 +1,163 @@
 <div class="full-page-form-container">
 
-    <h1>New Account Registration</h1>
+    <h1>Account Registration Form</h1>
 
     @if (submitProgress !== 'success') {
 
-    <form [formGroup]="userRegisterForm" novalidate (ngSubmit)="onSubmit(userRegisterForm.value)" autocomplete="off"
-        data-testid="userRegisterForm">
+    <form [formGroup]="form" novalidate (ngSubmit)="onSubmit(form.value)" autocomplete="off" data-testid="form">
 
-        <div class="form-group">
-            <label for="username">Username</label>
-            <div class="is-loading">
-                <input class="form-control" id="username" type="text" placeholder="username" formControlName="username"
-                    required data-testid="username">
-                <!-- <mat-icon *If="(isUsernameAvailable) && (userRegisterForm.get('username').valid)" matSuffix color="primary" matTooltip="This username is available">check</mat-icon>
-                      <mat-icon *If="(!isUsernameAvailable) && (userRegisterForm.get('username').valid)" matSuffix color="warn" matTooltip="This username is taken">cancel</mat-icon> -->
-                @if (userRegisterForm.get('username')?.pending) {
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
-                    style="float: right; margin-left: 8px"></span>
+        <!-- <mat-icon *If="(isUsernameAvailable) && (form.get('username').valid)" matSuffix color="primary" matTooltip="This username is available">check</mat-icon>
+        <mat-icon *If="(!isUsernameAvailable) && (form.get('username').valid)" matSuffix color="warn" matTooltip="This username is taken">cancel</mat-icon> -->
+
+        <p>
+            <mat-form-field class="full-width" id="username">
+                <mat-label>Username</mat-label>
+                <input matInput id="username" type="text" placeholder="username" formControlName="username">
+                @if (form.get('username')?.pending) {
+                <mat-icon matSuffix><mat-spinner diameter="15">
+                    </mat-spinner></mat-icon>
+                } @else if (form.get('username')?.valid) {
+                <mat-icon matSuffix color="primary">done</mat-icon>
                 }
-            </div>
-            <div *ngFor="let validation of _validation.account_validation_messages.username"
-                data-testid="username-error">
-                <small class="text-danger"
-                    *ngIf="userRegisterForm.get('username')?.hasError(validation.type) && (userRegisterForm.get('username')?.dirty || userRegisterForm.get('username')?.touched)">
-                    {{validation.message}}
-                </small>
-            </div>
-        </div>
+                <!-- @else if (form.get('username')?.invalid && form.get('username')?.touched) {
+                <mat-icon matSuffix color="warn">clear</mat-icon>
+                } -->
+                <mat-hint>alphanumeric and 5-20 characters</mat-hint>
+                <!--  validation -->
+                @if (form.get('username')?.hasError('required')) {
+                <mat-error class="validation-required-username">
+                    Username is <strong>required</strong>
+                </mat-error>
+                }
+                @if (form.get('username')?.hasError('minlength')) {
+                <mat-error class="validation-minlength-username">
+                    Username <strong>must be at least 5 characters long</strong>
+                </mat-error>
+                }
+                @if (form.get('username')?.hasError('maxlength')) {
+                <mat-error class="validation-maxlength-username">
+                    Username <strong>must not be more than 20 characters long</strong>
+                </mat-error>
+                }
+                @if (form.get('username')?.hasError('pattern')) {
+                <mat-error class="validation-pattern-username">
+                    Username <strong>must be alphanumeric (no special characters) and must not contain spaces</strong>
+                </mat-error>
+                }
+                @if (form.get('username')?.hasError('restrictedName')) {
+                <mat-error class="validation-restrictedName-username">
+                    Username <strong>may not contain the word "birder"</strong>
+                </mat-error>
+                }
+                @if (form.get('username')?.hasError('usernameTaken')) {
+                <mat-error class="validation-usernameTaken-username">
+                    Username <strong>is taken</strong>
+                </mat-error>
+                }
+            </mat-form-field>
+        </p>
 
-        <div class="form-group">
-            <label for="email">Email</label>
-            <div class="is-loading">
-                <input class="form-control" id="email" type="email" placeholder="Email" formControlName="email" required
-                    data-testid="email" autocomplete="off">
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
-                    *ngIf="(userRegisterForm.get('email')?.pending)" style="float: right; margin-left: 8px"></span>
-            </div>
-            <div *ngFor="let validation of _validation.account_validation_messages.email" data-testid="email-error">
-                <small class="text-danger"
-                    *ngIf="userRegisterForm.get('email')?.hasError(validation.type) && (userRegisterForm.get('email')?.dirty || userRegisterForm.get('email')?.touched)">
-                    {{validation.message}}
-                </small>
-            </div>
-        </div>
+        <p>
+            <mat-form-field class="full-width" id="email">
+                <mat-label>Email</mat-label>
+                <input matInput id="email" name="email" type="email" formControlName="email" placeholder="email"
+                    autocomplete="off">
+                @if (form.get('email')?.pending) {
+                <mat-icon matSuffix><mat-spinner diameter="15">
+                    </mat-spinner></mat-icon>
+                } @else if (form.get('email')?.valid) {
+                <mat-icon matSuffix color="primary">done</mat-icon>
+                }
+                <!-- <mat-hint>Hint.............</mat-hint> -->
+                @if (form.get('email')?.hasError('required')) {
+                <mat-error class="validation-required-email">
+                    Email is <strong>required</strong>
+                </mat-error>
+                }
+                @if (form.get('email')?.hasError('email')) {
+                <mat-error class="validation-email-email">
+                    Email is <strong>not valid</strong>
+                </mat-error>
+                }
+                @if (form.get('email')?.hasError('emailTaken')) {
+                <mat-error class="validation-emailTaken-email">
+                    Email is <strong>taken</strong>
+                </mat-error>
+                }
+            </mat-form-field>
+        </p>
 
-        <div class="password-group" formGroupName="passwordGroup">
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input class="form-control" id="password" type="password" placeholder="Password"
-                    formControlName="password" required data-testid="password">
-                <div *ngFor="let validation of _validation.account_validation_messages.password"
-                    data-testid="password-error">
-                    <small class="text-danger"
-                        *ngIf="userRegisterForm.get('passwordGroup')?.get('password')?.hasError(validation.type) && (userRegisterForm.get('passwordGroup')?.get('password')?.dirty || userRegisterForm.get('passwordGroup')?.get('password')?.touched)">
-                        {{validation.message}}
-                    </small>
-                </div>
-            </div>
+        <section formGroupName="passwordGroup">
+            <p>
+                <mat-form-field class="full-width" id="password">
+                    <mat-label>Password</mat-label>
+                    <input matInput id="password" name="password" type="password" formControlName="password"
+                        placeholder="password">
+                    <mat-hint>alphanumeric & eight characters</mat-hint>
+                    @if (form.get('passwordGroup')?.get('password')?.hasError('required')) {
+                    <mat-error class="validation-required-password">
+                        Password is <strong>required</strong>
+                    </mat-error>
+                    }
+                    @if (form.get('passwordGroup')?.get('password')?.hasError('minlength')) {
+                    <mat-error class="validation-minlength-password">
+                        Password must be at least <strong>8 characters long</strong>
+                    </mat-error>
+                    }
+                    @if (form.get('passwordGroup')?.get('password')?.hasError('pattern')) {
+                    <mat-error class="validation-pattern-password">
+                        Password must contain at least <strong>one number and one letter</strong>
+                    </mat-error>
+                    }
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field class="full-width" id="confirmPassword">
+                    <mat-label>confirmPassword</mat-label>
+                    <input matInput id="confirmPassword" name="confirmPassword" type="password"
+                        formControlName="confirmPassword" placeholder="confirm password">
+                    @if (form.get('passwordGroup')?.get('confirmPassword')?.hasError('required')) {
+                    <mat-error class="validation-required-confirmPassword">
+                        Password is <strong>required</strong>
+                    </mat-error>
+                    }
+                    @if (form.get('passwordGroup')?.hasError('match')) {
+                    <mat-error class="validation-match-confirmPassword">
+                        Passwords <strong>do not match</strong>
+                    </mat-error>
+                    }
+                </mat-form-field>
+            </p>
+        </section>
 
-            <div class="form-group">
-                <label for="confirmPassword">Confirm password</label>
-                <input class="form-control" id="confirmPassword" type="password" placeholder="Confirm Password"
-                    formControlName="confirmPassword" required data-testid="confirmPassword">
-
-                <div *ngFor="let validation of _validation.account_validation_messages.confirmPassword"
-                    data-testid="confirmPassword-error">
-                    <small class="text-danger"
-                        *ngIf="(userRegisterForm.get('passwordGroup')?.get('confirmPassword')?.hasError(validation.type) || userRegisterForm.get('passwordGroup')?.hasError(validation.type)) && (userRegisterForm.get('passwordGroup')?.get('confirmPassword')?.dirty || userRegisterForm.get('passwordGroup')?.get('confirmPassword')?.touched)">
-                        {{validation.message}}</small>
-                </div>
-            </div>
-        </div>
-
-        <!-- <pre>{{userRegisterForm.value | json}}</pre> -->
-
-        @if (requesting) {
-        <button class="btn btn-primary" type="button" disabled>
-            Registering...
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        </button>
-        } @else {
-        <button type="submit" class="btn btn-primary" [disabled]="!userRegisterForm.valid" data-testid="submit">
-            Register
-        </button>
-        }
+        <section class="buttons">
+            @if (requesting) {
+            <button mat-stroked-button type="button" disabled>
+                Registering...
+                <mat-icon><mat-spinner diameter="15">
+                    </mat-spinner></mat-icon>
+            </button>
+            } @else {
+            <button mat-stroked-button type="submit" class="btn btn-primar" [disabled]="!form.valid"
+                data-testid="submit">
+                Register
+            </button>
+            }
+        </section>
 
     </form>
     }
 
     @if (submitProgress === 'success') {
-    <div class="alert alert-success" data-testid="success">
+    <p class="alert alert-success" data-testid="success">
         <strong>Success!</strong> You have successfully registered
-        <div>
-            <a type="button" class="btn btn-primary" [routerLink]='["/login"]'>Login</a>
-        </div>
-    </div>
+        <a type="button" class="btn btn-primary" [routerLink]='["/login"]'>Login</a>
+    </p>
     }
 
     @if (submitProgress === 'error') {
-    <div class="alert alert-danger" data-testid="error">
+    <p class="alert alert-danger" data-testid="error">
         <strong>Whoops!</strong> An error occurred. Please try again.<br>
-    </div>
+    </p>
     }
 </div>

@@ -10,6 +10,10 @@ import { IManagePassword } from './i-manage-password.dto';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { NgIf, NgFor } from '@angular/common';
 
+/**
+ * TO DO - remove valication messages property from service..................
+ */
+
 @Component({
     selector: 'app-account-manage-password',
     templateUrl: './account-manage-password.component.html',

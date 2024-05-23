@@ -1,5 +1,5 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { TweetDayComponent } from './tweet-day.component';
 import { TweetDayService } from './tweet-day.service';
 import { of } from 'rxjs';

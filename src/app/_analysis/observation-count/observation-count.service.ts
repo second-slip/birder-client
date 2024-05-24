@@ -11,7 +11,9 @@ export class ObservationCountService implements OnDestroy {
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _observationCount$: BehaviorSubject<IObservationCount | null> = new BehaviorSubject<IObservationCount | null>(null);
 
-  constructor(private readonly _httpClient: HttpClient) { }
+  constructor(private readonly _httpClient: HttpClient) { 
+    this.getData();
+  }
 
   public get isError(): Observable<boolean> {
     return this._isError$.asObservable();

@@ -57,24 +57,24 @@ describe('ObservationCountComponent unit tests', () => {
             expect(loading).toBeTruthy();
         });
 
-        it('should call service method', async () => {
-            await setup();
+        // it('should call service method', async () => {
+        //     await setup();
 
-            expect(fakeObservationCountService.getData).toHaveBeenCalledTimes(1);
-        });
+        //     expect(fakeObservationCountService.getData).toHaveBeenCalledTimes(1);
+        // });
     });
 
     describe('when service returns success response', () => {
 
         describe('when count is 0', async () => {
 
-            it('should call getData on init', async () => {
-                await setup({
-                    count: of(fakeIObservationCountIsZero)
-                });
+            // it('should call getData on init', async () => {
+            //     await setup({
+            //         count: of(fakeIObservationCountIsZero)
+            //     });
 
-                expect(fakeObservationCountService.getData).toHaveBeenCalledTimes(1);
-            });
+            //     expect(fakeObservationCountService.getData).toHaveBeenCalledTimes(1);
+            // });
 
             it('should render the analysis section for count = 0', async () => {
                 await setup({
@@ -106,19 +106,16 @@ describe('ObservationCountComponent unit tests', () => {
                 const compiled = fixture.nativeElement as HTMLElement;
                 expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
             });
-
-
-
         });
 
         describe('when count is > 0', () => {
-            it('should call getData on init', async () => {
-                await setup({
-                    count: of(fakeIObservationCount)
-                });
+            // it('should call getData on init', async () => {
+            //     await setup({
+            //         count: of(fakeIObservationCount)
+            //     });
 
-                expect(fakeObservationCountService.getData).toHaveBeenCalledTimes(1);
-            });
+            //     expect(fakeObservationCountService.getData).toHaveBeenCalledTimes(1);
+            // });
 
             it('should render the analysis section with count from service response', async () => {
 
@@ -212,12 +209,12 @@ describe('ObservationCountComponent unit tests', () => {
                 isError: of(true)
             });
 
-            expect(fakeObservationCountService.getData).toHaveBeenCalledTimes(1);
+            expect(fakeObservationCountService.getData).not.toHaveBeenCalled();
 
             const button = await loader.getHarness(MatButtonHarness.with({ text: 'Try Again' }));
             await button.click();
 
-            expect(fakeObservationCountService.getData).toHaveBeenCalledTimes(2);
+            expect(fakeObservationCountService.getData).toHaveBeenCalledTimes(1);
         });
     });
 });

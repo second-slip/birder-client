@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ObservationTopFiveService } from './observation-top-five.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { AsyncPipe } from '@angular/common';
@@ -12,19 +12,11 @@ import { TopTableComponent } from './top-table/top-table.component';
   standalone: true,
   imports: [MatTabsModule, LoadingComponent, AsyncPipe, TopTableComponent]
 })
-export class ObservationTopFiveComponent implements OnInit {
+export class ObservationTopFiveComponent {
 
   constructor(readonly _service: ObservationTopFiveService) { }
 
-  ngOnInit(): void {
-    this._getData();
-  }
-
   public reload(): void {
-    this._getData();
-  }
-
-  private _getData(): void {
     this._service.getData();
   }
 }

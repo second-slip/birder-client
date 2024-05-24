@@ -11,7 +11,9 @@ export class ObservationTopFiveService implements OnDestroy {
   private readonly _isError$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _topObservations$: BehaviorSubject<IObservationTopFive | null> = new BehaviorSubject<IObservationTopFive | null>(null);
 
-  constructor(private readonly _httpClient: HttpClient) { }
+  constructor(private readonly _httpClient: HttpClient) { 
+    this.getData();
+  }
 
   public get isError(): Observable<boolean> {
     return this._isError$.asObservable();

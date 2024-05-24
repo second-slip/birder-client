@@ -64,11 +64,11 @@ describe('ObservationTopFiveComponent', () => {
             expect(loading).toBeTruthy();
         });
 
-        it('should call service method', async () => {
-            await setup();
+        // it('should call service method', async () => {
+        //     await setup();
 
-            expect(fakeObservationTopFiveService.getData).toHaveBeenCalledTimes(1);
-        });
+        //     expect(fakeObservationTopFiveService.getData).toHaveBeenCalledTimes(1);
+        // });
     });
 
     describe('when service returns success response', () => {
@@ -157,12 +157,12 @@ describe('ObservationTopFiveComponent', () => {
                 getTop: of(null)
             });
 
-            expect(fakeObservationTopFiveService.getData).toHaveBeenCalledTimes(1);
+            expect(fakeObservationTopFiveService.getData).not.toHaveBeenCalled();
       
             const btn = await loader.getHarness(MatButtonHarness.with({ text: 'Try Again' }));
             await btn.click();
 
-            expect(fakeObservationTopFiveService.getData).toHaveBeenCalledTimes(2);
+            expect(fakeObservationTopFiveService.getData).toHaveBeenCalledTimes(1);
           });
     });
 });

@@ -1,4 +1,4 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { skip } from 'rxjs';
 import { fakeIObservationTopFive, fakeTopObservationsResponse } from 'src/app/testing/analysis-helpers';
@@ -14,7 +14,7 @@ describe('ObservationTopFiveService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [ObservationTopFiveService],
+            providers: [provideHttpClientTesting()],
         });
         service = TestBed.inject(ObservationTopFiveService);
         controller = TestBed.inject(HttpTestingController);
@@ -32,7 +32,7 @@ describe('ObservationTopFiveService', () => {
         let finalLoadingState: boolean | undefined;
 
         // Act
-        service.getData(); // call http request method
+        // service.getData(); // call http request method
 
         // We expect that the Observable emits an array that equals to the one from the API response:
         service.getTop.subscribe((observationTopFiveObservable) => {
@@ -60,7 +60,7 @@ describe('ObservationTopFiveService', () => {
     });
 
     it('#getData should use GET to retrieve data', () => {
-        service.getData();
+        // service.getData();
         const testRequest = controller.expectOne(_apiUrl);
         expect(testRequest.request.method).toEqual('GET');
     });
@@ -74,7 +74,7 @@ describe('ObservationTopFiveService', () => {
         let finalLoadingState: boolean | undefined;;
 
         // Act & Assert
-        service.getData(); // call http request method
+        // service.getData(); // call http request method
 
         service.isError.pipe(skip(1)) // skip first, default 'false' value emitted...
             .subscribe((error) => {

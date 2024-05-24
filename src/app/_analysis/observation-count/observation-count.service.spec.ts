@@ -1,10 +1,11 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { skip } from 'rxjs';
 import { fakeIObservationCount, fakeObservationCountResponse } from 'src/app/testing/analysis-helpers';
 import { IObservationCount } from './i-observation-count.dto';
 
 import { ObservationCountService } from './observation-count.service';
+import { provideHttpClient } from '@angular/common/http';
 
 const _apiUrl = 'api/observationanalysis';
 
@@ -15,7 +16,7 @@ describe('ObservationCountService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [ObservationCountService],
+            providers: [provideHttpClientTesting()],
         });
         service = TestBed.inject(ObservationCountService);
         controller = TestBed.inject(HttpTestingController);
@@ -33,7 +34,7 @@ describe('ObservationCountService', () => {
         let finalLoadingState: boolean | undefined;
 
         // Act
-        service.getData(); // call http request method
+        //service.getData(); // call http request method
 
         // We expect that the Observable emits an array that equals to the one from the API response:
         service.count.subscribe((observationCountObservable) => {
@@ -61,7 +62,7 @@ describe('ObservationCountService', () => {
     });
 
     it('#getData should use GET to retrieve data', () => {
-        service.getData();
+        // service.getData();
         const testRequest = controller.expectOne(_apiUrl);
         expect(testRequest.request.method).toEqual('GET');
     });
@@ -74,7 +75,7 @@ describe('ObservationCountService', () => {
         let actualErrorState: boolean | undefined;
 
         // Act & Assert
-        service.getData(); // call http request method
+        // service.getData(); // call http request method
 
         service.isError.pipe(skip(1)) // skip first, default 'false' value emitted...
             .subscribe((error) => {

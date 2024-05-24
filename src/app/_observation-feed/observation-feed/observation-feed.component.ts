@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ObservationFeedService } from '../../_observation-feed/observation-feed.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
@@ -16,10 +16,11 @@ import { FilterControlComponent } from '../filter-control/filter-control.compone
   imports: [FilterControlComponent, InfiniteScrollComponent, ObservationFeedItemComponent, RouterLink, LoadingComponent, AsyncPipe]
 })
 export class ObservationFeedComponent implements OnInit {
-  private _url: string = '';
-  private _page: number = 1;
-  public title = 'Latest observations';
-  public filter: string = '';
+  private _url = signal('');
+  private _page = signal(1);
+
+  public title = signal('Latest observations');
+  public filter = signal('');
 
   constructor(readonly _service: ObservationFeedService, private _route: ActivatedRoute) { }
 
@@ -31,7 +32,7 @@ export class ObservationFeedComponent implements OnInit {
   }
 
   public onScroll(): void {
-    this._page++;
+    this._page.update(page => page + 1)
     this._getData();
   }
 
@@ -41,18 +42,18 @@ export class ObservationFeedComponent implements OnInit {
   }
 
   private _getData(): void {
-    this._service.getData(this._page, this._url);
+    this._service.getData(this._page(), this._url());
   }
 
   private _setup(filter: string | null): void {
     if (filter === 'network') {
-      this._url = 'api/observationfeed/network';
-      this.filter = filter;
-      this.title = 'Latest observations in your network';
+      this._url.set('api/observationfeed/network');
+      this.filter.set(filter);
+      this.title.set('Latest observations in your network');
     } else {
-      this._url = 'api/observationfeed';
-      this.filter = 'public';
-      this.title = 'Latest observations';
+      this._url.set('api/observationfeed');
+      this.filter.set('public');
+      this.title.set('Latest observations');
     }
   }
 }

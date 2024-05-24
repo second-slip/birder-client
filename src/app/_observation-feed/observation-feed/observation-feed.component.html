@@ -1,8 +1,8 @@
 <div class="standard-container">
 
     <div class="d-flex justify-content-between">
-        <h1 data-testid="title">{{ title }}</h1>
-        <app-filter-control [currentFilter]="filter"></app-filter-control>
+        <h1 data-testid="title">{{ title() }}</h1>
+        <app-filter-control [currentFilter]="filter()"></app-filter-control>
     </div>
 
     <!-- defer in idle; better to swith to when loaded -->
@@ -16,7 +16,7 @@
         @if (_service.allLoaded | async) {
         <div class="alert alert-info no-more-items" data-testid="all-loaded">
             <strong>No more items</strong> You have reached the end of the feed.
-            @if (filter === 'network') {
+            @if (filter() === 'network') {
             <p>
                 Switch to the <a [routerLink]='["/feed-p/public"]'>public feed</a> to view more observations.
             </p>

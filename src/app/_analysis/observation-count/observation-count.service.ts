@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, shareReplay, takeUntil } from 'rxjs';
 import { IObservationCount } from './i-observation-count.dto';
 
 @Injectable({
@@ -24,7 +24,7 @@ export class ObservationCountService implements OnDestroy {
   public getData(): void {
 
     this._httpClient.get<IObservationCount>('api/observationanalysis')
-      .pipe(takeUntil(this._subscription))
+      .pipe(shareReplay(), takeUntil(this._subscription))
       .subscribe({
         next: (response) => {
           this._observationCount$.next(response);

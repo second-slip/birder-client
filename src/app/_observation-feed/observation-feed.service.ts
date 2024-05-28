@@ -21,10 +21,6 @@ export class ObservationFeedService implements OnDestroy {
     return this._allLoaded$.asObservable();
   }
 
-  // private get allLoadedValue(): boolean {
-  //   return this._allLoaded$.value;
-  // }
-
   public get isLoading(): Observable<boolean> {
     return this._isLoading$.asObservable();
   }

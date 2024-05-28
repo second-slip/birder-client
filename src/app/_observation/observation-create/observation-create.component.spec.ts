@@ -9,7 +9,7 @@ import { ObservationCreateComponent } from './observation-create.component';
 import { SelectSpeciesComponent } from '../select-species/select-species.component';
 import { SelectDateTimeComponent } from '../select-date-time/select-date-time.component';
 import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
-import { MockComponent, MockRender } from 'ng-mocks';
+import { MockComponent } from 'ng-mocks';
 import { MatStepperModule } from '@angular/material/stepper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Router, Routes } from '@angular/router';

@@ -27,7 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm i -g cli-real-favicon
-    - run: npm ci
+    - run: npm ci --legacy-peer-deps #temporary until ng-mocks new version is released
     - run: npm run build --if-present
       env: 
         MAPKEY: ${{ secrets.MAPKEY }}

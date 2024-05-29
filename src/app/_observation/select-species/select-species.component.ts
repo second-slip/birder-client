@@ -23,7 +23,6 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
-    // AsyncPipe,
     CommonModule
   ],
   templateUrl: './select-species.component.html',
@@ -36,14 +35,13 @@ export class SelectSpeciesComponent implements OnInit {
   constructor(readonly _service: SelectSpeciesService) { }
 
   ngOnInit(): void {
-    // this._service.getData();
     this.filter();
   }
 
   public filter(): void {
     this.filteredBirds = this.selectSpeciesForm.valueChanges.pipe(
       startWith(''),
-      map(bird => (bird ? this._filterBirds(bird) : this._service.checklistItems().slice())),
+      map(bird => (bird ? this._filterBirds(bird) : this._service.birds().slice())),
     );
   }
 
@@ -51,17 +49,13 @@ export class SelectSpeciesComponent implements OnInit {
     return bird && bird.englishName ? bird.englishName : '';
   }
 
-  // public reload(): void {
-  //   // this._service.getData();
-  // }
-
   private _filterBirds(value: any): IBirdSummary[] {
     if (value.bird.englishName) { // full IBirdSummary object selected from the list
       const filterValue = value.bird.englishName.toLowerCase();
-      return this._service.checklistItems().filter((bird: IBirdSummary) => bird.englishName.toLowerCase().includes(filterValue));
+      return this._service.birds().filter((bird: IBirdSummary) => bird.englishName.toLowerCase().includes(filterValue));
     } else { // freetext string typed into the control
       const filterValue = value.bird.toLowerCase();
-      return this._service.checklistItems().filter((bird: IBirdSummary) => bird.englishName.toLowerCase().includes(filterValue));
+      return this._service.birds().filter((bird: IBirdSummary) => bird.englishName.toLowerCase().includes(filterValue));
     }
   }
 }

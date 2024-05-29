@@ -1,75 +1,74 @@
-// import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-// import { TestBed } from '@angular/core/testing';
-// import { BirdsDddlResponse } from 'src/app/testing/birds-helpers';
-// import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
-// import { SelectSpeciesService } from './select-species.service';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { BirdsDddlResponse } from 'src/app/testing/birds-helpers';
+import { SelectSpeciesService } from './select-species.service';
+import { provideHttpClient } from '@angular/common/http';
 
-// const apiUrl = `api/birds-list`;
+const apiUrl = `api/birds-list`;
 
-// describe('SelectSpeciesService', () => {
-//   let service: SelectSpeciesService;
-//   let controller: HttpTestingController;
+describe('SelectSpeciesService', () => {
+  let service: SelectSpeciesService;
+  let controller: HttpTestingController;
 
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({
-//       imports: [HttpClientTestingModule]
-//     });
-//     service = TestBed.inject(SelectSpeciesService);
-//     controller = TestBed.inject(HttpTestingController);
-//   });
+  beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
+    });
+    service = TestBed.inject(SelectSpeciesService);
+    controller = TestBed.inject(HttpTestingController);
+  });
 
-//   afterEach(() => {
-//     controller.verify();
-//   });
+  afterEach(() => {
+    controller.verify();
+  });
 
-//   it('should be created', () => {
-//     expect(service).toBeTruthy();
-//   });
+  it('should be created', () => {
+    controller.expectOne(apiUrl);
 
-//   it('fetches data', () => {
-//     let actualBirdsState: IBirdSummary[] | null | undefined;
-//     let actualErrorState: boolean | undefined;
+    expect(service).toBeTruthy();
+  });
 
-//     service.getData();
+  it('should have correct initial state', () => {
+    expect(service.birds()).toEqual([]);
+    // expect(service.loaded()).toBeFalsy();
+    expect(service.error()).toBeFalsy();
 
-//     service.isError
-//       .subscribe((error) => {
-//         actualErrorState = error;
-//       });
+    controller.expectOne(apiUrl);
+  });
 
-//     controller.expectOne(apiUrl).flush(BirdsDddlResponse);
+  it('fetches data and update state', () => {
+    expect(service.birds()).toEqual([]);
+    // expect(service.loaded()).toBeFalsy();
+    expect(service.error()).toBeFalsy();
 
-//     actualBirdsState = service.getBirds;
+    controller.expectOne(apiUrl).flush(BirdsDddlResponse);
 
-//     expect(actualBirdsState).toEqual(BirdsDddlResponse);
-//     expect(actualErrorState).toBeFalse();
-//   });
+    expect(service.birds()).toEqual(BirdsDddlResponse);
+    // expect(service.loaded()).toBeTruthy();
+    expect(service.error()).toBeFalsy();
+  });
 
-//   it('#getData should use GET to retrieve data', () => {
-//     service.getData();
-//     const testRequest = controller.expectOne(apiUrl);
-//     expect(testRequest.request.method).toEqual('GET');
-//   });
+  it('#getData should use GET to retrieve data', () => {
+    const testRequest = controller.expectOne(apiUrl);
+    expect(testRequest.request.method).toEqual('GET');
+  });
 
-//   it('passes the errors through', () => {
-//     let actualBirdsState: IBirdSummary[] | null | undefined;
-//     let actualErrorState: boolean | undefined;
+  it('should update state with error response', () => {
+    const status = 500;
+    const statusText = 'Internal Server Error';
+    const errorEvent = new ProgressEvent('API error');
 
-//     const status = 500;
-//     const statusText = 'Internal Server Error';
-//     const errorEvent = new ProgressEvent('API error');
+    expect(service.birds()).toEqual([]);
+    // expect(service.loaded()).toBeFalsy();
+    expect(service.error()).toBeFalsy();
 
-//     service.getData();
+    controller.expectOne(apiUrl).error(errorEvent, { status, statusText });
 
-//     service.isError.subscribe((error) => {
-//       actualErrorState = error;
-//     });
-
-//     controller.expectOne(apiUrl).error(errorEvent, { status, statusText });
-
-//     actualBirdsState = service.getBirds;
-
-//     expect(actualBirdsState).toEqual([]);
-//     expect(actualErrorState).toBeTrue();
-//   });
-// });
+    expect(service.birds()).toEqual([]);
+    // expect(service.loaded()).toBeFalsy();
+    expect(service.error()).toBeTruthy();
+  });
+});

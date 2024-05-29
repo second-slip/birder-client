@@ -14,17 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-select-species',
   standalone: true,
-  imports: [
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    ReactiveFormsModule,
-    CommonModule
-  ],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule,
+    MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule],
   templateUrl: './select-species.component.html',
   styleUrl: './select-species.component.scss'
 })

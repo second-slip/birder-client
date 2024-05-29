@@ -173,6 +173,7 @@ describe('SelectSpeciesComponent', () => {
             const input = await loader.getHarness(MatAutocompleteHarness.with({ selector: '#bird' }));
             await input.focus();
             const options = await input.getOptions({ text: /Blue/ });
+            await input.focus();
 
             expect(options.length).toBe(1);
             expect(await options[0].getText()).toBe('Blue Tit');

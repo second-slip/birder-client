@@ -1,4 +1,3 @@
-
 @if(_service.error()) {
 <div class="alert alert-danger" data-testid="error">
     <p data-testid="error-message">There was a problem retrieving the birds species list.  Try to reload the page.</p>
@@ -17,7 +16,7 @@
         <mat-spinner class="loading-spinner" matSuffix diameter="25"></mat-spinner>
         }
         <mat-autocomplete #autocomplete="matAutocomplete" [displayWith]="displayFn">
-            @for (bird of _service.birds(); track bird) {
+            @for (bird of filteredBirds | async; track bird) {
             <mat-option [value]="bird">
                 {{bird.englishName}}
                 <!-- {{bird.englishName}} | <small>{{bird.birderStatus}}</small> -->

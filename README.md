@@ -16,8 +16,8 @@ Birder is a social network-style platform for logging, sharing, and analysing bi
 The complementary server respository is [birder-server](https://github.com/andrew-stuart-cross/birder-server).
 
 ## Change Log
-- 29/05/2024: experimenting with signals API (see select-species service & component)
 - 01/06/2024: updated to Angular version **18**
+- 29/05/2024: experimenting with signals API (see select-species service & component)
 
 
 ## Open a demo in GitHub Codespaces

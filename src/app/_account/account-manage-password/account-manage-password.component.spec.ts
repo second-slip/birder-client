@@ -294,6 +294,15 @@ describe('AccountManagePasswordComponent', () => {
       expect(fakeAccountService.register).not.toHaveBeenCalled();
     }));
 
+    it('should not submit an invalid form2', fakeAsync(async () => {
+      await setup();
+
+      component.onSubmit('');
+
+      expect(fakeAccountService.register).not.toHaveBeenCalled();
+    }));
+
+
     it('should call the service on Submit', async () => {
       await setup();
       const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Update password' }));

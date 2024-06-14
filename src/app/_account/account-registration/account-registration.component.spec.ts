@@ -1,9 +1,7 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { AccountRegistrationComponent } from './account-registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { dispatchFakeEvent, expectText, findEl, setFieldValue } from 'src/app/testing/element.spec-helper';
 import { AccountService } from '../account.service';
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ConfirmEmailComponent } from '../confirm-email/confirm-email.component';
 import { AccountValidationService } from '../account-validation.service';
 import { of, throwError } from 'rxjs';
@@ -22,14 +20,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
-import { RestrictedNameValidator } from 'src/app/_validators';
-
-const requiredFields = [
-  'username',
-  'email',
-  'password',
-  'confirmPassword'
-];
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -41,9 +31,6 @@ describe('AccountRegistrationComponent', () => {
   let fixture: ComponentFixture<AccountRegistrationComponent>;
   let fakeAccountService: jasmine.SpyObj<AccountService>;
   let fakeValidationService: jasmine.SpyObj<AccountValidationService>;
-  let router = {
-    navigate: jasmine.createSpy('navigate')
-  }
   let loader: HarnessLoader;
 
   const setup = async (
@@ -63,7 +50,7 @@ describe('AccountRegistrationComponent', () => {
         postChangePassword: undefined,
         postUpdateLocation: undefined,
         postUpdateProfile: undefined,
-        ...fakeAccountServiceReturnValues // Overwrite with given return values
+        ...fakeAccountServiceReturnValues
       }
     );
 
@@ -79,7 +66,6 @@ describe('AccountRegistrationComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule, AccountRegistrationComponent, BrowserAnimationsModule],
-      schemas: [NO_ERRORS_SCHEMA],
       providers: [
         provideRouter(routes),
         { provide: AccountValidationService, useValue: fakeValidationService },

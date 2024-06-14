@@ -102,7 +102,7 @@ describe('AccountRegistrationComponent', () => {
       expect(await input.getValue()).toBe('');
     });
 
-    it('should load password input with correct setup', async () => {
+    it('should load email input with correct setup', async () => {
       await setup();
       const input = await loader.getHarness(MatInputHarness.with({ selector: '#email' }));
       expect(await input.isRequired()).toBe(true);

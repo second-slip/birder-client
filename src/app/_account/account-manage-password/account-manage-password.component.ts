@@ -1,34 +1,33 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { finalize, first, Subject, takeUntil } from 'rxjs';
-import { findInvalidControls } from 'src/app/testing/form-helpers';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { MatchOtherValidator, ValidatePassword } from 'src/app/_validators';
-import { AccountValidationService } from '../account-validation.service';
+// import { AccountValidationService } from '../account-validation.service';
 import { AccountService } from '../account.service';
 import { IManagePassword } from './i-manage-password.dto';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
-import { NgIf, NgFor } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
-/**
- * TO DO - remove valication messages property from service..................
- */
 
 @Component({
-    selector: 'app-account-manage-password',
-    templateUrl: './account-manage-password.component.html',
-    styleUrls: ['./account-manage-password.component.scss'],
-    standalone: true,
-    imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor, LoadingComponent]
+  selector: 'app-account-manage-password',
+  templateUrl: './account-manage-password.component.html',
+  styleUrls: ['./account-manage-password.component.scss'],
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, LoadingComponent,
+    MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
 })
 export class AccountManagePasswordComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
-  public requesting: boolean;
-  public submitProgress: 'idle' | 'success' | 'error' = 'idle';
-  public changePasswordForm: FormGroup;
+  public requesting = signal(false);// boolean;
+    public submitProgress = signal('idle');// | 'success' | 'error' = 'idle';
+  public form: FormGroup;
 
   constructor(private readonly _formBuilder: FormBuilder
-    , readonly _validation: AccountValidationService
     , private readonly _service: AccountService
     , private readonly _router: Router) { }
 
@@ -37,8 +36,8 @@ export class AccountManagePasswordComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(formValue: any): void {
-    if (!this.changePasswordForm.valid) return;
-    this.requesting = true;
+    if (!this.form.valid) return;
+    this.requesting.set(true);
 
     const model = <IManagePassword>{
       oldPassword: formValue.oldPassword,
@@ -47,13 +46,13 @@ export class AccountManagePasswordComponent implements OnInit, OnDestroy {
     };
 
     this._service.postChangePassword(model)
-      .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
+      .pipe(finalize(() => { this.requesting.set(false); }), takeUntil(this._subscription))
       .subscribe({
         next: () => {
-          this.submitProgress = 'success';
+          this.submitProgress.set('success');
           this._redirect();
         },
-        error: () => { this.submitProgress = 'error'; }
+        error: () => { this.submitProgress.set('error'); }
       });
   }
 
@@ -62,7 +61,7 @@ export class AccountManagePasswordComponent implements OnInit, OnDestroy {
   }
 
   private _createForms() {
-    this.changePasswordForm = this._formBuilder.group({
+    this.form = this._formBuilder.group({
       oldPassword: ['', { validators: [Validators.required], }],
       passwordGroup: this._formBuilder.group({
         password: ['', {
@@ -86,3 +85,5 @@ export class AccountManagePasswordComponent implements OnInit, OnDestroy {
     this._subscription.complete();
   }
 }
+
+

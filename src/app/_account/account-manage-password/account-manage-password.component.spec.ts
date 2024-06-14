@@ -385,13 +385,16 @@ describe('AccountManagePasswordComponent', () => {
       // Act
       await submitBtn.click();
 
+      // iIMPORTANT: detectChanges() is needed here due to the signals
+      fixture.detectChanges();
+
       // Assert
       expect(fakeAccountService.postChangePassword).toHaveBeenCalledWith(changePasswordModel);
       expect(fakeAccountService.postChangePassword).toHaveBeenCalledTimes(1);
 
       expect(fixture.componentInstance.submitProgress()).toBe('error');
       const isFormHidden = fixture.nativeElement as HTMLElement;
-      expect(isFormHidden.querySelector('[data-testid="form"]')?.textContent).toBeDefined();
+      expect(isFormHidden.querySelector('[data-testid="form"]')?.textContent).toBeUndefined();
 
       const compiled = fixture.nativeElement as HTMLElement;
       expect(compiled.querySelector('[data-testid="success"]')?.textContent).toBeUndefined();

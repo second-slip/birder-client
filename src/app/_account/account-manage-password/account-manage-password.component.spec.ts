@@ -294,7 +294,7 @@ describe('AccountManagePasswordComponent', () => {
       expect(fakeAccountService.register).not.toHaveBeenCalled();
     }));
 
-    it('should not submit an invalid form2', fakeAsync(async () => {
+    it('test form validity check onSubmit()', fakeAsync(async () => {
       await setup();
 
       component.onSubmit('');

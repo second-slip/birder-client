@@ -94,10 +94,10 @@ describe('AccountManageProfileComponent', () => {
     fixture.detectChanges();
   };
 
-  it('should create', fakeAsync(async () => {
+  it('should create', async () => {
     await setup();
     expect(component).toBeTruthy();
-  }));
+  });
 
   const markFieldAsTouched = (element: DebugElement) => {
     dispatchFakeEvent(element.nativeElement, 'blur');

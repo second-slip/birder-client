@@ -1,26 +1,27 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { finalize, first, Subject, takeUntil } from 'rxjs';
-import { ValidatePassword } from 'src/app/_validators';
+import { finalize, Subject, takeUntil } from 'rxjs';
+import { MatchOtherValidator, ValidatePassword } from 'src/app/_validators';
 import { AccountService } from '../account.service';
 import { IResetPassword } from './i-reset-password.dto';
-import { LoadingComponent } from '../../_loading/loading/loading.component';
-import { NgIf, NgFor } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
-    selector: 'app-reset-password',
-    templateUrl: './reset-password.component.html',
-    styleUrls: ['./reset-password.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor, RouterLink, LoadingComponent]
+  selector: 'app-reset-password',
+  templateUrl: './reset-password.component.html',
+  styleUrls: ['./reset-password.component.scss'],
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, RouterLink, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
 })
 export class ResetPasswordComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
-  public requesting: boolean;
-  public resetPasswordForm: FormGroup;
-  public submitProgress: 'idle' | 'success' | 'error' = 'idle';
+  public form: FormGroup;
+  public requesting = signal(false);
+  public submitProgress = signal('idle');
 
   constructor(readonly _service: AccountService
     , private _formBuilder: FormBuilder
@@ -32,28 +33,34 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     });
   }
 
-  public onSubmit(value: any): void {
-    if (!this.resetPasswordForm.valid) return;
+  public onSubmit(): void {
+    const model = this._mapToModel();
 
-    this.requesting = true;
+    if (!model) return this.submitProgress.set('error');
+
+    this.requesting.set(true);
+
+    this._service.resetPassword(model)
+      .pipe(finalize(() => { this.requesting.set(false); }), takeUntil(this._subscription))
+      .subscribe({
+        next: () => { this.submitProgress.set('success'); },
+        error: () => { this.submitProgress.set('error'); }
+      });
+  }
+
+  private _mapToModel(): IResetPassword | void {
+    if (!this.form.valid) return;
 
     try {
-      const model = <IResetPassword>{
-        email: value.email,
-        password: value.passwordGroup.password,
-        confirmPassword: value.passwordGroup.confirmPassword,
-        code: value.code
+      return <IResetPassword>{
+        email: this.form.value.email,
+        password: this.form.value.passwordGroup.password,
+        confirmPassword: this.form.value.passwordGroup.confirmPassword,
+        code: this.form.value.code
       };
-
-      this._service.resetPassword(model)
-        .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
-        .subscribe({
-          next: () => { this.submitProgress = 'success'; },
-          error: () => { this.submitProgress = 'error'; }
-        });
     }
     catch (error) {
-      console.log(error);
+      return this.submitProgress.set('error');
     }
   }
 
@@ -63,11 +70,10 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   }
 
   private _createForms(code: string | null) {
-    this.resetPasswordForm = this._formBuilder.group({
+    this.form = this._formBuilder.group({
       email: ['',
         {
-          validators: [Validators.required,
-          Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]
+          validators: [Validators.required, Validators.email]
         }
       ],
       code: [code,
@@ -79,30 +85,14 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         password: ['', {
           validators: [
             Validators.minLength(8),
-            Validators.required, // regex: accept letters, numbers and !@#$%.  Must have at least one letter and number
-            Validators.pattern('^(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9!@#$%]+$')] // ^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+            Validators.required,
+            Validators.pattern('^(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9!@#$%]+$')]
         }],
         confirmPassword: ['', {
           validators: [
-            Validators.required]
+            Validators.required, MatchOtherValidator('password')]
         }],
       }, { validators: ValidatePassword.passwordMatcher })
     })
   }
-
-  reset_password_validation_messages = {
-    'email': [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Enter a valid email' }
-    ],
-    'password': [
-      { type: 'required', message: 'Your new password is required' },
-      { type: 'minlength', message: 'Password must be at least 8 characters long' },
-      { type: 'pattern', message: 'Your password must contain at least one number and one letter' }
-    ],
-    'confirmPassword': [
-      { type: 'required', message: 'You must confirm your new password' },
-      { type: 'match', message: 'Passwords do not match' }
-    ]
-  };
 }

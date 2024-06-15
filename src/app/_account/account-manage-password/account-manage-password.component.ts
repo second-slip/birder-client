@@ -23,8 +23,8 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 })
 export class AccountManagePasswordComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
-  public requesting = signal(false);// boolean;
-    public submitProgress = signal('idle');// | 'success' | 'error' = 'idle';
+  public requesting = signal(false);
+  public submitProgress = signal('idle');
   public form: FormGroup;
 
   constructor(private readonly _formBuilder: FormBuilder

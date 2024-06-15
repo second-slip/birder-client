@@ -15,7 +15,7 @@ import { NgIf, NgFor } from '@angular/common';
     templateUrl: './account-manage-profile.component.html',
     styleUrls: ['./account-manage-profile.component.scss'],
     standalone: true,
-    imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor, LoadingComponent]
+    imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor]
 })
 export class AccountManageProfileComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();

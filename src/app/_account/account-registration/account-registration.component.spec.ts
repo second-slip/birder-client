@@ -84,7 +84,6 @@ describe('AccountRegistrationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-
   describe('initial form setup', () => {
 
     it('should load 4 input harnesses', async () => {

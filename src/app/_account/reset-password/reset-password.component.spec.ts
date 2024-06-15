@@ -1,5 +1,5 @@
 import { ResetPasswordComponent } from './reset-password.component';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccountService } from '../account.service';
 import { of, throwError } from 'rxjs';
@@ -66,10 +66,10 @@ describe('ResetPasswordComponent', () => {
   };
 
 
-  it('should create', fakeAsync(async () => {
+  it('should create', async () => {
     await setup();
     expect(component).toBeTruthy();
-  }));
+  });
 
   describe('initial form setup', () => {
 
@@ -299,7 +299,7 @@ describe('ResetPasswordComponent', () => {
       });
     });
 
-    it('should not submit an invalid form', fakeAsync(async () => {
+    it('should not submit an invalid form', async () => {
       await setup();
 
       const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Update password' }));
@@ -308,15 +308,15 @@ describe('ResetPasswordComponent', () => {
       await submitBtn.click();
 
       expect(fakeAccountService.resetPassword).not.toHaveBeenCalled();
-    }));
+    });
 
-    it('test form validity check onSubmit()', fakeAsync(async () => {
+    it('test form validity check onSubmit()', async () => {
       await setup();
 
       component.onSubmit();
 
       expect(fakeAccountService.resetPassword).not.toHaveBeenCalled();
-    }));
+    });
 
     it('should call the service on Submit', async () => {
       await setup();
@@ -339,87 +339,86 @@ describe('ResetPasswordComponent', () => {
       expect(fakeAccountService.resetPassword).toHaveBeenCalledTimes(1);
       expect(fakeAccountService.resetPassword).toHaveBeenCalledWith(resetPasswordModel);
     });
-  });
 
+    describe('handles service NEXT notification', () => {
 
-  describe('handles service NEXT notification', () => {
+      it('should handle success reposnse', async () => {
+        await setup({ resetPassword: of({ success: true }) });
 
-    it('should handle success reposnse', async () => {
-      await setup({ resetPassword: of({ success: true }) });
+        expect(fixture.componentInstance.submitProgress()).toBe('idle');
 
-      expect(fixture.componentInstance.submitProgress()).toBe('idle');
+        const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Update password' }));
+        expect(await submitBtn.isDisabled()).toBe(true);
 
-      const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Update password' }));
-      expect(await submitBtn.isDisabled()).toBe(true);
+        const input2 = await loader.getHarness(MatInputHarness.with({ selector: '#email' }));
+        await input2.setValue(email);
 
-      const input2 = await loader.getHarness(MatInputHarness.with({ selector: '#email' }));
-      await input2.setValue(email);
+        const input3 = await loader.getHarness(MatInputHarness.with({ selector: '#password' }));
+        await input3.setValue(password);
 
-      const input3 = await loader.getHarness(MatInputHarness.with({ selector: '#password' }));
-      await input3.setValue(password);
+        const input4 = await loader.getHarness(MatInputHarness.with({ selector: '#confirmPassword' }));
+        await input4.setValue(confirmPassword);
 
-      const input4 = await loader.getHarness(MatInputHarness.with({ selector: '#confirmPassword' }));
-      await input4.setValue(confirmPassword);
+        expect(await submitBtn.isDisabled()).toBe(false);
 
-      expect(await submitBtn.isDisabled()).toBe(false);
+        // Act
+        await submitBtn.click();
 
-      // Act
-      await submitBtn.click();
+        // Assert
+        expect(fakeAccountService.resetPassword).toHaveBeenCalledWith(resetPasswordModel);
+        expect(fakeAccountService.resetPassword).toHaveBeenCalledTimes(1);
 
-      // Assert
-      expect(fakeAccountService.resetPassword).toHaveBeenCalledWith(resetPasswordModel);
-      expect(fakeAccountService.resetPassword).toHaveBeenCalledTimes(1);
+        fixture.detectChanges();
 
-      fixture.detectChanges();
+        expect(fixture.componentInstance.submitProgress()).toBe('success');
+        const isFormHidden = fixture.nativeElement as HTMLElement;
+        expect(isFormHidden.querySelector('[data-testid="form"]')?.textContent).toBeUndefined();
 
-      expect(fixture.componentInstance.submitProgress()).toBe('success');
-      const isFormHidden = fixture.nativeElement as HTMLElement;
-      expect(isFormHidden.querySelector('[data-testid="form"]')?.textContent).toBeUndefined();
-
-      const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="success"]')?.textContent).toBeDefined();
+        const compiled = fixture.nativeElement as HTMLElement;
+        expect(compiled.querySelector('[data-testid="success"]')?.textContent).toBeDefined();
+      });
     });
-  });
 
-  describe('handles service ERROR notification', () => {
+    describe('handles service ERROR notification', () => {
 
-    it('should handle error reposnse', async () => {
-      await setup({ resetPassword: throwError(() => new Error('error')) });
+      it('should handle error reposnse', async () => {
+        await setup({ resetPassword: throwError(() => new Error('error')) });
 
-      expect(fixture.componentInstance.submitProgress()).toBe('idle');
+        expect(fixture.componentInstance.submitProgress()).toBe('idle');
 
-      const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Update password' }));
-      expect(await submitBtn.isDisabled()).toBe(true);
+        const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Update password' }));
+        expect(await submitBtn.isDisabled()).toBe(true);
 
-      const input2 = await loader.getHarness(MatInputHarness.with({ selector: '#email' }));
-      await input2.setValue(email);
+        const input2 = await loader.getHarness(MatInputHarness.with({ selector: '#email' }));
+        await input2.setValue(email);
 
-      const input3 = await loader.getHarness(MatInputHarness.with({ selector: '#password' }));
-      await input3.setValue(password);
+        const input3 = await loader.getHarness(MatInputHarness.with({ selector: '#password' }));
+        await input3.setValue(password);
 
-      const input4 = await loader.getHarness(MatInputHarness.with({ selector: '#confirmPassword' }));
-      await input4.setValue(confirmPassword);
+        const input4 = await loader.getHarness(MatInputHarness.with({ selector: '#confirmPassword' }));
+        await input4.setValue(confirmPassword);
 
-      expect(await submitBtn.isDisabled()).toBe(false);
+        expect(await submitBtn.isDisabled()).toBe(false);
 
-      // Act
-      await submitBtn.click();
+        // Act
+        await submitBtn.click();
 
-      // Assert
-      expect(fakeAccountService.resetPassword).toHaveBeenCalledWith(resetPasswordModel);
-      expect(fakeAccountService.resetPassword).toHaveBeenCalledTimes(1);
+        // Assert
+        expect(fakeAccountService.resetPassword).toHaveBeenCalledWith(resetPasswordModel);
+        expect(fakeAccountService.resetPassword).toHaveBeenCalledTimes(1);
 
-      fixture.detectChanges();
+        fixture.detectChanges();
 
-      expect(fixture.componentInstance.submitProgress()).toBe('error');
-      const isFormHidden = fixture.nativeElement as HTMLElement;
-      expect(isFormHidden.querySelector('[data-testid="form"]')?.textContent).toBeUndefined();
+        expect(fixture.componentInstance.submitProgress()).toBe('error');
+        const isFormHidden = fixture.nativeElement as HTMLElement;
+        expect(isFormHidden.querySelector('[data-testid="form"]')?.textContent).toBeUndefined();
 
-      const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="success"]')?.textContent).toBeUndefined();
+        const compiled = fixture.nativeElement as HTMLElement;
+        expect(compiled.querySelector('[data-testid="success"]')?.textContent).toBeUndefined();
 
-      const error = fixture.nativeElement as HTMLElement;
-      expect(error.querySelector('[data-testid="error"]')?.textContent).toBeDefined();
+        const error = fixture.nativeElement as HTMLElement;
+        expect(error.querySelector('[data-testid="error"]')?.textContent).toBeDefined();
+      });
     });
   });
 });

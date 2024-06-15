@@ -1,49 +1,63 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { finalize, first, Subject, takeUntil } from 'rxjs';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { Validators, FormsModule, ReactiveFormsModule, FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { AccountService } from '../account.service';
 import { IUserEmail } from '../i-user-email.dto';
-import { NgIf, NgFor } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
-    selector: 'app-forgot-password',
-    templateUrl: './forgot-password.component.html',
-    styleUrls: ['./forgot-password.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor]
+  selector: 'app-forgot-password',
+  templateUrl: './forgot-password.component.html',
+  styleUrls: ['./forgot-password.component.scss'],
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
 })
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
-  public requesting: boolean;
-  public requestPasswordResetForm: UntypedFormGroup;
-  public submitProgress: 'idle' | 'success' | 'error' = 'idle';
+  public form: FormGroup;
+  public requesting = signal(false);
+  public submitProgress = signal('idle');
 
-  constructor(private _formBuilder: UntypedFormBuilder, private _service: AccountService) { }
+  constructor(private _formBuilder: FormBuilder, private _service: AccountService) { }
 
   ngOnInit(): void {
     this._createForms();
   }
 
-  public onSubmit(model: IUserEmail): void {
-    if (!this.requestPasswordResetForm.valid) return;
+  public onSubmit(): void {
+    const model = this._mapToModel();
 
-    this.requesting = true;
+    if (!model) return this.submitProgress.set('error');
+
+    this.requesting.set(true);
 
     this._service.requestPasswordReset(model)
-      .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
+      .pipe(finalize(() => { this.requesting.set(false); }), takeUntil(this._subscription))
       .subscribe({
-        next: () => { this.submitProgress = 'success'; },
-        error: () => { this.submitProgress = 'error'; }
+        next: () => { this.submitProgress.set('success'); },
+        error: () => { this.submitProgress.set('error'); }
       });
   }
 
+  private _mapToModel(): IUserEmail | void {
+    if (!this.form.valid) return;
+
+    try {
+      return <IUserEmail>{
+        email: this.form.value.email,
+      };
+    }
+    catch (error) {
+      return this.submitProgress.set('error');
+    }
+  }
+
   private _createForms(): void {
-    this.requestPasswordResetForm = this._formBuilder.group({
-      email: new UntypedFormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-      ])),
+    this.form = this._formBuilder.group({
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 
@@ -51,11 +65,4 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     this._subscription.next('');
     this._subscription.complete();
   }
-
-  request_password_reset_validation_messages = {
-    'email': [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Enter a valid email' }
-    ],
-  };
 }

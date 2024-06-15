@@ -1,22 +1,24 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { dispatchFakeEvent, expectText, expectTextToContain, findEl, setFieldValue } from 'src/app/testing/element.spec-helper';
 import { AccountService } from '../account.service';
-import { DebugElement } from '@angular/core';
 import { ForgotPasswordComponent } from './forgot-password.component';
 import { of, throwError } from 'rxjs';
 import {
   emailModel,
   email
 } from 'src/app/testing/account-tests-helpers';
-
-const requiredFields = [
-  'email'
-];
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MatInputHarness } from '@angular/material/input/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
 describe('ForgotPasswordComponent', () => {
+  let component: ForgotPasswordComponent;
   let fixture: ComponentFixture<ForgotPasswordComponent>;
   let fakeAccountService: jasmine.SpyObj<AccountService>;
+  let loader: HarnessLoader;
 
   const setup = async (
     fakeAccountServiceReturnValues?: jasmine.SpyObjMethodNames<AccountService>) => {
@@ -35,111 +37,203 @@ describe('ForgotPasswordComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-    imports: [FormsModule, ReactiveFormsModule, ForgotPasswordComponent],
-    providers: [{ provide: AccountService, useValue: fakeAccountService }]
-}).compileComponents();
+      imports: [FormsModule, ReactiveFormsModule, BrowserAnimationsModule],
+      providers: [{ provide: AccountService, useValue: fakeAccountService }]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ForgotPasswordComponent);
+    component = fixture.componentInstance;
+    loader = TestbedHarnessEnvironment.loader(fixture);
     fixture.detectChanges();
   };
 
-  const fillForm = () => {
-    setFieldValue(fixture, 'email', email);
-  };
 
-  it('submits the form successfully', fakeAsync(async () => {
-    await setup(
-      {
-        requestPasswordReset: of({ success: true })
-      }
-    );
+  it('should create', async () => {
+    await setup();
+    expect(component).toBeTruthy();
+  });
 
-    expect(findEl(fixture, 'submit').properties.disabled).toBe(true);
 
-    fillForm();
-    fixture.detectChanges();
+  describe('initial form setup', () => {
 
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('[data-testid="success"]')?.textContent).toBeUndefined();
-
-    expect(findEl(fixture, 'submit').properties.disabled).toBe(false);
-
-    findEl(fixture, 'requestPasswordResetForm').triggerEventHandler('submit', {});
-
-    tick(1000);
-    fixture.detectChanges();
-
-    expectText(fixture, 'success', "Success! We've sent you an email. Check your inbox and follow the instructions to reset your password. ");
-
-    expect(fakeAccountService.requestPasswordReset).toHaveBeenCalledWith(jasmine.objectContaining(emailModel));
-  }));
-
-  it('handles errors', fakeAsync(async () => {
-
-    await setup({
-      // Let the API report a failure
-      requestPasswordReset: throwError(() => new Error('test')) // throwError(new Error('Validation failed')),
+    it('should load 1 input harness', async () => {
+      await setup();
+      const inputs = await loader.getAllHarnesses(MatInputHarness);
+      expect(inputs.length).toBe(1);
     });
 
-    fillForm();
-
-    tick(1000);
-
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
-
-    findEl(fixture, 'requestPasswordResetForm').triggerEventHandler('submit', {});
-    fixture.detectChanges();
-
-    expectText(fixture, 'error', ' An error occurred. Please try again ');
-
-    expect(fakeAccountService.requestPasswordReset).toHaveBeenCalledWith(jasmine.objectContaining(emailModel));
-  }));
-
-
-  // This should not happen as the 'submit' button should be disabled, but:
-  it('does not submit an invalid form', fakeAsync(async () => {
-    await setup();
-
-    //tick(1000) bot async validators
-
-    findEl(fixture, 'requestPasswordResetForm').triggerEventHandler('submit', {});
-
-    expect(fakeAccountService.requestPasswordReset).not.toHaveBeenCalled();
-  }));
-
-  const markFieldAsTouched = (element: DebugElement) => {
-    dispatchFakeEvent(element.nativeElement, 'blur');
-  };
-
-  it('marks fields as required', async () => {
-
-    await setup();
-
-    // Mark required fields as touched
-    requiredFields.forEach((testId) => {
-      markFieldAsTouched(findEl(fixture, testId));
-      // console.log(el.attributes)
-      // changes ng-untouched to ng-touched
-      // e.g.: 'form-control ng-touched ng-pristine ng-invalid'
+    it('should load email input with correct setup', async () => {
+      await setup();
+      const input = await loader.getHarness(MatInputHarness.with({ selector: '#email' }));
+      expect(await input.isRequired()).toBe(true);
+      expect(await input.getType()).toBe('email');
+      expect(await input.isDisabled()).toBe(false);
+      expect(await input.getValue()).toBe('');
     });
 
-    fixture.detectChanges();
-
-    requiredFields.forEach((testId) => {
-      const el = findEl(fixture, testId);
-
-      // console.log(el);
-      // console.log(el.attributes);
-
-      // Check aria-required attribute
-      expect(el.attributes['required']).toBe(  //['aria-required']).toBe(
-        '',
-        `${testId} must be marked as aria-required`,
-      );
-
-      // check error message is displayed
-      expectTextToContain(fixture, `${testId}-error`, `Email is required`);
+    it('should render the Submit button - disabled as form is invalid', async () => {
+      await setup();
+      const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Submit' }));
+      expect(await submitBtn.isDisabled()).toBe(true);
+      expect(await submitBtn.getText()).toBe('Submit');
     });
   });
+
+  describe('form completion and submission', async () => {
+
+    describe('email control', () => {
+      it('should be able to set value of email input', async () => {
+        await setup();
+        const input = await loader.getHarness(MatInputHarness.with({ selector: '#email' }));
+
+        expect(await input.getValue()).toBe('');
+        await input.setValue(email);
+
+        expect(await input.getValue()).toBe(email);
+      });
+
+      it('should show required validation messages when email input is touched but empty', async () => {
+        await setup();
+
+        const formField = await loader.getHarness(MatFormFieldHarness.with({ selector: '#email' }));
+        expect((await formField.getControl()) instanceof MatInputHarness).toBe(true);
+        expect(await formField.getTextErrors()).toEqual([]);
+
+        await ((await formField.getControl()) as MatInputHarness)?.blur();
+        expect(await formField.getTextErrors()).toEqual(['Email is required']);
+
+        fixture.componentInstance.form.get('email')?.setValue('');
+        expect(await formField.isControlValid()).toBe(false);
+
+        const compiled = fixture.nativeElement as HTMLElement;
+        expect(compiled.querySelector('.validation-required-email')?.textContent).toBeDefined();
+        expect(compiled.querySelector('.validation-required-email')?.textContent).toBe(' Email is required');
+      });
+
+      it('should show email format validation message when input invalid', async () => {
+        await setup();
+
+        const formField = await loader.getHarness(MatFormFieldHarness.with({ selector: '#email' }));
+        expect((await formField.getControl()) instanceof MatInputHarness).toBe(true);
+        expect(await formField.getTextErrors()).toEqual([]);
+
+        await ((await formField.getControl()) as MatInputHarness)?.setValue('k');
+        await ((await formField.getControl()) as MatInputHarness)?.blur();
+        expect(await formField.getTextErrors()).toEqual(['Email is not valid']);
+
+        fixture.componentInstance.form.get('email')?.setValue('k');
+        expect(await formField.isControlValid()).toBe(false);
+
+        const compiled = fixture.nativeElement as HTMLElement;
+        expect(compiled.querySelector('.validation-email-email')?.textContent).toBeDefined();
+        expect(compiled.querySelector('.validation-email-email')?.textContent).toBe(' Email is not valid');
+      });
+    });
+
+    it('should not submit an invalid form', async () => {
+      await setup();
+
+      const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Submit' }));
+      expect(await submitBtn.isDisabled()).toBe(true);
+
+      await submitBtn.click();
+
+      expect(fakeAccountService.requestPasswordReset).not.toHaveBeenCalled();
+    });
+
+    it('test form validity check onSubmit()', async () => {
+      await setup();
+
+      component.onSubmit();
+
+      expect(fakeAccountService.requestPasswordReset).not.toHaveBeenCalled();
+    });
+
+    it('should call the service on Submit', async () => {
+      await setup();
+      const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Submit' }));
+      expect(await submitBtn.isDisabled()).toBe(true);
+
+      const input2 = await loader.getHarness(MatInputHarness.with({ selector: '#email' }));
+      await input2.setValue(email);
+
+      expect(await submitBtn.isDisabled()).toBe(false);
+
+      await submitBtn.click();
+
+      expect(fakeAccountService.requestPasswordReset).toHaveBeenCalledTimes(1);
+      expect(fakeAccountService.requestPasswordReset).toHaveBeenCalledWith(emailModel);
+    });
+  });
+
+
+  describe('handles service NEXT notification', () => {
+
+    it('should handle success reposnse', async () => {
+      await setup({ requestPasswordReset: of({ success: true }) });
+
+      expect(fixture.componentInstance.submitProgress()).toBe('idle');
+
+      const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Submit' }));
+      expect(await submitBtn.isDisabled()).toBe(true);
+
+      const input2 = await loader.getHarness(MatInputHarness.with({ selector: '#email' }));
+      await input2.setValue(email);
+
+      expect(await submitBtn.isDisabled()).toBe(false);
+
+      // Act
+      await submitBtn.click();
+
+      // Assert
+      expect(fakeAccountService.requestPasswordReset).toHaveBeenCalledWith(emailModel);
+      expect(fakeAccountService.requestPasswordReset).toHaveBeenCalledTimes(1);
+
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.submitProgress()).toBe('success');
+      const isFormHidden = fixture.nativeElement as HTMLElement;
+      expect(isFormHidden.querySelector('[data-testid="form"]')?.textContent).toBeUndefined();
+
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector('[data-testid="success"]')?.textContent).toBeDefined();
+    });
+  });
+
+  describe('handles service ERROR notification', () => {
+
+    it('should handle error reposnse', async () => {
+      await setup({ requestPasswordReset: throwError(() => new Error('error')) });
+
+      expect(fixture.componentInstance.submitProgress()).toBe('idle');
+
+      const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Submit' }));
+      expect(await submitBtn.isDisabled()).toBe(true);
+
+      const input2 = await loader.getHarness(MatInputHarness.with({ selector: '#email' }));
+      await input2.setValue(email);
+
+      expect(await submitBtn.isDisabled()).toBe(false);
+
+      // Act
+      await submitBtn.click();
+
+      // Assert
+      expect(fakeAccountService.requestPasswordReset).toHaveBeenCalledWith(emailModel);
+      expect(fakeAccountService.requestPasswordReset).toHaveBeenCalledTimes(1);
+
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.submitProgress()).toBe('error');
+      const isFormHidden = fixture.nativeElement as HTMLElement;
+      expect(isFormHidden.querySelector('[data-testid="form"]')?.textContent).toBeUndefined();
+
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector('[data-testid="success"]')?.textContent).toBeUndefined();
+
+      const error = fixture.nativeElement as HTMLElement;
+      expect(error.querySelector('[data-testid="error"]')?.textContent).toBeDefined();
+    });
+  });
+
 });

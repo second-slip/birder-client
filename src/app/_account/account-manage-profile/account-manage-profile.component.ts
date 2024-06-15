@@ -25,6 +25,7 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public requesting = signal(false);
   public submitProgress = signal('idle');
+  public dataFetchError = signal(false);
 
   constructor(private _formBuilder: FormBuilder
     , private readonly _service: AccountService
@@ -85,7 +86,7 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
         next: (r) => {
           this.form = this._createForm(r);
         },
-        error: () => { this.submitProgress.set('error'); }
+        error: () => { this.dataFetchError.set(true); }
       });
   }
 

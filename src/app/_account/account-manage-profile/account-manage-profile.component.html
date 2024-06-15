@@ -4,7 +4,7 @@
 
     <p>Submit this form to change your username or email.</p>
 
-    @if (submitProgress() !== 'success') {
+    @if (!dataFetchError()) {
 
     <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()" autocomplete="off" data-testid="manageProfileForm">
 
@@ -103,6 +103,10 @@
         </section>
 
     </form>
+    } @else {
+        <p class="alert alert-danger" data-testid="dataFetchError">
+            <strong>Whoops!</strong> An error occurred fetching your profile. Please try again.<br>
+        </p>
     }
 
     @if (submitProgress() === 'success') {

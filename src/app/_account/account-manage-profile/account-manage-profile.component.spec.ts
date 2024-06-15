@@ -377,7 +377,7 @@ describe('AccountManageProfileComponent', () => {
 
   describe('handles service ERROR notification', () => {
 
-    it('should handle error reposnse', async () => {
+    it('postUpdateProfile should handle error reposnse', async () => {
       await setup({ postUpdateProfile: throwError(() => new Error('error')) });
 
       expect(fixture.componentInstance.submitProgress()).toBe('idle');
@@ -403,6 +403,29 @@ describe('AccountManageProfileComponent', () => {
 
       const error = fixture.nativeElement as HTMLElement;
       expect(error.querySelector('[data-testid="error"]')?.textContent).toBeDefined();
+    });
+
+    it('_getProfile should handle error reposnse', async () => {
+      await setup({ getUserProfile: throwError(() => new Error('error')) });
+
+      // Assert
+      expect(fakeAccountService.getUserProfile).toHaveBeenCalledTimes(1);
+
+      // fixture.detectChanges();
+
+      expect(fixture.componentInstance.dataFetchError()).toBeTruthy()
+
+      const dataFetchErrorMsg = fixture.nativeElement as HTMLElement;
+      expect(dataFetchErrorMsg.querySelector('[data-testid="dataFetchError"]')?.textContent).toBeDefined();
+
+      const isFormHidden = fixture.nativeElement as HTMLElement;
+      expect(isFormHidden.querySelector('[data-testid="form"]')?.textContent).toBeUndefined();
+
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector('[data-testid="success"]')?.textContent).toBeUndefined();
+
+      const error = fixture.nativeElement as HTMLElement;
+      expect(error.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
     });
   });
 });

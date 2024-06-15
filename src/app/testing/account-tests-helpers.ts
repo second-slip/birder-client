@@ -41,6 +41,12 @@ export const manageProfileModel = <IManageProfile>{
   email: email
 }
 
+export const invalidManageProfileModel = <IManageProfile>{
+  userName: '',
+  emailConfirmationRequired: true, //???
+  email: ''
+}
+
 export const changePasswordModel = <IManagePassword>{
   oldPassword: oldPassword,
   newPassword: password,

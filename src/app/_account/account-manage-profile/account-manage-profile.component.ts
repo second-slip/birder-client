@@ -1,27 +1,30 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { finalize, first, Subject, takeUntil } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { RestrictedNameValidator } from 'src/app/_validators';
 import { AccountValidationService } from '../account-validation.service';
 import { AccountService } from '../account.service';
 import { IManageProfile } from './i-manage-profile.dto';
-import { LoadingComponent } from '../../_loading/loading/loading.component';
-import { NgIf, NgFor } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
-    selector: 'app-account-manage-profile',
-    templateUrl: './account-manage-profile.component.html',
-    styleUrls: ['./account-manage-profile.component.scss'],
-    standalone: true,
-    imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor]
+  selector: 'app-account-manage-profile',
+  templateUrl: './account-manage-profile.component.html',
+  styleUrls: ['./account-manage-profile.component.scss'],
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
 })
 export class AccountManageProfileComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();
-  public requesting: boolean;
-  public manageProfileForm: FormGroup;
-  public submitProgress: 'idle' | 'success' | 'error' = 'idle';
+
+  public form: FormGroup;
+  public requesting = signal(false);
+  public submitProgress = signal('idle');
 
   constructor(private _formBuilder: FormBuilder
     , private readonly _service: AccountService
@@ -33,30 +36,36 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
     this._getProfile();
   }
 
-  public onSubmit(formValue: any): void {
+  public onSubmit(): void {
+    const model = this._mapToModel();
+
+    if (!model) return this.submitProgress.set('error');
+
+    this.requesting.set(true);
+
+    this._service.postUpdateProfile(model)
+      .pipe(finalize(() => { this.requesting.set(false); }), takeUntil(this._subscription))
+      .subscribe({
+        next: (r) => {
+          this.submitProgress.set('success');
+          this._redirect(r);
+        },
+        error: () => { this.submitProgress.set('error'); }
+      });
+  }
+
+  private _mapToModel(): IManageProfile | void {
+    if (!this.form.valid) return;
 
     try {
-
-      const model = <IManageProfile>{
-        userName: formValue.username,
-        email: formValue.email,
+      return <IManageProfile>{
+        userName: this.form.value.username,
+        email: this.form.value.email,
         emailConfirmationRequired: true
       };
-
-      this.requesting = true;
-
-      this._service.postUpdateProfile(model)
-        .pipe(first(), finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
-        .subscribe({
-          next: (r) => {
-            this.submitProgress = 'success';
-            this._redirect(r);
-          },
-          error: () => { this.submitProgress = 'error'; }
-        });
     }
     catch (error) {
-      console.log(error);
+      return this.submitProgress.set('error');
     }
   }
 
@@ -71,12 +80,12 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
 
   private _getProfile(): void {
     this._service.getUserProfile()
-      .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
+      .pipe(finalize(() => { this.requesting.set(false); }), takeUntil(this._subscription))
       .subscribe({
         next: (r) => {
-          this.manageProfileForm = this._createForm(r);
+          this.form = this._createForm(r);
         },
-        error: () => { this.submitProgress = 'error'; }
+        error: () => { this.submitProgress.set('error'); }
       });
   }
 
@@ -99,7 +108,7 @@ export class AccountManageProfileComponent implements OnInit, OnDestroy {
         user.email,
         {
           validators: [Validators.required,
-          Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')],
+          Validators.email],
           asyncValidators: (control: AbstractControl) => this._validation.validateEmail(control.value),
           updateOn: 'blur'
         }

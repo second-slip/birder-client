@@ -52,7 +52,6 @@ describe('AccountManagePasswordComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule, BrowserAnimationsModule],
-      // schemas: [NO_ERRORS_SCHEMA],
       providers: [
         provideRouter(routes),
         { provide: AccountService, useValue: fakeAccountService }

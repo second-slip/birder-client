@@ -11,7 +11,7 @@ import { AccountService } from './account.service';
 describe('AccountValidationService', () => {
   let service: AccountValidationService;
   let fakeAccountService: jasmine.SpyObj<AccountService>;
-  
+
   const setup = async (
     fakeAccountServiceReturnValues?: jasmine.SpyObjMethodNames<AccountService>) => {
 
@@ -47,54 +47,51 @@ describe('AccountValidationService', () => {
 
 
 
-it('should return validation error object if email/username is taken', fakeAsync(async () => {
-  await setup({
-    isEmailTaken: of(true),
-    isUsernameTaken: of(true)
-  });
+  it('should return validation error object if email/username is taken', fakeAsync(async () => {
+    await setup({
+      isEmailTaken: of(true),
+      isUsernameTaken: of(true)
+    });
 
-  const validateEmail = await service.validateEmail('gh');
-  const validateUsername = await service.validateUsername('gj');
+    const validateEmail = await service.validateEmail('gh');
+    const validateUsername = await service.validateUsername('gj');
 
-  let emailResult: {emailTaken: true} | null;
-  validateEmail?.subscribe((otherResult: any) => {
-    emailResult = otherResult;
-    expect(emailResult).toEqual({emailTaken: true});
-  });
+    let emailResult: { emailTaken: true } | null;
+    validateEmail?.subscribe((otherResult: any) => {
+      emailResult = otherResult;
+      expect(emailResult).toEqual({ emailTaken: true });
+    });
 
-  let usernameResult: {usernameTaken: true} | null;
-  validateUsername?.subscribe((otherResult: any) => {
-    usernameResult = otherResult;
-    expect(usernameResult).toEqual({usernameTaken: true});
-  });
+    let usernameResult: { usernameTaken: true } | null;
+    validateUsername?.subscribe((otherResult: any) => {
+      usernameResult = otherResult;
+      expect(usernameResult).toEqual({ usernameTaken: true });
+    });
 
-  tick(1000);
-}));
+    tick(1000);
+  }));
 
-it('should return null object if email/username is not taken', fakeAsync(async () => {
-  await setup({
-    isEmailTaken: of(false),
-    isUsernameTaken: of(false)
-  });
+  it('should return null object if email/username is not taken', fakeAsync(async () => {
+    await setup({
+      isEmailTaken: of(false),
+      isUsernameTaken: of(false)
+    });
 
-  const validateEmail = await service.validateEmail('gh');
-  const validateUsername = await service.validateUsername('gj');
+    const validateEmail = await service.validateEmail('gh');
+    const validateUsername = await service.validateUsername('gj');
 
-  let emailResult: {emailTaken: true} | null;
-  validateEmail?.subscribe((otherResult: any) => {
-    emailResult = otherResult;
-    expect(emailResult).toEqual(null);
-  });
+    let emailResult: { emailTaken: true } | null;
+    validateEmail?.subscribe((otherResult: any) => {
+      emailResult = otherResult;
+      expect(emailResult).toEqual(null);
+    });
 
-  let usernameResult: {usernameTaken: true} | null;
-  validateUsername?.subscribe((otherResult: any) => {
-    usernameResult = otherResult;
-    expect(usernameResult).toEqual(null);
-  });
+    let usernameResult: { usernameTaken: true } | null;
+    validateUsername?.subscribe((otherResult: any) => {
+      usernameResult = otherResult;
+      expect(usernameResult).toEqual(null);
+    });
 
-  tick(1000);
-}));
-
-
-
+    tick(1000);
+  }));
 });

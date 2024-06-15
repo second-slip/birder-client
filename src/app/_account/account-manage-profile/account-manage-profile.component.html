@@ -4,65 +4,113 @@
 
     <p>Submit this form to change your username or email.</p>
 
-    @if (submitProgress !== 'success') {
+    @if (submitProgress() !== 'success') {
 
-    <form [formGroup]="manageProfileForm" novalidate (ngSubmit)="onSubmit(manageProfileForm.value)" autocomplete="off"
-        data-testid="manageProfileForm">
+    <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()" autocomplete="off" data-testid="manageProfileForm">
 
-        <div class="form-group">
-            <label for="username">Username</label>
-            <div class="is-loading">
-                <input class="form-control" id="username" type="text" placeholder="username" formControlName="username"
-                    required data-testid="username">
-                @if (manageProfileForm.get('username')?.pending) {
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
-                    style="float: right; margin-left: 8px"></span>
+        <p>
+            <mat-form-field class="full-width" id="username">
+                <mat-label>Username</mat-label>
+                <input matInput id="username" type="text" placeholder="username" formControlName="username">
+                @if (form.get('username')?.pending) {
+                <mat-icon matSuffix><mat-spinner diameter="15">
+                    </mat-spinner></mat-icon>
+                } @else if (form.get('username')?.valid) {
+                <mat-icon matSuffix color="primary">done</mat-icon>
                 }
-            </div>
-            <!-- ...........................delete vlaidation msg from service -->
-            <div *ngFor="let validation of _validation.account_validation_messages.username"
-                data-testid="username-error">
-                <small class="text-danger"
-                    *ngIf="manageProfileForm.get('username')?.hasError(validation.type) && (manageProfileForm.get('username')?.dirty || manageProfileForm.get('username')?.touched)">
-                    {{validation.message}}
-                </small>
-            </div>
-        </div>
+                <!-- @else if (form.get('username')?.invalid && form.get('username')?.touched) {
+                <mat-icon matSuffix color="warn">clear</mat-icon>
+                } -->
+                <mat-hint>alphanumeric and 5-20 characters</mat-hint>
+                <!--  validation -->
+                @if (form.get('username')?.hasError('required')) {
+                <mat-error class="validation-required-username">
+                    Username is <strong>required</strong>
+                </mat-error>
+                }
+                @if (form.get('username')?.hasError('minlength')) {
+                <mat-error class="validation-minlength-username">
+                    Username <strong>must be at least 5 characters long</strong>
+                </mat-error>
+                }
+                @if (form.get('username')?.hasError('maxlength')) {
+                <mat-error class="validation-maxlength-username">
+                    Username <strong>must not be more than 20 characters long</strong>
+                </mat-error>
+                }
+                @if (form.get('username')?.hasError('pattern')) {
+                <mat-error class="validation-pattern-username">
+                    Username <strong>must be alphanumeric (no special characters) and must not contain spaces</strong>
+                </mat-error>
+                }
+                @if (form.get('username')?.hasError('restrictedName')) {
+                <mat-error class="validation-restrictedName-username">
+                    Username <strong>may not contain the word "birder"</strong>
+                </mat-error>
+                }
+                @if (form.get('username')?.hasError('usernameTaken')) {
+                <mat-error class="validation-usernameTaken-username">
+                    Username <strong>is taken</strong>
+                </mat-error>
+                }
+            </mat-form-field>
+        </p>
 
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input class="form-control" id="email" type="email" placeholder="Email" formControlName="email" required
-                data-testid="email">
-            <div *ngFor="let validation of _validation.account_validation_messages.email" data-testid="email-error">
-                <small class="text-danger"
-                    *ngIf="manageProfileForm.get('email')?.hasError(validation.type) && (manageProfileForm.get('email')?.dirty || manageProfileForm.get('email')?.touched)">
-                    {{validation.message}}
-                </small>
-            </div>
-            <p [hidden]="!manageProfileForm.get('email')?.dirty" class="alert alert-info email-alert">
-                <strong>Information</strong>&nbsp;You will need to confirm your new email and login again.
-            </p>
-        </div>
+        <p>
+            <mat-form-field class="full-width" id="email">
+                <mat-label>Email</mat-label>
+                <input matInput id="email" name="email" type="email" formControlName="email" placeholder="email"
+                    autocomplete="off">
+                @if (form.get('email')?.pending) {
+                <mat-icon matSuffix><mat-spinner diameter="15">
+                    </mat-spinner></mat-icon>
+                } @else if (form.get('email')?.valid) {
+                <mat-icon matSuffix color="primary">done</mat-icon>
+                }
+                <!-- <mat-hint>Hint.............</mat-hint> -->
+                @if (form.get('email')?.hasError('required')) {
+                <mat-error class="validation-required-email">
+                    Email is <strong>required</strong>
+                </mat-error>
+                }
+                @if (form.get('email')?.hasError('email')) {
+                <mat-error class="validation-email-email">
+                    Email is <strong>not valid</strong>
+                </mat-error>
+                }
+                @if (form.get('email')?.hasError('emailTaken')) {
+                <mat-error class="validation-emailTaken-email">
+                    Email is <strong>taken</strong>
+                </mat-error>
+                }
+            </mat-form-field>
+        </p>
 
-        @if (requesting) {
-        <button class="btn btn-primary" type="submit" disabled>
-            Saving...
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        </button>
-        } @else {
-        <button type="submit" class="btn btn-primary" [disabled]="!manageProfileForm.valid" data-testid="submit">
-            Save
-        </button>
-        }
+
+        <section class="buttons">
+            @if (requesting()) {
+            <button mat-stroked-button type="button" disabled>
+                Updating...
+                <mat-icon><mat-spinner diameter="15">
+                    </mat-spinner></mat-icon>
+            </button>
+            } @else {
+            <button mat-stroked-button type="submit" class="btn btn-primar" [disabled]="!form.valid"
+                data-testid="submit">
+                Update profile
+            </button>
+            }
+        </section>
+
     </form>
     }
 
-    @if (submitProgress === 'success') {
+    @if (submitProgress() === 'success') {
     <p class="alert alert-success" data-testid="success">
         <strong>Success!</strong> You have updated your profile
     </p>
     }
-    @if (submitProgress === 'error') {
+    @if (submitProgress() === 'error') {
     <p class="alert alert-danger" data-testid="error">
         <strong>Whoops!</strong> An error occurred. Please try again.<br>
     </p>

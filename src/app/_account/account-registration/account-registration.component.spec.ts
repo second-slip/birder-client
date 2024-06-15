@@ -59,13 +59,12 @@ describe('AccountRegistrationComponent', () => {
       {
         validateEmail: of(null),
         validateUsername: of(null),
-        account_validation_messages: undefined,
         ...fakeValidationReturnValues
       }
     );
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule, AccountRegistrationComponent, BrowserAnimationsModule],
+      imports: [FormsModule, ReactiveFormsModule, BrowserAnimationsModule],
       providers: [
         provideRouter(routes),
         { provide: AccountValidationService, useValue: fakeValidationService },
@@ -537,6 +536,8 @@ describe('AccountRegistrationComponent', () => {
       expect(fakeAccountService.register).toHaveBeenCalledWith(registerModel);
       expect(fakeAccountService.register).toHaveBeenCalledTimes(1);
 
+      fixture.detectChanges();
+
       expect(fixture.componentInstance.submitProgress).toBe('success');
       const isFormHidden = fixture.nativeElement as HTMLElement;
       expect(isFormHidden.querySelector('[data-testid="form"]')?.textContent).toBeUndefined();
@@ -576,6 +577,8 @@ describe('AccountRegistrationComponent', () => {
       // Assert
       expect(fakeAccountService.register).toHaveBeenCalledWith(registerModel);
       expect(fakeAccountService.register).toHaveBeenCalledTimes(1);
+
+      fixture.detectChanges();
 
       expect(fixture.componentInstance.submitProgress).toBe('error');
       const isFormHidden = fixture.nativeElement as HTMLElement;

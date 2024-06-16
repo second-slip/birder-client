@@ -14,6 +14,7 @@ import { MatFormFieldHarness } from '@angular/material/form-field/testing'
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { signal } from '@angular/core';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 describe('SelectSpeciesComponent', () => {
     let component: SelectSpeciesComponent;
@@ -26,7 +27,9 @@ describe('SelectSpeciesComponent', () => {
 
         fakeSelectSpeciesService = jasmine.createSpyObj<SelectSpeciesService>(
             'SelectSpeciesService',
-            {},
+            {
+                retry: undefined
+            },
             {
                 error: signal(false),
                 birds: signal([]),
@@ -35,7 +38,7 @@ describe('SelectSpeciesComponent', () => {
         );
 
         await TestBed.configureTestingModule({
-            imports: [FormsModule, ReactiveFormsModule, SelectSpeciesComponent],
+            imports: [FormsModule, ReactiveFormsModule],
             providers: [{ provide: SelectSpeciesService, useValue: fakeSelectSpeciesService },
             provideAnimations()]
         }).compileComponents();
@@ -88,23 +91,21 @@ describe('SelectSpeciesComponent', () => {
             expect(compiled.querySelector('[data-testid="error-message"]')?.textContent).toContain('There was a problem retrieving the birds species list');
         });
 
-        // it('should render the Reload button', async () => {
-        //     await setup({ isError: of(true) });
-        //     const btn = await loader.getHarness(MatButtonHarness.with({ selector: '#reload' }));
-        //     expect(await btn.isDisabled()).toBe(false);
-        //     expect(await btn.getText()).toContain('Reload');
-        // });
+        it('should render the Reload button', async () => {
+            await setup({ error: signal(true) });
+            const btn = await loader.getHarness(MatButtonHarness.with({ selector: '#reload' }));
+            expect(await btn.isDisabled()).toBe(false);
+            expect(await btn.getText()).toContain('Reload');
+        });
 
-        // it('should request data again on request (test with Button Harness)', async () => {
-        //     await setup({ isError: of(true) });
+        it('should request data again on request (test with Button Harness)', async () => {
+            await setup({ error: signal(true) });
 
-        //     expect(fakeSelectSpeciesService.getData).toHaveBeenCalledTimes(1);
+            const btn = await loader.getHarness(MatButtonHarness.with({ selector: '#reload' }));
+            await btn.click();
 
-        //     const btn = await loader.getHarness(MatButtonHarness.with({ selector: '#reload' }));
-        //     await btn.click();
-
-        //     expect(fakeSelectSpeciesService.getData).toHaveBeenCalledTimes(2);
-        // });
+            expect(fakeSelectSpeciesService.retry).toHaveBeenCalledTimes(1);
+        });
     });
 
     describe('when data are fetched successfully', () => {

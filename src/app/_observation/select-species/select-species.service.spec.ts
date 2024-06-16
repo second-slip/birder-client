@@ -27,7 +27,6 @@ describe('SelectSpeciesService', () => {
 
   it('should be created', () => {
     controller.expectOne(apiUrl);
-
     expect(service).toBeTruthy();
   });
 
@@ -70,5 +69,22 @@ describe('SelectSpeciesService', () => {
     expect(service.birds()).toEqual([]);
     // expect(service.loaded()).toBeFalsy();
     expect(service.error()).toBeTruthy();
+  });
+
+  it('should request data again with retry() method', () => {
+    const status = 500;
+    const statusText = 'Internal Server Error';
+    const errorEvent = new ProgressEvent('API error');
+    controller.expectOne(apiUrl).error(errorEvent, { status, statusText });
+
+    expect(service.birds()).toEqual([]);
+    expect(service.error()).toBeTruthy();
+
+    service.retry();
+
+    controller.expectOne(apiUrl).flush(BirdsDddlResponse);
+
+    expect(service.birds()).toEqual(BirdsDddlResponse);
+    expect(service.error()).toBeFalsy();
   });
 });

@@ -1,10 +1,10 @@
 @if(_service.error()) {
 <div class="alert alert-danger" data-testid="error">
-    <p data-testid="error-message">There was a problem retrieving the birds species list.  Try to reload the page.</p>
-    <!-- <button mat-stroked-button type="button" id="reload" (click)="_service.g()" data-testid="reload-button">
+    <p data-testid="error-message">There was a problem retrieving the birds species list. Try to reload the page.</p>
+    <button mat-stroked-button type="button" id="reload" (click)="_service.retry()" data-testid="reload-button">
         <mat-icon>autorenew</mat-icon>
         Reload
-    </button> -->
+    </button>
 </div>
 } @else {
 <form class="select-species-form" [formGroup]="selectSpeciesForm">

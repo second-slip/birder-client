@@ -9,7 +9,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
       if (error.error instanceof ErrorEvent) {
         // client-side error
-        console.log(error);
+        // console.log(error);
         errorMessage = `client-side error: ${error.error.message}`;
       } else {
         // server-side error

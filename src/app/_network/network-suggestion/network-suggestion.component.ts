@@ -10,8 +10,7 @@ import { AsyncPipe } from '@angular/common';
     styleUrls: ['./network-suggestion.component.scss'],
     providers: [NetworkSuggestionService],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [NetworkUserComponent,  LoadingComponent, AsyncPipe]
+    imports: [NetworkUserComponent, LoadingComponent, AsyncPipe]
 })
 export class NetworkSuggestionComponent implements OnInit {
 

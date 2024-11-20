@@ -11,12 +11,11 @@ import { NavigationMenuComponent } from '../navigation-menu/navigation-menu.comp
 import { AsyncPipe, DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-observation-delete',
-  templateUrl: './observation-delete.component.html',
-  styleUrls: ['./observation-delete.component.scss'],
-  providers: [ObservationReadService],
-  standalone: true,
-  imports: [RouterLink, NavigationMenuComponent, LoadingComponent, AsyncPipe, DatePipe]
+    selector: 'app-observation-delete',
+    templateUrl: './observation-delete.component.html',
+    styleUrls: ['./observation-delete.component.scss'],
+    providers: [ObservationReadService],
+    imports: [RouterLink, NavigationMenuComponent, LoadingComponent, AsyncPipe, DatePipe]
 })
 export class ObservationDeleteComponent implements OnInit, OnDestroy {
   private _observationId: string;

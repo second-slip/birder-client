@@ -17,7 +17,6 @@ import { LoremIpsumComponent } from 'src/app/lorem-ipsum/lorem-ipsum.component';
     templateUrl: './observation-read.component.html',
     styleUrls: ['./observation-read.component.scss'],
     providers: [ObservationReadService],
-    standalone: true,
     imports: [RouterLink, MatTabsModule, LoremIpsumComponent, ReadOnlyMapComponent, MatIconModule, ViewOnlyNotesComponent, NavigationMenuComponent, LoadingComponent, AsyncPipe, DatePipe]
 })
 export class ObservationReadComponent implements OnInit {

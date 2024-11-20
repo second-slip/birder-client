@@ -22,13 +22,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'app-observation-update',
-  templateUrl: './observation-update.component.html',
-  styleUrls: ['./observation-update.component.scss'],
-  providers: [{ provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } }],
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatStepperModule, MatButtonModule,
-    SelectDateTimeComponent, SelectSpeciesComponent, ReadWriteMapComponent, LoadingComponent, AsyncPipe]
+    selector: 'app-observation-update',
+    templateUrl: './observation-update.component.html',
+    styleUrls: ['./observation-update.component.scss'],
+    providers: [{ provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } }],
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatStepperModule, MatButtonModule,
+        SelectDateTimeComponent, SelectSpeciesComponent, ReadWriteMapComponent, LoadingComponent, AsyncPipe]
 })
 export class ObservationUpdateComponent implements OnInit, OnDestroy {
   @Input()

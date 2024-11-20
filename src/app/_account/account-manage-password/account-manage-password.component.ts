@@ -14,12 +14,11 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 
 @Component({
-  selector: 'app-account-manage-password',
-  templateUrl: './account-manage-password.component.html',
-  styleUrls: ['./account-manage-password.component.scss'],
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, LoadingComponent,
-    MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
+    selector: 'app-account-manage-password',
+    templateUrl: './account-manage-password.component.html',
+    styleUrls: ['./account-manage-password.component.scss'],
+    imports: [FormsModule, ReactiveFormsModule, LoadingComponent,
+        MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
 })
 export class AccountManagePasswordComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();

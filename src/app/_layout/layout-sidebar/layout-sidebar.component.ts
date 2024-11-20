@@ -7,7 +7,6 @@ import { RouterOutlet } from '@angular/router';
     templateUrl: './layout-sidebar.component.html',
     styleUrls: ['./layout-sidebar.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [RouterOutlet, SideMenuComponent]
 })
 export class LayoutSidebarComponent { }

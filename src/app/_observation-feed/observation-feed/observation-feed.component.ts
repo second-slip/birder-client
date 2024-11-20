@@ -8,12 +8,11 @@ import { AsyncPipe } from '@angular/common';
 import { FilterControlComponent } from '../filter-control/filter-control.component';
 
 @Component({
-  selector: 'app-observation-feed',
-  templateUrl: './observation-feed.component.html',
-  styleUrls: ['./observation-feed.component.scss'],
-  providers: [ObservationFeedService],
-  standalone: true,
-  imports: [FilterControlComponent, InfiniteScrollComponent, ObservationFeedItemComponent, RouterLink, LoadingComponent, AsyncPipe]
+    selector: 'app-observation-feed',
+    templateUrl: './observation-feed.component.html',
+    styleUrls: ['./observation-feed.component.scss'],
+    providers: [ObservationFeedService],
+    imports: [FilterControlComponent, InfiniteScrollComponent, ObservationFeedItemComponent, RouterLink, LoadingComponent, AsyncPipe]
 })
 export class ObservationFeedComponent implements OnInit {
   private _url = signal('');

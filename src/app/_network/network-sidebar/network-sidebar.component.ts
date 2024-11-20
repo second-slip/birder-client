@@ -7,7 +7,6 @@ import { NetworkSummaryComponent } from '../network-summary/network-summary.comp
     templateUrl: './network-sidebar.component.html',
     styleUrls: ['./network-sidebar.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [NetworkSummaryComponent, NetworkSuggestionComponent]
 })
 export class NetworkSidebarComponent { }

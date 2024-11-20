@@ -9,7 +9,6 @@ import { MatTabsModule } from '@angular/material/tabs';
     selector: 'app-account-manager',
     templateUrl: './account-manager.component.html',
     styleUrls: ['./account-manager.component.scss'],
-    standalone: true,
     imports: [MatTabsModule, AccountManageProfileComponent, AccountManagePasswordComponent, AccountManageLocationComponent, AccountManageAvatarComponent]
 })
 export class AccountManagerComponent { }

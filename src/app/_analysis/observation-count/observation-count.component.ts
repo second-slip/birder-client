@@ -6,11 +6,10 @@ import { AsyncPipe } from '@angular/common';
 import { ObservationPluralPipe } from 'src/app/pipes/observation-plural.pipe';
 
 @Component({
-  selector: 'app-observation-count',
-  templateUrl: './observation-count.component.html',
-  styleUrls: ['./observation-count.component.scss'],
-  standalone: true,
-  imports: [RouterLink, LoadingComponent, AsyncPipe, ObservationPluralPipe]
+    selector: 'app-observation-count',
+    templateUrl: './observation-count.component.html',
+    styleUrls: ['./observation-count.component.scss'],
+    imports: [RouterLink, LoadingComponent, AsyncPipe, ObservationPluralPipe]
 })
 export class ObservationCountComponent {
 

@@ -6,11 +6,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { TopTableComponent } from './top-table/top-table.component';
 
 @Component({
-  selector: 'app-observation-top-five',
-  templateUrl: './observation-top-five.component.html',
-  styleUrls: ['./observation-top-five.component.scss'],
-  standalone: true,
-  imports: [MatTabsModule, LoadingComponent, AsyncPipe, TopTableComponent]
+    selector: 'app-observation-top-five',
+    templateUrl: './observation-top-five.component.html',
+    styleUrls: ['./observation-top-five.component.scss'],
+    imports: [MatTabsModule, LoadingComponent, AsyncPipe, TopTableComponent]
 })
 export class ObservationTopFiveComponent {
 

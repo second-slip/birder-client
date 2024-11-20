@@ -5,12 +5,11 @@ import { NetworkUserComponent } from '../network-user/network-user.component';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-following',
-  templateUrl: './following.component.html',
-  styleUrls: ['./following.component.scss'],
-  providers: [FollowingService],
-  standalone: true,
-  imports: [NetworkUserComponent, LoadingComponent, AsyncPipe]
+    selector: 'app-following',
+    templateUrl: './following.component.html',
+    styleUrls: ['./following.component.scss'],
+    providers: [FollowingService],
+    imports: [NetworkUserComponent, LoadingComponent, AsyncPipe]
 })
 export class FollowingComponent implements OnInit {
   @Input() username: string;

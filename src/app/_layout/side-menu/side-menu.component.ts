@@ -9,7 +9,6 @@ import { ObservationCountComponent } from '../../_analysis/observation-count/obs
     templateUrl: './side-menu.component.html',
     styleUrls: ['./side-menu.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [ObservationCountComponent, TweetDayComponent, ObservationTopFiveComponent, NetworkSidebarComponent]
 })
 export class SideMenuComponent { }

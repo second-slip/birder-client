@@ -9,7 +9,6 @@ import { AsyncPipe } from '@angular/common';
     templateUrl: './tweet-day.component.html',
     styleUrls: ['./tweet-day.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [RouterLink, LoadingComponent, AsyncPipe]
 })
 export class TweetDayComponent implements OnInit {

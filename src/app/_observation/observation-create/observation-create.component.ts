@@ -20,13 +20,12 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-observation-create',
-  templateUrl: './observation-create.component.html',
-  styleUrls: ['./observation-create.component.scss'],
-  providers: [{ provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } }],
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, AsyncPipe, MatFormFieldModule, MatInputModule, MatStepperModule, MatButtonModule,
-    ReadWriteMapComponent, SelectDateTimeComponent, SelectSpeciesComponent]
+    selector: 'app-observation-create',
+    templateUrl: './observation-create.component.html',
+    styleUrls: ['./observation-create.component.scss'],
+    providers: [{ provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } }],
+    imports: [FormsModule, ReactiveFormsModule, AsyncPipe, MatFormFieldModule, MatInputModule, MatStepperModule, MatButtonModule,
+        ReadWriteMapComponent, SelectDateTimeComponent, SelectSpeciesComponent]
 })
 export class ObservationCreateComponent implements OnInit {
   private _subscription = new Subject();

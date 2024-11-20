@@ -7,12 +7,11 @@ import { FormsModule } from '@angular/forms';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-bird-index',
-  templateUrl: './bird-index.component.html',
-  styleUrls: ['./bird-index.component.scss'],
-  providers: [BirdIndexService],
-  standalone: true,
-  imports: [FormsModule, RouterLink, LoadingComponent, AsyncPipe, MatPaginatorModule]
+    selector: 'app-bird-index',
+    templateUrl: './bird-index.component.html',
+    styleUrls: ['./bird-index.component.scss'],
+    providers: [BirdIndexService],
+    imports: [FormsModule, RouterLink, LoadingComponent, AsyncPipe, MatPaginatorModule]
 })
 export class BirdIndexComponent implements OnInit {
   public page = 0;

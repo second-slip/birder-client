@@ -11,11 +11,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss'],
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, RouterLink, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
+    selector: 'app-reset-password',
+    templateUrl: './reset-password.component.html',
+    styleUrls: ['./reset-password.component.scss'],
+    imports: [FormsModule, ReactiveFormsModule, RouterLink, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
 })
 export class ResetPasswordComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();

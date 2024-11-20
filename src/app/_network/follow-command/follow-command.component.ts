@@ -8,7 +8,6 @@ import { FollowCommandService } from './follow-command.service';
     selector: 'app-follow-command',
     templateUrl: './follow-command.component.html',
     styleUrls: ['./follow-command.component.scss'],
-    standalone: true,
     imports: []
 })
 export class FollowCommandComponent implements OnDestroy {

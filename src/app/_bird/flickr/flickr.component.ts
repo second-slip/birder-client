@@ -5,12 +5,11 @@ import { AsyncPipe } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
-  selector: 'app-flickr',
-  templateUrl: './flickr.component.html',
-  styleUrls: ['./flickr.component.scss'],
-  providers: [FlickrService],
-  standalone: true,
-  imports: [LoadingComponent, AsyncPipe, MatGridListModule]
+    selector: 'app-flickr',
+    templateUrl: './flickr.component.html',
+    styleUrls: ['./flickr.component.scss'],
+    providers: [FlickrService],
+    imports: [LoadingComponent, AsyncPipe, MatGridListModule]
 })
 export class FlickrComponent implements OnInit {
   @Input() species: string;

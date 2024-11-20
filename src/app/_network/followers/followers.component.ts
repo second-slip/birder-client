@@ -6,12 +6,11 @@ import { NetworkUserComponent } from '../network-user/network-user.component';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-followers',
-  templateUrl: './followers.component.html',
-  styleUrls: ['./followers.component.scss'],
-  providers: [FollowersService],
-  standalone: true,
-  imports: [RouterLink, NetworkUserComponent, LoadingComponent, AsyncPipe]
+    selector: 'app-followers',
+    templateUrl: './followers.component.html',
+    styleUrls: ['./followers.component.scss'],
+    providers: [FollowersService],
+    imports: [RouterLink, NetworkUserComponent, LoadingComponent, AsyncPipe]
 })
 export class FollowersComponent implements OnInit {
   @Input() username: string;

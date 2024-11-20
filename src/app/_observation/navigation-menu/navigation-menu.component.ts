@@ -6,7 +6,6 @@ import { RouterLink } from '@angular/router';
     templateUrl: './navigation-menu.component.html',
     styleUrls: ['./navigation-menu.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [RouterLink]
 })
 export class NavigationMenuComponent {

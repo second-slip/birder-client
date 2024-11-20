@@ -5,11 +5,10 @@ import { FeaturesComponent } from '../../_about/features/features.component';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
-  standalone: true,
-  imports: [RouterLink, FeaturesComponent, MatButtonModule]
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    imports: [RouterLink, FeaturesComponent, MatButtonModule]
 })
 export class HomeComponent implements OnInit {
 

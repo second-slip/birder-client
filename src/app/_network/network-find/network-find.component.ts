@@ -11,8 +11,7 @@ import { FormsModule } from '@angular/forms';
     styleUrls: ['./network-find.component.scss'],
     providers: [NetworkFindService],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [FormsModule, NetworkUserComponent,  LoadingComponent, AsyncPipe]
+    imports: [FormsModule, NetworkUserComponent, LoadingComponent, AsyncPipe]
 })
 export class NetworkFindComponent {
   public searchTerm = '';

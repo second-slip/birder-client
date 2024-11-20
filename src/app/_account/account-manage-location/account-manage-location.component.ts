@@ -11,7 +11,6 @@ import { AsyncPipe } from '@angular/common';
     selector: 'app-account-manage-location',
     templateUrl: './account-manage-location.component.html',
     styleUrls: ['./account-manage-location.component.scss'],
-    standalone: true,
     imports: [ReadWriteMapComponent, RouterLink, AsyncPipe]
 })
 export class AccountManageLocationComponent implements OnInit, OnDestroy {

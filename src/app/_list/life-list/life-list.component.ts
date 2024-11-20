@@ -7,12 +7,11 @@ import { NgFor, AsyncPipe, SlicePipe } from '@angular/common';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-life-list',
-  templateUrl: './life-list.component.html',
-  styleUrls: ['./life-list.component.scss'],
-  providers: [LifeListService],
-  standalone: true,
-  imports: [RouterLink, NgFor, LoadingComponent, AsyncPipe, SlicePipe, MatPaginatorModule]
+    selector: 'app-life-list',
+    templateUrl: './life-list.component.html',
+    styleUrls: ['./life-list.component.scss'],
+    providers: [LifeListService],
+    imports: [RouterLink, NgFor, LoadingComponent, AsyncPipe, SlicePipe, MatPaginatorModule]
 })
 export class LifeListComponent implements OnInit {
   public page = 0;

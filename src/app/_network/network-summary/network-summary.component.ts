@@ -6,12 +6,11 @@ import { RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-network-summary',
-  templateUrl: './network-summary.component.html',
-  styleUrls: ['./network-summary.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  standalone: true,
-  imports: [RouterLink, LoadingComponent, AsyncPipe]
+    selector: 'app-network-summary',
+    templateUrl: './network-summary.component.html',
+    styleUrls: ['./network-summary.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    imports: [RouterLink, LoadingComponent, AsyncPipe]
 })
 export class NetworkSummaryComponent implements OnInit {
   @Input()

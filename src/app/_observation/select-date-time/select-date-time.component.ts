@@ -7,12 +7,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
-  selector: 'app-select-date-time',
-  templateUrl: './select-date-time.component.html',
-  styleUrls: ['./select-date-time.component.scss'],
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, CommonModule],
-  providers: [provideNativeDateAdapter()]
+    selector: 'app-select-date-time',
+    templateUrl: './select-date-time.component.html',
+    styleUrls: ['./select-date-time.component.scss'],
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, CommonModule],
+    providers: [provideNativeDateAdapter()]
 })
 export class SelectDateTimeComponent implements OnInit {
   @Input()

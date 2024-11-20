@@ -4,11 +4,10 @@ import { IObservationPosition } from '../i-observation-position.dto';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-read-only-map',
-  templateUrl: './read-only-map.component.html',
-  styleUrls: ['./read-only-map.component.scss'],
-  standalone: true,
-  imports: [MatIconModule, GoogleMap, MapInfoWindow, MapAdvancedMarker]
+    selector: 'app-read-only-map',
+    templateUrl: './read-only-map.component.html',
+    styleUrls: ['./read-only-map.component.scss'],
+    imports: [MatIconModule, GoogleMap, MapInfoWindow, MapAdvancedMarker]
 })
 export class ReadOnlyMapComponent implements OnInit {
   @Input() position: IObservationPosition;

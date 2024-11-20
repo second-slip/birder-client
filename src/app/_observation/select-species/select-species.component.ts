@@ -12,12 +12,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-select-species',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule,
-    MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule],
-  templateUrl: './select-species.component.html',
-  styleUrl: './select-species.component.scss'
+    selector: 'app-select-species',
+    imports: [FormsModule, ReactiveFormsModule, CommonModule,
+        MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule],
+    templateUrl: './select-species.component.html',
+    styleUrl: './select-species.component.scss'
 })
 export class SelectSpeciesComponent implements OnInit {
   @Input() selectSpeciesForm: FormGroup

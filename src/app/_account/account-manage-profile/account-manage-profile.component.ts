@@ -13,11 +13,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
-  selector: 'app-account-manage-profile',
-  templateUrl: './account-manage-profile.component.html',
-  styleUrls: ['./account-manage-profile.component.scss'],
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
+    selector: 'app-account-manage-profile',
+    templateUrl: './account-manage-profile.component.html',
+    styleUrls: ['./account-manage-profile.component.scss'],
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
 })
 export class AccountManageProfileComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();

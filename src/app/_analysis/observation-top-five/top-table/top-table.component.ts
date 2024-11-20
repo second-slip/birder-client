@@ -6,11 +6,10 @@ import { MatTableModule } from '@angular/material/table';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 
 @Component({
-  selector: 'app-top-table',
-  standalone: true,
-  imports: [AsyncPipe, MatTableModule, RouterLink],
-  templateUrl: './top-table.component.html',
-  styleUrl: './top-table.component.scss'
+    selector: 'app-top-table',
+    imports: [AsyncPipe, MatTableModule, RouterLink],
+    templateUrl: './top-table.component.html',
+    styleUrl: './top-table.component.scss'
 })
 export class TopTableComponent {
   @Input() topObservations: IObservationTopFiveRecord[] = [];

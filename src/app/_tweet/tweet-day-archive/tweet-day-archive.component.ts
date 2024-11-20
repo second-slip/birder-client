@@ -10,7 +10,6 @@ import { AsyncPipe, DatePipe } from '@angular/common';
     styleUrls: ['./tweet-day-archive.component.scss'],
     providers: [TweetDayArchiveService],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [RouterLink, LoadingComponent, AsyncPipe, DatePipe]
 })
 export class TweetDayArchiveComponent implements OnInit {

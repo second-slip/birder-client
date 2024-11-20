@@ -8,11 +8,10 @@ import { FormsModule } from '@angular/forms';
 import { WindowGeolocateService } from '../window-geolocate.service';
 
 @Component({
-  selector: 'app-read-write-map',
-  templateUrl: './read-write-map.component.html',
-  styleUrls: ['./read-write-map.component.scss'],
-  standalone: true,
-  imports: [FormsModule, MatIconModule, GoogleMap, MapInfoWindow, MapAdvancedMarker, LoadingComponent]
+    selector: 'app-read-write-map',
+    templateUrl: './read-write-map.component.html',
+    styleUrls: ['./read-write-map.component.scss'],
+    imports: [FormsModule, MatIconModule, GoogleMap, MapInfoWindow, MapAdvancedMarker, LoadingComponent]
 })
 export class ReadWriteMapComponent implements OnInit, OnDestroy {
   @Input() latitude: number;

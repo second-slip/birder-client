@@ -8,7 +8,6 @@ import { RouterLink } from '@angular/router';
     templateUrl: './network-user.component.html',
     styleUrls: ['./network-user.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [RouterLink, FollowCommandComponent]
 })
 export class NetworkUserComponent {

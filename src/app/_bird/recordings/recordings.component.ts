@@ -5,12 +5,11 @@ import { AsyncPipe, SlicePipe } from '@angular/common';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-recordings',
-  templateUrl: './recordings.component.html',
-  styleUrls: ['./recordings.component.scss'],
-  providers: [RecordingsService],
-  standalone: true,
-  imports: [LoadingComponent, AsyncPipe, SlicePipe, MatPaginatorModule]
+    selector: 'app-recordings',
+    templateUrl: './recordings.component.html',
+    styleUrls: ['./recordings.component.scss'],
+    providers: [RecordingsService],
+    imports: [LoadingComponent, AsyncPipe, SlicePipe, MatPaginatorModule]
 })
 export class RecordingsComponent implements OnInit {
   @Input() species: string;

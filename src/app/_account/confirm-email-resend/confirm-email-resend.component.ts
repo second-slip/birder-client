@@ -9,7 +9,6 @@ import { IUserEmail } from '../i-user-email.dto';
     templateUrl: './confirm-email-resend.component.html',
     styleUrls: ['./confirm-email-resend.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [FormsModule, ReactiveFormsModule]
 })
 export class ConfirmEmailResendComponent implements OnInit, OnDestroy {

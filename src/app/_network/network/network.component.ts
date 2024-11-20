@@ -8,7 +8,6 @@ import { MatTabsModule } from '@angular/material/tabs';
     selector: 'app-network',
     templateUrl: './network.component.html',
     styleUrls: ['./network.component.scss'],
-    standalone: true,
     imports: [MatTabsModule, NetworkSummaryComponent, NetworkSuggestionComponent, NetworkFindComponent]
 })
 export class NetworkComponent { }

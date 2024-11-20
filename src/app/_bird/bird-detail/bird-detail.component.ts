@@ -15,7 +15,6 @@ import { MatTabsModule } from '@angular/material/tabs';
     templateUrl: './bird-detail.component.html',
     styleUrls: ['./bird-detail.component.scss'],
     providers: [BirdDetailService],
-    standalone: true,
     imports: [MatTabsModule, LoremIpsumComponent, BirdInfoComponent, FlickrComponent, RecordingsComponent, RouterLink, LoadingComponent, AsyncPipe]
 })
 export class BirdDetailComponent implements OnInit {

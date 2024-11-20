@@ -6,7 +6,6 @@ import { ConfirmEmailResendComponent } from '../confirm-email-resend/confirm-ema
     templateUrl: './confirm-email.component.html',
     styleUrls: ['./confirm-email.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [ConfirmEmailResendComponent]
 })
 export class ConfirmEmailComponent {

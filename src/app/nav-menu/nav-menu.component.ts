@@ -9,7 +9,6 @@ import { RouterLink } from '@angular/router';
     templateUrl: './nav-menu.component.html',
     styleUrls: ['./nav-menu.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [RouterLink, MatIconModule, AsyncPipe]
 })
 export class NavMenuComponent implements OnInit {

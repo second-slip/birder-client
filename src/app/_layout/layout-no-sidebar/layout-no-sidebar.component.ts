@@ -6,7 +6,6 @@ import { RouterOutlet } from '@angular/router';
     templateUrl: './layout-no-sidebar.component.html',
     styleUrls: ['./layout-no-sidebar.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [RouterOutlet]
 })
 export class LayoutNoSidebarComponent  {}

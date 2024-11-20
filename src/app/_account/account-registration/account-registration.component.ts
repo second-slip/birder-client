@@ -13,11 +13,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
-  selector: 'app-account-registration',
-  templateUrl: './account-registration.component.html',
-  styleUrls: ['./account-registration.component.scss'],
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, RouterLink, LoadingComponent, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
+    selector: 'app-account-registration',
+    templateUrl: './account-registration.component.html',
+    styleUrls: ['./account-registration.component.scss'],
+    imports: [FormsModule, ReactiveFormsModule, RouterLink, LoadingComponent, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
 })
 export class AccountRegistrationComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();

@@ -6,11 +6,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
-  selector: 'app-filter-control',
-  templateUrl: './filter-control.component.html',
-  styleUrls: ['./filter-control.component.scss'],
-  standalone: true,
-  imports: [MatButtonModule, MatMenuModule, RouterLink, AsyncPipe]
+    selector: 'app-filter-control',
+    templateUrl: './filter-control.component.html',
+    styleUrls: ['./filter-control.component.scss'],
+    imports: [MatButtonModule, MatMenuModule, RouterLink, AsyncPipe]
 })
 export class FilterControlComponent {
   @Input() currentFilter: string;

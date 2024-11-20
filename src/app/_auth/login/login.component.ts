@@ -18,12 +18,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, RouterLink, LoadingComponent, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatCheckboxModule],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    imports: [FormsModule, ReactiveFormsModule, RouterLink, LoadingComponent, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatCheckboxModule]
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();

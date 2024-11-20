@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { MatchOtherValidator, ValidatePassword } from 'src/app/_validators';
 import { AccountService } from '../account.service';
@@ -14,7 +14,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     selector: 'app-reset-password',
     templateUrl: './reset-password.component.html',
     styleUrls: ['./reset-password.component.scss'],
-    imports: [FormsModule, ReactiveFormsModule, RouterLink, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
 })
 export class ResetPasswordComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();

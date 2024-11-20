@@ -6,7 +6,6 @@ import { MatchOtherValidator, ValidatePassword } from 'src/app/_validators';
 // import { AccountValidationService } from '../account-validation.service';
 import { AccountService } from '../account.service';
 import { IManagePassword } from './i-manage-password.dto';
-import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,7 +16,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     selector: 'app-account-manage-password',
     templateUrl: './account-manage-password.component.html',
     styleUrls: ['./account-manage-password.component.scss'],
-    imports: [FormsModule, ReactiveFormsModule, LoadingComponent,
+    imports: [FormsModule, ReactiveFormsModule,
         MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
 })
 export class AccountManagePasswordComponent implements OnInit, OnDestroy {

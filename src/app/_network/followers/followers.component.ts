@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { FollowersService } from './followers.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { NetworkUserComponent } from '../network-user/network-user.component';
@@ -10,7 +9,7 @@ import { AsyncPipe } from '@angular/common';
     templateUrl: './followers.component.html',
     styleUrls: ['./followers.component.scss'],
     providers: [FollowersService],
-    imports: [RouterLink, NetworkUserComponent, LoadingComponent, AsyncPipe]
+    imports: [NetworkUserComponent, LoadingComponent, AsyncPipe]
 })
 export class FollowersComponent implements OnInit {
   @Input() username: string;

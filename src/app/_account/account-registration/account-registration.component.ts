@@ -6,7 +6,6 @@ import { MatchOtherValidator, RestrictedNameValidator, ValidatePassword } from '
 import { AccountValidationService } from '../account-validation.service';
 import { AccountService } from '../account.service';
 import { IAccountRegistration } from './i-account-registration';
-import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,7 +15,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     selector: 'app-account-registration',
     templateUrl: './account-registration.component.html',
     styleUrls: ['./account-registration.component.scss'],
-    imports: [FormsModule, ReactiveFormsModule, RouterLink, LoadingComponent, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
+    imports: [FormsModule, ReactiveFormsModule, RouterLink, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinner]
 })
 export class AccountRegistrationComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();

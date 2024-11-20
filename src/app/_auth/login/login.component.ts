@@ -9,7 +9,6 @@ import { AuthenticationFailureReason } from '../authentication-failure-reason';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { IAuthenticationResult } from '../i-authentication-result.dto';
 import { TokenService } from '../token.service';
-import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,7 +21,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    imports: [FormsModule, ReactiveFormsModule, RouterLink, LoadingComponent, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatCheckboxModule]
+    imports: [FormsModule, ReactiveFormsModule, RouterLink, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatCheckboxModule]
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private _subscription = new Subject();

@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { IObservationFeed } from '../i-observation-feed.dto';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,8 +12,15 @@ import { AsyncPipe, DatePipe } from '@angular/common';
     encapsulation: ViewEncapsulation.None,
     imports: [RouterLink, MatIconModule, AsyncPipe, DatePipe]
 })
-export class ObservationFeedItemComponent {
+export class ObservationFeedItemComponent implements OnInit {
   @Input() observation: IObservationFeed;
+
+  // @Input({required: true}) question!: Question;
+  @Output() loaded = new EventEmitter<number>();
+
+  ngOnInit() {
+    this.loaded.emit(this.observation.observationId);
+  }
 
   constructor(readonly _authService: AuthenticationService) { }
 }

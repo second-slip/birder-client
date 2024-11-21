@@ -8,11 +8,18 @@ import { AsyncPipe } from '@angular/common';
 import { FilterControlComponent } from '../filter-control/filter-control.component';
 
 @Component({
-    selector: 'app-observation-feed',
-    templateUrl: './observation-feed.component.html',
-    styleUrls: ['./observation-feed.component.scss'],
-    providers: [ObservationFeedService],
-    imports: [FilterControlComponent, InfiniteScrollComponent, ObservationFeedItemComponent, RouterLink, LoadingComponent, AsyncPipe]
+  selector: 'app-observation-feed',
+  templateUrl: './observation-feed.component.html',
+  styleUrls: ['./observation-feed.component.scss'],
+  providers: [ObservationFeedService],
+  imports: [
+    FilterControlComponent,
+    InfiniteScrollComponent,
+    ObservationFeedItemComponent,
+    RouterLink,
+    LoadingComponent,
+    AsyncPipe,
+  ],
 })
 export class ObservationFeedComponent implements OnInit {
   private _url = signal('');
@@ -21,17 +28,36 @@ export class ObservationFeedComponent implements OnInit {
   public title = signal('Latest observations');
   public filter = signal('');
 
-  constructor(readonly _service: ObservationFeedService, private _route: ActivatedRoute) { }
+  constructor(
+    readonly _service: ObservationFeedService,
+    private _route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this._route.paramMap.subscribe(pmap => {
+    this._route.paramMap.subscribe((pmap) => {
       this._setup(pmap.get('filter'));
       this._getData();
     });
   }
 
+  loaded(id: number) {
+    if (id != this._service.lastId) {
+      this.onScroll();
+      // this.questions().length < this.total &&
+      // this.questions().at(-2)?.id === id
+      // this.loadQuestions(this.questions().length / 5);
+    }
+
+    // if (
+    //   this.questions().length < this.total &&
+    //   this.questions().at(-2)?.id === id
+    // ) {
+    //   this.loadQuestions(this.questions().length / 5);
+    // }
+  }
+
   public onScroll(): void {
-    this._page.update(page => page + 1)
+    this._page.update((page) => page + 1);
     this._getData();
   }
 

@@ -7,10 +7,13 @@ import { IAuthUser } from '../../_auth/i-auth-user.dto';
 import { expectText } from 'src/app/testing/element.spec-helper';
 import { provideRouter } from '@angular/router';
 import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
+import { ComponentRef, input } from '@angular/core';
+import { observationId } from 'src/app/testing/observation-test-helpers';
 
 describe('ObservationFeedItemComponent', () => {
     let component: ObservationFeedItemComponent;
     let fixture: ComponentFixture<ObservationFeedItemComponent>;
+    let componentRef: ComponentRef<ObservationFeedItemComponent>
 
     let fakeAuthService: AuthenticationService;
 
@@ -64,7 +67,8 @@ describe('ObservationFeedItemComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ObservationFeedItemComponent);
         component = fixture.componentInstance;
-        component.observation = fakeIObservationFeedSingleItem; // {} as IObservationFeed;
+        componentRef = fixture.componentRef
+        componentRef.setInput('observation', fakeIObservationFeedSingleItem)
         fixture.detectChanges();
     });
 

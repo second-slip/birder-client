@@ -7,76 +7,81 @@ import { IAuthUser } from '../../_auth/i-auth-user.dto';
 import { expectText } from 'src/app/testing/element.spec-helper';
 import { provideRouter } from '@angular/router';
 import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
-import { ComponentRef, input } from '@angular/core';
-import { observationId } from 'src/app/testing/observation-test-helpers';
+import { ComponentRef } from '@angular/core';
 
 describe('ObservationFeedItemComponent', () => {
-    let component: ObservationFeedItemComponent;
-    let fixture: ComponentFixture<ObservationFeedItemComponent>;
-    let componentRef: ComponentRef<ObservationFeedItemComponent>
+  let component: ObservationFeedItemComponent;
+  let fixture: ComponentFixture<ObservationFeedItemComponent>;
+  let componentRef: ComponentRef<ObservationFeedItemComponent>;
 
-    let fakeAuthService: AuthenticationService;
+  let fakeAuthService: AuthenticationService;
 
-    const authUser: IAuthUser = {
-        userName: 'test',
-        avatar: 'testAvatar',
-        defaultLocationLatitude: 0.99,
-        defaultLocationLongitude: 0.88
-    }
+  const authUser: IAuthUser = {
+    userName: 'test',
+    avatar: 'testAvatar',
+    defaultLocationLatitude: 0.99,
+    defaultLocationLongitude: 0.88,
+  };
 
-    fakeAuthService = jasmine.createSpyObj<AuthenticationService>(
-        'AuthenticationService',
-        {
-            checkAuthStatus: undefined,
-            logout: undefined
-        },
-        {
-            isAuthorisedObservable: of(false),
-            getAuthUser: of(authUser)
-        }
-    );
-
-    const fakeIObservationFeedSingleItem: IObservationFeed =
+  fakeAuthService = jasmine.createSpyObj<AuthenticationService>(
+    'AuthenticationService',
     {
-        observationId: 10099,
-        quantity: 1,
-        observationDateTime: "2021-11-28T17:02:13.527Z",
-        birdId: 1002,
-        species: "Stercorarius parasiticus",
-        englishName: "Arctic Skua",
-        thumbnailUrl: "https://farm66.staticflickr.com/65535/52183437764_25d56664db_q.jpg",
-        latitude: 53.44244782183897,
-        longitude: -2.2773529647976964,
-        formattedAddress: "581A Wilbraham Rd, Chorlton-cum-Hardy, Manchester M21 9AF, UK",
-        shortAddress: "Manchester, United Kingdom",
-        username: "monkey",
-        notesCount: 0,
-        creationDate: "2021-11-28T17:02:45.1213198Z",
-        lastUpdateDate: "2021-11-28T17:02:45.1213198Z"
+      checkAuthStatus: undefined,
+      logout: undefined,
+    },
+    {
+      isAuthorisedObservable: of(false),
+      getAuthUser: of(authUser),
     }
+  );
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            imports: [ObservationFeedItemComponent],
-            providers: [{ provide: AuthenticationService, useValue: fakeAuthService },
-            provideRouter(blankRoutesArray)]
-        })
-            .compileComponents();
-    });
+  const fakeIObservationFeedSingleItem: IObservationFeed = {
+    observationId: 10099,
+    quantity: 1,
+    observationDateTime: '2021-11-28T17:02:13.527Z',
+    birdId: 1002,
+    species: 'Stercorarius parasiticus',
+    englishName: 'Arctic Skua',
+    thumbnailUrl:
+      'https://farm66.staticflickr.com/65535/52183437764_25d56664db_q.jpg',
+    latitude: 53.44244782183897,
+    longitude: -2.2773529647976964,
+    formattedAddress:
+      '581A Wilbraham Rd, Chorlton-cum-Hardy, Manchester M21 9AF, UK',
+    shortAddress: 'Manchester, United Kingdom',
+    username: 'monkey',
+    notesCount: 0,
+    creationDate: '2021-11-28T17:02:45.1213198Z',
+    lastUpdateDate: '2021-11-28T17:02:45.1213198Z',
+  };
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(ObservationFeedItemComponent);
-        component = fixture.componentInstance;
-        componentRef = fixture.componentRef
-        componentRef.setInput('observation', fakeIObservationFeedSingleItem)
-        fixture.detectChanges();
-    });
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ObservationFeedItemComponent],
+      providers: [
+        { provide: AuthenticationService, useValue: fakeAuthService },
+        provideRouter(blankRoutesArray),
+      ],
+    }).compileComponents();
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ObservationFeedItemComponent);
+    component = fixture.componentInstance;
+    componentRef = fixture.componentRef;
+    componentRef.setInput('observation', fakeIObservationFeedSingleItem);
+    fixture.detectChanges();
+  });
 
-    it('renders the species name from the Input() object', () => {
-        expectText(fixture, 'species-name', String(fakeIObservationFeedSingleItem.species));
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('renders the species name from the Input() object', () => {
+    expectText(
+      fixture,
+      'species-name',
+      String(fakeIObservationFeedSingleItem.species)
+    );
+  });
 });

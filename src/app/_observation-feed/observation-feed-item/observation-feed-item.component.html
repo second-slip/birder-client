@@ -1,6 +1,8 @@
 @if (observation()) { @if(_authService.getAuthUser | async; as authUser) {
 
-<article class="wrapper">
+<!-- <p>{{observation().observationId}}</p> -->
+
+<article>
   <div class="title-big">
     <h4>
       {{ observation().quantity > 1 ? observation().quantity : "" }}

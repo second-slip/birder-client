@@ -1,152 +1,121 @@
 import { TestBed } from '@angular/core/testing';
 import { ObservationFeedService } from './observation-feed.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { skip } from 'rxjs';
-import { IObservationFeed } from './i-observation-feed.dto';
-import { fakeIObservationFeed, fakeIObservationFeedWithOneElement, fakeObservationFeedResponse, fakeObservationFeedResponseWithOneElement } from '../testing/observation-feed-helper';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
+import {
+  fakeIObservationFeed,
+  fakeIObservationFeedWithOneElement,
+  fakeObservationFeedResponse,
+  fakeObservationFeedResponseWithOneElement,
+} from '../testing/observation-feed-helper';
+import { provideHttpClient } from '@angular/common/http';
 
 const _pageIndex = 1;
 const _apiUrl = `api/observationfeed?pageIndex=${_pageIndex}&pageSize=10`;
 
-
 describe('ObservationFeedService', () => {
-    let controller: HttpTestingController;
-    let service: ObservationFeedService;
+  let controller: HttpTestingController;
+  let service: ObservationFeedService;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [ObservationFeedService]
-        });
-        service = TestBed.inject(ObservationFeedService);
-        controller = TestBed.inject(HttpTestingController);
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        ObservationFeedService,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
+    });
+    service = TestBed.inject(ObservationFeedService);
+    controller = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    controller.verify();
+  });
+
+  it('should get observations', () => {
+    // Arrange
+    expect(service.observations()).toBe(null);
+    expect(service.isLoading()).toBe(false);
+    expect(service.isError()).toBe(false);
+    expect(service.isAllLoaded()).toBe(false);
+    expect(service.lastLoadedRecordId()).toBe(0);
+    expect(service.observations()).toBe(null);
+
+    // Act
+    service.getData(_pageIndex, 'api/observationfeed');
+
+    const request = controller.expectOne({
+      method: 'GET',
+      url: _apiUrl,
     });
 
-    afterEach(() => {
-        controller.verify();
+    // Assert
+    request.flush(fakeObservationFeedResponse);
+
+    expect(service.observations()).toEqual(fakeObservationFeedResponse);
+    expect(service.isLoading()).toBe(false);
+    expect(service.isError()).toBe(false);
+    expect(service.isAllLoaded()).toBe(false);
+    expect(service.lastLoadedRecordId()).toBe(
+      fakeIObservationFeed[fakeIObservationFeed.length - 1].observationId
+    );
+  });
+
+  it('should pass through error response state', () => {
+    // Arrange
+    const status = 500;
+    const statusText = 'Internal Server Error';
+    const errorEvent = new ErrorEvent('API error');
+
+    expect(service.observations()).toBe(null);
+    expect(service.isLoading()).toBe(false);
+    expect(service.isError()).toBe(false);
+    expect(service.isAllLoaded()).toBe(false);
+    expect(service.lastLoadedRecordId()).toBe(0);
+    expect(service.observations()).toBe(null);
+
+    // Act
+    service.getData(_pageIndex, 'api/observationfeed');
+
+    // Assert
+    controller.expectOne(_apiUrl).error(errorEvent, { status, statusText });
+
+    expect(service.observations()).toEqual(null);
+    expect(service.isLoading()).toBe(false);
+    expect(service.isError()).toBe(true);
+    expect(service.isAllLoaded()).toBe(false);
+    expect(service.lastLoadedRecordId()).toBe(0);
+  });
+
+  it('should set isAllLoaded flag', () => {
+    // Arrange
+    expect(service.observations()).toBe(null);
+    expect(service.isLoading()).toBe(false);
+    expect(service.isError()).toBe(false);
+    expect(service.isAllLoaded()).toBe(false);
+    expect(service.lastLoadedRecordId()).toBe(0);
+    expect(service.observations()).toBe(null);
+
+    // Act
+    service.getData(_pageIndex, 'api/observationfeed');
+
+    const request = controller.expectOne({
+      method: 'GET',
+      url: _apiUrl,
     });
 
+    // Assert
+    request.flush(fakeObservationFeedResponseWithOneElement);
 
-    it('makes an http call', () => {
-        // Arrange
-        let actualobservationFeed: IObservationFeed[] | null | undefined; // undefined initial state to check if Observable emits
-        let actualErrorState: boolean | undefined;
-        let finalLoadingState: boolean | undefined;
-        let actualAllLoadedState: boolean | undefined;
-
-        // Act
-        service.getData(_pageIndex, 'api/observationfeed'); // call http request method
-
-        // We expect that the Observable emits an array that equals to the one from the API response:
-        service.observations.subscribe((observationFeedObservable) => {
-            actualobservationFeed = observationFeedObservable
-        });
-
-        service.isError
-            .subscribe((error) => {
-                actualErrorState = error;
-            });
-
-        service.isLoading.pipe(skip(1)) // skip first default 'true' value emitted...
-            .subscribe((loading) => {
-                finalLoadingState = loading;
-            });
-
-        service.allLoaded.pipe() // skip first default 'true' value emitted...
-            .subscribe((loaded) => {
-                actualAllLoadedState = loaded;
-            });
-
-        const request = controller.expectOne({
-            method: 'GET',
-            url: _apiUrl
-        });
-        // Answer the request so the Observable emits a value.
-        request.flush(fakeObservationFeedResponse); // also paste the response object in with {}
-
-        // Assert
-        expect(actualobservationFeed).toEqual(fakeIObservationFeed);
-        expect(actualErrorState).toBeFalse();
-        expect(finalLoadingState).toBeFalse();
-        expect(actualAllLoadedState).toBeFalse();
-    });
-
-    it('passes through errors', () => {
-        // Arrange
-        const status = 500;
-        const statusText = 'Internal Server Error';
-        const errorEvent = new ErrorEvent('API error');
-        let actualErrorState: boolean | undefined;
-        let finalLoadingState: boolean | undefined;
-        let actualAllLoadedState: boolean | undefined;
-
-        // Act & Assert
-        service.getData(_pageIndex, 'api/observationfeed'); // call http request method
-
-        service.isError.pipe(skip(1)) // skip first, default 'false' value emitted...
-            .subscribe((error) => {
-                actualErrorState = error;
-            });
-
-        service.isLoading.pipe(skip(1)) // skip first, default 'true' value emitted...
-            .subscribe((loading) => {
-                finalLoadingState = loading;
-            });
-
-        service.allLoaded.pipe() // skip first default 'true' value emitted...
-            .subscribe((loaded) => {
-                actualAllLoadedState = loaded;
-            });
-
-        controller.expectOne(_apiUrl).error(errorEvent, { status, statusText });
-
-        expect(actualErrorState).toBeTrue();
-        expect(finalLoadingState).toBeFalse();
-        expect(actualAllLoadedState).toBeFalse();
-    });
-
-
-
-    // 
-    it('updates allLoaded property to true', () => {
-        // Arrange
-        let actualobservationFeed: IObservationFeed[] | null | undefined; // undefined initial state to check if Observable emits
-        let actualErrorState: boolean | undefined;
-        let finalLoadingState: boolean | undefined;
-        let actualAllLoadedState: boolean | undefined;
-
-        // Act
-        service.getData(_pageIndex, 'api/observationfeed'); // call http request method
-
-        // We expect that the Observable emits an array that equals to the one from the API response:
-        service.observations.subscribe((observationFeedObservable) => {
-            actualobservationFeed = observationFeedObservable
-        });
-
-        service.isError
-            .subscribe((error) => {
-                actualErrorState = error;
-            });
-
-        service.isLoading.pipe(skip(1)) // skip first default 'true' value emitted...
-            .subscribe((loading) => {
-                finalLoadingState = loading;
-            });
-
-        service.allLoaded.pipe(skip(1)) // skip first default 'true' value emitted...
-            .subscribe((loaded) => {
-                actualAllLoadedState = loaded;
-            });
-
-        const request = controller.expectOne(_apiUrl);
-        // Answer the request so the Observable emits a value.
-        request.flush(fakeObservationFeedResponseWithOneElement); // empty array response
-
-        // Assert
-        expect(actualobservationFeed).toEqual(fakeIObservationFeedWithOneElement);
-        expect(actualErrorState).toBeFalse();
-        expect(finalLoadingState).toBeFalse();
-
-        expect(actualAllLoadedState).toBeTrue(); // <-- empty response is less than pageSize, so ALL LOADED
-    });
+    expect(service.observations()).toEqual(fakeIObservationFeedWithOneElement);
+    expect(service.isLoading()).toBe(false);
+    expect(service.isError()).toBe(false);
+    expect(service.isAllLoaded()).toBe(true);
+    expect(service.lastLoadedRecordId()).toBe(
+      fakeIObservationFeedWithOneElement[0].observationId
+    );
+  });
 });

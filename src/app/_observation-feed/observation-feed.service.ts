@@ -1,49 +1,40 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, OnDestroy } from '@angular/core';
-import {
-  BehaviorSubject,
-  finalize,
-  Observable,
-  shareReplay,
-  Subject,
-  takeUntil,
-} from 'rxjs';
+import { inject, Injectable, OnDestroy, Signal, signal } from '@angular/core';
 import { IObservationFeed } from './i-observation-feed.dto';
+import { finalize, shareReplay, Subject, takeUntil } from 'rxjs';
 
 @Injectable()
 export class ObservationFeedService implements OnDestroy {
-  private _subscription = new Subject();
-  private readonly _isError$: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-  private readonly _isLoading$: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(true);
-  private readonly _allLoaded$: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-  private readonly _observations$: BehaviorSubject<IObservationFeed[] | null> =
-    new BehaviorSubject<IObservationFeed[] | null>(null);
+  private readonly _httpClient = inject(HttpClient);
+  private readonly _subscription = new Subject();
+  private readonly _observations = signal<IObservationFeed[] | null>(null);
+  private readonly _isLoading = signal(false);
+  private readonly _isError = signal(false);
+  private readonly _isAllLoaded = signal(false);
+  private readonly _lastLoadedRecordId = signal(0);
 
-  constructor(private _httpClient: HttpClient) {}
-
-  public get isError(): Observable<boolean> {
-    return this._isError$.asObservable();
+  get isLoading(): Signal<boolean> {
+    return this._isLoading.asReadonly();
+  }
+  get isError(): Signal<boolean> {
+    return this._isError.asReadonly();
+  }
+  get isAllLoaded(): Signal<boolean> {
+    return this._isAllLoaded.asReadonly();
+  }
+  get lastLoadedRecordId(): Signal<number> {
+    return this._lastLoadedRecordId.asReadonly();
+  }
+  get observations(): Signal<IObservationFeed[] | null> {
+    return this._observations.asReadonly();
   }
 
-  public get allLoaded(): Observable<boolean> {
-    return this._allLoaded$.asObservable();
-  }
-
-  public get isLoading(): Observable<boolean> {
-    return this._isLoading$.asObservable();
-  }
-
-  public get observations(): Observable<IObservationFeed[] | null> {
-    return this._observations$.asObservable();
-  }
+  constructor() {}
 
   public getData(pageIndex: number, url: string, pageSize: number = 10): void {
-    if (this._allLoaded$.value) return; // todo: move to isCached method
+    if (this._isAllLoaded()) return;
 
-    this._isLoading$.next(true);
+    this._isLoading.set(true);
 
     const parameters = new HttpParams()
       .set('pageIndex', pageIndex.toString())
@@ -54,40 +45,33 @@ export class ObservationFeedService implements OnDestroy {
       .pipe(
         shareReplay(),
         finalize(() => {
-          this._isLoading$.next(false);
+          this._isLoading.set(false);
         }),
         takeUntil(this._subscription)
       )
       .subscribe({
         next: (items: IObservationFeed[]) => {
-          this._observations$.next([
-            ...(this._observations$.getValue() || []),
-            ...items,
-          ]); // spread syntax, or concat?
+          this._observations.set([...(this._observations() || []), ...items]);
 
-          this.lastId = items[- 1].observationId;
+          this._setLastLoadedRecordId(items);
           this._moreToGet(pageSize, items.length);
         },
         error: () => {
-          this._handleError();
+          this._isError.set(true);
         },
         complete: () => {
-          if (this._isError$) this._isError$.next(false);
+          if (this._isError()) this._isError.set(false);
         },
       });
   }
 
-  public lastId: number;
-
-
-  private _moreToGet(pageSize: number, items: number): void {
-    if (items < pageSize) {
-      this._allLoaded$.next(true);
-    }
+  private _setLastLoadedRecordId(items: IObservationFeed[]): void {
+    const id = items[items.length - 1]?.observationId;
+    if (id) this._lastLoadedRecordId.set(id);
   }
 
-  private _handleError() {
-    this._isError$.next(true);
+  private _moreToGet(pageSize: number, items: number): void {
+    if (items < pageSize) this._isAllLoaded.set(true);
   }
 
   ngOnDestroy(): void {

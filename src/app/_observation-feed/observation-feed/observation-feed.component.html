@@ -11,11 +11,13 @@
 <!--  -->
 <app-observation-feed-item
   [observation]="item"
-  (loaded)="fetchMore($event)"
+  (whenLoaded)="fetchMore($event)"
 ></app-observation-feed-item>
 } @placeholder () {
 <!-- problem here to decide on -->
-<div>hello...........................</div>
+<p>
+  hello...............................................................................................................
+</p>
 } }
 <!-- empty block not needed: isAllLoaded block below covers this scenario -->
 <!-- @empty { <p>this is empty...........................</p> }  -->

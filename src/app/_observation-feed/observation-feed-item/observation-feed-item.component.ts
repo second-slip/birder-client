@@ -27,11 +27,11 @@ export class ObservationFeedItemComponent implements OnInit {
 
   // @Output()
   // public loaded =  new EventEmitter<number>();
-  loaded = output<number>();
+  whenLoaded = output<number>();
 
   constructor(readonly _authService: AuthenticationService) {}
 
   ngOnInit() {
-    this.loaded.emit(this.observation().observationId);
+    this.whenLoaded.emit(this.observation().observationId);
   }
 }

@@ -9,7 +9,8 @@ import { MatMenuModule } from '@angular/material/menu';
     selector: 'app-filter-control',
     templateUrl: './filter-control.component.html',
     styleUrls: ['./filter-control.component.scss'],
-    imports: [MatButtonModule, MatMenuModule, RouterLink, AsyncPipe]
+    imports: [MatButtonModule, MatMenuModule, RouterLink, AsyncPipe],
+    standalone: true // temporarily restore to enable MockComponent (ng-mocks) in tests
 })
 export class FilterControlComponent {
   @Input() currentFilter: string;

@@ -49,7 +49,7 @@ describe('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     );
 
     await TestBed.configureTestingModule({
-      deferBlockBehavior: DeferBlockBehavior.Manual,
+      // deferBlockBehavior: DeferBlockBehavior.Manual,
       imports: [ObservationFeedComponent, ObservationFeedItemComponent],
       providers: [
         {
@@ -76,9 +76,9 @@ describe('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         },
         add: {
           imports: [
-            ObservationFeedItemComponent,
-            // MockComponent(ObservationFeedItemComponent),
-            // MockComponent(FilterControlComponent),
+            // ObservationFeedItemComponent,
+            MockComponent(ObservationFeedItemComponent),
+            MockComponent(FilterControlComponent),
           ],
           providers: [
             {
@@ -115,7 +115,7 @@ describe('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     // await firstDeferBlock.render(DeferBlockState.Complete);
 
     // const deferBlocks = await fixture.getDeferBlocks();
-    // only one defer block should be found
+    // // only one defer block should be found
     // expect(deferBlocks.length).toBe(10);
 
     // component._service.getData(2, '');

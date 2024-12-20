@@ -1,37 +1,33 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ObservationFeedService } from '../../_observation-feed/observation-feed.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { ObservationFeedItemComponent } from '../observation-feed-item/observation-feed-item.component';
-import { InfiniteScrollComponent } from '../../infinite-scroll/infinite-scroll.component';
-import { AsyncPipe } from '@angular/common';
 import { FilterControlComponent } from '../filter-control/filter-control.component';
 
 @Component({
   selector: 'app-observation-feed',
   templateUrl: './observation-feed.component.html',
-  styleUrls: ['./observation-feed.component.scss'],
   providers: [ObservationFeedService],
+  host: { class: 'standard-container' },
   imports: [
     FilterControlComponent,
-    InfiniteScrollComponent,
     ObservationFeedItemComponent,
     RouterLink,
-    LoadingComponent,
-    AsyncPipe,
-  ],
+    LoadingComponent
+],
 })
 export class ObservationFeedComponent implements OnInit {
+  readonly _service = inject(ObservationFeedService);
+  private _route = inject(ActivatedRoute);
+
   private _url = signal('');
   private _page = signal(1);
 
   public title = signal('Latest observations');
   public filter = signal('');
 
-  constructor(
-    readonly _service: ObservationFeedService,
-    private _route: ActivatedRoute
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {
     this._route.paramMap.subscribe((pmap) => {
@@ -40,25 +36,11 @@ export class ObservationFeedComponent implements OnInit {
     });
   }
 
-  loaded(id: number) {
-    if (id != this._service.lastId) {
-      this.onScroll();
-      // this.questions().length < this.total &&
-      // this.questions().at(-2)?.id === id
-      // this.loadQuestions(this.questions().length / 5);
+  public fetchMore(id: number): void {
+    if (id == this._service.lastLoadedRecordId()) {
+      this._page.update((page) => page + 1);
+      this._getData();
     }
-
-    // if (
-    //   this.questions().length < this.total &&
-    //   this.questions().at(-2)?.id === id
-    // ) {
-    //   this.loadQuestions(this.questions().length / 5);
-    // }
-  }
-
-  public onScroll(): void {
-    this._page.update((page) => page + 1);
-    this._getData();
   }
 
   public reload(): void {

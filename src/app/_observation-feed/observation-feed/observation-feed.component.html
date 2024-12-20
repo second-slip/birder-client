@@ -1,48 +1,50 @@
-<div class="standard-container">
-  <div class="d-flex justify-content-between">
-    <h1 data-testid="title">{{ title() }}</h1>
-    <app-filter-control [currentFilter]="filter()"></app-filter-control>
-  </div>
-
-  @for (item of _service.observations | async; track item.observationId) {
-  @defer (on viewport) {
-  <!-- <app-question-item [question]="question" (loaded)="loaded($event)"/> -->
-  <app-observation-feed-item [observation]="item" (loaded)="loaded($event)"></app-observation-feed-item>
-  } @placeholder {
-  <div>loading...</div>
-  } }
-
-  <!-- @for (item of _service.observations | async; track $index) {
-  <app-observation-feed-item [observation]="item"></app-observation-feed-item>
-  } -->
-
-  <!-- <app-infinite-scroll (scrolled)="onScroll()">
-    @if (_service.allLoaded | async) {
-    <div class="alert alert-info no-more-items" data-testid="all-loaded">
-      <strong>No more items</strong> You have reached the end of the feed. @if
-      (filter() === 'network') {
-      <p>
-        Switch to the <a [routerLink]="['/feed-p/public']">public feed</a> to
-        view more observations.
-      </p>
-      }
-    </div>
-    }
-
-    @if (_service.isLoading | async) {
-    <app-loading></app-loading>
-    } @if (_service.isError | async) {
-    <p class="alert alert-danger" data-testid="error">
-      <strong>Whoops!</strong> There was an error retrieving the data.<br />
-      <button
-        type="button"
-        class="btn btn-primary btn-sm btn-try-again"
-        data-testid="reload-button"
-        (click)="reload()"
-      >
-        Try Again
-      </button>
-    </p>
-    }
-  </app-infinite-scroll> -->
+<div class="d-flex justify-content-between">
+  <h1 data-testid="title">{{ title() }}</h1>
+  <app-filter-control [currentFilter]="filter()"></app-filter-control>
 </div>
+
+<!-- @defer (when _service.observations()) { -->
+<!--  -->
+@for (item of _service.observations(); track item.observationId) {
+<!--  -->
+@defer (on viewport) {
+<!--  -->
+<app-observation-feed-item
+  [observation]="item"
+  (loaded)="fetchMore($event)"
+></app-observation-feed-item>
+} @placeholder () {
+<!-- problem here to decide on -->
+<div>hello...........................</div>
+} }
+<!-- empty block not needed: isAllLoaded block below covers this scenario -->
+<!-- @empty { <p>this is empty...........................</p> }  -->
+<!-- } -->
+
+<!--  -->
+
+@if (_service.isLoading()) {
+<app-loading></app-loading>
+} @if (_service.isAllLoaded()) {
+<div class="alert alert-info no-more-items" data-testid="all-loaded">
+  <strong>No more items</strong> You have reached the end of the feed. @if
+  (filter() === 'network') {
+  <p>
+    Switch to the <a [routerLink]="['/feed-p/public']">public feed</a> to view
+    more observations.
+  </p>
+  }
+</div>
+} @if (_service.isError()) {
+<p class="alert alert-danger" data-testid="error">
+  <strong>Whoops!</strong> There was an error retrieving the data.<br />
+  <button
+    type="button"
+    class="btn btn-primary btn-sm btn-try-again"
+    data-testid="reload-button"
+    (click)="reload()"
+  >
+    Try Again
+  </button>
+</p>
+}

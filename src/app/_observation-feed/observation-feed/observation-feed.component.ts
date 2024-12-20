@@ -14,8 +14,9 @@ import { FilterControlComponent } from '../filter-control/filter-control.compone
     FilterControlComponent,
     ObservationFeedItemComponent,
     RouterLink,
-    LoadingComponent
-],
+    LoadingComponent,
+  ],
+  standalone: true, // temporarily restore to enable MockComponent (ng-mocks) in tests
 })
 export class ObservationFeedComponent implements OnInit {
   readonly _service = inject(ObservationFeedService);

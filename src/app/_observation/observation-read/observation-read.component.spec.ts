@@ -147,7 +147,7 @@ describe('ObservationReadComponent', () => {
       expect(fakeObservationReadService.getData).toHaveBeenCalledOnceWith('10');
     });
 
-    it('shows the observation', async () => {
+    it('shows the child components', async () => {
       await setup(
         {
           isError: of(false),

@@ -5,16 +5,17 @@ import { NetworkUserComponent } from '../network-user/network-user.component';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-    selector: 'app-following',
-    templateUrl: './following.component.html',
-    styleUrls: ['./following.component.scss'],
-    providers: [FollowingService],
-    imports: [NetworkUserComponent, LoadingComponent, AsyncPipe]
+  selector: 'app-following',
+  templateUrl: './following.component.html',
+  styleUrls: ['./following.component.scss'],
+  providers: [FollowingService],
+  standalone: true, // temporarily restore to enable MockComponent (ng-mocks) in tests
+  imports: [NetworkUserComponent, LoadingComponent, AsyncPipe],
 })
 export class FollowingComponent implements OnInit {
   @Input() username: string;
 
-  constructor(readonly _service: FollowingService) { }
+  constructor(readonly _service: FollowingService) {}
 
   ngOnInit(): void {
     this._getData();

@@ -6,7 +6,7 @@ import { IBirdDetail } from '../bird-detail/i-bird-detail.dto';
     templateUrl: './bird-info.component.html',
     styleUrls: ['./bird-info.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true
+    
 })
 export class BirdInfoComponent {
   @Input() bird: IBirdDetail;

@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'observationPlural',
-  standalone: true
+  
 })
 export class ObservationPluralPipe implements PipeTransform {
 

@@ -15,18 +15,18 @@ import { FilterControlComponent } from '../filter-control/filter-control.compone
     ObservationFeedItemComponent,
     RouterLink,
     LoadingComponent,
-  ],
-  standalone: true, // temporarily restore to enable MockComponent (ng-mocks) in tests
+  ]//,
+  //
 })
 export class ObservationFeedComponent implements OnInit {
   readonly _service = inject(ObservationFeedService);
   private _route = inject(ActivatedRoute);
 
-  private _url = signal('');
-  private _page = signal(1);
+  protected _url = signal('');
+  protected _page = signal(1);
 
-  public title = signal('Latest observations');
-  public filter = signal('');
+  protected title = signal('Latest observations');
+  protected filter = signal('');
 
   constructor() {}
 
@@ -37,14 +37,14 @@ export class ObservationFeedComponent implements OnInit {
     });
   }
 
-  public fetchMore(id: number): void {
+  protected fetchMore(id: number): void {
     if (id == this._service.lastLoadedRecordId()) {
       this._page.update((page) => page + 1);
       this._getData();
     }
   }
 
-  public reload(): void {
+  protected reload(): void {
     // this._page = 1;
     this._getData();
   }

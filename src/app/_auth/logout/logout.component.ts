@@ -8,7 +8,7 @@ import { AuthenticationService } from '../authentication.service';
     templateUrl: './logout.component.html',
     styleUrls: ['./logout.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true
+    
 })
 export class LogoutComponent {
 

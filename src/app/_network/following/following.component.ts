@@ -9,7 +9,7 @@ import { AsyncPipe } from '@angular/common';
   templateUrl: './following.component.html',
   styleUrls: ['./following.component.scss'],
   providers: [FollowingService],
-  standalone: true, // temporarily restore to enable MockComponent (ng-mocks) in tests
+  
   imports: [NetworkUserComponent, LoadingComponent, AsyncPipe],
 })
 export class FollowingComponent implements OnInit {

@@ -209,7 +209,7 @@ describe('HomeComponent', () => {
 // }
 
 // @Component({
-//   standalone: true,
+//   ,
 //   template: '',
 // })
 // class TestHeroDetailComponent { }

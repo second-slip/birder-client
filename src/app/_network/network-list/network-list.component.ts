@@ -10,7 +10,7 @@ import { FollowersComponent } from '../followers/followers.component';
     imports: [AsyncPipe, MatTabsModule, FollowingComponent, FollowersComponent],
     templateUrl: './network-list.component.html',
     styleUrl: './network-list.component.scss',
-    standalone: true // temporarily restore to enable MockComponent (ng-mocks) in tests 
+     // temporarily restore to enable MockComponent (ng-mocks) in tests 
 })
 export class NetworkListComponent {
   @Input() username: string;

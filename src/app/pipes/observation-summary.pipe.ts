@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'observationSummary',
-  standalone: true
+  
 })
 export class ObservationSummaryPipe implements PipeTransform {
 

@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-account-manage-avatar',
   templateUrl: './account-manage-avatar.component.html',
   styleUrls: ['./account-manage-avatar.component.scss'],
-  standalone: true
+  
 })
 export class AccountManageAvatarComponent { }

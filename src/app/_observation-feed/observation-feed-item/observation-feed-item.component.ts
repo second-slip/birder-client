@@ -20,7 +20,7 @@ import { AsyncPipe, DatePipe } from '@angular/common';
   styleUrls: ['./observation-feed-item.component.scss'],
   encapsulation: ViewEncapsulation.None,
   imports: [RouterLink, MatIconModule, AsyncPipe, DatePipe],
-  standalone: true, // temporarily restore to enable MockComponent (ng-mocks) in tests
+  
 })
 export class ObservationFeedItemComponent implements OnInit {
   observation = input.required<IObservationFeed>();

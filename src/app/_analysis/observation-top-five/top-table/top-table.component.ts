@@ -10,7 +10,7 @@ import { AuthenticationService } from 'src/app/_auth/authentication.service';
   imports: [AsyncPipe, MatTableModule, RouterLink],
   templateUrl: './top-table.component.html',
   styleUrl: './top-table.component.scss',
-  standalone: true, // temporarily restore to enable MockComponent (ng-mocks) in tests
+  
 })
 export class TopTableComponent {
   @Input() topObservations: IObservationTopFiveRecord[] = [];

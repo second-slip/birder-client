@@ -23,7 +23,7 @@ export class TweetDayComponent implements OnInit {
     this._service.getData();
   }
 
-  public reload(): void {
+  protected reload(): void {
     this._getData();
   }
 }

@@ -21,12 +21,12 @@ export class TweetDayArchiveComponent implements OnInit {
     this._getData();
   }
 
-  public getMoreTweets(): void {
+  protected getMoreTweets(): void {
     this._page++;
     this._getData();
   }
 
-  public reload(): void {
+  protected reload(): void {
     this._page = 1;
     this._getData();
   }

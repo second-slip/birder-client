@@ -4,11 +4,9 @@ import { RouterOutlet } from '@angular/router';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    imports: [NavMenuComponent, RouterOutlet, FooterComponent]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  imports: [NavMenuComponent, RouterOutlet, FooterComponent],
 })
-export class AppComponent {
-  title = 'Birder';
-}
+export class AppComponent {}

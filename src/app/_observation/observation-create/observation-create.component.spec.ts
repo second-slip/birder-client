@@ -154,7 +154,7 @@ describe('ObservationCreateComponent', () => {
     await setup();
     expect(component).toBeTruthy();
     expect(dateTimePicker).toBeTruthy();
-    console.log(dateTimePicker);
+    // console.log(dateTimePicker);
     // expect(dateTimePicker.isValid).toBe(true);
     // expect(dateTimePicker.dateTime).toBe(new Date(new Date().getFullYear() - 10, 0, 1).toISOString())
   }));

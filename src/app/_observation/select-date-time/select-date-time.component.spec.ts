@@ -1,146 +1,173 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SelectDateTimeComponent } from './select-date-time.component';
-import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
-// todo: struggling to test updateFormValue method as cannot find a way to trigger the event handler...
-
-// const requiredFields = [
-//   'date',
-//   'time'
-// ];
+import { ComponentRef, LOCALE_ID } from '@angular/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import {
+  MatNativeDateModule,
+  provideNativeDateAdapter,
+} from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTimepickerModule } from '@angular/material/timepicker';
+import { MatDatepickerInputHarness } from '@angular/material/datepicker/testing';
+import { MatTimepickerInputHarness } from '@angular/material/timepicker/testing';
+import { CommonModule } from '@angular/common';
 
 describe('SelectDateTimeComponent', () => {
   let component: SelectDateTimeComponent;
   let fixture: ComponentFixture<SelectDateTimeComponent>;
+  let componentRef: ComponentRef<SelectDateTimeComponent>;
+  let selectDateForm: FormGroup;
+
+  let loader: HarnessLoader;
 
   const setup = async (fakeInputDate?: Date | null) => {
+    selectDateForm = new FormGroup({
+      date: new FormControl(
+        fakeInputDate,
+        Validators.compose([Validators.required])
+      ),
+      time: new FormControl(
+        fakeInputDate,
+        Validators.compose([Validators.required])
+      ),
+    });
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, NoopAnimationsModule, SelectDateTimeComponent]
+      imports: [
+        FormsModule,
+        NoopAnimationsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatTimepickerModule,
+        // MatFormFieldModule,
+        // MatInputModule,
+        //CommonModule,
+      ],
+      providers: [
+        // provideNativeDateAdapter(),
+        { provide: LOCALE_ID, useValue: 'en-GB' },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SelectDateTimeComponent);
     component = fixture.componentInstance;
-
-    // component.dateForm = new FormGroup({
-    //   observationDate: new FormControl(fakeInputDate, Validators.compose([
-    //     Validators.required
-    //   ])),
-    //   observationTime: new FormControl(fakeInputDate, Validators.compose([
-    //     Validators.required
-    //   ]))
-    // });
-
-    //spyOn(component, 'reload');
-    // spyOn(component, 'updateFormValue');
-
+    componentRef = fixture.componentRef;
+    componentRef.setInput('form', selectDateForm);
+    loader = TestbedHarnessEnvironment.loader(fixture);
     fixture.detectChanges();
   };
 
-  describe('when component is loaded', () => {
+  describe('select-date-time component tests', () => {
+    describe('DATEPICKER element tests', () => {
+      it('should create', async () => {
+        await setup(new Date());
+        expect(component).toBeTruthy();
+      });
 
-    it('should create', async () => {
-      await setup(new Date());
-      expect(component).toBeTruthy();
+      it('should load all datepicker input harnesses', async () => {
+        await setup(new Date());
+        const inputs = await loader.getAllHarnesses(MatDatepickerInputHarness);
+        expect(inputs.length).toBe(1);
+      });
+
+      it('should get whether the input has an associated calendar', async () => {
+        await setup(new Date());
+        const input = await loader.getHarness(MatDatepickerInputHarness);
+        expect(await input.hasCalendar()).toBeTrue();
+      });
+
+      it('should set the input value', async () => {
+        await setup(new Date());
+        const input = await loader.getHarness(MatDatepickerInputHarness);
+        expect(await input.getValue()).toBe(new Date().toLocaleDateString());
+
+        // await input.setValue('1/1/2020');
+        // expect(await input.getValue()).toBe(new Date().toDateString());
+      });
+
+      it('should get the max date of the input', async () => {
+        await setup(new Date(2020, 0, 1, 12, 0, 0));
+        const input = await loader.getHarness(MatDatepickerInputHarness);
+        const exp = new Date().toISOString().substring(0, 10);
+        // var date = new Date('2014-08-28').format("YYYY-MM-DDT00:00:00.000") + "Z";
+        expect(await input.getMax()).toBe(exp);
+      });
+
+      // can't test this yet in 'toggle' setup
+      // it('should be able to open and close a calendar in popup mode', async () => {
+      //   await setup(new Date());
+      //   const input = await loader.getHarness(MatDatepickerInputHarness);
+      //   expect(await input.isCalendarOpen()).toBe(false);
+
+      //   await input.openCalendar();
+      //   expect(await input.isCalendarOpen()).toBe(true);
+
+      //   await input.closeCalendar();
+      //   expect(await input.isCalendarOpen()).toBe(false);
+      // });
     });
 
+    describe('timepicker element tests', () => {
+      it('should load all timepicker input harnesses', async () => {
+        await setup(new Date());
+        const inputs = await loader.getAllHarnesses(MatTimepickerInputHarness);
+        expect(inputs.length).toBe(1);
+      });
+
+      it('should open and close a timepicker', async () => {
+        await setup(new Date());
+        const input = await loader.getHarness(MatTimepickerInputHarness);
+        expect(await input.isTimepickerOpen()).toBe(false);
+
+        await input.openTimepicker();
+        expect(await input.isTimepickerOpen()).toBe(true);
+      });
+
+      it('should set the input value', async () => {
+        await setup(new Date());
+        const input = await loader.getHarness(MatTimepickerInputHarness);
+        const exp = new Date().toISOString().substring(11, 16);
+        expect(await input.getValue()).toBe(exp);
+
+        await input.setValue('3:21 PM');
+        expect(await input.getValue()).toBe('3:21 PM');
+      });
+
+      it('should select an option from the timepicker', async () => {
+        await setup(new Date());
+        const input = await loader.getHarness(MatTimepickerInputHarness);
+        const timepicker = await input.openTimepicker();
+        const exp = new Date().toISOString().substring(11, 16);
+        expect(await input.getValue()).toBe(exp);
+
+        await timepicker.selectOption({ text: '13:00' });
+        expect(await input.getValue()).toBe('13:00');
+      });
+
+      // it('should set the model value', async () => {
+      //   await setup(new Date());
+      //   const input = await loader.getHarness(MatTimepickerInputHarness);
+      //   const timepicker = await input.openTimepicker();
+      //   const exp = new Date().toISOString().substring(11, 16);
+      //   expect(await input.getValue()).toBe(exp);
+
+      //   await timepicker.selectOption({ text: '13:00' });
+      //   expect(await input.getValue()).toBe('13:00');
+
+      //   const actualModelValue = fixture.componentInstance.form().get('time')?.value;
+      //   const actualTime = new Date(actualModelValue).toISOString().substring(11, 16);
+
+      //   expect(actualTime).toBe(exp);
+      // });
+    });
   });
-
-  //   describe('when form is valid', () => {
-  //     it('fields should be marked as required', async () => {
-  //       await setup(new Date());
-
-  //       requiredFields.forEach((testId) => {
-  //         const el = findEl(fixture, testId);
-
-  //         expect(el.attributes['aria-required']).toBe(
-  //           'true',
-  //           `${testId} must be marked as aria-required`,
-  //         );
-  //       });
-  //     });
-
-  //     it('should not show error message', async () => {
-  //       await setup(new Date());
-
-  //       const compiled = fixture.nativeElement as HTMLElement;
-  //       expect(compiled.querySelector('[data-testid="form-invalid-error-message"]')?.textContent).toBeUndefined();
-  //     });
-  //   });
-
-  //   describe('when form is not valid', () => {
-
-  //     it('should show error message', async () => {
-  //       await setup(null);
-
-  //       expectText(fixture, 'form-invalid-date-error-message', 'Pick a date using the control.');
-  //     });
-  //   });
-
-  // });
-
-  // describe('when form is not valid', () => {
-
-  //   // it('should show error message', fakeAsync(async () => {
-
-  //   //   // spyOn(component, 'updateFormValue');
-
-  //   //   await setup(new Date());
-
-  //   //   // expect(component).toBeTruthy();
-
-  //   //   const resetInputEl = findEl(fixture, 'date').nativeElement;
-  //   //   //console.log(resetInputEl);
-  //   //   resetInputEl.value = '2022-08-27';
-
-  //   //   resetInputEl.dispatchEvent(new Event('change'));
-
-
-  //   //   fixture.detectChanges();
-
-  //   //   tick(1000);
-
-  //   //   console.log(resetInputEl.value);
-  //   //   // console.log(component.date);
-  //   //   // console.log(component.dateForm);
-
-  //   //   //expectText(fixture, 'form-invalid-date-error-message', 'Choose a time using the control.');
-  //   //   console.log(component.date)
-  //   //   expect(component.updateFormValue).toHaveBeenCalled();
-  //   //   // expectText(fixture, 'form-invalid-time-error-message', 'Choose a time using the control.');
-  //   // }));
-
-  //   it('should show error message', fakeAsync(async () => {
-
-  //     // spyOn(component, 'updateFormValue');
-
-  //     await setup(new Date());
-
-  //     // expect(component).toBeTruthy();
-
-  //     const resetInputEl = findEl(fixture, 'date').nativeElement;
-  //     console.log(resetInputEl);
-  //     resetInputEl.value = '2022-08-27';
-
-  //     resetInputEl.dispatchEvent(new Event('input'));
-
-  //     click(fixture, "date");
-
-  //     resetInputEl.value = '2022-08-27';
-  //     fixture.detectChanges();
-  //     resetInputEl.value = '2022-08-27';
-  //     tick(1000);
-
-  //     console.log(resetInputEl);
-  //     // console.log(component.date);
-  //     // console.log(component.dateForm);
-
-  //     //expectText(fixture, 'form-invalid-date-error-message', 'Choose a time using the control.');
-  //     console.log(component.time)
-  //     expect(component.updateFormValue).toHaveBeenCalled();
-  //     // expectText(fixture, 'form-invalid-time-error-message', 'Choose a time using the control.');
-  //   }));
-  // });
-
 });

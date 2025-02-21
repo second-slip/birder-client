@@ -1,52 +1,30 @@
-<form [formGroup]="form" novalidate>
+<form [formGroup]="form()" novalidate>
+  <mat-form-field>
+    <mat-label>Observation date</mat-label>
+    <input
+      matInput
+      [matDatepicker]="datepicker"
+      formControlName="date"
+      [max]="maxDate"
+      readonly
+    />
+    <mat-datepicker #datepicker />
+    <mat-datepicker-toggle [for]="datepicker" matSuffix />
+    <mat-hint>Choose date</mat-hint>
+  </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Choose the date</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="observationDate" [min]="minDate" [max]="maxDate" readonly>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker disabled="false"></mat-datepicker>
-        @if (form.get('observationDate')?.hasError('required'))
-        {
-        <mat-error class="validation-required-email">This field is required.</mat-error>
-        }
-        @if (form.get('observationDate')?.hasError('matDatepickerMin'))
-        {
-        <mat-error class="validation-required-email">The earliest date you can choose is: {{ minDate | date:
-            'dd/MM/yyyy' }}.</mat-error>
-        }
-        @if (form.get('observationDate')?.hasError('matDatepickerMax'))
-        {
-        <mat-error class="validation-required-email">The latest date you can choose is: {{ maxDate | date: 'dd/MM/yyyy'
-            }}.</mat-error>
-        }
-    </mat-form-field>
-
-    <mat-form-field class="example-full-width">
-        <mat-label>Choose the time</mat-label>
-        <input matInput type="time" formControlName="observationTime">
-        <mat-hint>HH:MM</mat-hint>
-        @if (form.get('observationTime')?.hasError('required'))
-        {
-        <mat-error class="validation-required-email">The time is required, and should be in the "HH:MM" format (i.e:
-            15:34).</mat-error>
-        }
-        @if (form.get('observationTime')?.hasError('pattern'))
-        {
-        <mat-error class="validation-required-email">This field is required. The time must be in the format
-            HH:MM.</mat-error>
-        }
-    </mat-form-field>
-
+  <mat-form-field>
+    <mat-label>Observation time</mat-label>
+    <input
+      matInput
+      [matTimepicker]="timepicker"
+      formControlName="time"
+      readonly
+    />
+    <mat-timepicker #timepicker interval="30m" />
+    <mat-timepicker-toggle [for]="timepicker" matSuffix />
+    <mat-hint>Choose time</mat-hint>
+  </mat-form-field>
 </form>
 
-<!-- <br>
-<br>
-
-<p>dateForm value: {{ form.value | json }}</p>
-<hr>
-<p>dateTime value: {{ dateTime | json }}</p>
-<hr>
-<p>dateForm valid?: {{ form.valid | json }}</p>
-<p>form errors: {{ form.get('observationDate')?.errors| json }}</p>
-<hr>
-<p>dateTimeValid: {{ dateTimeValid | async }} </p> -->
+<!-- <pre>{{ form().value | json }}</pre> -->

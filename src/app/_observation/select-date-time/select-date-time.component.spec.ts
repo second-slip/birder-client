@@ -53,7 +53,7 @@ describe('SelectDateTimeComponent', () => {
         //CommonModule,
       ],
       providers: [
-        // provideNativeDateAdapter(),
+        provideNativeDateAdapter(),
         { provide: LOCALE_ID, useValue: 'en-GB' },
       ],
     }).compileComponents();
@@ -88,8 +88,9 @@ describe('SelectDateTimeComponent', () => {
       it('should set the input value', async () => {
         await setup(new Date());
         const input = await loader.getHarness(MatDatepickerInputHarness);
-        expect(await input.getValue()).toBe(new Date().toLocaleDateString());
+        expect(await input.getValue()).toEqual(new Date().toLocaleDateString());
 
+        // Expected '21/02/2025' to be '2/21/2025'.
         // await input.setValue('1/1/2020');
         // expect(await input.getValue()).toBe(new Date().toDateString());
       });

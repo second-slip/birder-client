@@ -1,127 +1,187 @@
-<div class="standard-container">
+@if (observation) {
 
-    @if (observation) {
+<h1>Update Observation Report</h1>
 
-    <h1>Update Observation Report</h1>
+@if (_authService.getAuthUser | async; as authUser) { @if (observation.username
+!== authUser.userName) {
+<p class="alert alert-info" data-testid="not-authorised">
+  <strong>Whoops!</strong>&nbsp;Only the record owner is allowed to update their
+  record.<br />
+  <button
+    mat-button
+    mat-raised-button
+    type="button"
+    class="btn"
+    data-testid="redirect-button"
+    (click)="redirect()"
+  >
+    Go back
+  </button>
+</p>
+} @else {
+<form
+  [formGroup]="updateObservationForm"
+  novalidate
+  (ngSubmit)="onSubmit()"
+  data-testid="form"
+>
+  <mat-vertical-stepper [linear]="false" #stepper>
+    <mat-step
+      [stepControl]="updateObservationForm && selectSpeciesForm"
+      errorMessage="This section is not completed"
+    >
+      <ng-template matStepLabel
+        ><span>Details: what and when?</span></ng-template
+      >
 
-    @if (_authService.getAuthUser | async; as authUser) {
+      <app-select-species
+        #species
+        [selectSpeciesForm]="selectSpeciesForm"
+      ></app-select-species>
 
-    @if (observation.username !== authUser.userName) {
-    <p class="alert alert-info" data-testid="not-authorised">
-        <strong>Whoops!</strong>&nbsp;Only the record owner is allowed to update their record.<br>
-        <button mat-button mat-raised-button type="button" class="btn" data-testid="rediect-button"
-            (click)="redirect()">Go
-            back</button>
-    </p>
-    } @else {
-    <form [formGroup]="updateObservationForm" novalidate (ngSubmit)="onSubmit()" data-testid="form">
+      <mat-form-field class="form-field" id="quantity">
+        <mat-label>Quantity</mat-label>
+        <input
+          matInput
+          type="number"
+          min="1"
+          max="1000"
+          id="quantity"
+          formControlName="quantity"
+          required
+        />
+        <mat-hint align="start">How many individuals</mat-hint>
+        @if (updateObservationForm.get('quantity')?.hasError('required')) {
+        <mat-error class="validation-required-email"
+          >This field is required.</mat-error
+        >
+        } @if (updateObservationForm.get('quantity')?.hasError('min')) {
+        <mat-error>
+          The minimum value is
+          {{ updateObservationForm.get("quantity")?.errors?.min?.min }}
+          individual.</mat-error
+        >
+        } @if (updateObservationForm.get('quantity')?.hasError('max')) {
+        <mat-error>
+          The maximum value is
+          {{ updateObservationForm.get("quantity")?.errors?.max?.max }}
+          individuals.
+        </mat-error>
+        }
+      </mat-form-field>
 
-        <mat-vertical-stepper [linear]="false" #stepper>
+      <app-select-date-time [form]="selectDateForm"></app-select-date-time>
 
-            <mat-step [stepControl]="updateObservationForm && selectSpeciesForm"
-                errorMessage="This section is not completed">
+      <button matStepperNext type="button" class="btn btn-light btn-small">
+        Next
+      </button>
+    </mat-step>
 
-                <ng-template matStepLabel><span>Details: what and when?</span></ng-template>
+    <mat-step>
+      <ng-template matStepLabel><span>Location</span></ng-template>
 
-                <app-select-species #species [selectSpeciesForm]="selectSpeciesForm"></app-select-species>
+      <div>
+        <app-read-write-map
+          [latitude]="observation.position.latitude"
+          [longitude]="observation.position.longitude"
+        >
+        </app-read-write-map>
+      </div>
 
-                <mat-form-field class="form-field" id="quantity">
-                    <mat-label>Quantity</mat-label>
-                    <input matInput type="number" min="1" max="1000" id="quantity" formControlName="quantity" required>
-                    <mat-hint align="start">How many individuals</mat-hint>
-                    @if (updateObservationForm.get('quantity')?.hasError('required'))
-                    {
-                    <mat-error class="validation-required-email">This field is required.</mat-error>
-                    }
-                    @if (updateObservationForm.get('quantity')?.hasError('min')) {
-                    <mat-error>
-                        The minimum value is {{ updateObservationForm.get('quantity')?.errors?.min?.min}}
-                        individual.</mat-error>
-                    }
-                    @if (updateObservationForm.get('quantity')?.hasError('max')) {
-                    <mat-error>
-                        The maximum value is {{ updateObservationForm.get('quantity')?.errors?.max?.max }} individuals.
-                    </mat-error>
-                    }
-                </mat-form-field>
+      <button matStepperPrevious type="button" class="btn btn-light btn-small">
+        Back
+      </button>
+      <button matStepperNext type="button" class="btn btn-light btn-small">
+        Next
+      </button>
+    </mat-step>
 
-                <app-select-date-time [dateTime]="observation.observationDateTime.toISOString()"
-                    (dateTimeValid)="handleFormChange($event)"></app-select-date-time>
+    <mat-step [optional]="true">
+      <ng-template matStepLabel><span>Notes</span></ng-template>
 
-                <button matStepperNext type="button" class="btn btn-light btn-small">Next</button>
-            </mat-step>
+      <div class="alert alert-info">
+        <strong>Whoops!</strong> The Notes functionality is currently not
+        available. This capability is being redesigned.<br />
+      </div>
 
-            <mat-step>
-                <ng-template matStepLabel><span>Location</span></ng-template>
+      <!-- <app-edit-notes [notes]="observation.notes"></app-edit-notes> -->
 
-                <div>
-                    <app-read-write-map [latitude]="observation.position.latitude"
-                        [longitude]="observation.position.longitude">
-                    </app-read-write-map>
-                </div>
+      <button matStepperPrevious type="button" class="btn btn-light btn-small">
+        Back
+      </button>
+      <button matStepperNext type="button" class="btn btn-light btn-small">
+        Next
+      </button>
+    </mat-step>
 
-                <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
-                <button matStepperNext type="button" class="btn btn-light btn-small">Next</button>
-            </mat-step>
+    <mat-step>
+      <ng-template matStepLabel><span>Done</span></ng-template>
 
-            <mat-step [optional]="true">
-                <ng-template matStepLabel><span>Notes</span></ng-template>
-
-                <div class="alert alert-info">
-                    <strong>Whoops!</strong> The Notes functionality is currently not available. This
-                    capability is being redesigned.<br>
-                </div>
-
-                <!-- <app-edit-notes [notes]="observation.notes"></app-edit-notes> -->
-
-                <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
-                <button matStepperNext type="button" class="btn btn-light btn-small">Next</button>
-            </mat-step>
-
-            <mat-step>
-                <ng-template matStepLabel><span>Done</span></ng-template>
-
-                @if (!isFormValid()) {
-                <p class="alert alert-danger" data-testid="invalid-form-menu">
-                    The form is not complete. You must complete the manadatory fields in Section 1.
-                    <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
-                </p>
-                } @else {
-                <p class="alert alert-info" data-testid="valid-form-menu">
-                    The form is complete. Choose "Update" to save the changes.
-                    @if (requesting) {
-                    <button mat-button mat-raised-button type="submit" class="btn" disabled>
-                        Updating observation...
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    </button>
-                    } @else {
-                    <button mat-button mat-raised-button type="submit" class="btn" [disabled]="!isFormValid()">
-                        Update
-                    </button>
-                    }
-                    <button matStepperPrevious type="button" class="btn btn-light btn-small">Back</button>
-                </p>
-                }
-                @if (updateError) {
-                <p class="alert alert-danger" data-testid="record-update-error">
-                    There was an error updating the observation. Please try again.
-                </p>
-                }
-
-            </mat-step>
-
-        </mat-vertical-stepper>
-
-    </form>
-    }
-    }
-    } @else if (loadingError) {
-    <p class="alert alert-danger" data-testid="loading-error-section">
-        <strong>Whoops!</strong>&nbsp;An error occurred<br>
-        <button mat-button mat-raised-button type="button" class="btn" data-testid="reload-button"
-            (click)="reload()">Try Again</button>
-    </p>
-    } @else {
-    <app-loading></app-loading>
-    }
-</div>
+      @if (!isFormValid()) {
+      <p class="alert alert-danger" data-testid="invalid-form-menu">
+        The form is not complete. You must complete the manadatory fields in
+        Section 1.
+        <button
+          matStepperPrevious
+          type="button"
+          class="btn btn-light btn-small"
+        >
+          Back
+        </button>
+      </p>
+      } @else {
+      <p class="alert alert-info" data-testid="valid-form-menu">
+        The form is complete. Choose "Update" to save the changes. @if
+        (requesting) {
+        <button mat-button mat-raised-button type="submit" class="btn" disabled>
+          Updating observation...
+          <span
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+        </button>
+        } @else {
+        <button
+          mat-button
+          mat-raised-button
+          type="submit"
+          class="btn"
+          [disabled]="!isFormValid()"
+        >
+          Update
+        </button>
+        }
+        <button
+          matStepperPrevious
+          type="button"
+          class="btn btn-light btn-small"
+        >
+          Back
+        </button>
+      </p>
+      } @if (updateError) {
+      <p class="alert alert-danger" data-testid="record-update-error">
+        There was an error updating the observation. Please try again.
+      </p>
+      }
+    </mat-step>
+  </mat-vertical-stepper>
+</form>
+} } } @else if (loadingError) {
+<p class="alert alert-danger" data-testid="loading-error-section">
+  <strong>Whoops!</strong>&nbsp;An error occurred<br />
+  <button
+    mat-button
+    mat-raised-button
+    type="button"
+    class="btn"
+    data-testid="reload-button"
+    (click)="reload()"
+  >
+    Try Again
+  </button>
+</p>
+} @else {
+<app-loading></app-loading>
+}

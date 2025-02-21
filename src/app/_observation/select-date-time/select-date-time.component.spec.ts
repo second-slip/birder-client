@@ -11,6 +11,7 @@ import { ComponentRef, LOCALE_ID } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import {
+  MAT_DATE_LOCALE,
   MatNativeDateModule,
   provideNativeDateAdapter,
 } from '@angular/material/core';
@@ -50,6 +51,7 @@ describe('SelectDateTimeComponent', () => {
       providers: [
         // provideNativeDateAdapter(),
         { provide: LOCALE_ID, useValue: 'en-GB' },
+        {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
       ],
     }).compileComponents();
 
@@ -82,7 +84,7 @@ describe('SelectDateTimeComponent', () => {
 
       it('should set the input value', async () => {
         // marked as pending as test works locally BUT not on remote CI due to date culture
-        pending(); // *****************************************************************
+        // pending(); // *****************************************************************
 
         await setup(new Date());
         const input = await loader.getHarness(MatDatepickerInputHarness);

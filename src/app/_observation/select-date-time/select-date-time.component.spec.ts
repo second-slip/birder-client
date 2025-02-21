@@ -51,7 +51,7 @@ describe('SelectDateTimeComponent', () => {
       providers: [
         // provideNativeDateAdapter(),
         { provide: LOCALE_ID, useValue: 'en-GB' },
-        {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
+        { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
       ],
     }).compileComponents();
 
@@ -91,6 +91,7 @@ describe('SelectDateTimeComponent', () => {
 
         expect(await input.getValue()).toEqual(new Date().toLocaleDateString());
         // Expected '21/02/2025' to be '2/21/2025'.
+        //Expected '21/02/2025' to equal '2/21/2025'.
       });
 
       it('should get the max date of the input', async () => {

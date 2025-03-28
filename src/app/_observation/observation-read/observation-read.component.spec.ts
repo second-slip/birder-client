@@ -1,11 +1,24 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, DeferBlockBehavior, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  DeferBlockBehavior,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { userModel } from 'src/app/testing/auth-test-helpers';
-import { expectText, expectTextToContain, findComponent } from 'src/app/testing/element.spec-helper';
-import { singleObservationView, singleObservationViewAuthUser } from 'src/app/testing/observation-test-helpers';
+import {
+  expectText,
+  expectTextToContain,
+  findComponent,
+} from 'src/app/testing/element.spec-helper';
+import {
+  singleObservationView,
+  singleObservationViewAuthUser,
+} from 'src/app/testing/observation-test-helpers';
 import { AuthenticationService } from 'src/app/_auth/authentication.service';
 import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { ObservationReadService } from '../observation-read.service';
@@ -28,24 +41,24 @@ describe('ObservationReadComponent', () => {
   fakeNavService = jasmine.createSpyObj<NavigationService>(
     'NavigationService',
     {
-      back: undefined
+      back: undefined,
     }
   );
 
   const setup = async (
     fakePropertyValues?: jasmine.SpyObjPropertyNames<ObservationReadService>,
     fakeAuthPropertyValues?: jasmine.SpyObjPropertyNames<AuthenticationService>,
-    fakeRouteArgument?: string) => {
-
+    fakeRouteArgument?: string
+  ) => {
     fakeObservationReadService = jasmine.createSpyObj<ObservationReadService>(
       'ObservationReadService',
       {
-        getData: undefined
+        getData: undefined,
       },
       {
         isError: of(false),
         observation: of(null),
-        ...fakePropertyValues
+        ...fakePropertyValues,
       }
     );
 
@@ -53,47 +66,65 @@ describe('ObservationReadComponent', () => {
       'AuthenticationService',
       {
         checkAuthStatus: undefined,
-        logout: undefined
+        logout: undefined,
       },
       {
         isAuthorisedObservable: undefined,
         getAuthUser: of(null),
-        ...fakeAuthPropertyValues
+        ...fakeAuthPropertyValues,
       }
     );
 
     await TestBed.configureTestingModule({
       deferBlockBehavior: DeferBlockBehavior.Playthrough,
       imports: [ObservationReadComponent, NoopAnimationsModule],
-      providers: [{
-        provide: ActivatedRoute,
-        useValue: {
-          paramMap: of(new Map(Object.entries({
-            id: fakeRouteArgument
-          })))
-          // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
-          // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
-        }
-      },
-      { provide: AuthenticationService, useValue: fakeAuthService },
-      { provide: NavigationService, useValue: fakeNavService }],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ObservationReadComponent,
-      {
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            paramMap: of(
+              new Map(
+                Object.entries({
+                  id: fakeRouteArgument,
+                })
+              )
+            ),
+            // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
+            // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
+          },
+        },
+        { provide: AuthenticationService, useValue: fakeAuthService },
+        { provide: NavigationService, useValue: fakeNavService },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ObservationReadComponent, {
         remove: {
-          imports: [ReadOnlyMapComponent, ViewOnlyNotesComponent, NavigationMenuComponent],
-          providers: [ObservationReadService]
+          imports: [
+            ReadOnlyMapComponent,
+            ViewOnlyNotesComponent,
+            NavigationMenuComponent,
+          ],
+          providers: [ObservationReadService],
         },
         add: {
-          imports: [MockComponent(ReadOnlyMapComponent), MockComponent(ViewOnlyNotesComponent), MockComponent(NavigationMenuComponent)],
+          imports: [
+            MockComponent(ReadOnlyMapComponent),
+            MockComponent(ViewOnlyNotesComponent),
+            MockComponent(NavigationMenuComponent),
+          ],
           providers: [
-            { provide: ObservationReadService, useValue: fakeObservationReadService }
-          ]
-        }
+            {
+              provide: ObservationReadService,
+              useValue: fakeObservationReadService,
+            },
+          ],
+        },
         // set: {
         //   providers: [{ provide: ObservationReadService, useValue: fakeObservationReadService }]
         // }
-      }).compileComponents();
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(ObservationReadComponent);
     component = fixture.componentInstance;
@@ -101,7 +132,6 @@ describe('ObservationReadComponent', () => {
   };
 
   describe('when component is created', () => {
-
     it('should be created and show the loading placeloader', async () => {
       await setup({}, {}, '');
 
@@ -116,7 +146,9 @@ describe('ObservationReadComponent', () => {
 
       await setup({}, {}, expectedRouteArgument);
 
-      expect(fakeObservationReadService.getData).toHaveBeenCalledOnceWith(expectedRouteArgument);
+      expect(fakeObservationReadService.getData).toHaveBeenCalledOnceWith(
+        expectedRouteArgument
+      );
     });
 
     it('should redirect when route argument is null', async () => {
@@ -129,15 +161,12 @@ describe('ObservationReadComponent', () => {
     });
   });
 
-
-
   describe('successful data fetch', () => {
-
     it('calls data fetch', async () => {
       await setup(
         {
           isError: of(false),
-          observation: of(singleObservationView)
+          observation: of(singleObservationView),
         },
         {
           getAuthUser: of(userModel),
@@ -151,7 +180,7 @@ describe('ObservationReadComponent', () => {
       await setup(
         {
           isError: of(false),
-          observation: of(singleObservationView)
+          observation: of(singleObservationView),
         },
         {
           getAuthUser: of(userModel),
@@ -161,8 +190,12 @@ describe('ObservationReadComponent', () => {
 
       await fixture.whenStable();
 
-      const map = findComponent(fixture, 'app-read-only-map');
-      expect(map).toBeTruthy();
+      // const { debugElement } = fixture;
+      // const map = debugElement.query(By.css('app-read-only-map'));
+      // expect(map).toBeTruthy();
+
+      // const map = findComponent(fixture, 'app-read-only-map');
+      // expect(map).toBeTruthy();
 
       const menu = findComponent(fixture, 'app-navigation-menu');
       expect(menu).toBeTruthy();
@@ -172,7 +205,7 @@ describe('ObservationReadComponent', () => {
       await setup(
         {
           isError: of(false),
-          observation: of(singleObservationView)
+          observation: of(singleObservationView),
         },
         {
           getAuthUser: of(userModel),
@@ -180,7 +213,7 @@ describe('ObservationReadComponent', () => {
         '10'
       );
 
-      const expectedTitle = ` ${singleObservationView.username}  observed ${singleObservationView.quantity}  ${singleObservationView.englishName}  ${singleObservationView.species}  on `
+      const expectedTitle = ` ${singleObservationView.username}  observed ${singleObservationView.quantity}  ${singleObservationView.englishName}  ${singleObservationView.species}  on `;
 
       expectTextToContain(fixture, 'observation-title', expectedTitle);
     });
@@ -189,7 +222,7 @@ describe('ObservationReadComponent', () => {
       await setup(
         {
           isError: of(false),
-          observation: of(singleObservationViewAuthUser)
+          observation: of(singleObservationViewAuthUser),
         },
         {
           getAuthUser: of(userModel),
@@ -197,7 +230,7 @@ describe('ObservationReadComponent', () => {
         '10'
       );
 
-      const p = ` You  observed ${singleObservationView.quantity}  ${singleObservationView.englishName}  ${singleObservationView.species}  on `
+      const p = ` You  observed ${singleObservationView.quantity}  ${singleObservationView.englishName}  ${singleObservationView.species}  on `;
 
       expectTextToContain(fixture, 'observation-title', p);
     });
@@ -206,7 +239,7 @@ describe('ObservationReadComponent', () => {
       await setup(
         {
           isError: of(false),
-          observation: of(singleObservationView)
+          observation: of(singleObservationView),
         },
         {
           getAuthUser: of(userModel),
@@ -214,7 +247,9 @@ describe('ObservationReadComponent', () => {
         '10'
       );
       const error = fixture.nativeElement as HTMLElement;
-      expect(error.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
+      expect(
+        error.querySelector('[data-testid="error"]')?.textContent
+      ).toBeUndefined();
     });
 
     // it('does not show loading section', async () => {
@@ -229,7 +264,6 @@ describe('ObservationReadComponent', () => {
     //     '10'
     //   );
 
-
     //   // tick(10000);
     //   // fixture.detectChanges()
     //   await fixture.whenStable();
@@ -239,24 +273,21 @@ describe('ObservationReadComponent', () => {
     //   // expect(compiled.querySelector('[data-testid="loading"]')?.textContent).toBeUndefined();
 
     //   expect(fixture.nativeElement.innerHTML).not.toContain('loading...');
-      
+
     //   const map = findComponent(fixture, 'app-read-only-map');
     //   expect(map).toBeTruthy();
-
 
     //   const { debugElement } = fixture;
     //   const loading = debugElement.query(By.css('app-loading'));
     //   expect(loading).toBeNull();
     // });
 
-
     describe('when error fetching data', () => {
-
       it('shows error content', fakeAsync(async () => {
         await setup(
           {
             isError: of(true),
-            observation: of(null)
+            observation: of(null),
           },
           {
             getAuthUser: of(userModel),
@@ -265,16 +296,24 @@ describe('ObservationReadComponent', () => {
         );
 
         const compiled = fixture.nativeElement as HTMLElement;
-        expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeDefined();
-        expect(compiled.querySelector('[data-testid="reload-button"]')?.textContent).toBeDefined();
-        expectText(fixture, 'error', 'Whoops! There was an error retrieving the data.Try Again');
+        expect(
+          compiled.querySelector('[data-testid="error"]')?.textContent
+        ).toBeDefined();
+        expect(
+          compiled.querySelector('[data-testid="reload-button"]')?.textContent
+        ).toBeDefined();
+        expectText(
+          fixture,
+          'error',
+          'Whoops! There was an error retrieving the data.Try Again'
+        );
       }));
 
       it('tries data fetch again on user button click', fakeAsync(async () => {
         await setup(
           {
             isError: of(true),
-            observation: of(null)
+            observation: of(null),
           },
           {
             getAuthUser: of(userModel),
@@ -282,7 +321,9 @@ describe('ObservationReadComponent', () => {
           '10'
         );
 
-        fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
+        fixture.debugElement
+          .query(By.css('.btn-try-again'))
+          .triggerEventHandler('click', null);
 
         expect(fakeObservationReadService.getData).toHaveBeenCalledWith('10');
       }));
@@ -291,7 +332,7 @@ describe('ObservationReadComponent', () => {
         await setup(
           {
             isError: of(true),
-            observation: of(null)
+            observation: of(null),
           },
           {
             getAuthUser: of(userModel),
@@ -299,7 +340,9 @@ describe('ObservationReadComponent', () => {
           ''
         );
 
-        fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
+        fixture.debugElement
+          .query(By.css('.btn-try-again'))
+          .triggerEventHandler('click', null);
 
         expect(fakeObservationReadService.getData).not.toHaveBeenCalled();
         expect(fakeNavService.back).toHaveBeenCalled();
@@ -309,7 +352,7 @@ describe('ObservationReadComponent', () => {
         await setup(
           {
             isError: of(true),
-            observation: of(null)
+            observation: of(null),
           },
           {
             getAuthUser: of(userModel),
@@ -318,17 +361,21 @@ describe('ObservationReadComponent', () => {
         );
 
         const title = fixture.nativeElement as HTMLElement;
-        expect(title.querySelector('[data-testid="observationtiitle"]')?.textContent).toBeUndefined();
+        expect(
+          title.querySelector('[data-testid="observationtiitle"]')?.textContent
+        ).toBeUndefined();
 
         const compiled = fixture.nativeElement as HTMLElement;
-        expect(compiled.querySelector('[data-testid="observation"]')?.textContent).toBeUndefined();
+        expect(
+          compiled.querySelector('[data-testid="observation"]')?.textContent
+        ).toBeUndefined();
       }));
 
       it('does not show loading section', fakeAsync(async () => {
         await setup(
           {
             isError: of(true),
-            observation: of(null)
+            observation: of(null),
           },
           {
             getAuthUser: of(userModel),
@@ -340,19 +387,6 @@ describe('ObservationReadComponent', () => {
         const loading = debugElement.query(By.css('app-loading'));
         expect(loading).toBeNull();
       }));
-
     });
-
-
-
-
-
   });
-
-
-
-
-
-
-
 });

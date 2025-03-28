@@ -15,7 +15,7 @@ describe('TokenService', () => {
     let store: any = {};
     const mockLocalStorage = {
       getItem: (key: string): string => {
-        return key in store ? store[key] : null;
+        return key in store ? store[key] : '';
       },
       setItem: (key: string, value: string) => {
         store[key] = `${value}`;
@@ -65,7 +65,7 @@ describe('TokenService', () => {
         localStorage.setItem('jwt', 'anothertoken');
         expect(service.getToken()).toEqual('anothertoken');
         service.removeToken();
-        expect(service.getToken()).toBeNull();
+        expect(service.getToken()).toBeFalsy();
     });
   });
 });

@@ -56,8 +56,8 @@ module.exports = (req, res, next) => {
     return res.jsonp(data.topObservations);
   }
 
-  // Observation Top api (filtered) /days?=3
-  if (req.method === "GET" && req.originalUrl === "/list/top-date-filter") {
+  // Observation Top api (filtered) list/top-five-filter?days=30
+  if (req.method === "GET" && req.originalUrl.includes('/list/top-five-filter?days=')) {
     let data = {
       topObservations: [
         {

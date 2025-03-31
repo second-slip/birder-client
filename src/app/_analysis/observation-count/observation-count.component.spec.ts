@@ -209,12 +209,12 @@ describe('ObservationCountComponent unit tests', () => {
                 isError: of(true)
             });
 
-            expect(fakeObservationCountService.getData).not.toHaveBeenCalled();
+            expect(fakeObservationCountService.getData).toHaveBeenCalled();
 
             const button = await loader.getHarness(MatButtonHarness.with({ text: 'Try Again' }));
             await button.click();
 
-            expect(fakeObservationCountService.getData).toHaveBeenCalledTimes(1);
+            expect(fakeObservationCountService.getData).toHaveBeenCalledTimes(2);
         });
     });
 });

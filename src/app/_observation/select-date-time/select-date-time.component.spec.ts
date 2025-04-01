@@ -135,7 +135,7 @@ describe('SelectDateTimeComponent', () => {
       it('should set the input value', async () => {
         await setup(new Date());
         const input = await loader.getHarness(MatTimepickerInputHarness);
-        const exp = new Date().toISOString().substring(11, 16);
+        const exp = new Date().toLocaleTimeString().substring(0, 5);// .toUTCString().substring(11, 16);
         expect(await input.getValue()).toBe(exp);
 
         await input.setValue('3:21 PM');
@@ -146,7 +146,7 @@ describe('SelectDateTimeComponent', () => {
         await setup(new Date());
         const input = await loader.getHarness(MatTimepickerInputHarness);
         const timepicker = await input.openTimepicker();
-        const exp = new Date().toISOString().substring(11, 16);
+        const exp = new Date().toLocaleTimeString().substring(0, 5);
         expect(await input.getValue()).toBe(exp);
 
         await timepicker.selectOption({ text: '13:00' });

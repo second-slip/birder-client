@@ -1,20 +1,15 @@
-@if (_service.getTop | async; as analysis) {
 <div class="side-bar-container centre">
-    <h1>Your Top Species</h1>
-    <mat-tab-group class="tab-group">
-        <mat-tab label="Month">
-            <app-top-table [topObservations]="analysis.topMonthlyObservations"></app-top-table>
-        </mat-tab>
-        <mat-tab label="All time">
-            <app-top-table [topObservations]="analysis.topObservations"></app-top-table>
-        </mat-tab>
-    </mat-tab-group>
+  <h1>Your Top Species</h1>
+  <mat-tab-group preserveContent="true" class="tab-group">
+    <mat-tab label="All time">
+      <ng-template matTabContent>
+        <app-top-five></app-top-five>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Month">
+      <ng-template matTabContent>
+        <app-top-five-filtered></app-top-five-filtered>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
 </div>
-} @else if (_service.isError | async) {
-<p class="alert alert-danger" data-testid="error">
-    <strong>Whoops!</strong> There was an error retrieving the data.<br>
-    <button mat-button mat-raised-button type="button" class="btn" (click)="reload()">Try Again</button>
-</p>
-} @else {
-<app-loading></app-loading>
-}

@@ -1,177 +1,65 @@
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { of, throwError } from 'rxjs';
-import { fakeIObservationTopFive, fakeIObservationTopFiveEmpty } from 'src/app/testing/analysis-helpers';
 import { ObservationTopFiveComponent } from './observation-top-five.component';
-import { ObservationTopFiveService } from './observation-top-five.service';
-import { provideRouter } from '@angular/router';
-import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatTabGroupHarness } from '@angular/material/tabs/testing';
-import { TopTableComponent } from './top-table/top-table.component';
-import { MockComponent } from 'ng-mocks';
-import { MatButtonHarness } from '@angular/material/button/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { TopFiveComponent } from './top-five/top-five.component';
+import { MockComponents } from 'ng-mocks';
+import { TopFiveFilteredComponent } from './top-five-filtered/top-five-filtered.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ObservationTopFiveComponent', () => {
-    let component: ObservationTopFiveComponent;
-    let fixture: ComponentFixture<ObservationTopFiveComponent>;
-    let loader: HarnessLoader;
+  let component: ObservationTopFiveComponent;
+  let fixture: ComponentFixture<ObservationTopFiveComponent>;
+  let loader: HarnessLoader;
 
-    let fakeObservationTopFiveService: ObservationTopFiveService;
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        NoopAnimationsModule,
+        MockComponents(TopFiveComponent, TopFiveFilteredComponent),
+      ],
+      declarations: [ObservationTopFiveComponent],
+    }).compileComponents();
 
-    const setup = async (fakePropertyValues?: jasmine.SpyObjPropertyNames<ObservationTopFiveService>) => {
+    fixture = TestBed.createComponent(ObservationTopFiveComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    loader = TestbedHarnessEnvironment.loader(fixture);
+  });
 
-        fakeObservationTopFiveService = jasmine.createSpyObj<ObservationTopFiveService>(
-            'ObservationTopFiveService',
-            {
-                getData: undefined,
-            },
-            {
-                isError: of(false),
-                getTop: undefined,
-                ...fakePropertyValues
-            });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
-        await TestBed.configureTestingModule({
-            imports: [ObservationTopFiveComponent, NoopAnimationsModule, MockComponent(TopTableComponent)],
-            providers: [
-                provideRouter(blankRoutesArray),
-                { provide: ObservationTopFiveService, useValue: fakeObservationTopFiveService }
-            ]
-        }).compileComponents();
+  it('should load harness for tab-group', async () => {
+    const tabGroups = await loader.getAllHarnesses(MatTabGroupHarness);
+    expect(tabGroups.length).toBe(1);
+  });
 
-        fixture = TestBed.createComponent(ObservationTopFiveComponent);
-        component = fixture.componentInstance;
-        loader = TestbedHarnessEnvironment.loader(fixture);
-        fixture.detectChanges();
-    };
+  it('should load harness for tab-group with selected tab label', async () => {
+    const tabGroups = await loader.getAllHarnesses(
+      MatTabGroupHarness.with({
+        selectedTabLabel: 'All time',
+      })
+    );
+    expect(tabGroups.length).toBe(1);
+  });
 
-    describe('on initialisation', () => {
+  it('should be able to get tabs of tab-group', async () => {
+    const tabGroup = await loader.getHarness(MatTabGroupHarness);
+    const tabs = await tabGroup.getTabs();
+    expect(tabs.length).toBe(2);
+  });
 
-        it('should create', async () => {
-            await setup();
-            expect(component).toBeTruthy();
-        });
-
-        it('should show loading child component', async () => {
-            await setup();
-
-            const { debugElement } = fixture;
-            const loading = debugElement.query(By.css('app-loading'));
-            expect(loading).toBeTruthy();
-        });
-
-        // it('should call service method', async () => {
-        //     await setup();
-
-        //     expect(fakeObservationTopFiveService.getData).toHaveBeenCalledTimes(1);
-        // });
-    });
-
-    describe('when service returns success response', () => {
-
-        it('should load harness for tab-group', async () => {
-            await setup({
-                getTop: of(fakeIObservationTopFive)
-            });
-
-            const tabGroups = await loader.getAllHarnesses(MatTabGroupHarness);
-            expect(tabGroups.length).toBe(1);
-        });
-
-        it('should load harness for tab-group with selected tab label', async () => {
-            await setup({
-                getTop: of(fakeIObservationTopFive)
-            });
-
-            const tabGroups = await loader.getAllHarnesses(
-                MatTabGroupHarness.with({
-                    selectedTabLabel: 'Month',
-                }),
-            );
-            expect(tabGroups.length).toBe(1);
-        });
-
-        it('should be able to get tabs of tab-group', async () => {
-            await setup({
-                getTop: of(fakeIObservationTopFive)
-            });
-
-            const tabGroup = await loader.getHarness(MatTabGroupHarness);
-            const tabs = await tabGroup.getTabs();
-            expect(tabs.length).toBe(2);
-        });
-
-        it('should be able to select tab from tab-group', async () => {
-            await setup({
-                getTop: of(fakeIObservationTopFive)
-            });
-
-            const tabGroup = await loader.getHarness(MatTabGroupHarness);
-            expect(await (await tabGroup.getSelectedTab()).getLabel()).toBe('Month');
-            await tabGroup.selectTab({ label: 'All time' });
-            expect(await (await tabGroup.getSelectedTab()).getLabel()).toBe('All time');
-        });
-    });
-
-    describe('when service returns error response', () => {
-
-        it('should not load harness for tab-group', async () => {
-            await setup({
-                isError: of(true),
-                getTop: of(null)
-            });
-
-            const tabGroups = await loader.getAllHarnesses(MatTabGroupHarness);
-            expect(tabGroups.length).toBe(0);
-        });
-
-        it('should show error message', async () => {
-            await setup({
-                isError: of(true),
-                getTop: of(null)
-            });
-
-            const compiled = fixture.nativeElement as HTMLElement;
-            expect(compiled.querySelector('[data-testid="error"]')).toBeTruthy();
-            expect(compiled.querySelector('[data-testid="error"]')?.textContent).toContain('Whoops! There was an error retrieving the data.');
-        });
-
-        it('should render the Retry button', async () => {
-            await setup({
-                isError: of(true),
-                getTop: of(null)
-            });
-      
-            const btn = await loader.getHarness(MatButtonHarness.with({ text: 'Try Again' }));
-            expect(await btn.isDisabled()).toBe(false);
-            expect(await btn.getText()).toContain('Try Again');
-          });
-
-          it('Retry button should call data service method', async () => {
-            await setup({
-                isError: of(true),
-                getTop: of(null)
-            });
-
-            expect(fakeObservationTopFiveService.getData).not.toHaveBeenCalled();
-      
-            const btn = await loader.getHarness(MatButtonHarness.with({ text: 'Try Again' }));
-            await btn.click();
-
-            expect(fakeObservationTopFiveService.getData).toHaveBeenCalledTimes(1);
-          });
-    });
+  it('should be able to select tab from tab-group', async () => {
+    const tabGroup = await loader.getHarness(MatTabGroupHarness);
+    expect(await (await tabGroup.getSelectedTab()).getLabel()).toBe('All time');
+    await tabGroup.selectTab({ label: 'Month' });
+    expect(await (await tabGroup.getSelectedTab()).getLabel()).toBe('Month');
+  });
 });
-
-
-
-
-
-
 
 // describe('ObservationTopFiveComponent service is called successfully with count > 0', () => {
 
@@ -226,7 +114,6 @@ describe('ObservationTopFiveComponent', () => {
 
 //         expect(compiled.querySelector('[data-testid="top-five-content-zero"]')?.textContent).toBeUndefined();
 //     }));
-
 
 //     it('should not show loading child component', () => {
 //         fixture.detectChanges();
@@ -290,7 +177,6 @@ describe('ObservationTopFiveComponent', () => {
 //         expect(compiled.querySelector('[data-testid="top-five-content"]')?.textContent).toBeUndefined();
 //     }));
 
-
 //     it('should not show loading child component', () => {
 //         const { debugElement } = fixture;
 //         const loading = debugElement.query(By.css('app-loading'));
@@ -302,7 +188,6 @@ describe('ObservationTopFiveComponent', () => {
 //         expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
 //     });
 // });
-
 
 // describe('ObservationTopFiveComponent - test when error', () => {
 //     let fixture: ComponentFixture<ObservationTopFiveComponent>;
@@ -362,7 +247,6 @@ describe('ObservationTopFiveComponent', () => {
 //     }));
 // });
 
-
 // describe('ObservationTopFiveComponent - test loading placeholder', () => {
 //     let fixture: ComponentFixture<ObservationTopFiveComponent>;
 //     let debugElement: DebugElement;
@@ -397,7 +281,6 @@ describe('ObservationTopFiveComponent', () => {
 //         debugElement = fixture.debugElement;
 //     });
 
-
 //     it('shows loading content', () => {
 //         const { debugElement } = fixture;
 //         const loading = debugElement.query(By.css('app-loading'));
@@ -414,4 +297,3 @@ describe('ObservationTopFiveComponent', () => {
 //         expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
 //     });
 // });
-

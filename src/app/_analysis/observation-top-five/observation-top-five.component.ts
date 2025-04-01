@@ -1,20 +1,11 @@
 import { Component } from '@angular/core';
-import { ObservationTopFiveService } from './observation-top-five.service';
-import { LoadingComponent } from '../../_loading/loading/loading.component';
-import { AsyncPipe } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
-import { TopTableComponent } from './top-table/top-table.component';
+import { TopFiveFilteredComponent } from './top-five-filtered/top-five-filtered.component';
+import { TopFiveComponent } from './top-five/top-five.component';
 
 @Component({
   selector: 'app-observation-top-five',
   templateUrl: './observation-top-five.component.html',
-  styleUrls: ['./observation-top-five.component.scss'],
-  imports: [MatTabsModule, LoadingComponent, AsyncPipe, TopTableComponent],
+  imports: [MatTabsModule, TopFiveFilteredComponent, TopFiveComponent],
 })
-export class ObservationTopFiveComponent {
-  constructor(readonly _service: ObservationTopFiveService) {}
-
-  public reload(): void {
-    this._service.getData();
-  }
-}
+export class ObservationTopFiveComponent {}

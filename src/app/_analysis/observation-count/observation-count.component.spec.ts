@@ -43,8 +43,8 @@ describe('ObservationCountComponent unit tests', () => {
         announceObservationsChanged: undefined,
       },
       {
-        observationsChanged$: of(),
-        networkChanged$: of(),
+        observationsChanged$: of(''),
+        networkChanged$: of(''),
       }
     );
 
@@ -257,14 +257,14 @@ describe('ObservationCountComponent unit tests', () => {
         isError: of(true),
       });
 
-      expect(fakeObservationCountService.getData).toHaveBeenCalled();
+      expect(fakeObservationCountService.getData).toHaveBeenCalledTimes(2);
 
       const button = await loader.getHarness(
         MatButtonHarness.with({ text: 'Try Again' })
       );
       await button.click();
 
-      expect(fakeObservationCountService.getData).toHaveBeenCalledTimes(2);
+      expect(fakeObservationCountService.getData).toHaveBeenCalledTimes(3);
     });
   });
 });

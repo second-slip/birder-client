@@ -46,8 +46,8 @@ describe('TopFiveComponent', () => {
         announceObservationsChanged: undefined,
       },
       {
-        observationsChanged$: of(),
-        networkChanged$: of(),
+        observationsChanged$: of(''),
+        networkChanged$: of(''),
       }
     );
 
@@ -246,14 +246,14 @@ describe('TopFiveComponent', () => {
         isError: signal(true),
       });
 
-      expect(fakeService.getData).toHaveBeenCalled();
+      expect(fakeService.getData).toHaveBeenCalledTimes(2);
 
       const button = await loader.getHarness(
         MatButtonHarness.with({ text: 'Try Again' })
       );
       await button.click();
 
-      expect(fakeService.getData).toHaveBeenCalledTimes(2);
+      expect(fakeService.getData).toHaveBeenCalledTimes(3);
     });
   });
 

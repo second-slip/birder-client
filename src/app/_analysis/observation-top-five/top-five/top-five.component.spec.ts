@@ -11,6 +11,7 @@ import { HarnessLoader, parallel } from '@angular/cdk/testing';
 import { MatTableHarness } from '@angular/material/table/testing';
 import { fakeIObservationTopFive } from 'src/app/testing/analysis-helpers';
 import { By } from '@angular/platform-browser';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 describe('TopFiveComponent', () => {
   let component: TopFiveComponent;
@@ -45,8 +46,8 @@ describe('TopFiveComponent', () => {
         announceObservationsChanged: undefined,
       },
       {
-        observationsChanged$: of(''),
-        networkChanged$: of(''),
+        observationsChanged$: of(),
+        networkChanged$: of(),
       }
     );
 
@@ -214,6 +215,45 @@ describe('TopFiveComponent', () => {
       const { debugElement } = fixture;
       const loading = debugElement.query(By.css('app-loading'));
       expect(loading).toBeFalsy();
+    });
+
+    it('should load button harness', async () => {
+      await setup({
+        records: signal([]),
+        isError: signal(true),
+      });
+
+      const button = await loader.getAllHarnesses(MatButtonHarness);
+      expect(button.length).toBe(1);
+    });
+
+    it('should load Try Again button', async () => {
+      await setup({
+        records: signal([]),
+        isError: signal(true),
+      });
+
+      const button = await loader.getAllHarnesses(
+        MatButtonHarness.with({ text: 'Try Again' })
+      );
+      expect(button.length).toBe(1);
+      expect(await button[0].getText()).toBe('Try Again');
+    });
+
+    it('calls data fetch again on retry button click', async () => {
+      await setup({
+        records: signal([]),
+        isError: signal(true),
+      });
+
+      expect(fakeService.getData).toHaveBeenCalled();
+
+      const button = await loader.getHarness(
+        MatButtonHarness.with({ text: 'Try Again' })
+      );
+      await button.click();
+
+      expect(fakeService.getData).toHaveBeenCalledTimes(2);
     });
   });
 

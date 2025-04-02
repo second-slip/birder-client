@@ -43,8 +43,8 @@ describe('ObservationCountComponent unit tests', () => {
         announceObservationsChanged: undefined,
       },
       {
-        observationsChanged$: of(''),
-        networkChanged$: of(''),
+        observationsChanged$: of(),
+        networkChanged$: of(),
       }
     );
 

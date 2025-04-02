@@ -25,13 +25,7 @@ export class TopFiveService {
     return this._records.asReadonly();
   }
 
-  // constructor() {
-  //   this.getData();
-  // }
-
   public getData(): void {
-    console.log('top 5 called');
-
     this._isLoading.set(true);
 
     this._httpClient

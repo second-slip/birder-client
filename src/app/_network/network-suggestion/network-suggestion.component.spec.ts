@@ -9,50 +9,73 @@ import { MockComponent } from 'ng-mocks';
 import { NetworkUserComponent } from '../network-user/network-user.component';
 import { provideRouter } from '@angular/router';
 import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
+import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 
 describe('NetworkSuggestionComponent', () => {
   let component: NetworkSuggestionComponent;
   let fixture: ComponentFixture<NetworkSuggestionComponent>;
 
   let fakeService: jasmine.SpyObj<NetworkSuggestionService>;
+  let fakeAnnounceChangesService: jasmine.SpyObj<AnnounceChangesService>;
 
   const setup = async (
     fakeMethodValues?: jasmine.SpyObjMethodNames<NetworkSuggestionService>,
-    fakePropertyValues?: jasmine.SpyObjPropertyNames<NetworkSuggestionService>) => {
-
+    fakePropertyValues?: jasmine.SpyObjPropertyNames<NetworkSuggestionService>
+  ) => {
     fakeService = jasmine.createSpyObj<NetworkSuggestionService>(
       'NetworkSuggestionService',
       {
         getData: undefined,
-        ...fakeMethodValues
+        ...fakeMethodValues,
       },
       {
         isError: of(false),
         getNetworkSuggestions: of(null),
-        ...fakePropertyValues
+        ...fakePropertyValues,
       }
     );
 
+    fakeAnnounceChangesService = jasmine.createSpyObj<AnnounceChangesService>(
+      'AnnounceChangesService',
+      {
+        announceNetworkChanged: undefined,
+        announceObservationsChanged: undefined,
+      },
+      {
+        observationsChanged$: of(''),
+        networkChanged$: of(''),
+      }
+    );
 
     await TestBed.configureTestingModule({
       imports: [NetworkSuggestionComponent],
-      providers: [provideRouter(blankRoutesArray)],
-    }).overrideComponent(NetworkSuggestionComponent,
-      {
-        remove: { imports: [NetworkUserComponent], providers: [NetworkSuggestionService] },
+      providers: [
+        provideRouter(blankRoutesArray),
+        {
+          provide: AnnounceChangesService,
+          useValue: fakeAnnounceChangesService,
+        },
+      ],
+    })
+      .overrideComponent(NetworkSuggestionComponent, {
+        remove: {
+          imports: [NetworkUserComponent],
+          providers: [NetworkSuggestionService],
+        },
         add: {
           imports: [MockComponent(NetworkUserComponent)],
           providers: [
-            { provide: NetworkSuggestionService, useValue: fakeService }
-          ]
-        }
+            { provide: NetworkSuggestionService, useValue: fakeService },
+          ],
+        },
         // {
         //   set: {
         //     providers: [
         //       { provide: NetworkSuggestionService, useValue: fakeService }
         //     ]
         //   }
-      }).compileComponents();
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(NetworkSuggestionComponent);
     component = fixture.componentInstance;
@@ -68,64 +91,88 @@ describe('NetworkSuggestionComponent', () => {
     expect(loading).toBeTruthy();
   }));
 
-
   describe('when response is successful', () => {
-
     it('calls data fetch service method', fakeAsync(async () => {
-      await setup({},
+      await setup(
+        {},
         {
           isError: of(false),
-          getNetworkSuggestions: of(fakeNetworkUserModelArray)
-        });
+          getNetworkSuggestions: of(fakeNetworkUserModelArray),
+        }
+      );
 
-      expect(fakeService.getData).toHaveBeenCalledTimes(1);
+      expect(fakeService.getData).toHaveBeenCalledTimes(2);
     }));
 
     it('shows the suggestions list when suggestions > 0', fakeAsync(async () => {
-      await setup({},
+      await setup(
+        {},
         {
           isError: of(false),
-          getNetworkSuggestions: of(fakeNetworkUserModelArray)
-        });
+          getNetworkSuggestions: of(fakeNetworkUserModelArray),
+        }
+      );
 
       const feedItems = findComponent(fixture, 'app-network-user');
       expect(feedItems).toBeTruthy();
 
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="suggestions-list"]')?.textContent).toBeDefined();
-      expect(compiled.querySelector('[data-testid="suggestions-list-is-zero"]')?.textContent).toBeUndefined();
+      expect(
+        compiled.querySelector('[data-testid="suggestions-list"]')?.textContent
+      ).toBeDefined();
+      expect(
+        compiled.querySelector('[data-testid="suggestions-list-is-zero"]')
+          ?.textContent
+      ).toBeUndefined();
     }));
 
     it('shows the no suggestions content when suggestions = 0 ([])', fakeAsync(async () => {
-      await setup({},
+      await setup(
+        {},
         {
           isError: of(false),
-          getNetworkSuggestions: of([])
-        });
+          getNetworkSuggestions: of([]),
+        }
+      );
 
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="suggestions-list"]')?.textContent).toBeUndefined();
-      expect(compiled.querySelector('[data-testid="suggestions-list-is-zero"]')?.textContent).toBeDefined();
-      expectText(fixture, 'suggestions-list-is-zero', ' No suggestions at this time... ');
+      expect(
+        compiled.querySelector('[data-testid="suggestions-list"]')?.textContent
+      ).toBeUndefined();
+      expect(
+        compiled.querySelector('[data-testid="suggestions-list-is-zero"]')
+          ?.textContent
+      ).toBeDefined();
+      expectText(
+        fixture,
+        'suggestions-list-is-zero',
+        ' No suggestions at this time... '
+      );
     }));
 
     it('does not show error section', fakeAsync(async () => {
-      await setup({},
+      await setup(
+        {},
         {
           isError: of(false),
-          getNetworkSuggestions: of(fakeNetworkUserModelArray)
-        });
+          getNetworkSuggestions: of(fakeNetworkUserModelArray),
+        }
+      );
 
       const error = fixture.nativeElement as HTMLElement;
-      expect(error.querySelector('[data-testid="error"]')?.textContent).toBeUndefined();
+      expect(
+        error.querySelector('[data-testid="error"]')?.textContent
+      ).toBeUndefined();
     }));
 
     it('does not show loading section', fakeAsync(async () => {
-      await setup({},
+      await setup(
+        {},
         {
           isError: of(false),
-          getNetworkSuggestions: of(fakeNetworkUserModelArray)
-        });
+          getNetworkSuggestions: of(fakeNetworkUserModelArray),
+        }
+      );
 
       const { debugElement } = fixture;
       const loading = debugElement.query(By.css('app-loading'));
@@ -134,58 +181,76 @@ describe('NetworkSuggestionComponent', () => {
   });
 
   describe('when response is unsuccessful', () => {
-
     it('shows error content', fakeAsync(async () => {
-      await setup({},
+      await setup(
+        {},
         {
           isError: of(true),
-          getNetworkSuggestions: of(null)
-        });
+          getNetworkSuggestions: of(null),
+        }
+      );
 
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeDefined();
-      expect(compiled.querySelector('[data-testid="reload-button"]')?.textContent).toBeDefined();
-      expectText(fixture, 'error', 'Whoops! There was an error retrieving the data.Try Again');
+      expect(
+        compiled.querySelector('[data-testid="error"]')?.textContent
+      ).toBeDefined();
+      expect(
+        compiled.querySelector('[data-testid="reload-button"]')?.textContent
+      ).toBeDefined();
+      expectText(
+        fixture,
+        'error',
+        'Whoops! There was an error retrieving the data.Try Again'
+      );
     }));
 
     it('tries data fetch again on retry button click', fakeAsync(async () => {
-      await setup({},
+      await setup(
+        {},
         {
           isError: of(true),
-          getNetworkSuggestions: of(null)
-        });
+          getNetworkSuggestions: of(null),
+        }
+      );
 
-      fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
+      fixture.debugElement
+        .query(By.css('.btn-try-again'))
+        .triggerEventHandler('click', null);
 
       expect(fakeService.getData).toHaveBeenCalled();
     }));
 
     it('does not show success content', fakeAsync(async () => {
-      await setup({},
+      await setup(
+        {},
         {
           isError: of(true),
-          getNetworkSuggestions: of(null)
-        });
+          getNetworkSuggestions: of(null),
+        }
+      );
 
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="followers-list"]')?.textContent).toBeUndefined();
-      expect(compiled.querySelector('[data-testid="followers-list-is-zero"]')?.textContent).toBeUndefined();
-
+      expect(
+        compiled.querySelector('[data-testid="followers-list"]')?.textContent
+      ).toBeUndefined();
+      expect(
+        compiled.querySelector('[data-testid="followers-list-is-zero"]')
+          ?.textContent
+      ).toBeUndefined();
     }));
 
     it('does not show loading section', fakeAsync(async () => {
-      await setup({},
+      await setup(
+        {},
         {
           isError: of(true),
-          getNetworkSuggestions: of(null)
-        });
+          getNetworkSuggestions: of(null),
+        }
+      );
 
       const { debugElement } = fixture;
       const loading = debugElement.query(By.css('app-loading'));
       expect(loading).toBeNull();
     }));
-
-
   });
-
 });

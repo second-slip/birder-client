@@ -64,7 +64,7 @@ export class ObservationDeleteComponent implements OnInit, OnDestroy {
       .pipe(finalize(() => { this.requesting = false; }), takeUntil(this._subscription))
       .subscribe({
         next: (r) => {
-          this._announcement.announceObservationsChanged();
+          this._announcement.announceObservationsChanged('observation deleted');
           this._router.navigate(['/feed-p/public']);
         },
         error: (e) => {

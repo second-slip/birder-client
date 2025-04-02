@@ -2,25 +2,17 @@
 // new test(s) required for id out emit
 
 import { NO_ERRORS_SCHEMA, signal } from '@angular/core';
-import {
-  ComponentFixture,
-  DeferBlockBehavior,
-  DeferBlockState,
-  fakeAsync,
-  TestBed,
-  tick,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
+import { expectText } from 'src/app/testing/element.spec-helper';
 import { fakeIObservationFeed } from 'src/app/testing/observation-feed-helper';
 import { ObservationFeedService } from '../../_observation-feed/observation-feed.service';
 import { ObservationFeedComponent } from './observation-feed.component';
 import { ObservationFeedItemComponent } from '../observation-feed-item/observation-feed-item.component';
 import { MockComponent } from 'ng-mocks';
 import { FilterControlComponent } from '../filter-control/filter-control.component';
-import { IObservationFeed } from '../i-observation-feed.dto';
 
 describe('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', () => {
   let component: ObservationFeedComponent;

@@ -102,7 +102,7 @@ export class ObservationCreateComponent implements OnInit {
         )
         .subscribe({
           next: (r) => {
-            this._announcement.announceObservationsChanged();
+            this._announcement.announceObservationsChanged('Hello from Sender!');
             this._router.navigate([`/observation/detail/${r.observationId}`]);
           },
           error: (e) => {

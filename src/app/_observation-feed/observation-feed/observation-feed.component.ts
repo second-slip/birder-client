@@ -15,8 +15,7 @@ import { FilterControlComponent } from '../filter-control/filter-control.compone
     ObservationFeedItemComponent,
     RouterLink,
     LoadingComponent,
-  ]//,
-  //
+  ],
 })
 export class ObservationFeedComponent implements OnInit {
   readonly _service = inject(ObservationFeedService);

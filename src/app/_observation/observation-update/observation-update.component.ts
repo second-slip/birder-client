@@ -171,7 +171,7 @@ export class ObservationUpdateComponent implements OnInit, OnDestroy {
         )
         .subscribe({
           next: (r) => {
-            this._announcement.announceObservationsChanged();
+            this._announcement.announceObservationsChanged('observation updated');
             this._router.navigate([`/observation/detail/${r.observationId}`]);
           },
           error: (e) => {

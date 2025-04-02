@@ -12,7 +12,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './top-five.component.html',
   styleUrl: './top-five.component.scss',
 })
-export class TopFiveComponent implements OnInit {
+export class TopFiveComponent {
   protected displayedColumns: string[] = ['index', 'name', 'count'];
 
   constructor(
@@ -20,16 +20,12 @@ export class TopFiveComponent implements OnInit {
     protected readonly _service: TopFiveService
   ) {
     this._service.getData();
-    
+
     this._announcement.observationsChanged$
       .pipe(takeUntilDestroyed())
       .subscribe((msg) => {
         this._service.getData();
       });
-  }
-
-  ngOnInit(): void {
-    // this._service.getData();
   }
 
   protected reload(): void {

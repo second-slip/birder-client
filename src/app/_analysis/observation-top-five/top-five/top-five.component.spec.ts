@@ -73,10 +73,6 @@ describe('TopFiveComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // success
-  // error
-  // loading
-
   describe('success server response', () => {
     it('should render the mat-table', async () => {
       await setup({
@@ -226,7 +222,7 @@ describe('TopFiveComponent', () => {
   describe('when loading', () => {
     it('should not render the mat-table', async () => {
       await setup({
-        isLoading: signal(true)
+        isLoading: signal(true),
       });
 
       const tables = await loader.getAllHarnesses(MatTableHarness);
@@ -235,7 +231,7 @@ describe('TopFiveComponent', () => {
 
     it('should not show the error content', async () => {
       await setup({
-        isLoading: signal(true)
+        isLoading: signal(true),
       });
 
       const compiled = fixture.nativeElement as HTMLElement;
@@ -246,7 +242,7 @@ describe('TopFiveComponent', () => {
 
     it('should show the loading symbol', async () => {
       await setup({
-        isLoading: signal(true)
+        isLoading: signal(true),
       });
 
       const { debugElement } = fixture;

@@ -5,47 +5,51 @@ import { INetworkUser } from '../i-network-user.dto';
 import { FollowCommandService } from './follow-command.service';
 
 @Component({
-    selector: 'app-follow-command',
-    templateUrl: './follow-command.component.html',
-    styleUrls: ['./follow-command.component.scss'],
-    imports: []
+  selector: 'app-follow-command',
+  templateUrl: './follow-command.component.html',
+  styleUrls: ['./follow-command.component.scss'],
+  imports: [],
 })
 export class FollowCommandComponent implements OnDestroy {
-  @Input() user: INetworkUser
+  @Input() user: INetworkUser;
 
   private _subscription = new Subject();
 
-  constructor(private readonly _service: FollowCommandService,
-    private readonly _announce: AnnounceChangesService) { }
+  constructor(
+    private readonly _service: FollowCommandService,
+    private readonly _announce: AnnounceChangesService
+  ) {}
 
   public followOrUnfollow(): void {
     if (this.user.isFollowing === false) {
-      this._service.postFollowUser(this.user)
+      this._service
+        .postFollowUser(this.user)
         .pipe(first(), takeUntil(this._subscription))
         .subscribe({
           next: (data: INetworkUser) => {
             this.user = data;
-            this._announce.announceNetworkChanged();
+            this._announce.announceNetworkChanged('');
             // this.toast.info('You have followed ' + data.userName, 'Success');
           },
-          error: ((error: any) => {
+          error: (error: any) => {
             // ToDo: write proper error actions
             // this.toast.error(error.friendlyMessage, 'An error occurred');
-          })
+          },
         });
     } else {
-      this._service.postUnfollowUser(this.user)
+      this._service
+        .postUnfollowUser(this.user)
         .pipe(first(), takeUntil(this._subscription))
         .subscribe({
           next: (data: INetworkUser) => {
             // this.toast.info('You have unfollowed ' + data.userName, 'Success');
             this.user = data;
-            this._announce.announceNetworkChanged();
+            this._announce.announceNetworkChanged('');
           },
-          error: ((error: any) => {
+          error: (error: any) => {
             // ToDo: write proper error actions
             // this.toast.error(error.friendlyMessage, 'An error occurred');
-          })
+          },
         });
     }
   }

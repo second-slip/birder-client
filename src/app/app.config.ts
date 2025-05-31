@@ -2,6 +2,7 @@ import {
   ApplicationConfig,
   LOCALE_ID,
   importProvidersFrom,
+  provideZonelessChangeDetection,
 } from '@angular/core';
 import {
   provideRouter,
@@ -48,5 +49,6 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([authenticationInterceptor, errorInterceptor])
     ),
     provideAnimations(),
+    provideZonelessChangeDetection()
   ],
 };

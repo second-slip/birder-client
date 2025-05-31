@@ -1,10 +1,20 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { skip } from 'rxjs';
-import { singleObservationResponse, singleObservation, singleObservationView, singleObservationViewResponse } from '../testing/observation-test-helpers';
+import {
+  singleObservationResponse,
+  singleObservation,
+  singleObservationView,
+  singleObservationViewResponse,
+} from '../testing/observation-test-helpers';
 
 import { ObservationReadService } from './observation-read.service';
 import { IObservationViewDto } from './i-observation-view.dto';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
 
 const _observationId = '10';
 const _apiUrl = `api/observationread?id=${_observationId}`;
@@ -15,8 +25,12 @@ describe('ObservationReadService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [ObservationReadService]
+      providers: [
+        provideZonelessChangeDetection(),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        ObservationReadService
+      ],
     });
     service = TestBed.inject(ObservationReadService);
     controller = TestBed.inject(HttpTestingController);
@@ -31,7 +45,6 @@ describe('ObservationReadService', () => {
   });
 
   it('should return error if id is null or empty', () => {
-
     let actualObservation: IObservationViewDto | null | undefined;
     let actualErrorState: boolean | undefined;
 
@@ -39,13 +52,12 @@ describe('ObservationReadService', () => {
     service.getData(''); // empty string, which should be caught by the method guard
 
     service.observation.subscribe((tweetObservable) => {
-      actualObservation = tweetObservable
+      actualObservation = tweetObservable;
     });
 
-    service.isError
-      .subscribe((error) => {
-        actualErrorState = error;
-      });
+    service.isError.subscribe((error) => {
+      actualErrorState = error;
+    });
 
     controller.expectNone(_apiUrl);
 
@@ -62,13 +74,12 @@ describe('ObservationReadService', () => {
     service.getData(_observationId);
 
     service.observation.subscribe((tweetObservable) => {
-      actualObservation = tweetObservable
+      actualObservation = tweetObservable;
     });
 
-    service.isError
-      .subscribe((error) => {
-        actualErrorState = error;
-      });
+    service.isError.subscribe((error) => {
+      actualErrorState = error;
+    });
 
     const request = controller.expectOne(_apiUrl);
     request.flush(singleObservationViewResponse);
@@ -96,13 +107,12 @@ describe('ObservationReadService', () => {
     service.getData(_observationId);
 
     service.observation.subscribe((tweetObservable) => {
-      actualObservation = tweetObservable
+      actualObservation = tweetObservable;
     });
 
-    service.isError.pipe(skip(1))
-      .subscribe((error) => {
-        actualErrorState = error;
-      });
+    service.isError.pipe(skip(1)).subscribe((error) => {
+      actualErrorState = error;
+    });
 
     controller.expectOne(_apiUrl).error(errorEvent, { status, statusText });
 

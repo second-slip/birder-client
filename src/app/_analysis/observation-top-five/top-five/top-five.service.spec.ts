@@ -9,6 +9,7 @@ import {
   fakeTopObservationsResponse,
 } from 'src/app/testing/analysis-helpers';
 import { provideHttpClient } from '@angular/common/http';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 const _apiUrl = 'api/list/top';
 
@@ -18,7 +19,11 @@ describe('TopFiveService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideZonelessChangeDetection(),
+      ],
     });
     service = TestBed.inject(TopFiveService);
     controller = TestBed.inject(HttpTestingController);

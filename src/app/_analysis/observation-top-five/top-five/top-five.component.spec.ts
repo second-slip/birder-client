@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TopFiveComponent } from './top-five.component';
-import { signal } from '@angular/core';
+import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { TopFiveService } from './top-five.service';
 import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 import { provideRouter } from '@angular/router';
@@ -54,6 +54,7 @@ describe('TopFiveComponent', () => {
     await TestBed.configureTestingModule({
       imports: [TopFiveComponent],
       providers: [
+        provideZonelessChangeDetection(),
         provideRouter(blankRoutesArray),
         { provide: TopFiveService, useValue: fakeService },
         {

@@ -1,10 +1,19 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { skip } from 'rxjs';
-import { apiNetworkUserArrayResponse, fakeNetworkUserModelArray } from 'src/app/testing/network-test-helpers';
+import {
+  apiNetworkUserArrayResponse,
+  fakeNetworkUserModelArray,
+} from 'src/app/testing/network-test-helpers';
 import { INetworkUser } from '../i-network-user.dto';
 
 import { NetworkFindService } from './network-find.service';
+import { provideHttpClient } from '@angular/common/http';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 const _searchCriterion = 'test';
 const _apiUrl = `api/network/search?searchCriterion=${_searchCriterion}`;
@@ -15,8 +24,12 @@ describe('NetworkFindService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [NetworkFindService]
+      providers: [
+        NetworkFindService,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideZonelessChangeDetection(),
+      ],
     });
     service = TestBed.inject(NetworkFindService);
     controller = TestBed.inject(HttpTestingController);
@@ -40,17 +53,16 @@ describe('NetworkFindService', () => {
 
     // We expect that the Observable emits an array that equals to the one from the API response:
     service.getSearchResults.subscribe((searchResultsObservable) => {
-      actualSearchResults = searchResultsObservable
+      actualSearchResults = searchResultsObservable;
     });
 
-    service.isError
-      .subscribe((error) => {
-        actualErrorState = error;
-      });
+    service.isError.subscribe((error) => {
+      actualErrorState = error;
+    });
 
     const request = controller.expectOne({
       method: 'GET',
-      url: _apiUrl
+      url: _apiUrl,
     });
     // Answer the request so the Observable emits a value.
     request.flush(apiNetworkUserArrayResponse); // also paste the response object in with {}
@@ -59,7 +71,6 @@ describe('NetworkFindService', () => {
     expect(actualSearchResults).toEqual(fakeNetworkUserModelArray);
     expect(actualErrorState).toBeFalse();
   });
-
 
   it('passes through errors', () => {
     // Arrange
@@ -71,7 +82,8 @@ describe('NetworkFindService', () => {
     // Act & Assert
     service.getData(_searchCriterion); // call http request method
 
-    service.isError.pipe(skip(1)) // skip first, default 'false' value emitted...
+    service.isError
+      .pipe(skip(1)) // skip first, default 'false' value emitted...
       .subscribe((error) => {
         actualErrorState = error;
       });

@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FooterComponent } from './footer.component';
 import { provideRouter } from '@angular/router';
 import { blankRoutesArray } from '../testing/route-tests-helpers';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('FooterComponent', () => {
   let component: FooterComponent;
@@ -11,9 +12,11 @@ describe('FooterComponent', () => {
   beforeEach(async () => {
     TestBed.configureTestingModule({
       imports: [FooterComponent],
-      providers: [provideRouter(blankRoutesArray)],
-    })
-      .compileComponents();
+      providers: [
+        provideRouter(blankRoutesArray),
+        provideZonelessChangeDetection(),
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -27,7 +30,6 @@ describe('FooterComponent', () => {
   });
 
   describe('initialisation', () => {
-
     it('should set the year property to current year', () => {
       // Arrange
       const year = new Date().getFullYear().toString();
@@ -40,5 +42,4 @@ describe('FooterComponent', () => {
       expect(component.message).toEqual(expected);
     });
   });
-
 });

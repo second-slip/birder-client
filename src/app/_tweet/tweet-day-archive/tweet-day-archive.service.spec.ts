@@ -1,9 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { TweetDayArchiveService } from './tweet-day-archive.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { skip } from 'rxjs';
 import { ITweet } from '../i-tweet.dto';
-import { fakeTweetArchiveArray, fakeTweetArchiveResponse } from 'src/app/testing/tweet-day-test-helper';
+import {
+  fakeTweetArchiveArray,
+  fakeTweetArchiveResponse,
+} from 'src/app/testing/tweet-day-test-helper';
+import { provideHttpClient } from '@angular/common/http';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 const _pageIndex = 1;
 const _apiUrl = `api/tweets/archive?pageIndex=${_pageIndex}&pageSize=8`;
@@ -14,8 +23,13 @@ describe('TweetDayArchiveService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [TweetDayArchiveService],
+      providers: [
+        TweetDayArchiveService,
+
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideZonelessChangeDetection(),
+      ],
     });
     service = TestBed.inject(TweetDayArchiveService);
     controller = TestBed.inject(HttpTestingController);
@@ -24,7 +38,6 @@ describe('TweetDayArchiveService', () => {
   afterEach(() => {
     controller.verify();
   });
-
 
   it('makes an http call', () => {
     // Arrange
@@ -38,20 +51,21 @@ describe('TweetDayArchiveService', () => {
 
     // We expect that the Observable emits an array that equals to the one from the API response:
     service.getTweets.subscribe((observationFeedObservable) => {
-      actualTweetObservable = observationFeedObservable
+      actualTweetObservable = observationFeedObservable;
     });
 
-    service.isError
-      .subscribe((error) => {
-        actualErrorState = error;
-      });
+    service.isError.subscribe((error) => {
+      actualErrorState = error;
+    });
 
-    service.isLoading.pipe(skip(1)) // skip first default 'true' value emitted...
+    service.isLoading
+      .pipe(skip(1)) // skip first default 'true' value emitted...
       .subscribe((loading) => {
         finalLoadingState = loading;
       });
 
-    service.allLoaded.pipe() // skip first default 'true' value emitted...
+    service.allLoaded
+      .pipe() // skip first default 'true' value emitted...
       .subscribe((loaded) => {
         actualAllLoadedState = loaded;
       });
@@ -85,17 +99,20 @@ describe('TweetDayArchiveService', () => {
     // Act & Assert
     service.getData(_pageIndex); // call http request method
 
-    service.isError.pipe(skip(1)) // skip first, default 'false' value emitted...
+    service.isError
+      .pipe(skip(1)) // skip first, default 'false' value emitted...
       .subscribe((error) => {
         actualErrorState = error;
       });
 
-    service.isLoading.pipe(skip(1)) // skip first, default 'true' value emitted...
+    service.isLoading
+      .pipe(skip(1)) // skip first, default 'true' value emitted...
       .subscribe((loading) => {
         finalLoadingState = loading;
       });
 
-    service.allLoaded.pipe() // skip first default 'true' value emitted...
+    service.allLoaded
+      .pipe() // skip first default 'true' value emitted...
       .subscribe((loaded) => {
         actualAllLoadedState = loaded;
       });
@@ -107,9 +124,7 @@ describe('TweetDayArchiveService', () => {
     expect(actualAllLoadedState).toBeFalse();
   });
 
-
-
-  // 
+  //
   it('updates allLoaded property to true', () => {
     // Arrange
     let actualTweetObservable: ITweet[] | null | undefined; // undefined initial state to check if Observable emits
@@ -122,20 +137,21 @@ describe('TweetDayArchiveService', () => {
 
     // We expect that the Observable emits an array that equals to the one from the API response:
     service.getTweets.subscribe((observationFeedObservable) => {
-      actualTweetObservable = observationFeedObservable
+      actualTweetObservable = observationFeedObservable;
     });
 
-    service.isError
-      .subscribe((error) => {
-        actualErrorState = error;
-      });
+    service.isError.subscribe((error) => {
+      actualErrorState = error;
+    });
 
-    service.isLoading.pipe(skip(1)) // skip first default 'true' value emitted...
+    service.isLoading
+      .pipe(skip(1)) // skip first default 'true' value emitted...
       .subscribe((loading) => {
         finalLoadingState = loading;
       });
 
-    service.allLoaded.pipe(skip(1)) // skip first default 'true' value emitted...
+    service.allLoaded
+      .pipe(skip(1)) // skip first default 'true' value emitted...
       .subscribe((loaded) => {
         actualAllLoadedState = loaded;
       });

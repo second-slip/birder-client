@@ -1,9 +1,16 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { fakeAsync, TestBed } from '@angular/core/testing';
-import { authSuccessResult, loginModel } from 'src/app/testing/auth-test-helpers';
+import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import {
+  authSuccessResult,
+  loginModel,
+} from 'src/app/testing/auth-test-helpers';
 import { IAuthenticationResult } from '../i-authentication-result.dto';
 import { LoginService } from './login.service';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('LoginService', () => {
   let service: LoginService;
@@ -11,7 +18,12 @@ describe('LoginService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule]
+      imports: [],
+      providers: [
+        provideZonelessChangeDetection(),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
     });
     service = TestBed.inject(LoginService);
     controller = TestBed.inject(HttpTestingController);
@@ -21,10 +33,9 @@ describe('LoginService', () => {
     controller.verify();
   });
 
-  it('should be created', fakeAsync(async () => {
+  it('should be created', async () => {
     expect(service).toBeTruthy();
-  }));
-
+  });
 
   it('successfully signs in', () => {
     let result: IAuthenticationResult | undefined;
@@ -48,7 +59,9 @@ describe('LoginService', () => {
       errors.push(error);
     };
 
-    service.login(loginModel).subscribe({next: fail, error: recordError,complete: fail,});
+    service
+      .login(loginModel)
+      .subscribe({ next: fail, error: recordError, complete: fail });
 
     const status = 500;
     const statusText = 'Internal Server Error';
@@ -58,7 +71,6 @@ describe('LoginService', () => {
     requests.forEach((request) => {
       request.error(errorEvent, { status, statusText });
     });
-
 
     expect(errors.length).toBe(1);
 

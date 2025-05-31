@@ -1,7 +1,17 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { flickrResponse, flickrUrl, photoUrlsArray, species } from 'src/app/testing/flickr-recordings-api-tests-helper';
+import {
+  flickrResponse,
+  flickrUrl,
+  photoUrlsArray,
+  species,
+} from 'src/app/testing/flickr-recordings-api-tests-helper';
 import { FlickrService } from './flickr.service';
+import { provideHttpClient } from '@angular/common/http';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('FlickrService', () => {
   let service: FlickrService;
@@ -9,8 +19,12 @@ describe('FlickrService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [FlickrService]
+      providers: [
+        FlickrService,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideZonelessChangeDetection(),
+      ],
     });
     service = TestBed.inject(FlickrService);
     controller = TestBed.inject(HttpTestingController);
@@ -34,10 +48,9 @@ describe('FlickrService', () => {
       actualImagesState = otherResult;
     });
 
-    service.isError
-      .subscribe((error) => {
-        actualErrorState = error;
-      });
+    service.isError.subscribe((error) => {
+      actualErrorState = error;
+    });
 
     controller.expectOne(flickrUrl).flush(flickrResponse);
 

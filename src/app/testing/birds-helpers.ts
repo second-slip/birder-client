@@ -387,7 +387,7 @@ export const fakeIBirdArray: IBirdSummary[] =
   ];
 
   
-export const BirdsDddlResponse =
+export const BirdsDdlResponse =
 [
   {
     "birdId": 1002,

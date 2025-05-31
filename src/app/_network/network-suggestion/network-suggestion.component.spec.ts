@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
@@ -10,6 +10,7 @@ import { NetworkUserComponent } from '../network-user/network-user.component';
 import { provideRouter } from '@angular/router';
 import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('NetworkSuggestionComponent', () => {
   let component: NetworkSuggestionComponent;
@@ -50,6 +51,7 @@ describe('NetworkSuggestionComponent', () => {
     await TestBed.configureTestingModule({
       imports: [NetworkSuggestionComponent],
       providers: [
+        provideZonelessChangeDetection(),
         provideRouter(blankRoutesArray),
         {
           provide: AnnounceChangesService,
@@ -82,17 +84,17 @@ describe('NetworkSuggestionComponent', () => {
     fixture.detectChanges();
   };
 
-  it('"SMOKE TEST": should be created and show the loading placeloader', fakeAsync(async () => {
+  it('"SMOKE TEST": should be created and show the loading placeholder', async () => {
     await setup({}, {});
 
     expect(component).toBeTruthy();
     const { debugElement } = fixture;
     const loading = debugElement.query(By.css('app-loading'));
     expect(loading).toBeTruthy();
-  }));
+  });
 
   describe('when response is successful', () => {
-    it('calls data fetch service method', fakeAsync(async () => {
+    it('calls data fetch service method', async () => {
       await setup(
         {},
         {
@@ -102,9 +104,9 @@ describe('NetworkSuggestionComponent', () => {
       );
 
       expect(fakeService.getData).toHaveBeenCalledTimes(2);
-    }));
+    });
 
-    it('shows the suggestions list when suggestions > 0', fakeAsync(async () => {
+    it('shows the suggestions list when suggestions > 0', async () => {
       await setup(
         {},
         {
@@ -124,9 +126,9 @@ describe('NetworkSuggestionComponent', () => {
         compiled.querySelector('[data-testid="suggestions-list-is-zero"]')
           ?.textContent
       ).toBeUndefined();
-    }));
+    });
 
-    it('shows the no suggestions content when suggestions = 0 ([])', fakeAsync(async () => {
+    it('shows the no suggestions content when suggestions = 0 ([])', async () => {
       await setup(
         {},
         {
@@ -148,9 +150,9 @@ describe('NetworkSuggestionComponent', () => {
         'suggestions-list-is-zero',
         ' No suggestions at this time... '
       );
-    }));
+    });
 
-    it('does not show error section', fakeAsync(async () => {
+    it('does not show error section', async () => {
       await setup(
         {},
         {
@@ -163,9 +165,9 @@ describe('NetworkSuggestionComponent', () => {
       expect(
         error.querySelector('[data-testid="error"]')?.textContent
       ).toBeUndefined();
-    }));
+    });
 
-    it('does not show loading section', fakeAsync(async () => {
+    it('does not show loading section', async () => {
       await setup(
         {},
         {
@@ -177,11 +179,11 @@ describe('NetworkSuggestionComponent', () => {
       const { debugElement } = fixture;
       const loading = debugElement.query(By.css('app-loading'));
       expect(loading).toBeNull();
-    }));
+    });
   });
 
   describe('when response is unsuccessful', () => {
-    it('shows error content', fakeAsync(async () => {
+    it('shows error content', async () => {
       await setup(
         {},
         {
@@ -202,9 +204,9 @@ describe('NetworkSuggestionComponent', () => {
         'error',
         'Whoops! There was an error retrieving the data.Try Again'
       );
-    }));
+    });
 
-    it('tries data fetch again on retry button click', fakeAsync(async () => {
+    it('tries data fetch again on retry button click', async () => {
       await setup(
         {},
         {
@@ -218,9 +220,9 @@ describe('NetworkSuggestionComponent', () => {
         .triggerEventHandler('click', null);
 
       expect(fakeService.getData).toHaveBeenCalled();
-    }));
+    });
 
-    it('does not show success content', fakeAsync(async () => {
+    it('does not show success content', async () => {
       await setup(
         {},
         {
@@ -237,9 +239,9 @@ describe('NetworkSuggestionComponent', () => {
         compiled.querySelector('[data-testid="followers-list-is-zero"]')
           ?.textContent
       ).toBeUndefined();
-    }));
+    });
 
-    it('does not show loading section', fakeAsync(async () => {
+    it('does not show loading section', async () => {
       await setup(
         {},
         {
@@ -251,6 +253,6 @@ describe('NetworkSuggestionComponent', () => {
       const { debugElement } = fixture;
       const loading = debugElement.query(By.css('app-loading'));
       expect(loading).toBeNull();
-    }));
+    });
   });
 });

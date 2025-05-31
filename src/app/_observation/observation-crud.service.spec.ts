@@ -1,9 +1,21 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { createObservationModel, createdResponse, observationId, singleObservation, singleObservationResponse, updateObservationModel, updatedResponse } from '../testing/observation-test-helpers';
+import {
+  createObservationModel,
+  createdResponse,
+  observationId,
+  singleObservation,
+  singleObservationResponse,
+  updateObservationModel,
+  updatedResponse,
+} from '../testing/observation-test-helpers';
 import { ObservationCrudService } from './observation-crud.service';
 import { IUpdateObservation } from './observation-update/i-update-observation.dto';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('ObservationCrudService', () => {
   let service: ObservationCrudService;
@@ -11,7 +23,12 @@ describe('ObservationCrudService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule]
+      // imports: [HttpClientTestingModule],
+      providers: [
+        provideZonelessChangeDetection(),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
     });
     service = TestBed.inject(ObservationCrudService);
     controller = TestBed.inject(HttpTestingController);
@@ -27,14 +44,15 @@ describe('ObservationCrudService', () => {
 
   it('checks it gets the observation', () => {
     let result: IUpdateObservation | null | undefined;
-    service.getObservation(observationId.toString())
+    service
+      .getObservation(observationId.toString())
       .subscribe((otherResult) => {
         result = otherResult;
       });
 
     const request = controller.expectOne({
       method: 'GET',
-      url: `api/observationread/update?id=${observationId}`
+      url: `api/observationread/update?id=${observationId}`,
     });
     request.flush(singleObservationResponse);
 
@@ -42,7 +60,7 @@ describe('ObservationCrudService', () => {
   });
 
   it('check it adds the observation', () => {
-    let result: { observationId: string} | null | undefined;
+    let result: { observationId: string } | null | undefined;
 
     service.addObservation(createObservationModel).subscribe((otherResult) => {
       result = otherResult;
@@ -59,10 +77,12 @@ describe('ObservationCrudService', () => {
   });
 
   it('check it updates the observation', () => {
-    let result: { observationId: string} | null | undefined;
-    service.updateObservation(observationId.toString(), updateObservationModel).subscribe((otherResult) => {
-      result = otherResult;
-    });
+    let result: { observationId: string } | null | undefined;
+    service
+      .updateObservation(observationId.toString(), updateObservationModel)
+      .subscribe((otherResult) => {
+        result = otherResult;
+      });
 
     const request = controller.expectOne({
       method: 'PUT',
@@ -100,10 +120,18 @@ describe('ObservationCrudService', () => {
     const statusText = 'Internal Server Error';
     const errorEvent = new ProgressEvent('API error');
 
-    service.addObservation(createObservationModel).subscribe({ next: fail, error: recordError, complete: fail, });
-    service.deleteObservation(observationId).subscribe({ next: fail, error: recordError, complete: fail, });
-    service.getObservation(observationId.toString()).subscribe({ next: fail, error: recordError, complete: fail, });
-    service.updateObservation(observationId.toString(), updateObservationModel).subscribe({ next: fail, error: recordError, complete: fail, });
+    service
+      .addObservation(createObservationModel)
+      .subscribe({ next: fail, error: recordError, complete: fail });
+    service
+      .deleteObservation(observationId)
+      .subscribe({ next: fail, error: recordError, complete: fail });
+    service
+      .getObservation(observationId.toString())
+      .subscribe({ next: fail, error: recordError, complete: fail });
+    service
+      .updateObservation(observationId.toString(), updateObservationModel)
+      .subscribe({ next: fail, error: recordError, complete: fail });
 
     const requests = controller.match(() => true);
     requests.forEach((request) => {
@@ -117,5 +145,4 @@ describe('ObservationCrudService', () => {
       expect(error.statusText).toBe(statusText);
     });
   });
-
 });

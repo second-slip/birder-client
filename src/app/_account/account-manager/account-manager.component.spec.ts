@@ -6,7 +6,10 @@ import { AccountManagePasswordComponent } from '../account-manage-password/accou
 import { AccountManageProfileComponent } from '../account-manage-profile/account-manage-profile.component';
 import { MockComponent } from 'ng-mocks';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ɵDeferBlockBehavior } from '@angular/core';
+import {
+  provideZonelessChangeDetection,
+  ɵDeferBlockBehavior,
+} from '@angular/core';
 
 describe('AccountManagerComponent', () => {
   let component: AccountManagerComponent;
@@ -14,11 +17,26 @@ describe('AccountManagerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AccountManagerComponent, NoopAnimationsModule]
+      imports: [AccountManagerComponent, NoopAnimationsModule],
+      providers: [provideZonelessChangeDetection()],
     })
       .overrideComponent(AccountManagerComponent, {
-        remove: { imports: [AccountManageAvatarComponent, AccountManageLocationComponent, AccountManagePasswordComponent, AccountManageProfileComponent] },
-        add: { imports: [MockComponent(AccountManageAvatarComponent), MockComponent(AccountManageLocationComponent), MockComponent(AccountManagePasswordComponent), MockComponent(AccountManageProfileComponent)] },
+        remove: {
+          imports: [
+            AccountManageAvatarComponent,
+            AccountManageLocationComponent,
+            AccountManagePasswordComponent,
+            AccountManageProfileComponent,
+          ],
+        },
+        add: {
+          imports: [
+            MockComponent(AccountManageAvatarComponent),
+            MockComponent(AccountManageLocationComponent),
+            MockComponent(AccountManagePasswordComponent),
+            MockComponent(AccountManageProfileComponent),
+          ],
+        },
       })
       .compileComponents();
   });

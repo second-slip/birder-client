@@ -7,7 +7,7 @@ import { IAuthUser } from '../../_auth/i-auth-user.dto';
 import { expectText } from 'src/app/testing/element.spec-helper';
 import { provideRouter } from '@angular/router';
 import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
-import { ComponentRef } from '@angular/core';
+import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 
 describe('ObservationFeedItemComponent', () => {
   let component: ObservationFeedItemComponent;
@@ -59,6 +59,7 @@ describe('ObservationFeedItemComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ObservationFeedItemComponent],
       providers: [
+        provideZonelessChangeDetection(),
         { provide: AuthenticationService, useValue: fakeAuthService },
         provideRouter(blankRoutesArray),
       ],

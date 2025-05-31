@@ -13,6 +13,7 @@ import { provideRouter } from '@angular/router';
 import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('ObservationCountComponent unit tests', () => {
   let component: ObservationCountComponent;
@@ -51,6 +52,7 @@ describe('ObservationCountComponent unit tests', () => {
     await TestBed.configureTestingModule({
       imports: [ObservationCountComponent],
       providers: [
+        provideZonelessChangeDetection(),
         {
           provide: ObservationCountService,
           useValue: fakeObservationCountService,

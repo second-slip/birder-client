@@ -7,6 +7,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatTabGroupHarness } from '@angular/material/tabs/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { By } from '@angular/platform-browser';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('AboutComponent', () => {
   let component: AboutComponent;
@@ -17,6 +18,7 @@ describe('AboutComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AboutComponent, NoopAnimationsModule],
       providers: [
+        provideZonelessChangeDetection(),
         provideRouter(blankRoutesArray),
       ],
     })

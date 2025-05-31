@@ -1,4 +1,7 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  NO_ERRORS_SCHEMA,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { findComponent } from './testing/element.spec-helper';
@@ -10,11 +13,17 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
+      providers: [provideZonelessChangeDetection()],
       schemas: [NO_ERRORS_SCHEMA],
     })
       .overrideComponent(AppComponent, {
         remove: { imports: [NavMenuComponent, FooterComponent] },
-        add: { imports: [MockComponent(NavMenuComponent), MockComponent(FooterComponent)] },
+        add: {
+          imports: [
+            MockComponent(NavMenuComponent),
+            MockComponent(FooterComponent),
+          ],
+        },
       })
       .compileComponents();
   });

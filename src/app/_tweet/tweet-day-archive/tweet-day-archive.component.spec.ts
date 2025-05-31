@@ -1,5 +1,9 @@
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import {
+  DebugElement,
+  NO_ERRORS_SCHEMA,
+  provideZonelessChangeDetection,
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
@@ -10,14 +14,12 @@ import { provideRouter } from '@angular/router';
 import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 
 describe('TweetDayArchiveComponent', () => {
-
   describe('test when success', () => {
     let fixture: ComponentFixture<TweetDayArchiveComponent>;
     let debugElement: DebugElement;
     let fakeTweetDayArchiveService: TweetDayArchiveService;
 
     beforeEach(async () => {
-
       fakeTweetDayArchiveService = jasmine.createSpyObj<TweetDayArchiveService>(
         'TweetDayArchiveService',
         {
@@ -27,21 +29,28 @@ describe('TweetDayArchiveComponent', () => {
           isLoading: of(false),
           isError: of(false),
           allLoaded: of(false),
-          getTweets: of(fakeTweetArchiveArray)
+          getTweets: of(fakeTweetArchiveArray),
         }
       );
 
       await TestBed.configureTestingModule({
         imports: [TweetDayArchiveComponent],
-        providers: [provideRouter(blankRoutesArray)],
-        schemas: [NO_ERRORS_SCHEMA]
+        providers: [
+          provideRouter(blankRoutesArray),
+          provideZonelessChangeDetection(),
+        ],
+        schemas: [NO_ERRORS_SCHEMA],
       })
-        .overrideComponent(TweetDayArchiveComponent,
-          {
-            set: {
-              providers: [{ provide: TweetDayArchiveService, useValue: fakeTweetDayArchiveService }]
-            }
-          })
+        .overrideComponent(TweetDayArchiveComponent, {
+          set: {
+            providers: [
+              {
+                provide: TweetDayArchiveService,
+                useValue: fakeTweetDayArchiveService,
+              },
+            ],
+          },
+        })
         .compileComponents();
 
       fixture = TestBed.createComponent(TweetDayArchiveComponent);
@@ -54,10 +63,12 @@ describe('TweetDayArchiveComponent', () => {
       expect(fakeTweetDayArchiveService.getData).toHaveBeenCalledTimes(1);
     });
 
-    it('should render the Tweets', fakeAsync(() => {
+    it('should render the Tweets', () => {
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="tweet-table"]')?.textContent).toBeDefined();
-    }));
+      expect(
+        compiled.querySelector('[data-testid="tweet-table"]')?.textContent
+      ).toBeDefined();
+    });
 
     it('should not show loading child component', () => {
       const { debugElement } = fixture;
@@ -67,12 +78,16 @@ describe('TweetDayArchiveComponent', () => {
 
     it('should not show error content', () => {
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toBeUndefined();
+      expect(
+        compiled.querySelector('[data-testid="error-content"]')?.textContent
+      ).toBeUndefined();
     });
 
     it('should not show all loaded content', () => {
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="all-loaded"]')?.textContent).toBeUndefined();
+      expect(
+        compiled.querySelector('[data-testid="all-loaded"]')?.textContent
+      ).toBeUndefined();
     });
   });
 
@@ -82,7 +97,6 @@ describe('TweetDayArchiveComponent', () => {
     let fakeTweetDayArchiveService: TweetDayArchiveService;
 
     beforeEach(async () => {
-
       fakeTweetDayArchiveService = jasmine.createSpyObj<TweetDayArchiveService>(
         'TweetDayArchiveService',
         {
@@ -92,21 +106,28 @@ describe('TweetDayArchiveComponent', () => {
           isLoading: of(false),
           isError: of(false),
           allLoaded: of(true),
-          getTweets: of(fakeTweetArchiveArray)
+          getTweets: of(fakeTweetArchiveArray),
         }
       );
 
       await TestBed.configureTestingModule({
         imports: [TweetDayArchiveComponent],
-        providers: [provideRouter(blankRoutesArray)],
-        schemas: [NO_ERRORS_SCHEMA]
+        providers: [
+          provideRouter(blankRoutesArray),
+          provideZonelessChangeDetection(),
+        ],
+        schemas: [NO_ERRORS_SCHEMA],
       })
-        .overrideComponent(TweetDayArchiveComponent,
-          {
-            set: {
-              providers: [{ provide: TweetDayArchiveService, useValue: fakeTweetDayArchiveService }]
-            }
-          })
+        .overrideComponent(TweetDayArchiveComponent, {
+          set: {
+            providers: [
+              {
+                provide: TweetDayArchiveService,
+                useValue: fakeTweetDayArchiveService,
+              },
+            ],
+          },
+        })
 
         .compileComponents();
 
@@ -120,10 +141,12 @@ describe('TweetDayArchiveComponent', () => {
       expect(fakeTweetDayArchiveService.getData).toHaveBeenCalledTimes(1);
     });
 
-    it('should render the Tweets', fakeAsync(() => {
+    it('should render the Tweets', () => {
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="tweet-table"]')?.textContent).toBeDefined();
-    }));
+      expect(
+        compiled.querySelector('[data-testid="tweet-table"]')?.textContent
+      ).toBeDefined();
+    });
 
     it('should not show loading child component', () => {
       const { debugElement } = fixture;
@@ -133,12 +156,16 @@ describe('TweetDayArchiveComponent', () => {
 
     it('should not show error content', () => {
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toBeUndefined();
+      expect(
+        compiled.querySelector('[data-testid="error-content"]')?.textContent
+      ).toBeUndefined();
     });
 
     it('should show all loaded content', () => {
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="all-loaded"]')?.textContent).toBeDefined();
+      expect(
+        compiled.querySelector('[data-testid="all-loaded"]')?.textContent
+      ).toBeDefined();
     });
   });
 
@@ -148,7 +175,6 @@ describe('TweetDayArchiveComponent', () => {
     let fakeTweetDayArchiveService: TweetDayArchiveService;
 
     beforeEach(async () => {
-
       fakeTweetDayArchiveService = jasmine.createSpyObj<TweetDayArchiveService>(
         'TweetDayArchiveService',
         {
@@ -158,21 +184,28 @@ describe('TweetDayArchiveComponent', () => {
           isLoading: of(true),
           isError: of(false),
           allLoaded: of(false),
-          getTweets: undefined
+          getTweets: undefined,
         }
       );
 
       await TestBed.configureTestingModule({
         imports: [TweetDayArchiveComponent],
-        providers: [provideRouter(blankRoutesArray)],
-        schemas: [NO_ERRORS_SCHEMA]
+        providers: [
+          provideRouter(blankRoutesArray),
+          provideZonelessChangeDetection(),
+        ],
+        schemas: [NO_ERRORS_SCHEMA],
       })
-        .overrideComponent(TweetDayArchiveComponent,
-          {
-            set: {
-              providers: [{ provide: TweetDayArchiveService, useValue: fakeTweetDayArchiveService }]
-            }
-          })
+        .overrideComponent(TweetDayArchiveComponent, {
+          set: {
+            providers: [
+              {
+                provide: TweetDayArchiveService,
+                useValue: fakeTweetDayArchiveService,
+              },
+            ],
+          },
+        })
 
         .compileComponents();
 
@@ -181,7 +214,6 @@ describe('TweetDayArchiveComponent', () => {
       debugElement = fixture.debugElement;
     });
 
-
     it('shows loading content', () => {
       const loading = findComponent(fixture, 'app-loading');
       expect(loading).toBeTruthy();
@@ -189,7 +221,9 @@ describe('TweetDayArchiveComponent', () => {
 
     it('should not show error content', () => {
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="error-content"]')?.textContent).toBeUndefined();
+      expect(
+        compiled.querySelector('[data-testid="error-content"]')?.textContent
+      ).toBeUndefined();
     });
   });
 
@@ -199,7 +233,6 @@ describe('TweetDayArchiveComponent', () => {
     let fakeTweetDayArchiveService: TweetDayArchiveService;
 
     beforeEach(async () => {
-
       fakeTweetDayArchiveService = jasmine.createSpyObj<TweetDayArchiveService>(
         'TweetDayArchiveService',
         {
@@ -209,21 +242,28 @@ describe('TweetDayArchiveComponent', () => {
           isLoading: of(false),
           isError: of(true),
           allLoaded: of(false),
-          getTweets: undefined
+          getTweets: undefined,
         }
       );
 
       await TestBed.configureTestingModule({
         imports: [TweetDayArchiveComponent],
-        providers: [provideRouter(blankRoutesArray)],
-        schemas: [NO_ERRORS_SCHEMA]
+        providers: [
+          provideRouter(blankRoutesArray),
+          provideZonelessChangeDetection(),
+        ],
+        schemas: [NO_ERRORS_SCHEMA],
       })
-        .overrideComponent(TweetDayArchiveComponent,
-          {
-            set: {
-              providers: [{ provide: TweetDayArchiveService, useValue: fakeTweetDayArchiveService }]
-            }
-          })
+        .overrideComponent(TweetDayArchiveComponent, {
+          set: {
+            providers: [
+              {
+                provide: TweetDayArchiveService,
+                useValue: fakeTweetDayArchiveService,
+              },
+            ],
+          },
+        })
 
         .compileComponents();
 
@@ -240,21 +280,32 @@ describe('TweetDayArchiveComponent', () => {
 
     it('hides main content', () => {
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="main-title"]')?.textContent).toBeUndefined();
+      expect(
+        compiled.querySelector('[data-testid="main-title"]')?.textContent
+      ).toBeUndefined();
     });
 
     it('shows error content', () => {
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeDefined();
-      expect(compiled.querySelector('[data-testid="reload-button"]')?.textContent).toBeDefined();
-      expectText(fixture, 'error', 'Whoops! There was an error retrieving the data.Try Again');
+      expect(
+        compiled.querySelector('[data-testid="error"]')?.textContent
+      ).toBeDefined();
+      expect(
+        compiled.querySelector('[data-testid="reload-button"]')?.textContent
+      ).toBeDefined();
+      expectText(
+        fixture,
+        'error',
+        'Whoops! There was an error retrieving the data.Try Again'
+      );
     });
 
-    it('tries data fetch again on retry button click', fakeAsync(async () => {
-      fixture.debugElement.query(By.css('.btn-try-again')).triggerEventHandler('click', null);
+    it('tries data fetch again on retry button click', async () => {
+      fixture.debugElement
+        .query(By.css('.btn-try-again'))
+        .triggerEventHandler('click', null);
 
       expect(fakeTweetDayArchiveService.getData).toHaveBeenCalled();
-    }));
+    });
   });
 });
-

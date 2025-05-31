@@ -1,10 +1,11 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  NO_ERRORS_SCHEMA,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import {
   ComponentFixture,
   DeferBlockBehavior,
-  fakeAsync,
   TestBed,
-  tick,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -79,6 +80,7 @@ describe('ObservationReadComponent', () => {
       deferBlockBehavior: DeferBlockBehavior.Playthrough,
       imports: [ObservationReadComponent, NoopAnimationsModule],
       providers: [
+        provideZonelessChangeDetection(),
         {
           provide: ActivatedRoute,
           useValue: {
@@ -132,7 +134,7 @@ describe('ObservationReadComponent', () => {
   };
 
   describe('when component is created', () => {
-    it('should be created and show the loading placeloader', async () => {
+    it('should be created and show the loading placeholder', async () => {
       await setup({}, {}, '');
 
       expect(component).toBeTruthy();
@@ -283,7 +285,7 @@ describe('ObservationReadComponent', () => {
     // });
 
     describe('when error fetching data', () => {
-      it('shows error content', fakeAsync(async () => {
+      it('shows error content', async () => {
         await setup(
           {
             isError: of(true),
@@ -307,9 +309,9 @@ describe('ObservationReadComponent', () => {
           'error',
           'Whoops! There was an error retrieving the data.Try Again'
         );
-      }));
+      });
 
-      it('tries data fetch again on user button click', fakeAsync(async () => {
+      it('tries data fetch again on user button click', async () => {
         await setup(
           {
             isError: of(true),
@@ -326,9 +328,9 @@ describe('ObservationReadComponent', () => {
           .triggerEventHandler('click', null);
 
         expect(fakeObservationReadService.getData).toHaveBeenCalledWith('10');
-      }));
+      });
 
-      it('redirects on retry if id is null or empty', fakeAsync(async () => {
+      it('redirects on retry if id is null or empty', async () => {
         await setup(
           {
             isError: of(true),
@@ -346,9 +348,9 @@ describe('ObservationReadComponent', () => {
 
         expect(fakeObservationReadService.getData).not.toHaveBeenCalled();
         expect(fakeNavService.back).toHaveBeenCalled();
-      }));
+      });
 
-      it('hides main content', fakeAsync(async () => {
+      it('hides main content', async () => {
         await setup(
           {
             isError: of(true),
@@ -369,9 +371,9 @@ describe('ObservationReadComponent', () => {
         expect(
           compiled.querySelector('[data-testid="observation"]')?.textContent
         ).toBeUndefined();
-      }));
+      });
 
-      it('does not show loading section', fakeAsync(async () => {
+      it('does not show loading section', async () => {
         await setup(
           {
             isError: of(true),
@@ -386,7 +388,7 @@ describe('ObservationReadComponent', () => {
         const { debugElement } = fixture;
         const loading = debugElement.query(By.css('app-loading'));
         expect(loading).toBeNull();
-      }));
+      });
     });
   });
 });

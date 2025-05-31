@@ -1,7 +1,11 @@
 // todo
 // new test(s) required for id out emit
 
-import { NO_ERRORS_SCHEMA, signal } from '@angular/core';
+import {
+  NO_ERRORS_SCHEMA,
+  provideZonelessChangeDetection,
+  signal,
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -44,6 +48,7 @@ describe('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
       // deferBlockBehavior: DeferBlockBehavior.Manual,
       imports: [ObservationFeedComponent, ObservationFeedItemComponent],
       providers: [
+        provideZonelessChangeDetection(),
         {
           provide: ActivatedRoute,
           useValue: {
@@ -177,6 +182,7 @@ describe('ObservationFeedComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ObservationFeedComponent],
       providers: [
+                provideZonelessChangeDetection(),
         {
           provide: ActivatedRoute,
           useValue: {

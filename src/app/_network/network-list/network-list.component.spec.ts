@@ -11,6 +11,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { MatTabGroupHarness } from '@angular/material/tabs/testing';
 import { authUserName, userModel } from 'src/app/testing/auth-test-helpers';
 import { ActivatedRoute } from '@angular/router';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('NetworkListComponent', () => {
   let component: NetworkListComponent;
@@ -20,35 +21,42 @@ describe('NetworkListComponent', () => {
 
   const setup = async (
     fakeUsernameInput?: string,
-    fakeAuthPropertyValues?: jasmine.SpyObjPropertyNames<AuthenticationService>) => {
-
+    fakeAuthPropertyValues?: jasmine.SpyObjPropertyNames<AuthenticationService>
+  ) => {
     fakeAuthService = jasmine.createSpyObj<AuthenticationService>(
       'AuthenticationService',
       {
         checkAuthStatus: undefined,
-        logout: undefined
+        logout: undefined,
       },
       {
         isAuthorisedObservable: undefined,
         getAuthUser: of(null),
-        ...fakeAuthPropertyValues
+        ...fakeAuthPropertyValues,
       }
     );
 
     await TestBed.configureTestingModule({
-      imports: [NetworkListComponent, NoopAnimationsModule, MockComponent(FollowersComponent), MockComponent(FollowingComponent)],
-      providers: [{ provide: AuthenticationService, useValue: fakeAuthService },
-      // {
-      //   provide: ActivatedRoute,
-      //   useValue: {
-      //     paramMap: of(new Map(Object.entries({
-      //       username: 'andrew'
-      //     })))
-      //     // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
-      //     // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
-      //   }
-      // }
-    ]
+      imports: [
+        NetworkListComponent,
+        NoopAnimationsModule,
+        MockComponent(FollowersComponent),
+        MockComponent(FollowingComponent),
+      ],
+      providers: [
+        provideZonelessChangeDetection(),
+        { provide: AuthenticationService, useValue: fakeAuthService },
+        // {
+        //   provide: ActivatedRoute,
+        //   useValue: {
+        //     paramMap: of(new Map(Object.entries({
+        //       username: 'andrew'
+        //     })))
+        //     // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
+        //     // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
+        //   }
+        // }
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(NetworkListComponent);
@@ -56,10 +64,9 @@ describe('NetworkListComponent', () => {
     loader = TestbedHarnessEnvironment.loader(fixture);
     component.username = fakeUsernameInput ?? '';
     fixture.detectChanges();
-  }
+  };
 
   describe('when loaded', () => {
-
     it('should create', async () => {
       await setup();
       expect(component).toBeTruthy();
@@ -78,7 +85,7 @@ describe('NetworkListComponent', () => {
       const tabGroups = await loader.getAllHarnesses(
         MatTabGroupHarness.with({
           selectedTabLabel: 'Following',
-        }),
+        })
       );
       expect(tabGroups.length).toBe(1);
     });
@@ -95,36 +102,43 @@ describe('NetworkListComponent', () => {
       await setup();
 
       const tabGroup = await loader.getHarness(MatTabGroupHarness);
-      expect(await (await tabGroup.getSelectedTab()).getLabel()).toBe('Following');
+      expect(await (await tabGroup.getSelectedTab()).getLabel()).toBe(
+        'Following'
+      );
       await tabGroup.selectTab({ label: 'Followers' });
-      expect(await (await tabGroup.getSelectedTab()).getLabel()).toBe('Followers');
+      expect(await (await tabGroup.getSelectedTab()).getLabel()).toBe(
+        'Followers'
+      );
     });
   });
 
   describe('header section', () => {
-
     it('title should render username when other users profile', async () => {
-      await setup('andrew',
-        {
-          getAuthUser: of(userModel)
-        }
-      );
+      await setup('andrew', {
+        getAuthUser: of(userModel),
+      });
 
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="title"]')?.textContent).toBeTruthy();
-      expect(compiled.querySelector('[data-testid="title"]')?.textContent).toContain("andrew's network");
+      expect(
+        compiled.querySelector('[data-testid="title"]')?.textContent
+      ).toBeTruthy();
+      expect(
+        compiled.querySelector('[data-testid="title"]')?.textContent
+      ).toContain("andrew's network");
     });
 
     it('title should render "your" when own profile', async () => {
-      await setup(authUserName,
-        {
-          getAuthUser: of(userModel)
-        }
-      );
+      await setup(authUserName, {
+        getAuthUser: of(userModel),
+      });
 
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="title"]')?.textContent).toBeTruthy();
-      expect(compiled.querySelector('[data-testid="title"]')?.textContent).toContain("Your network");
+      expect(
+        compiled.querySelector('[data-testid="title"]')?.textContent
+      ).toBeTruthy();
+      expect(
+        compiled.querySelector('[data-testid="title"]')?.textContent
+      ).toContain('Your network');
     });
   });
 });

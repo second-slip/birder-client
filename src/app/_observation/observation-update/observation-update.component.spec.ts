@@ -30,7 +30,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { IAuthUser } from 'src/app/_auth/i-auth-user.dto';
-import { ComponentRef } from '@angular/core';
+import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 
 describe('ObservationUpdateComponent', () => {
   let component: ObservationUpdateComponent;
@@ -105,6 +105,7 @@ describe('ObservationUpdateComponent', () => {
       ], //MatStepperModule
       providers: [
         provideRouter(routes, withComponentInputBinding()),
+        provideZonelessChangeDetection(),
         // {
         //   provide: ActivatedRoute,
         //   useValue: {
@@ -159,7 +160,7 @@ describe('ObservationUpdateComponent', () => {
   };
 
   describe('when component is created', () => {
-    it('should be created and show the loading placeloader', async () => {
+    it('should be created and show the loading placeholder', async () => {
       await setup();
 
       expect(component).toBeTruthy();
@@ -587,7 +588,7 @@ describe('ObservationUpdateComponent', () => {
       expect(
         compiled.querySelector('[data-testid="invalid-form-menu"]')?.textContent
       ).toContain(
-        'The form is not complete. You must complete the manadatory fields in Section 1.'
+        'The form is not complete. You must complete the mandatory fields in Section 1.'
       );
     });
   });

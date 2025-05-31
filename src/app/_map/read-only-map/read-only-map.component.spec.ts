@@ -2,7 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReadOnlyMapComponent } from './read-only-map.component';
 import { throwError } from 'rxjs';
 import { expectText } from 'src/app/testing/element.spec-helper';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  NO_ERRORS_SCHEMA,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { By } from '@angular/platform-browser';
 import { fakeLocationMarker } from 'src/app/testing/map-tests-helpers';
@@ -14,9 +17,9 @@ describe('ReadOnlyMapComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [GoogleMapsModule, ReadOnlyMapComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      providers: [provideZonelessChangeDetection()],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -57,14 +60,15 @@ describe('ReadOnlyMapComponent', () => {
     // expect(component.markerStatus).toBe('success');
 
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('[data-testid="location"]')?.textContent).toBeDefined();
+    expect(
+      compiled.querySelector('[data-testid="location"]')?.textContent
+    ).toBeDefined();
     expectText(fixture, 'location-text', 'address string');
 
     const { debugElement } = fixture;
     const map = debugElement.query(By.css('google-map'));
     expect(map).toBeDefined();
   });
-
 
   it('should show error content on error', () => {
     component.options = throwError(() => new Error(''));
@@ -73,7 +77,13 @@ describe('ReadOnlyMapComponent', () => {
     expect(component.error).toBeTruthy();
 
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('[data-testid="error"]')?.textContent).toBeDefined();
-    expectText(fixture, 'error', 'Whoops! There is an error displaying the map.');
+    expect(
+      compiled.querySelector('[data-testid="error"]')?.textContent
+    ).toBeDefined();
+    expectText(
+      fixture,
+      'error',
+      'Whoops! There is an error displaying the map.'
+    );
   });
 });

@@ -1,8 +1,12 @@
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { BirdsDddlResponse } from 'src/app/testing/birds-helpers';
+import { BirdsDdlResponse } from 'src/app/testing/birds-helpers';
 import { SelectSpeciesService } from './select-species.service';
 import { provideHttpClient } from '@angular/common/http';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 const apiUrl = `api/birds-list`;
 
@@ -14,8 +18,9 @@ describe('SelectSpeciesService', () => {
     TestBed.configureTestingModule({
       providers: [
         provideHttpClient(),
-        provideHttpClientTesting()
-      ]
+        provideHttpClientTesting(),
+        provideZonelessChangeDetection(),
+      ],
     });
     service = TestBed.inject(SelectSpeciesService);
     controller = TestBed.inject(HttpTestingController);
@@ -43,9 +48,9 @@ describe('SelectSpeciesService', () => {
     // expect(service.loaded()).toBeFalsy();
     expect(service.error()).toBeFalsy();
 
-    controller.expectOne(apiUrl).flush(BirdsDddlResponse);
+    controller.expectOne(apiUrl).flush(BirdsDdlResponse);
 
-    expect(service.birds()).toEqual(BirdsDddlResponse);
+    expect(service.birds()).toEqual(BirdsDdlResponse);
     // expect(service.loaded()).toBeTruthy();
     expect(service.error()).toBeFalsy();
   });
@@ -82,9 +87,9 @@ describe('SelectSpeciesService', () => {
 
     service.retry();
 
-    controller.expectOne(apiUrl).flush(BirdsDddlResponse);
+    controller.expectOne(apiUrl).flush(BirdsDdlResponse);
 
-    expect(service.birds()).toEqual(BirdsDddlResponse);
+    expect(service.birds()).toEqual(BirdsDdlResponse);
     expect(service.error()).toBeFalsy();
   });
 });

@@ -7,7 +7,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ComponentRef, LOCALE_ID } from '@angular/core';
+import {
+  ComponentRef,
+  LOCALE_ID,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import {
@@ -50,6 +54,7 @@ describe('SelectDateTimeComponent', () => {
       ],
       providers: [
         // provideNativeDateAdapter(),
+        provideZonelessChangeDetection(),
         { provide: LOCALE_ID, useValue: 'en-GB' },
         { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
       ],

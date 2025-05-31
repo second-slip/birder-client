@@ -4,6 +4,7 @@ import { NetworkSidebarComponent } from './network-sidebar.component';
 import { NetworkSummaryComponent } from '../network-summary/network-summary.component';
 import { NetworkSuggestionComponent } from '../network-suggestion/network-suggestion.component';
 import { MockComponent } from 'ng-mocks';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('NetworkSidebarComponent', () => {
   let component: NetworkSidebarComponent;
@@ -11,11 +12,19 @@ describe('NetworkSidebarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NetworkSidebarComponent]
+      imports: [NetworkSidebarComponent],
+      providers: [provideZonelessChangeDetection()],
     })
       .overrideComponent(NetworkSidebarComponent, {
-        remove: { imports: [NetworkSummaryComponent, NetworkSuggestionComponent] },
-        add: { imports: [MockComponent(NetworkSummaryComponent), MockComponent(NetworkSuggestionComponent)] },
+        remove: {
+          imports: [NetworkSummaryComponent, NetworkSuggestionComponent],
+        },
+        add: {
+          imports: [
+            MockComponent(NetworkSummaryComponent),
+            MockComponent(NetworkSuggestionComponent),
+          ],
+        },
       })
       .compileComponents();
   });

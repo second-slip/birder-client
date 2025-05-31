@@ -1,7 +1,16 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClient, HttpInterceptorFn, provideHttpClient, withInterceptors } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpInterceptorFn,
+  provideHttpClient,
+  withInterceptors,
+} from '@angular/common/http';
 import { errorInterceptor } from './error.interceptor';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('errorInterceptor', () => {
   const interceptor: HttpInterceptorFn = (req, next) =>
@@ -25,6 +34,7 @@ describe('errorInterceptor integration(?) tests', () => {
       providers: [
         provideHttpClient(withInterceptors([errorInterceptor])),
         provideHttpClientTesting(),
+        provideZonelessChangeDetection(),
       ],
     });
     httpTestingController = TestBed.inject(HttpTestingController);
@@ -40,7 +50,7 @@ describe('errorInterceptor integration(?) tests', () => {
     const url = 'api/test-server-error';
     const status = 500;
     const statusText = 'Internal Server Error';
-    const emsg = `server-side error: ${status}\nMessage: Http failure response for ${url}: ${status} ${statusText}`;// 'deliberate 404 error';
+    const emsg = `server-side error: ${status}\nMessage: Http failure response for ${url}: ${status} ${statusText}`; // 'deliberate 404 error';
 
     //act
     httpClient.get(url).subscribe({
@@ -53,11 +63,10 @@ describe('errorInterceptor integration(?) tests', () => {
     // assert
     const retryCount = 3;
     for (var i = 0, c = retryCount + 1; i < c; i++) {
-      const req = httpTestingController
-        .expectOne({
-          method: 'GET',
-          url: url
-        });
+      const req = httpTestingController.expectOne({
+        method: 'GET',
+        url: url,
+      });
 
       req.flush(emsg, { status: status, statusText: statusText });
     }
@@ -74,7 +83,7 @@ describe('errorInterceptor integration(?) tests', () => {
       message: 'fake client error meesage!',
       lineno: 402,
       colno: 123,
-      filename: 'jimmy.html'
+      filename: 'jimmy.html',
     };
 
     const errorEvent = new ErrorEvent('MyErrEventType', errorInitEvent);
@@ -90,11 +99,10 @@ describe('errorInterceptor integration(?) tests', () => {
     // assert
     const retryCount = 3;
     for (var i = 0, c = retryCount + 1; i < c; i++) {
-      const req = httpTestingController
-        .expectOne({
-          method: 'GET',
-          url: url
-        });
+      const req = httpTestingController.expectOne({
+        method: 'GET',
+        url: url,
+      });
 
       req.flush(errorEvent, { status: status, statusText: statusText });
     }

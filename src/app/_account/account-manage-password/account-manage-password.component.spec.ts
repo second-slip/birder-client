@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 import { LoginComponent } from 'src/app/_auth/login/login.component';
@@ -18,6 +18,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent }
@@ -53,6 +54,7 @@ describe('AccountManagePasswordComponent', () => {
     await TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule, BrowserAnimationsModule],
       providers: [
+        provideZonelessChangeDetection(),
         provideRouter(routes),
         { provide: AccountService, useValue: fakeAccountService }
       ]
@@ -282,7 +284,7 @@ describe('AccountManagePasswordComponent', () => {
 
     });
 
-    it('should not submit an invalid form', fakeAsync(async () => {
+    it('should not submit an invalid form', async () => {
       await setup();
 
       const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Update password' }));
@@ -291,15 +293,15 @@ describe('AccountManagePasswordComponent', () => {
       await submitBtn.click();
 
       expect(fakeAccountService.register).not.toHaveBeenCalled();
-    }));
+    });
 
-    it('test form validity check onSubmit()', fakeAsync(async () => {
+    it('test form validity check onSubmit()', async () => {
       await setup();
 
       component.onSubmit('');
 
       expect(fakeAccountService.register).not.toHaveBeenCalled();
-    }));
+    });
 
 
     it('should call the service on Submit', async () => {

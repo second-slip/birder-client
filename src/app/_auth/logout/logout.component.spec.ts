@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { HomeComponent } from 'src/app/_home/home/home.component';
@@ -6,10 +6,9 @@ import { NavigationService } from 'src/app/_sharedServices/navigation.service';
 import { AuthenticationService } from '../authentication.service';
 import { LogoutComponent } from './logout.component';
 import { provideRouter, Routes } from '@angular/router';
+import { provideZonelessChangeDetection } from '@angular/core';
 
-const routes: Routes = [
-  { path: 'home', component: HomeComponent }
-];
+const routes: Routes = [{ path: 'home', component: HomeComponent }];
 
 describe('LogoutComponent', () => {
   let component: LogoutComponent;
@@ -20,7 +19,7 @@ describe('LogoutComponent', () => {
   fakeNavService = jasmine.createSpyObj<NavigationService>(
     'NavigationService',
     {
-      back: undefined
+      back: undefined,
     }
   );
 
@@ -37,14 +36,14 @@ describe('LogoutComponent', () => {
   );
 
   const setup = async () => {
-
     await TestBed.configureTestingModule({
       imports: [LogoutComponent],
       providers: [
         provideRouter(routes),
+        provideZonelessChangeDetection(),
         { provide: NavigationService, useValue: fakeNavService },
-        { provide: AuthenticationService, useValue: fakeAuthService }
-      ]
+        { provide: AuthenticationService, useValue: fakeAuthService },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LogoutComponent);
@@ -52,29 +51,30 @@ describe('LogoutComponent', () => {
     fixture.detectChanges();
   };
 
-  it('should create', fakeAsync(async () => {
+  it('should create', async () => {
     await setup();
     expect(component).toBeTruthy();
-  }));
+  });
 
-
-  it('signs out', fakeAsync(async () => {
+  it('signs out', async () => {
     await setup();
 
-    fixture.debugElement.query(By.css('.btn-confirm')).triggerEventHandler('click', null);
+    fixture.debugElement
+      .query(By.css('.btn-confirm'))
+      .triggerEventHandler('click', null);
     fixture.detectChanges();
 
     expect(fakeAuthService.logout).toHaveBeenCalled();
-  }));
+  });
 
-  it('does not sign out', fakeAsync(async () => {
+  it('does not sign out', async () => {
     await setup();
 
-    fixture.debugElement.query(By.css('.btn-cancel')).triggerEventHandler('click', null);
+    fixture.debugElement
+      .query(By.css('.btn-cancel'))
+      .triggerEventHandler('click', null);
     fixture.detectChanges();
 
     expect(fakeNavService.back).toHaveBeenCalled();
-
-  }));
-
+  });
 });

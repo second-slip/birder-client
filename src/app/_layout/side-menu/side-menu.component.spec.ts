@@ -7,6 +7,7 @@ import { TweetDayComponent } from 'src/app/_tweet/tweet-day/tweet-day.component'
 import { ObservationTopFiveComponent } from 'src/app/_analysis/observation-top-five/observation-top-five.component';
 import { NetworkSidebarComponent } from 'src/app/_network/network-sidebar/network-sidebar.component';
 import { MockComponent } from 'ng-mocks';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('SideMenuComponent', () => {
   let component: SideMenuComponent;
@@ -14,11 +15,25 @@ describe('SideMenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SideMenuComponent]
+      imports: [SideMenuComponent],
+      providers: [provideZonelessChangeDetection()],
     })
       .overrideComponent(SideMenuComponent, {
-        remove: { imports: [ObservationCountComponent, TweetDayComponent, ObservationTopFiveComponent, NetworkSidebarComponent] },
-        add: { imports: [MockComponent(ObservationCountComponent), MockComponent(ObservationTopFiveComponent), MockComponent(NetworkSidebarComponent)] },
+        remove: {
+          imports: [
+            ObservationCountComponent,
+            TweetDayComponent,
+            ObservationTopFiveComponent,
+            NetworkSidebarComponent,
+          ],
+        },
+        add: {
+          imports: [
+            MockComponent(ObservationCountComponent),
+            MockComponent(ObservationTopFiveComponent),
+            MockComponent(NetworkSidebarComponent),
+          ],
+        },
       })
       .compileComponents();
   });

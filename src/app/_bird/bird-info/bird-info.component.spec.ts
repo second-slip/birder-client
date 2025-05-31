@@ -3,6 +3,7 @@ import { fakeIBirdDetail } from 'src/app/testing/birds-helpers';
 import { expectText } from 'src/app/testing/element.spec-helper';
 
 import { BirdInfoComponent } from './bird-info.component';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('BirdInfoComponent', () => {
   let component: BirdInfoComponent;
@@ -10,9 +11,9 @@ describe('BirdInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [BirdInfoComponent]
-})
-      .compileComponents();
+      imports: [BirdInfoComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -29,6 +30,10 @@ describe('BirdInfoComponent', () => {
   it('renders the species information from the from the Input() object', () => {
     expectText(fixture, 'order', String(fakeIBirdDetail.order));
     expectText(fixture, 'international-name', String('N/a'));
-    expectText(fixture, 'bto-status', String(fakeIBirdDetail.btoStatusInBritain));
+    expectText(
+      fixture,
+      'bto-status',
+      String(fakeIBirdDetail.btoStatusInBritain)
+    );
   });
 });

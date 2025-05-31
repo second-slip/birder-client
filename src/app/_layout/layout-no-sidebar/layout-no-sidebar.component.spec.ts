@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LayoutNoSidebarComponent } from './layout-no-sidebar.component';
 import { By } from '@angular/platform-browser';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('LayoutNoSidebarComponent', () => {
   let component: LayoutNoSidebarComponent;
@@ -8,9 +9,9 @@ describe('LayoutNoSidebarComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-    imports: [LayoutNoSidebarComponent]
-})
-      .compileComponents();
+      imports: [LayoutNoSidebarComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
   });
 
   beforeEach(() => {

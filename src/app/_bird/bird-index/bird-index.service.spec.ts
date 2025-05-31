@@ -1,9 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { BirdIndexService } from './bird-index.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { skip } from 'rxjs';
 import { IBirdSummary } from '../i-bird-summary.dto';
 import { fakeBirdIndexResponse, fakeIBirdArray } from 'src/app/testing/birds-helpers';
+import { provideHttpClient } from '@angular/common/http';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 const _pageIndex = 1;
 const _apiUrl = `api/Birds?pageIndex=${_pageIndex}&pageSize=30&speciesFilter=0`;
@@ -14,8 +16,11 @@ describe('BirdIndexService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [BirdIndexService],
+      providers: [BirdIndexService,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideZonelessChangeDetection()
+      ],
     });
     service = TestBed.inject(BirdIndexService);
     controller = TestBed.inject(HttpTestingController);

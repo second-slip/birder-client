@@ -1,8 +1,10 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { username, userProfileModel } from 'src/app/testing/userProfile-tests-helpers';
 import { IUserProfile } from './i-user-profile.dto';
 import { UserProfileService } from './user-profile.service';
+import { provideHttpClient } from '@angular/common/http';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 const apiUrl = `api/userprofile?requestedusername=${username}`;
 
@@ -12,8 +14,12 @@ describe('UserProfileService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [UserProfileService]
+      providers: [
+        UserProfileService,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideZonelessChangeDetection(),
+      ]
     });
     service = TestBed.inject(UserProfileService);
     controller = TestBed.inject(HttpTestingController);

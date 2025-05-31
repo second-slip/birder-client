@@ -1,10 +1,14 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { fakeNetworkUserModel } from 'src/app/testing/network-test-helpers';
 import { INetworkUser } from '../i-network-user.dto';
 
 import { FollowCommandService } from './follow-command.service';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('FollowCommandService', () => {
   let service: FollowCommandService;
@@ -12,7 +16,11 @@ describe('FollowCommandService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideZonelessChangeDetection(),
+      ],
     });
     service = TestBed.inject(FollowCommandService);
     controller = TestBed.inject(HttpTestingController);
@@ -60,8 +68,12 @@ describe('FollowCommandService', () => {
       errors.push(error);
     };
 
-    service.postFollowUser(fakeNetworkUserModel).subscribe({ next: fail, error: recordError, complete: fail, });
-    service.postUnfollowUser(fakeNetworkUserModel).subscribe({ next: fail, error: recordError, complete: fail, });
+    service
+      .postFollowUser(fakeNetworkUserModel)
+      .subscribe({ next: fail, error: recordError, complete: fail });
+    service
+      .postUnfollowUser(fakeNetworkUserModel)
+      .subscribe({ next: fail, error: recordError, complete: fail });
 
     const status = 500;
     const statusText = 'Internal Server Error';

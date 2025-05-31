@@ -1,5 +1,8 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { AccountService } from './account.service';
 
@@ -15,10 +18,10 @@ import {
   locationModel,
   manageProfileModel,
   checkUsernameResponse,
-  checkEmailResponse
+  checkEmailResponse,
 } from 'src/app/testing/account-tests-helpers';
 import { IManageProfile } from './account-manage-profile/i-manage-profile.dto';
-
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('AccountService', () => {
   let service: AccountService;
@@ -26,7 +29,11 @@ describe('AccountService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideZonelessChangeDetection(),
+      ],
     });
     service = TestBed.inject(AccountService);
     controller = TestBed.inject(HttpTestingController);
@@ -42,8 +49,10 @@ describe('AccountService', () => {
       result = otherResult;
     });
 
-    controller.expectOne(`api/account/check-username?username=${username}`).flush(checkUsernameResponse);
-  
+    controller
+      .expectOne(`api/account/check-username?username=${username}`)
+      .flush(checkUsernameResponse);
+
     expect(result).toBe(true);
   });
 
@@ -54,7 +63,9 @@ describe('AccountService', () => {
       result = otherResult;
     });
 
-    controller.expectOne(`api/account/check-email?email=${email}`).flush(checkEmailResponse);
+    controller
+      .expectOne(`api/account/check-email?email=${email}`)
+      .flush(checkEmailResponse);
     expect(result).toBeTrue();
   });
 
@@ -68,7 +79,12 @@ describe('AccountService', () => {
       method: 'POST',
       url: 'api/account/register',
     });
-    expect(request.request.body).toEqual({ userName: username, email: email, password: password, confirmPassword: confirmPassword });
+    expect(request.request.body).toEqual({
+      userName: username,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    });
     request.flush({ success: true });
 
     expect(result).toEqual({ success: true });
@@ -84,7 +100,7 @@ describe('AccountService', () => {
       method: 'POST',
       url: 'api/account/request-password-reset',
     });
-    expect(request.request.body).toEqual({ email: email }); // model is created by the service from string email parameter 
+    expect(request.request.body).toEqual({ email: email }); // model is created by the service from string email parameter
     request.flush({ success: true });
 
     expect(result).toEqual({ success: true });
@@ -100,7 +116,7 @@ describe('AccountService', () => {
       method: 'POST',
       url: 'api/account/resend-email-confirmation',
     });
-    expect(request.request.body).toEqual(emailModel); // model is created by the service from string email parameter 
+    expect(request.request.body).toEqual(emailModel); // model is created by the service from string email parameter
     request.flush({ success: true });
 
     expect(result).toEqual({ success: true });
@@ -124,10 +140,9 @@ describe('AccountService', () => {
 
   it('checks it gets the profile', () => {
     let result: IManageProfile | null | undefined;
-    service.getUserProfile()
-      .subscribe((otherResult) => {
-        result = otherResult;
-      });
+    service.getUserProfile().subscribe((otherResult) => {
+      result = otherResult;
+    });
 
     controller.expectOne('api/manage').flush(manageProfileModel);
     expect(result).toEqual(manageProfileModel);
@@ -187,16 +202,36 @@ describe('AccountService', () => {
       errors.push(error);
     };
 
-    service.isUsernameTaken(username).subscribe({ next: fail, error: recordError, complete: fail, });
-    service.isEmailTaken(email).subscribe({ next: fail, error: recordError, complete: fail, });
-    service.register(registerModel).subscribe({ next: fail, error: recordError, complete: fail, });
-    service.requestPasswordReset(emailModel).subscribe({ next: fail, error: recordError, complete: fail, });
-    service.resendEmailConfirmation(emailModel).subscribe({ next: fail, error: recordError, complete: fail, });
-    service.resetPassword(resetPasswordModel).subscribe({ next: fail, error: recordError, complete: fail, });
-    service.postChangePassword(changePasswordModel).subscribe({ next: fail, error: recordError, complete: fail, });
-    service.postUpdateLocation(locationModel).subscribe({ next: fail, error: recordError, complete: fail, });
-    service.getUserProfile().subscribe({ next: fail, error: recordError, complete: fail, });
-    service.postUpdateProfile(manageProfileModel).subscribe({ next: fail, error: recordError, complete: fail, });
+    service
+      .isUsernameTaken(username)
+      .subscribe({ next: fail, error: recordError, complete: fail });
+    service
+      .isEmailTaken(email)
+      .subscribe({ next: fail, error: recordError, complete: fail });
+    service
+      .register(registerModel)
+      .subscribe({ next: fail, error: recordError, complete: fail });
+    service
+      .requestPasswordReset(emailModel)
+      .subscribe({ next: fail, error: recordError, complete: fail });
+    service
+      .resendEmailConfirmation(emailModel)
+      .subscribe({ next: fail, error: recordError, complete: fail });
+    service
+      .resetPassword(resetPasswordModel)
+      .subscribe({ next: fail, error: recordError, complete: fail });
+    service
+      .postChangePassword(changePasswordModel)
+      .subscribe({ next: fail, error: recordError, complete: fail });
+    service
+      .postUpdateLocation(locationModel)
+      .subscribe({ next: fail, error: recordError, complete: fail });
+    service
+      .getUserProfile()
+      .subscribe({ next: fail, error: recordError, complete: fail });
+    service
+      .postUpdateProfile(manageProfileModel)
+      .subscribe({ next: fail, error: recordError, complete: fail });
 
     const status = 500;
     const statusText = 'Internal Server Error';

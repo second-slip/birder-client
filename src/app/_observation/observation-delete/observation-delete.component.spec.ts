@@ -1,5 +1,8 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import {
+  NO_ERRORS_SCHEMA,
+  provideZonelessChangeDetection,
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
@@ -23,24 +26,24 @@ describe('ObservationDeleteComponent', () => {
   fakeNavService = jasmine.createSpyObj<NavigationService>(
     'NavigationService',
     {
-      back: undefined
+      back: undefined,
     }
   );
 
   const setup = async (
     fakePropertyValues?: jasmine.SpyObjPropertyNames<ObservationReadService>,
     fakeAuthPropertyValues?: jasmine.SpyObjPropertyNames<AuthenticationService>,
-    fakeRouteArgument?: string) => {
-
+    fakeRouteArgument?: string
+  ) => {
     fakeObservationReadService = jasmine.createSpyObj<ObservationReadService>(
       'ObservationReadService',
       {
-        getData: undefined
+        getData: undefined,
       },
       {
         isError: of(false),
         observation: of(null),
-        ...fakePropertyValues
+        ...fakePropertyValues,
       }
     );
 
@@ -50,19 +53,20 @@ describe('ObservationDeleteComponent', () => {
         getObservation: undefined,
         updateObservation: undefined,
         addObservation: undefined,
-        deleteObservation: undefined
-      });
+        deleteObservation: undefined,
+      }
+    );
 
     fakeAuthService = jasmine.createSpyObj<AuthenticationService>(
       'AuthenticationService',
       {
         checkAuthStatus: undefined,
-        logout: undefined
+        logout: undefined,
       },
       {
         isAuthorisedObservable: undefined,
         getAuthUser: of(null),
-        ...fakeAuthPropertyValues
+        ...fakeAuthPropertyValues,
       }
     );
 
@@ -70,32 +74,52 @@ describe('ObservationDeleteComponent', () => {
       'AnnounceChangesService',
       {
         announceNetworkChanged: undefined,
-        announceObservationsChanged: undefined
-      });
+        announceObservationsChanged: undefined,
+      }
+    );
 
     await TestBed.configureTestingModule({
-    imports: [ObservationDeleteComponent],
-    providers: [{
-            provide: ActivatedRoute,
-            useValue: {
-                paramMap: of(new Map(Object.entries({
-                    id: fakeRouteArgument
-                })))
-                // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
-                // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
-            }
+      imports: [ObservationDeleteComponent],
+      providers: [
+        provideZonelessChangeDetection(),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            paramMap: of(
+              new Map(
+                Object.entries({
+                  id: fakeRouteArgument,
+                })
+              )
+            ),
+            // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
+            // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
+          },
         },
-        { provide: AnnounceChangesService, useValue: fakeAnnounceChangesService },
-        { provide: ObservationCrudService, useValue: fakeObservationCrudService },
+        {
+          provide: AnnounceChangesService,
+          useValue: fakeAnnounceChangesService,
+        },
+        {
+          provide: ObservationCrudService,
+          useValue: fakeObservationCrudService,
+        },
         { provide: AuthenticationService, useValue: fakeAuthService },
-        { provide: NavigationService, useValue: fakeNavService }],
-    schemas: [NO_ERRORS_SCHEMA]
-}).overrideComponent(ObservationDeleteComponent,
-      {
+        { provide: NavigationService, useValue: fakeNavService },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ObservationDeleteComponent, {
         set: {
-          providers: [{ provide: ObservationReadService, useValue: fakeObservationReadService }]
-        }
-      }).compileComponents();
+          providers: [
+            {
+              provide: ObservationReadService,
+              useValue: fakeObservationReadService,
+            },
+          ],
+        },
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(ObservationDeleteComponent);
     component = fixture.componentInstance;
@@ -103,32 +127,32 @@ describe('ObservationDeleteComponent', () => {
   };
 
   describe('when component is created', () => {
-
-    it('should be created and show the loading placeloader', fakeAsync(async () => {
+    it('should be created and show the loading placeholder', async () => {
       await setup({}, {}, '');
 
       expect(component).toBeTruthy();
       const { debugElement } = fixture;
       const loading = debugElement.query(By.css('app-loading'));
       expect(loading).toBeTruthy();
-    }));
+    });
 
-    it('should get the id from the route and call data fetch', fakeAsync(async () => {
+    it('should get the id from the route and call data fetch', async () => {
       const expectedRouteArgument = '10';
 
       await setup({}, {}, expectedRouteArgument);
 
-      expect(fakeObservationReadService.getData).toHaveBeenCalledOnceWith(expectedRouteArgument);
-    }));
+      expect(fakeObservationReadService.getData).toHaveBeenCalledOnceWith(
+        expectedRouteArgument
+      );
+    });
 
-    it('should redirect when route argument is null/falsy', fakeAsync(async () => {
+    it('should redirect when route argument is null/falsy', async () => {
       const expectedRouteArgument = '';
 
       await setup({}, {}, expectedRouteArgument);
 
       expect(fakeObservationReadService.getData).not.toHaveBeenCalled();
       expect(fakeNavService.back).toHaveBeenCalled();
-    }));
+    });
   });
-
 });

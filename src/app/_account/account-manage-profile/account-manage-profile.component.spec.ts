@@ -22,6 +22,7 @@ import {
   invalidManageProfileModel
 } from 'src/app/testing/account-tests-helpers';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 
 const routes: Routes = [
@@ -85,6 +86,7 @@ describe('AccountManageProfileComponent', () => {
       imports: [FormsModule, ReactiveFormsModule, BrowserAnimationsModule],
       providers: [
         provideRouter(routes),
+        provideZonelessChangeDetection(),
         { provide: AccountValidationService, useValue: fakeValidationService },
         { provide: AccountService, useValue: fakeAccountService },
         { provide: AuthenticationService, useValue: fakeAuthService }

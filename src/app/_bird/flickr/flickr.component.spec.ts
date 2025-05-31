@@ -6,8 +6,12 @@ import { FlickrComponent } from './flickr.component';
 import { FlickrService } from './flickr.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatGridListHarness, MatGridTileHarness } from '@angular/material/grid-list/testing';
+import {
+  MatGridListHarness,
+  MatGridTileHarness,
+} from '@angular/material/grid-list/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('FlickrComponent', () => {
   let component: FlickrComponent;
@@ -17,29 +21,29 @@ describe('FlickrComponent', () => {
   let fakeFlickrService: jasmine.SpyObj<FlickrService>;
 
   const setup = async (
-    fakePropertyValues?: jasmine.SpyObjPropertyNames<FlickrService>) => {
-
+    fakePropertyValues?: jasmine.SpyObjPropertyNames<FlickrService>
+  ) => {
     fakeFlickrService = jasmine.createSpyObj<FlickrService>(
       'FlickrService',
       {
-        getData: undefined
+        getData: undefined,
       },
       {
         images: of(null),
         isError: of(false),
-        ...fakePropertyValues
+        ...fakePropertyValues,
       }
     );
 
     await TestBed.configureTestingModule({
-      imports: [FlickrComponent]
+      providers: [provideZonelessChangeDetection()],
+      imports: [FlickrComponent],
     })
-      .overrideComponent(FlickrComponent,
-        {
-          set: {
-            providers: [{ provide: FlickrService, useValue: fakeFlickrService }]
-          }
-        })
+      .overrideComponent(FlickrComponent, {
+        set: {
+          providers: [{ provide: FlickrService, useValue: fakeFlickrService }],
+        },
+      })
       .compileComponents();
 
     fixture = TestBed.createComponent(FlickrComponent);
@@ -49,7 +53,6 @@ describe('FlickrComponent', () => {
   };
 
   describe('on initialisation', () => {
-
     it('should be created', async () => {
       await setup();
       expect(component).toBeTruthy();
@@ -72,10 +75,9 @@ describe('FlickrComponent', () => {
   });
 
   describe('when images are fetched', () => {
-
     it('calls data fetch', async () => {
       await setup({
-        images: of(photoUrlsArray)
+        images: of(photoUrlsArray),
       });
 
       expect(fakeFlickrService.getData).toHaveBeenCalledTimes(1);
@@ -83,7 +85,7 @@ describe('FlickrComponent', () => {
 
     it('shows the images grid', async () => {
       await setup({
-        images: of(photoUrlsArray)
+        images: of(photoUrlsArray),
       });
 
       const harnesses = await loader.getAllHarnesses(MatGridListHarness);
@@ -92,7 +94,7 @@ describe('FlickrComponent', () => {
 
     it('should show tiles in grid', async () => {
       await setup({
-        images: of(photoUrlsArray)
+        images: of(photoUrlsArray),
       });
 
       const harnesses = await loader.getAllHarnesses(MatGridTileHarness);
@@ -101,7 +103,7 @@ describe('FlickrComponent', () => {
 
     it('does not show the loading section', async () => {
       await setup({
-        images: of(photoUrlsArray)
+        images: of(photoUrlsArray),
       });
 
       const { debugElement } = fixture;
@@ -110,11 +112,10 @@ describe('FlickrComponent', () => {
     });
   });
 
-
   describe('when fetched zero images', () => {
     it('calls data fetch', async () => {
       await setup({
-        images: of([])
+        images: of([]),
       });
 
       expect(fakeFlickrService.getData).toHaveBeenCalledTimes(1);
@@ -122,25 +123,29 @@ describe('FlickrComponent', () => {
 
     it('shows no images section', async () => {
       await setup({
-        images: of([])
+        images: of([]),
       });
 
       const noRecords = fixture.nativeElement as HTMLElement;
-      expect(noRecords.querySelector('[data-testid="no-images"]')?.textContent).toBeTruthy();
+      expect(
+        noRecords.querySelector('[data-testid="no-images"]')?.textContent
+      ).toBeTruthy();
     });
 
     it('does not show error section', async () => {
       await setup({
-        images: of([])
+        images: of([]),
       });
 
       const error = fixture.nativeElement as HTMLElement;
-      expect(error.querySelector('[data-testid="error"]')?.textContent).toBeFalsy();
+      expect(
+        error.querySelector('[data-testid="error"]')?.textContent
+      ).toBeFalsy();
     });
 
     it('does not show loading section', async () => {
       await setup({
-        images: of([])
+        images: of([]),
       });
 
       const { debugElement } = fixture;
@@ -153,7 +158,7 @@ describe('FlickrComponent', () => {
     it('calls data fetch', async () => {
       await setup({
         images: of(null),
-        isError: of(true)
+        isError: of(true),
       });
       expect(fakeFlickrService.getData).toHaveBeenCalledTimes(1);
     });
@@ -161,7 +166,7 @@ describe('FlickrComponent', () => {
     it('does not show no images section', async () => {
       await setup({
         images: of(null),
-        isError: of(true)
+        isError: of(true),
       });
 
       const harnesses = await loader.getAllHarnesses(MatGridListHarness);
@@ -171,18 +176,20 @@ describe('FlickrComponent', () => {
     it('shows error section', async () => {
       await setup({
         images: of(null),
-        isError: of(true)
+        isError: of(true),
       });
 
       const error = fixture.nativeElement as HTMLElement;
       expect(error.querySelector('[data-testid="error"]')).toBeTruthy();
-      expect(error.querySelector('[data-testid="error"]')?.textContent).toContain('Whoops! There was an error retrieving the data');
+      expect(
+        error.querySelector('[data-testid="error"]')?.textContent
+      ).toContain('Whoops! There was an error retrieving the data');
     });
 
     it('does not show loading section', async () => {
       await setup({
         images: of(null),
-        isError: of(true)
+        isError: of(true),
       });
       const { debugElement } = fixture;
       const loading = debugElement.query(By.css('app-loading'));
@@ -192,7 +199,7 @@ describe('FlickrComponent', () => {
     it('should load button', async () => {
       await setup({
         images: of(null),
-        isError: of(true)
+        isError: of(true),
       });
 
       const buttons = await loader.getAllHarnesses(MatButtonHarness);
@@ -202,10 +209,12 @@ describe('FlickrComponent', () => {
     it('should load button with exact text', async () => {
       await setup({
         images: of(null),
-        isError: of(true)
+        isError: of(true),
       });
 
-      const buttons = await loader.getAllHarnesses(MatButtonHarness.with({text: 'Try Again'}));
+      const buttons = await loader.getAllHarnesses(
+        MatButtonHarness.with({ text: 'Try Again' })
+      );
       expect(buttons.length).toBe(1);
       expect(await buttons[0].getText()).toBe('Try Again');
     });
@@ -213,12 +222,14 @@ describe('FlickrComponent', () => {
     it('Retry button should call data service method', async () => {
       await setup({
         images: of(null),
-        isError: of(true)
+        isError: of(true),
       });
 
       expect(fakeFlickrService.getData).toHaveBeenCalledTimes(1);
 
-      const btn = await loader.getHarness(MatButtonHarness.with({ text: 'Try Again' }));
+      const btn = await loader.getHarness(
+        MatButtonHarness.with({ text: 'Try Again' })
+      );
       await btn.click();
 
       expect(fakeFlickrService.getData).toHaveBeenCalledTimes(2);

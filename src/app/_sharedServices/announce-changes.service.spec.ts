@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { AnnounceChangesService } from './announce-changes.service';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('AnnounceChangesService', () => {
   let service: AnnounceChangesService;
@@ -17,6 +18,7 @@ describe('AnnounceChangesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        provideZonelessChangeDetection(),
         // { provide: ObservationCountService, useValue: fakeCountService },
       ],
     });
@@ -28,45 +30,40 @@ describe('AnnounceChangesService', () => {
   });
 
   describe('announceNetworkChanged events', () => {
+    it('should publish event to subscribers', () => {
+      // Arrange
+      let subscriber: any | undefined;
 
-  it('should publish event to subscribers', () => {
-    // Arrange
-    let subscriber: any | undefined;
+      service.networkChanged$.subscribe((response) => {
+        subscriber = response;
+      });
 
-    service.networkChanged$.subscribe((response) => {
-      subscriber = response;
+      expect(subscriber).toBeFalsy();
+
+      // Act
+      service.announceNetworkChanged('');
+
+      //Assert
+      expect(subscriber).toBeTruthy();
     });
-
-    expect(subscriber).toBeFalsy();
-
-    // Act
-    service.announceNetworkChanged('');
-
-    //Assert
-    expect(subscriber).toBeTruthy();
   });
 
-});
+  describe('announceObservationsChanged events', () => {
+    it('should publish event to subscribers', () => {
+      // Arrange
+      let subscriber: any | undefined;
 
-describe('announceObservationsChanged events', () => {
+      service.observationsChanged$.subscribe((response) => {
+        subscriber = response;
+      });
 
-  it('should publish event to subscribers', () => {
-    // Arrange
-    let subscriber: any | undefined;
+      expect(subscriber).toBeFalsy();
 
-    service.observationsChanged$.subscribe((response) => {
-      subscriber = response;
+      // Act
+      service.announceObservationsChanged('');
+
+      //Assert
+      expect(subscriber).toBeTruthy();
     });
-
-    expect(subscriber).toBeFalsy();
-
-    // Act
-    service.announceObservationsChanged('');
-
-    //Assert
-    expect(subscriber).toBeTruthy();
   });
-
-});
-
 });

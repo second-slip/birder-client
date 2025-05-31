@@ -1,9 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
 import { TopFiveFilterService } from './top-five-filter.service';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
-import { fakeIObservationTopFive, fakeTopObservationsResponse } from 'src/app/testing/analysis-helpers';
+import {
+  fakeIObservationTopFive,
+  fakeTopObservationsResponse,
+} from 'src/app/testing/analysis-helpers';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 const _days = 30;
 const _apiUrl = `api/list/top-five-filter?days=${_days}`;
@@ -14,7 +21,11 @@ describe('TopFiveFilterService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideZonelessChangeDetection(),
+      ],
     });
     service = TestBed.inject(TopFiveFilterService);
     controller = TestBed.inject(HttpTestingController);

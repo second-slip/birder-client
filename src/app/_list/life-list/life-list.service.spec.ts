@@ -1,8 +1,15 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { lifeListModel, lifeListResponse } from 'src/app/testing/list-test-helpers';
+import {
+  lifeListModel,
+  lifeListResponse,
+} from 'src/app/testing/list-test-helpers';
 import { ILifeList } from './i-life-list.dto';
 import { LifeListService } from './life-list.service';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 const _apiUrl = `api/list/life`;
 
@@ -13,7 +20,7 @@ describe('LifeListService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [LifeListService]
+      providers: [LifeListService, provideZonelessChangeDetection()],
     });
     service = TestBed.inject(LifeListService);
     controller = TestBed.inject(HttpTestingController);
@@ -36,18 +43,17 @@ describe('LifeListService', () => {
     service.getData();
 
     service.lifeList.subscribe((list) => {
-      actualList = list
+      actualList = list;
     });
 
     service.isError.subscribe((error) => {
       actualErrorState = error;
     });
 
-    const request = controller.expectOne(
-      {
-        method: 'GET',
-        url: _apiUrl
-      });
+    const request = controller.expectOne({
+      method: 'GET',
+      url: _apiUrl,
+    });
 
     request.flush(lifeListResponse);
 
@@ -69,13 +75,12 @@ describe('LifeListService', () => {
     service.getData();
 
     service.lifeList.subscribe((list) => {
-      actualList = list
+      actualList = list;
     });
 
-    service.isError.pipe()
-      .subscribe((error) => {
-        actualErrorState = error;
-      });
+    service.isError.pipe().subscribe((error) => {
+      actualErrorState = error;
+    });
 
     controller.expectOne(_apiUrl).error(errorEvent, { status, statusText });
 

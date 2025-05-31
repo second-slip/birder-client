@@ -4,7 +4,7 @@ import { TopFiveFilteredComponent } from './top-five-filtered.component';
 import { TopFiveFilterService } from './top-five-filter.service';
 import { HarnessLoader, parallel } from '@angular/cdk/testing';
 import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
-import { signal } from '@angular/core';
+import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { of } from 'rxjs';
 import { provideRouter } from '@angular/router';
 import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
@@ -54,6 +54,7 @@ describe('TopFiveFilteredComponent', () => {
     await TestBed.configureTestingModule({
       imports: [TopFiveFilteredComponent],
       providers: [
+        provideZonelessChangeDetection(),
         provideRouter(blankRoutesArray),
         { provide: TopFiveFilterService, useValue: fakeService },
         {
@@ -266,7 +267,7 @@ describe('TopFiveFilteredComponent', () => {
   describe('when loading', () => {
     it('should not render the mat-table', async () => {
       await setup({
-        isLoading: signal(true)
+        isLoading: signal(true),
       });
 
       const tables = await loader.getAllHarnesses(MatTableHarness);
@@ -275,7 +276,7 @@ describe('TopFiveFilteredComponent', () => {
 
     it('should not show the error content', async () => {
       await setup({
-        isLoading: signal(true)
+        isLoading: signal(true),
       });
 
       const compiled = fixture.nativeElement as HTMLElement;
@@ -286,7 +287,7 @@ describe('TopFiveFilteredComponent', () => {
 
     it('should show the loading symbol', async () => {
       await setup({
-        isLoading: signal(true)
+        isLoading: signal(true),
       });
 
       const { debugElement } = fixture;

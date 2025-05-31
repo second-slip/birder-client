@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { userModel } from 'src/app/testing/auth-test-helpers';
@@ -11,6 +11,7 @@ import { NetworkSummaryService } from './network-summary.service';
 import { provideRouter } from '@angular/router';
 import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
 import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('NetworkSummaryComponent', () => {
   let component: NetworkSummaryComponent;
@@ -64,6 +65,7 @@ describe('NetworkSummaryComponent', () => {
       imports: [NetworkSummaryComponent],
       providers: [
         provideRouter(blankRoutesArray),
+        provideZonelessChangeDetection(),
         { provide: NetworkSummaryService, useValue: fakeService },
         { provide: AuthenticationService, useValue: fakeAuthService },
         {
@@ -79,25 +81,25 @@ describe('NetworkSummaryComponent', () => {
     fixture.detectChanges();
   };
 
-  it('"SMOKE TEST": should be created and show the loading placeloader', fakeAsync(async () => {
+  it('"SMOKE TEST": should be created and show the loading placeholder', async () => {
     await setup(false, {});
 
     expect(component).toBeTruthy();
     const { debugElement } = fixture;
     const loading = debugElement.query(By.css('app-loading'));
     expect(loading).toBeTruthy();
-  }));
+  });
 
   describe('when component is instantiated', () => {
-    it('calls data fetch service method', fakeAsync(async () => {
+    it('calls data fetch service method', async () => {
       await setup(false, {
         getSummary: of(fakeNetworkSummary),
       });
 
       expect(fakeService.getData).toHaveBeenCalledTimes(2);
-    }));
+    });
 
-    it('does not render the title when showTitle is false', fakeAsync(async () => {
+    it('does not render the title when showTitle is false', async () => {
       await setup(false, {
         getSummary: of(fakeNetworkSummary),
       });
@@ -106,9 +108,9 @@ describe('NetworkSummaryComponent', () => {
       expect(
         compiled.querySelector('[data-testid="h1-title"]')?.textContent
       ).toBeUndefined();
-    }));
+    });
 
-    it('renders the title when showTitle is true', fakeAsync(async () => {
+    it('renders the title when showTitle is true', async () => {
       await setup(true, {
         getSummary: of(fakeNetworkSummary),
       });
@@ -117,11 +119,11 @@ describe('NetworkSummaryComponent', () => {
       expect(
         compiled.querySelector('[data-testid="h1-title"]')?.textContent
       ).toBeDefined();
-    }));
+    });
   });
 
   describe('when the response is successful', () => {
-    it('shows the network summary section', fakeAsync(async () => {
+    it('shows the network summary section', async () => {
       await setup(false, {
         getSummary: of(fakeNetworkSummary),
       });
@@ -132,9 +134,9 @@ describe('NetworkSummaryComponent', () => {
       ).toBeDefined();
       const summaryText = `${fakeNetworkSummary.followersCount} followers / ${fakeNetworkSummary.followingCount} following`;
       expectText(fixture, 'summary', summaryText);
-    }));
+    });
 
-    it('shows the correct summary text when followers > 1', fakeAsync(async () => {
+    it('shows the correct summary text when followers > 1', async () => {
       await setup(false, {
         getSummary: of(fakeNetworkSummary),
       });
@@ -146,9 +148,9 @@ describe('NetworkSummaryComponent', () => {
       // 'followers', plural
       const summaryText = `${fakeNetworkSummary.followersCount} followers / ${fakeNetworkSummary.followingCount} following`;
       expectText(fixture, 'summary', summaryText);
-    }));
+    });
 
-    it('shows the correct summary text when followers < 1', fakeAsync(async () => {
+    it('shows the correct summary text when followers < 1', async () => {
       const oneFollowerModel: INetworkSummary = {
         followersCount: 1,
         followingCount: 1,
@@ -165,11 +167,11 @@ describe('NetworkSummaryComponent', () => {
       // 'follower', singular
       const summaryText = `${oneFollowerModel.followersCount} follower / ${oneFollowerModel.followingCount} following`;
       expectText(fixture, 'summary', summaryText);
-    }));
+    });
   });
 
   describe('when response is unsuccessful', () => {
-    it('shows error content', fakeAsync(async () => {
+    it('shows error content', async () => {
       await setup(false, {
         isError: of(true),
         getSummary: of(null),
@@ -187,9 +189,9 @@ describe('NetworkSummaryComponent', () => {
         'error',
         'Whoops! There was an error retrieving the data.Try Again'
       );
-    }));
+    });
 
-    it('tries data fetch again on retry button click', fakeAsync(async () => {
+    it('tries data fetch again on retry button click', async () => {
       await setup(false, {
         isError: of(true),
         getSummary: of(null),
@@ -200,9 +202,9 @@ describe('NetworkSummaryComponent', () => {
         .triggerEventHandler('click', null);
 
       expect(fakeService.getData).toHaveBeenCalled();
-    }));
+    });
 
-    it('does not show success content', fakeAsync(async () => {
+    it('does not show success content', async () => {
       await setup(false, {
         isError: of(true),
         getSummary: of(null),
@@ -212,9 +214,9 @@ describe('NetworkSummaryComponent', () => {
       expect(
         compiled.querySelector('[data-testid="summary"]')?.textContent
       ).toBeUndefined();
-    }));
+    });
 
-    it('does not show loading section', fakeAsync(async () => {
+    it('does not show loading section', async () => {
       await setup(false, {
         isError: of(true),
         getSummary: of(null),
@@ -223,6 +225,6 @@ describe('NetworkSummaryComponent', () => {
       const { debugElement } = fixture;
       const loading = debugElement.query(By.css('app-loading'));
       expect(loading).toBeNull();
-    }));
+    });
   });
 });

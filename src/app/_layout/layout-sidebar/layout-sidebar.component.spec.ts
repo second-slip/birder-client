@@ -4,6 +4,7 @@ import { LayoutSidebarComponent } from './layout-sidebar.component';
 import { By } from '@angular/platform-browser';
 import { SideMenuComponent } from '../side-menu/side-menu.component';
 import { MockComponent } from 'ng-mocks';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('LayoutSidebarComponent', () => {
   let component: LayoutSidebarComponent;
@@ -11,7 +12,8 @@ describe('LayoutSidebarComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [LayoutSidebarComponent]
+      imports: [LayoutSidebarComponent],
+      providers: [provideZonelessChangeDetection()],
     })
       .overrideComponent(LayoutSidebarComponent, {
         remove: { imports: [SideMenuComponent] },

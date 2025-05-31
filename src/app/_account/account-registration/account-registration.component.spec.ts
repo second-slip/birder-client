@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccountRegistrationComponent } from './account-registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccountService } from '../account.service';
@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -67,6 +68,7 @@ describe('AccountRegistrationComponent', () => {
       imports: [FormsModule, ReactiveFormsModule, BrowserAnimationsModule],
       providers: [
         provideRouter(routes),
+        provideZonelessChangeDetection(),
         { provide: AccountValidationService, useValue: fakeValidationService },
         { provide: AccountService, useValue: fakeAccountService }
       ]
@@ -468,7 +470,7 @@ describe('AccountRegistrationComponent', () => {
       });
     });
 
-    it('should not submit an invalid form', fakeAsync(async () => {
+    it('should not submit an invalid form', async () => {
       await setup();
 
       const submitBtn = await loader.getHarness(MatButtonHarness.with({ text: 'Register' }));
@@ -477,7 +479,7 @@ describe('AccountRegistrationComponent', () => {
       await submitBtn.click();
 
       expect(fakeAccountService.register).not.toHaveBeenCalled();
-    }));
+    });
 
     it('should call the service on Submit', async () => {
       await setup();

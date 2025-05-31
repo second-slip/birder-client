@@ -1,10 +1,19 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { skip } from 'rxjs/operators';
-import { fakeBirdDetailResponse, fakeIBirdDetail } from 'src/app/testing/birds-helpers';
+import {
+  fakeBirdDetailResponse,
+  fakeIBirdDetail,
+} from 'src/app/testing/birds-helpers';
 
 import { BirdDetailService } from './bird-detail.service';
 import { IBirdDetail } from './i-bird-detail.dto';
+import { provideHttpClient } from '@angular/common/http';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 const _birdId = '1013';
 const _apiUrl = `api/Birds/Bird?id=${_birdId}`;
@@ -15,8 +24,12 @@ describe('BirdDetailService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [BirdDetailService],
+      providers: [
+        BirdDetailService,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideZonelessChangeDetection(),
+      ],
     });
     service = TestBed.inject(BirdDetailService);
     controller = TestBed.inject(HttpTestingController);
@@ -25,7 +38,6 @@ describe('BirdDetailService', () => {
   afterEach(() => {
     controller.verify();
   });
-
 
   it('makes an http call', () => {
     // Arrange
@@ -37,14 +49,12 @@ describe('BirdDetailService', () => {
 
     // We expect that the Observable emits an array that equals to the one from the API response:
     service.getBird.subscribe((birdObservable) => {
-      actualBird = birdObservable
+      actualBird = birdObservable;
     });
 
-    service.isError
-      .subscribe((error) => {
-        actualErrorState = error;
-      });
-
+    service.isError.subscribe((error) => {
+      actualErrorState = error;
+    });
 
     const request = controller.expectOne(_apiUrl); // _apiUrl);
     // Answer the request so the Observable emits a value.
@@ -71,11 +81,11 @@ describe('BirdDetailService', () => {
     // Act & Assert
     service.getData(_birdId); // call http request method
 
-    service.isError.pipe(skip(1)) // skip first, default 'false' value emitted...
+    service.isError
+      .pipe(skip(1)) // skip first, default 'false' value emitted...
       .subscribe((error) => {
         actualErrorState = error;
       });
-
 
     controller.expectOne(_apiUrl).error(errorEvent, { status, statusText });
 

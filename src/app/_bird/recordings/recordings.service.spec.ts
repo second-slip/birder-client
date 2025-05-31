@@ -1,8 +1,16 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { recordingsResponse, species } from 'src/app/testing/flickr-recordings-api-tests-helper';
+import {
+  recordingsResponse,
+  species,
+} from 'src/app/testing/flickr-recordings-api-tests-helper';
 import { IRecording } from './i-recording.dto';
 import { RecordingsService } from './recordings.service';
+import { provideHttpClient } from '@angular/common/http';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 const apiUrl = `api/Recording?species=${species}`;
 
@@ -12,8 +20,12 @@ describe('RecordingsService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [RecordingsService]
+      providers: [
+        RecordingsService,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideZonelessChangeDetection(),
+      ],
     });
     service = TestBed.inject(RecordingsService);
     controller = TestBed.inject(HttpTestingController);
@@ -32,14 +44,13 @@ describe('RecordingsService', () => {
     let actualErrorState: boolean | undefined;
 
     service.getData(species);
-    
+
     service.recordings.subscribe((otherResult) => {
-        actualRecordingsState = otherResult;
+      actualRecordingsState = otherResult;
     });
 
-    service.isError
-    .subscribe((error) => {
-        actualErrorState = error;
+    service.isError.subscribe((error) => {
+      actualErrorState = error;
     });
 
     controller.expectOne(apiUrl).flush(recordingsResponse);
@@ -52,7 +63,7 @@ describe('RecordingsService', () => {
     service.getData(species);
     const testRequest = controller.expectOne(apiUrl);
     expect(testRequest.request.method).toEqual('GET');
-});
+  });
 
   it('passes the errors through', () => {
     let actualRecordingsState: Array<IRecording> | null | undefined;
@@ -63,13 +74,13 @@ describe('RecordingsService', () => {
     const errorEvent = new ProgressEvent('API error');
 
     service.getData(species);
-    
+
     service.recordings.subscribe((otherResult) => {
-        actualRecordingsState = otherResult;
+      actualRecordingsState = otherResult;
     });
 
     service.isError.subscribe((error) => {
-        actualErrorState = error;
+      actualErrorState = error;
     });
 
     controller.expectOne(apiUrl).error(errorEvent, { status, statusText });

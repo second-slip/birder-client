@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   FormControl,
   FormGroup,
@@ -29,7 +29,7 @@ import { By } from '@angular/platform-browser';
 import { userModel } from 'src/app/testing/auth-test-helpers';
 import { fakeIBirdSummary } from 'src/app/testing/birds-helpers';
 import { findComponent } from 'src/app/testing/element.spec-helper';
-import { ComponentRef } from '@angular/core';
+import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 
 const routes: Routes = [{ path: 'login', component: ObservationReadComponent }];
 
@@ -90,8 +90,8 @@ describe('ObservationCreateComponent', () => {
         BrowserAnimationsModule,
         ObservationCreateComponent,
       ],
-      // declarations: [SelectSpeciesComponent],
       providers: [
+        provideZonelessChangeDetection(),
         {
           provide: AnnounceChangesService,
           useValue: fakeAnnounceChangesService,
@@ -150,14 +150,14 @@ describe('ObservationCreateComponent', () => {
     // dateTimePicker.dateTime = dt;
   };
 
-  it('SMOKE TEST: should be created', fakeAsync(async () => {
+  it('SMOKE TEST: should be created', async () => {
     await setup();
     expect(component).toBeTruthy();
     expect(dateTimePicker).toBeTruthy();
     // console.log(dateTimePicker);
     // expect(dateTimePicker.isValid).toBe(true);
     // expect(dateTimePicker.dateTime).toBe(new Date(new Date().getFullYear() - 10, 0, 1).toISOString())
-  }));
+  });
 
   // describe('STEPPER CONTROL TESTS', () => {
 

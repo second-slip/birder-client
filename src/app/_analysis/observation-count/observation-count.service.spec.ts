@@ -1,5 +1,4 @@
 import {
-  HttpClientTestingModule,
   HttpTestingController,
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
@@ -13,6 +12,7 @@ import { IObservationCount } from './i-observation-count.dto';
 
 import { ObservationCountService } from './observation-count.service';
 import { provideHttpClient } from '@angular/common/http';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 const _apiUrl = 'api/observationanalysis';
 
@@ -22,8 +22,11 @@ describe('ObservationCountService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [provideHttpClientTesting()],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideZonelessChangeDetection(),
+      ],
     });
     service = TestBed.inject(ObservationCountService);
     controller = TestBed.inject(HttpTestingController);

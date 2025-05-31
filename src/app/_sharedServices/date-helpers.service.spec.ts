@@ -1,12 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
 import { DateHelpersService } from './date-helpers.service';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('DateHelpersService', () => {
   let service: DateHelpersService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()],
+    });
     service = TestBed.inject(DateHelpersService);
   });
 

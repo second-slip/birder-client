@@ -1,12 +1,16 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { expectText } from 'src/app/testing/element.spec-helper';
-import { fakeNetworkUserModel, userName } from 'src/app/testing/network-test-helpers';
+import {
+  fakeNetworkUserModel,
+  userName,
+} from 'src/app/testing/network-test-helpers';
 import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 import { INetworkUser } from '../i-network-user.dto';
 import { FollowCommandComponent } from './follow-command.component';
 import { FollowCommandService } from './follow-command.service';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('FollowCommandComponent', () => {
   let component: FollowCommandComponent;
@@ -17,30 +21,36 @@ describe('FollowCommandComponent', () => {
 
   const setup = async (
     user: INetworkUser,
-    fakeMethodValues?: jasmine.SpyObjMethodNames<FollowCommandService>) => {
-
+    fakeMethodValues?: jasmine.SpyObjMethodNames<FollowCommandService>
+  ) => {
     fakeService = jasmine.createSpyObj<FollowCommandService>(
       'FollowCommandService',
       {
         postFollowUser: undefined,
         postUnfollowUser: undefined,
-        ...fakeMethodValues
-      });
+        ...fakeMethodValues,
+      }
+    );
 
     fakeAnnounceChangesService = jasmine.createSpyObj<AnnounceChangesService>(
       'AnnounceChangesService',
       {
         announceNetworkChanged: undefined,
-        announceObservationsChanged: undefined
-      });
+        announceObservationsChanged: undefined,
+      }
+    );
 
     await TestBed.configureTestingModule({
-    imports: [FollowCommandComponent],
-    providers: [
+      imports: [FollowCommandComponent],
+      providers: [
+        provideZonelessChangeDetection(),
         { provide: FollowCommandService, useValue: fakeService },
-        { provide: AnnounceChangesService, useValue: fakeAnnounceChangesService }
-    ],
-}).compileComponents();
+        {
+          provide: AnnounceChangesService,
+          useValue: fakeAnnounceChangesService,
+        },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FollowCommandComponent);
     component = fixture.componentInstance;
@@ -49,80 +59,78 @@ describe('FollowCommandComponent', () => {
   };
 
   describe('when the component is rendered', () => {
-
-    it('"SMOKE TEST": should be created and show the loading placeloader', fakeAsync(async () => {
+    it('"SMOKE TEST": should be created and show the loading placeholder', async () => {
       await setup(fakeNetworkUserModel);
       expect(component).toBeTruthy();
-    }));
+    });
 
-    it('it sets the @input', fakeAsync(async () => {
+    it('it sets the @input', async () => {
       await setup(fakeNetworkUserModel);
-      expect(component.user).toBe(fakeNetworkUserModel)
-    }));
+      expect(component.user).toBe(fakeNetworkUserModel);
+    });
   });
-
 
   describe('when own profile', () => {
-
-    it('it hides the "follow/unfollow" button', fakeAsync(async () => {
+    it('it hides the "follow/unfollow" button', async () => {
       const user: INetworkUser = {
         userName: userName,
         avatar: 'https://img.icons8.com/color/96/000000/user.png',
         isFollowing: false,
-        isOwnProfile: true // <--
+        isOwnProfile: true, // <--
       };
       await setup(user);
 
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="follow-button"]')?.textContent).toBeUndefined();
-    }));
-
+      expect(
+        compiled.querySelector('[data-testid="follow-button"]')?.textContent
+      ).toBeUndefined();
+    });
   });
 
-
   describe('when other user profile', () => {
-
-    it('it shows the "follow/unfollow" button', fakeAsync(async () => {
+    it('it shows the "follow/unfollow" button', async () => {
       const user: INetworkUser = {
         userName: userName,
         avatar: 'https://img.icons8.com/color/96/000000/user.png',
         isFollowing: false,
-        isOwnProfile: false // <--
+        isOwnProfile: false, // <--
       };
       await setup(user);
 
-
       const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('[data-testid="follow-button"]')?.textContent).toBeDefined();
+      expect(
+        compiled.querySelector('[data-testid="follow-button"]')?.textContent
+      ).toBeDefined();
 
       expectText(fixture, 'follow-button', ' Follow');
-    }));
+    });
 
-    it('follows user on button click and changes the button text', fakeAsync(async () => {
-
+    it('follows user on button click and changes the button text', async () => {
       const user: INetworkUser = {
         userName: userName,
         avatar: 'https://img.icons8.com/color/96/000000/user.png',
         isFollowing: false, // <-- not following
-        isOwnProfile: false // <--
+        isOwnProfile: false, // <--
       };
 
       const userReturned: INetworkUser = {
         userName: userName,
         avatar: 'https://img.icons8.com/color/96/000000/user.png',
         isFollowing: true, // <-- following
-        isOwnProfile: false
+        isOwnProfile: false,
       };
 
       await setup(user, {
-        postFollowUser: of(userReturned)
+        postFollowUser: of(userReturned),
       });
 
       // initial button text
       expectText(fixture, 'follow-button', ' Follow');
 
       // button click...
-      fixture.debugElement.query(By.css('.btn-follow')).triggerEventHandler('click', null);
+      fixture.debugElement
+        .query(By.css('.btn-follow'))
+        .triggerEventHandler('click', null);
 
       //..should call method
       expect(fakeService.postFollowUser).toHaveBeenCalled();
@@ -130,33 +138,34 @@ describe('FollowCommandComponent', () => {
       fixture.detectChanges();
       //... and change button text
       expectText(fixture, 'follow-button', ' Unfollow');
-    }));
+    });
 
-    it('unfollows user on button click and changes the button text', fakeAsync(async () => {
-
+    it('unfollows user on button click and changes the button text', async () => {
       const user: INetworkUser = {
         userName: userName,
         avatar: 'https://img.icons8.com/color/96/000000/user.png',
         isFollowing: true, // <-- following
-        isOwnProfile: false // <--
+        isOwnProfile: false, // <--
       };
 
       const userReturned: INetworkUser = {
         userName: userName,
         avatar: 'https://img.icons8.com/color/96/000000/user.png',
         isFollowing: false, // <-- not following
-        isOwnProfile: false
+        isOwnProfile: false,
       };
 
       await setup(user, {
-        postUnfollowUser: of(userReturned)
+        postUnfollowUser: of(userReturned),
       });
 
       // initial button text
       expectText(fixture, 'follow-button', ' Unfollow');
 
       // button click...
-      fixture.debugElement.query(By.css('.btn-follow')).triggerEventHandler('click', null);
+      fixture.debugElement
+        .query(By.css('.btn-follow'))
+        .triggerEventHandler('click', null);
 
       //..should call method
       expect(fakeService.postUnfollowUser).toHaveBeenCalled();
@@ -164,6 +173,6 @@ describe('FollowCommandComponent', () => {
       fixture.detectChanges();
       //... and change button text
       expectText(fixture, 'follow-button', ' Follow');
-    }));
+    });
   });
 });

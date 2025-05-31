@@ -11,6 +11,7 @@ import {
   fakeObservationFeedResponseWithOneElement,
 } from '../testing/observation-feed-helper';
 import { provideHttpClient } from '@angular/common/http';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 const _pageIndex = 1;
 const _apiUrl = `api/observationfeed?pageIndex=${_pageIndex}&pageSize=10`;
@@ -22,6 +23,7 @@ describe('ObservationFeedService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        provideZonelessChangeDetection(),
         ObservationFeedService,
         provideHttpClient(),
         provideHttpClientTesting(),

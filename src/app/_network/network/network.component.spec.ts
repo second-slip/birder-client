@@ -5,6 +5,7 @@ import { NetworkSuggestionComponent } from '../network-suggestion/network-sugges
 import { MockComponent } from 'ng-mocks';
 import { NetworkSummaryComponent } from '../network-summary/network-summary.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('NetworkComponent', () => {
   let component: NetworkComponent;
@@ -12,7 +13,8 @@ describe('NetworkComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, NetworkComponent]
+      imports: [NoopAnimationsModule, NetworkComponent],
+      providers: [provideZonelessChangeDetection()]
     })
       .overrideComponent(NetworkComponent, {
         remove: { imports: [NetworkFindComponent, NetworkSuggestionComponent, NetworkSummaryComponent] },

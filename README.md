@@ -1,6 +1,6 @@
 # birder-client
 
-This is the Angular 19 client app for the Birder website. 
+This is the Angular 20 client app for the Birder website. 
 
 <!-- [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](https://www.typescriptlang.org/) -->
 
@@ -16,6 +16,7 @@ Birder is a social network-style platform for logging, sharing, and analysing bi
 The complementary server respository is [birder-server](https://github.com/second-slip/birder-server).
 
 ## Change Log
+- 31/05/2025: updated to angular version **20**
 - 20/11/2024: updated to Angular version **19**
 - 01/06/2024: updated to Angular version **18**
 - 29/05/2024: experimenting with signals API (see select-species service & component)

@@ -24,12 +24,12 @@ describe('ForgotPasswordComponent', () => {
     fakeAccountService = jasmine.createSpyObj<AccountService>(
       'AccountService',
       {
-        isEmailTaken: undefined,
-        isUsernameTaken: undefined,
-        register: undefined,
-        requestPasswordReset: undefined,
-        resendEmailConfirmation: undefined,
-        resetPassword: undefined,
+        isEmailTaken: of(false),
+        isUsernameTaken: of(false),
+        register: of(),
+        requestPasswordReset: of(),
+        resendEmailConfirmation: of(),
+        resetPassword: of(),
         ...fakeAccountServiceReturnValues, // Overwrite with given return values
       }
     );

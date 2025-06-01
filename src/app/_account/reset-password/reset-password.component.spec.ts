@@ -31,12 +31,12 @@ describe('ResetPasswordComponent', () => {
     fakeAccountService = jasmine.createSpyObj<AccountService>(
       'AccountService',
       {
-        isEmailTaken: undefined,
-        isUsernameTaken: undefined,
-        register: undefined,
-        requestPasswordReset: undefined,
-        resendEmailConfirmation: undefined,
-        resetPassword: undefined,
+        isEmailTaken: of(false),
+        isUsernameTaken: of(false),
+        register: of(),
+        requestPasswordReset: of(),
+        resendEmailConfirmation: of(),
+        resetPassword: of(),
         ...fakeAccountServiceReturnValues,
       }
     );
@@ -52,7 +52,13 @@ describe('ResetPasswordComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            paramMap: of(new Map(Object.entries(obj))),
+            paramMap: of(
+              new Map(
+                Object.entries({
+                  code: code,
+                })
+              )
+            ),
             // needs to be a 'Map' object otherwise "map.get is not a function" error occurs
             // see: https://bobbyhadz.com/blog/javascript-typeerror-map-get-is-not-a-function#:~:text=get%20is%20not%20a%20function%22%20error%20occurs%20when%20we%20call,the%20method%20on%20Map%20objects.
           },

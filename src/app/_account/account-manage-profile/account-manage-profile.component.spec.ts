@@ -47,7 +47,7 @@ describe('AccountManageProfileComponent', () => {
       {
         isEmailTaken: of(false),
         isUsernameTaken: of(false),
-        postUpdateProfile: undefined,
+        postUpdateProfile: of(),
         requestPasswordReset: undefined,
         resendEmailConfirmation: undefined,
         resetPassword: undefined,

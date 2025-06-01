@@ -42,7 +42,7 @@ describe('LoginComponent', () => {
     fakeLoginServiceReturnValues?: jasmine.SpyObjMethodNames<LoginService>
   ) => {
     fakeLoginService = jasmine.createSpyObj<LoginService>('LoginService', {
-      login: undefined,
+      login: of(),
       ...fakeLoginServiceReturnValues,
     });
 

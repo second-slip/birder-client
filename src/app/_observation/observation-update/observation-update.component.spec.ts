@@ -588,7 +588,7 @@ describe('ObservationUpdateComponent', () => {
       expect(
         compiled.querySelector('[data-testid="invalid-form-menu"]')?.textContent
       ).toContain(
-        'The form is not complete. You must complete the mandatory fields in Section 1.'
+        ' The form is not complete. You must complete the manadatory fields in Section 1.  Back '
       );
     });
   });

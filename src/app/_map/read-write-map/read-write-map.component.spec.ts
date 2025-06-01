@@ -1,4 +1,7 @@
-import { provideZonelessChangeDetection } from '@angular/core';
+import {
+  NO_ERRORS_SCHEMA,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { By } from '@angular/platform-browser';
@@ -42,6 +45,7 @@ describe('ReadWriteMapComponent', () => {
           { provide: WindowGeolocateService, useValue: fakeWindowGeoService },
         ],
         imports: [GoogleMapsModule, ReadWriteMapComponent],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     });
 
@@ -57,52 +61,6 @@ describe('ReadWriteMapComponent', () => {
 
       expect(component).toBeTruthy();
     });
-
-    // it('marker changed event should update marker if coordinates are available', () => {
-
-    //   // event: google.maps.MapMouseEvent
-
-    //   const u = jasmine.createSpyObj<google.maps.MapMouseEvent>('click', {domEvent: undefined, stop: undefined}, {latLng:})
-
-    //   const y = <google.maps.MapMouseEvent>{
-    //     latLng: {lat: 2, lng: 5 },
-    //     stop: () => function(),
-    //     domEvent: MouseEvent({})
-    //   }
-
-    // });
-
-    // it('marker changed event should update marker if coordinates are available', () => {
-    //   component.latitude = 1;
-    //   component.longitude = -1;
-    //   // fixture.detectChanges();
-    //   // event: google.maps.MapMouseEvent
-
-    //   const u = jasmine.createSpyObj<google.maps.MapMouseEvent>('click', { domEvent: undefined, stop: undefined });
-
-    //   component.markerChanged(u);
-
-    //   // fixture.detectChanges();
-
-    //   expect(fakeService.reverseGeocode).toHaveBeenCalledTimes(2); // on component create then after method call
-    //   expect(fakeService.reverseGeocode).toHaveBeenCalledWith(3, 4);
-    // });
-
-    // it('marker changed event should update marker if coordinates are NOT available', () => {
-    //   component.latitude = testLatitude;
-    //   component.longitude = testLongitude;
-    //   // fixture.detectChanges();
-    //   // event: google.maps.MapMouseEvent
-
-    //   const u = jasmine.createSpyObj<google.maps.MapMouseEvent>('click', { domEvent: undefined, stop: undefined }, { latLng: undefined })
-
-    //   //component.markerChanged(u);
-
-    //   // fixture.detectChanges();
-
-    //   expect(fakeService.reverseGeocode).toHaveBeenCalledTimes(2); // on component create then after method call
-    //   expect(fakeService.reverseGeocode).toHaveBeenCalledWith(2,3);
-    // });
 
     it('should display the map when valid', () => {
       component.latitude = testLatitude;
@@ -146,19 +104,6 @@ describe('ReadWriteMapComponent', () => {
 
         expect(fakeService.geocode).toHaveBeenCalledOnceWith(testSearchAddress);
       });
-
-      // it('does not call method when input value is falsy', ()  => {
-
-      //   component.latitude = testLatitude;
-      //   component.longitude = testLongitude;
-      //   component.searchAddress = '';
-      //   fixture.detectChanges();
-
-      //   // button click...
-      //   fixture.debugElement.query(By.css('.btn-search-address')).triggerEventHandler('click', null);
-
-      //   expect(fakeService.geocode).not.toHaveBeenCalled();
-      // });
     });
   });
 
@@ -350,19 +295,5 @@ describe('ReadWriteMapComponent', () => {
       await setup();
       expect(component).toBeTruthy();
     });
-
-    // describe('map interactivity', () => {
-
-    // it('calls getCurrentPosition method on button click ', async () => {
-    //   await setup();
-
-    //   spyOn(component, 'markerChanged');
-    //   const event = jasmine.createSpyObj<google.maps.MapMouseEvent>('click', { domEvent: undefined, stop: undefined });
-    //   component.markerChanged(event);
-    //   expect(component.markerChanged).toHaveBeenCalledTimes(1);
-    //   expect(component.markerChanged).toHaveBeenCalledOnceWith(event);
-    // });
-
-    // });
   });
 });

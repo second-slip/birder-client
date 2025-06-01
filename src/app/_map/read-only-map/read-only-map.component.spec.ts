@@ -34,25 +34,6 @@ describe('ReadOnlyMapComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should show loading', () => {
-  //   component.position = fakeLocationMarker;
-  //   fixture.detectChanges();
-
-  //   // component.markerStatus = 'idle';
-
-  //   fixture.detectChanges();
-
-  //   const { debugElement } = fixture;
-  //   const loading = debugElement.query(By.css('app-loading'));
-  //   expect(loading).toBeDefined();
-
-  //   const compiled = fixture.nativeElement as HTMLElement;
-  //   expect(compiled.querySelector('[data-testid="location"]')?.textContent).toBeUndefined();
-
-  //   const map = debugElement.query(By.css('google-map'));
-  //   expect(map).toBeNull();
-  // });
-
   it('should display the map when valid', () => {
     component.position = fakeLocationMarker;
     fixture.detectChanges();

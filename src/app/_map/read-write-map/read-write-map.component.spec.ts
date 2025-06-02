@@ -1,7 +1,4 @@
-import {
-  NO_ERRORS_SCHEMA,
-  provideZonelessChangeDetection,
-} from '@angular/core';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { By } from '@angular/platform-browser';
@@ -45,7 +42,7 @@ describe('ReadWriteMapComponent', () => {
           { provide: WindowGeolocateService, useValue: fakeWindowGeoService },
         ],
         imports: [GoogleMapsModule, ReadWriteMapComponent],
-        schemas: [NO_ERRORS_SCHEMA],
+        // schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     });
 
@@ -125,7 +122,7 @@ describe('ReadWriteMapComponent', () => {
       fakeWindowGeoService = jasmine.createSpyObj<WindowGeolocateService>(
         'WindowGeolocateService',
         {
-          getCurrentPosition: undefined,
+          getCurrentPosition: of(),
           ...fakeMethodReturnValues,
         }
       );

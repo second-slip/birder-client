@@ -3,7 +3,7 @@ import { ObservationCountService } from 'src/app/_analysis/observation-count/obs
 import { LifeListService } from './life-list.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { RouterLink } from '@angular/router';
-import { NgFor, AsyncPipe, SlicePipe } from '@angular/common';
+import { AsyncPipe, SlicePipe } from '@angular/common';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
@@ -11,7 +11,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
     templateUrl: './life-list.component.html',
     styleUrls: ['./life-list.component.scss'],
     providers: [LifeListService],
-    imports: [RouterLink, NgFor, LoadingComponent, AsyncPipe, SlicePipe, MatPaginatorModule]
+    imports: [RouterLink, LoadingComponent, AsyncPipe, SlicePipe, MatPaginatorModule]
 })
 export class LifeListComponent implements OnInit {
   public page = 0;

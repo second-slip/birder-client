@@ -1,63 +1,65 @@
 <div class="standard-container">
 
-    <h1>Your Life List</h1>
+  <h1>Your Life List</h1>
 
-    @if (_analysisService.count | async; as analysis) {
+  @if (_analysisService.count | async; as analysis) {
     <p>You have spotted {{ analysis.uniqueSpeciesCount }} species:</p>
-    }
+  }
 
-    @if (_service.lifeList | async; as list) {
+  @if (_service.lifeList | async; as list) {
 
     @if (list.length) {
-    <table class="table table-striped" data-testid="life-list-table">
+      <table class="table table-striped" data-testid="life-list-table">
         <thead>
-            <tr>
-                <!-- <th scope="col">#</th> -->
-                <th scope="col">Count</th>
-                <th scope="col">Species</th>
-                <th class="hide-small" scope="col">Status / Population</th>
-                <th scope="col">Risk Flag</th>
-            </tr>
+          <tr>
+            <!-- <th scope="col">#</th> -->
+            <th scope="col">Count</th>
+            <th scope="col">Species</th>
+            <th class="hide-small" scope="col">Status / Population</th>
+            <th scope="col">Risk Flag</th>
+          </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let record of list | slice: (page) * pageSize : (page) * pageSize + pageSize; index as i">
-                <!-- better adding rank on the server! -->
-                <!-- add equal rank positions too -->
-                <!-- <th scope="row">{{ i + 1 }}</th> -->
-                <td>{{ record.count }}</td>
-                <td><a routerLink="/bird/detail/{{record.birdId}}">{{ record.englishName }}</a>
-                    <br><small><em>{{ record.species }}</em></small>
-                </td>
-                <td class="hide-small"><small>{{ record.btoStatusInBritain }} <br> {{
-                        record.populationSize
-                        }}</small></td>
-                <td [style.color]="record.conservationListColourCode"><small>{{
-                        record.conservationStatus
-                        }}</small>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    } @else {
-    <p data-testid="no-items" class="alert alert-info">
-        <strong>Nothing yet to show</strong><br>
-        You have not yet logged any observations...<br>
-        Why not <a routerLink="/observation/create">click here</a> to add your first one?
-    </p>
-    }
+          @for (record of list | slice: (page) * pageSize : (page) * pageSize + pageSize; track record; let i = $index) {
+            <tr>
+              <!-- better adding rank on the server! -->
+              <!-- add equal rank positions too -->
+              <!-- <th scope="row">{{ i + 1 }}</th> -->
+              <td>{{ record.count }}</td>
+              <td><a routerLink="/bird/detail/{{record.birdId}}">{{ record.englishName }}</a>
+              <br><small><em>{{ record.species }}</em></small>
+            </td>
+            <td class="hide-small"><small>{{ record.btoStatusInBritain }} <br> {{
+              record.populationSize
+            }}</small></td>
+            <td [style.color]="record.conservationListColourCode"><small>{{
+              record.conservationStatus
+            }}</small>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+} @else {
+  <p data-testid="no-items" class="alert alert-info">
+    <strong>Nothing yet to show</strong><br>
+    You have not yet logged any observations...<br>
+    Why not <a routerLink="/observation/create">click here</a> to add your first one?
+  </p>
+}
 
-    <hr>
-    <mat-paginator [pageIndex]="page" [length]="list.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25]"
-        aria-label="Select page" [showFirstLastButtons]="true" (page)="handlePageEvent($event)">
-    </mat-paginator>
+<hr>
+  <mat-paginator [pageIndex]="page" [length]="list.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25]"
+    aria-label="Select page" [showFirstLastButtons]="true" (page)="handlePageEvent($event)">
+  </mat-paginator>
 
-    } @else if (_service.isError | async) {
-    <p class="alert alert-danger" data-testid="error">
-        <strong>Whoops!</strong> There was an error retrieving the data.<br>
-        <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
-            (click)="reload()">Try Again</button>
-    </p>
-    } @else {
-    <app-loading></app-loading>
-    }
+} @else if (_service.isError | async) {
+  <p class="alert alert-danger" data-testid="error">
+    <strong>Whoops!</strong> There was an error retrieving the data.<br>
+    <button type="button" class="btn btn-primary btn-sm btn-try-again" data-testid="reload-button"
+    (click)="reload()">Try Again</button>
+  </p>
+} @else {
+  <app-loading></app-loading>
+}
 </div>

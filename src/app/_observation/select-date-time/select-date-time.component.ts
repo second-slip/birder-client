@@ -1,6 +1,6 @@
 import { Component, input, OnInit } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatInputModule } from '@angular/material/input';
@@ -17,9 +17,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    MatTimepickerModule,
-    CommonModule,
-  ],
+    MatTimepickerModule
+],
   providers: [provideNativeDateAdapter()],
 })
 export class SelectDateTimeComponent implements OnInit {

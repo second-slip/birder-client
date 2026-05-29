@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
-import { MatchOtherValidator, ValidatePassword } from 'src/app/_validators';
+import { MatchOtherValidator, ValidatePassword } from '../../_validators';
 // import { AccountValidationService } from '../account-validation.service';
 import { AccountService } from '../account.service';
 import { IManagePassword } from './i-manage-password.dto';

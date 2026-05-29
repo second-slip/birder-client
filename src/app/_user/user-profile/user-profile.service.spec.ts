@@ -1,6 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { username, userProfileModel } from 'src/app/testing/userProfile-tests-helpers';
+import { username, userProfileModel } from '../../testing/userProfile-tests-helpers';
 import { IUserProfile } from './i-user-profile.dto';
 import { UserProfileService } from './user-profile.service';
 import { provideHttpClient } from '@angular/common/http';

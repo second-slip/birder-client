@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
-import { userModel } from 'src/app/testing/auth-test-helpers';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
-import { LoginComponent } from 'src/app/_auth/login/login.component';
+import { userModel } from '../../testing/auth-test-helpers';
+import { AuthenticationService } from '../../_auth/authentication.service';
+import { LoginComponent } from '../../_auth/login/login.component';
 import { AccountValidationService } from '../account-validation.service';
 import { AccountService } from '../account.service';
 import { ConfirmEmailComponent } from '../confirm-email/confirm-email.component';
@@ -20,7 +20,7 @@ import {
   username,
   email,
   invalidManageProfileModel
-} from 'src/app/testing/account-tests-helpers';
+} from '../../testing/account-tests-helpers';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
 

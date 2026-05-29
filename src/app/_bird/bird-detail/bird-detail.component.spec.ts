@@ -5,11 +5,11 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { expectText } from 'src/app/testing/element.spec-helper';
+import { expectText } from '../../testing/element.spec-helper';
 import { BirdDetailComponent } from './bird-detail.component';
 import { BirdDetailService } from './bird-detail.service';
 import { NavigationService } from '../../_sharedServices/navigation.service';
-import { fakeIBirdDetail } from 'src/app/testing/birds-helpers';
+import { fakeIBirdDetail } from '../../testing/birds-helpers';
 import { ActivatedRoute } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 

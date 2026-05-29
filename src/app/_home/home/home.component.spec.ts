@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { provideRouter, Router, Routes } from '@angular/router';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { AuthenticationService } from '../../_auth/authentication.service';
 import { of } from 'rxjs';
-import { ObservationFeedComponent } from 'src/app/_observation-feed/observation-feed/observation-feed.component';
+import { ObservationFeedComponent } from '../../_observation-feed/observation-feed/observation-feed.component';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
-import { LoginComponent } from 'src/app/_auth/login/login.component';
-import { AccountRegistrationComponent } from 'src/app/_account/account-registration/account-registration.component';
+import { LoginComponent } from '../../_auth/login/login.component';
+import { AccountRegistrationComponent } from '../../_account/account-registration/account-registration.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideZonelessChangeDetection } from '@angular/core';
 

@@ -3,7 +3,7 @@ import { NetworkSuggestionService } from './network-suggestion.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { NetworkUserComponent } from '../network-user/network-user.component';
 import { AsyncPipe } from '@angular/common';
-import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
+import { AnnounceChangesService } from '../../_sharedServices/announce-changes.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({

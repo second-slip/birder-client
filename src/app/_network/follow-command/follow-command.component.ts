@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { first, Subject, takeUntil } from 'rxjs';
-import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
+import { AnnounceChangesService } from '../../_sharedServices/announce-changes.service';
 import { INetworkUser } from '../i-network-user.dto';
 import { FollowCommandService } from './follow-command.service';
 

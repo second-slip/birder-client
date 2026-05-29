@@ -8,7 +8,7 @@ import { skip } from 'rxjs';
 import {
   apiNetworkUserArrayResponse,
   fakeNetworkUserModelArray,
-} from 'src/app/testing/network-test-helpers';
+} from '../../testing/network-test-helpers';
 import { INetworkUser } from '../i-network-user.dto';
 
 import { FollowersService } from './followers.service';

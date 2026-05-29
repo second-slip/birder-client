@@ -6,9 +6,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
-import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
-import { NavigationService } from 'src/app/_sharedServices/navigation.service';
+import { AuthenticationService } from '../../_auth/authentication.service';
+import { AnnounceChangesService } from '../../_sharedServices/announce-changes.service';
+import { NavigationService } from '../../_sharedServices/navigation.service';
 import { ObservationCrudService } from '../observation-crud.service';
 import { ObservationReadService } from '../observation-read.service';
 

@@ -9,16 +9,16 @@ import {
   expectText,
   findComponent,
   findEl,
-} from 'src/app/testing/element.spec-helper';
+} from '../../testing/element.spec-helper';
 import {
   lifeListLongList,
   lifeListModel,
-} from 'src/app/testing/list-test-helpers';
-import { ObservationCountService } from 'src/app/_analysis/observation-count/observation-count.service';
+} from '../../testing/list-test-helpers';
+import { ObservationCountService } from '../../_analysis/observation-count/observation-count.service';
 import { LifeListComponent } from './life-list.component';
 import { LifeListService } from './life-list.service';
 import { provideRouter } from '@angular/router';
-import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
+import { blankRoutesArray } from '../../testing/route-tests-helpers';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';

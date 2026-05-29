@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
-import { fakeNetworkUserModelArray } from 'src/app/testing/network-test-helpers';
+import { expectText, findComponent } from '../../testing/element.spec-helper';
+import { fakeNetworkUserModelArray } from '../../testing/network-test-helpers';
 import { NetworkSuggestionComponent } from './network-suggestion.component';
 import { NetworkSuggestionService } from './network-suggestion.service';
 import { MockComponent } from 'ng-mocks';
 import { NetworkUserComponent } from '../network-user/network-user.component';
 import { provideRouter } from '@angular/router';
-import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
-import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
+import { blankRoutesArray } from '../../testing/route-tests-helpers';
+import { AnnounceChangesService } from '../../_sharedServices/announce-changes.service';
 import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('NetworkSuggestionComponent', () => {

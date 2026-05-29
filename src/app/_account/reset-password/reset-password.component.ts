@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
-import { MatchOtherValidator, ValidatePassword } from 'src/app/_validators';
+import { MatchOtherValidator, ValidatePassword } from '../../_validators';
 import { AccountService } from '../account.service';
 import { IResetPassword } from './i-reset-password.dto';
 import { MatFormFieldModule } from '@angular/material/form-field';

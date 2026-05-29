@@ -7,18 +7,18 @@ import {
   findComponent,
   findEl,
   setFieldValue,
-} from 'src/app/testing/element.spec-helper';
+} from '../../testing/element.spec-helper';
 import {
   fakeNetworkUserModelArray,
   networkSearchTerm,
-} from 'src/app/testing/network-test-helpers';
+} from '../../testing/network-test-helpers';
 
 import { NetworkFindComponent } from './network-find.component';
 import { NetworkFindService } from './network-find.service';
 import { MockComponent } from 'ng-mocks';
 import { NetworkUserComponent } from '../network-user/network-user.component';
 import { provideRouter } from '@angular/router';
-import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
+import { blankRoutesArray } from '../../testing/route-tests-helpers';
 import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('NetworkFindComponent', () => {

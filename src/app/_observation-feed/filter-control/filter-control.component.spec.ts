@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
-import { IAuthUser } from 'src/app/_auth/i-auth-user.dto';
+import { AuthenticationService } from '../../_auth/authentication.service';
+import { IAuthUser } from '../../_auth/i-auth-user.dto';
 import { of } from 'rxjs';
 import { FilterControlComponent } from './filter-control.component';
 import { provideRouter } from '@angular/router';
-import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
+import { blankRoutesArray } from '../../testing/route-tests-helpers';
 import { provideZonelessChangeDetection } from '@angular/core';
 
 // ToDo: Test the template

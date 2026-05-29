@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterLink } from '@angular/router';
-import { FeaturesComponent } from 'src/app/_about/features/features.component';
+// import { FeaturesComponent } from '../../_about/features/features.component';
+import { FeaturesComponent } from '../../_about/features/features.component';
 import { AboutGeneralComponent } from '../about-general/about-general.component';
 
 @Component({

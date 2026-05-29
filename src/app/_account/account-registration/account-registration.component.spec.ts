@@ -11,9 +11,9 @@ import {
   password,
   confirmPassword,
   email
-} from 'src/app/testing/account-tests-helpers';
+} from '../../testing/account-tests-helpers';
 import { provideRouter, Routes } from '@angular/router';
-import { LoginComponent } from 'src/app/_auth/login/login.component';
+import { LoginComponent } from '../../_auth/login/login.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

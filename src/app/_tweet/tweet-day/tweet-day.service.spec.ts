@@ -7,7 +7,7 @@ import { skip } from 'rxjs/operators';
 import {
   fakeITweet,
   fakeTweetResponse,
-} from 'src/app/testing/tweet-day-test-helper';
+} from '../../testing/tweet-day-test-helper';
 import { ITweet } from '../i-tweet.dto';
 import { TweetDayService } from './tweet-day.service';
 import { provideHttpClient } from '@angular/common/http';

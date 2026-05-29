@@ -11,25 +11,25 @@ import { of, throwError } from 'rxjs';
 import {
   singleObservationAuthUser,
   updateObservationModel,
-} from 'src/app/testing/observation-test-helpers';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
-import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
-import { NavigationService } from 'src/app/_sharedServices/navigation.service';
+} from '../../testing/observation-test-helpers';
+import { AuthenticationService } from '../../_auth/authentication.service';
+import { AnnounceChangesService } from '../../_sharedServices/announce-changes.service';
+import { NavigationService } from '../../_sharedServices/navigation.service';
 import { ObservationCrudService } from '../observation-crud.service';
 import { ObservationReadComponent } from '../observation-read/observation-read.component';
 import { ObservationUpdateComponent } from './observation-update.component';
-import { userModel } from 'src/app/testing/auth-test-helpers';
+import { userModel } from '../../testing/auth-test-helpers';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { SelectSpeciesComponent } from '../select-species/select-species.component';
 import { SelectDateTimeComponent } from '../select-date-time/select-date-time.component';
-import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
+import { ReadWriteMapComponent } from '../../_map/read-write-map/read-write-map.component';
 import { MockComponent } from 'ng-mocks';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
-import { IAuthUser } from 'src/app/_auth/i-auth-user.dto';
+import { IAuthUser } from '../../_auth/i-auth-user.dto';
 import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 
 describe('ObservationUpdateComponent', () => {

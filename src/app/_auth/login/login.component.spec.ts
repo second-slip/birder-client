@@ -7,9 +7,9 @@ import {
   loginModel,
   password,
   username,
-} from 'src/app/testing/auth-test-helpers';
-import { ConfirmEmailComponent } from 'src/app/_account/confirm-email/confirm-email.component';
-import { NavigationService } from 'src/app/_sharedServices/navigation.service';
+} from '../../testing/auth-test-helpers';
+import { ConfirmEmailComponent } from '../../_account/confirm-email/confirm-email.component';
+import { NavigationService } from '../../_sharedServices/navigation.service';
 import { AuthenticationService } from '../authentication.service';
 import { LoginComponent } from './login.component';
 import { LoginService } from './login.service';
@@ -22,7 +22,7 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { TokenService } from '../token.service';
 import { AuthenticationFailureReason } from '../authentication-failure-reason';
-import { expectText } from 'src/app/testing/element.spec-helper';
+import { expectText } from '../../testing/element.spec-helper';
 import { provideZonelessChangeDetection } from '@angular/core';
 
 const routes: Routes = [

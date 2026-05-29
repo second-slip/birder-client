@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ObservationCountService } from 'src/app/_analysis/observation-count/observation-count.service';
+import { ObservationCountService } from '../../_analysis/observation-count/observation-count.service';
 import { UserProfileService } from './user-profile.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { FollowCommandComponent } from '../../_network/follow-command/follow-command.component';
 import { AsyncPipe, DatePipe } from '@angular/common';
-import { FollowersPluralPipe } from 'src/app/pipes/followers-plural.pipe';
-import { ObservationSummaryPipe } from 'src/app/pipes/observation-summary.pipe';
+import { FollowersPluralPipe } from '../../pipes/followers-plural.pipe';
+import { ObservationSummaryPipe } from '../../pipes/observation-summary.pipe';
 import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({

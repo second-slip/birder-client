@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { HomeComponent } from 'src/app/_home/home/home.component';
-import { NavigationService } from 'src/app/_sharedServices/navigation.service';
+import { HomeComponent } from '../../_home/home/home.component';
+import { NavigationService } from '../../_sharedServices/navigation.service';
 import { AuthenticationService } from '../authentication.service';
 import { LogoutComponent } from './logout.component';
 import { provideRouter, Routes } from '@angular/router';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { AuthenticationService } from '../../_auth/authentication.service';
 import { FeaturesComponent } from '../../_about/features/features.component';
 import { MatButtonModule } from '@angular/material/button';
 

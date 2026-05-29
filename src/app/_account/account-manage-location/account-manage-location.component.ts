@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { finalize, first, Subject, takeUntil } from 'rxjs';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
-import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
+import { AuthenticationService } from '../../_auth/authentication.service';
+import { ReadWriteMapComponent } from '../../_map/read-write-map/read-write-map.component';
 import { AccountService } from '../account.service';
 import { IManageLocation } from './i-manage-location.dto';
 import { AsyncPipe } from '@angular/common';

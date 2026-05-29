@@ -8,7 +8,7 @@ import {
   flickrUrl,
   photoUrlsArray,
   species,
-} from 'src/app/testing/flickr-recordings-api-tests-helper';
+} from '../../testing/flickr-recordings-api-tests-helper';
 import { FlickrService } from './flickr.service';
 import { provideHttpClient } from '@angular/common/http';
 import { provideZonelessChangeDetection } from '@angular/core';

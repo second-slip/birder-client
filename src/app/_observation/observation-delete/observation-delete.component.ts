@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
-import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
-import { NavigationService } from 'src/app/_sharedServices/navigation.service';
+import { AuthenticationService } from '../../_auth/authentication.service';
+import { AnnounceChangesService } from '../../_sharedServices/announce-changes.service';
+import { NavigationService } from '../../_sharedServices/navigation.service';
 import { ObservationCrudService } from '../observation-crud.service';
 import { ObservationReadService } from '../observation-read.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';

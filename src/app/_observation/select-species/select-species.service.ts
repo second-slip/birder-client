@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy, computed, inject, signal } from '@angular/core';
-import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
+import { IBirdSummary } from '../../_bird/i-bird-summary.dto';
 import { IBirdListState } from './i-bird-list-state.dto';
 import { Subject, takeUntil } from 'rxjs';
 

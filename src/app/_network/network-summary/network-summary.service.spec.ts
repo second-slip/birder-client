@@ -7,7 +7,7 @@ import { skip } from 'rxjs';
 import {
   apiNetworkSummaryResponse,
   fakeNetworkSummary,
-} from 'src/app/testing/network-test-helpers';
+} from '../../testing/network-test-helpers';
 import { INetworkSummary } from './i-network-summary.dto';
 import { NetworkSummaryService } from './network-summary.service';
 import { provideHttpClient } from '@angular/common/http';

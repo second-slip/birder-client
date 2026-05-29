@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { AuthenticationService } from '../../_auth/authentication.service';
 import { of } from 'rxjs';
 import { ObservationFeedItemComponent } from './observation-feed-item.component';
 import { IObservationFeed } from '../i-observation-feed.dto';
 import { IAuthUser } from '../../_auth/i-auth-user.dto';
-import { expectText } from 'src/app/testing/element.spec-helper';
+import { expectText } from '../../testing/element.spec-helper';
 import { provideRouter } from '@angular/router';
-import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
+import { blankRoutesArray } from '../../testing/route-tests-helpers';
 import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 
 describe('ObservationFeedItemComponent', () => {

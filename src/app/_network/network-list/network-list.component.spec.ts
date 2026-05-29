@@ -3,13 +3,13 @@ import { NetworkListComponent } from './network-list.component';
 import { MockComponent } from 'ng-mocks';
 import { FollowersComponent } from '../followers/followers.component';
 import { FollowingComponent } from '../following/following.component';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { AuthenticationService } from '../../_auth/authentication.service';
 import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatTabGroupHarness } from '@angular/material/tabs/testing';
-import { authUserName, userModel } from 'src/app/testing/auth-test-helpers';
+import { authUserName, userModel } from '../../testing/auth-test-helpers';
 import { ActivatedRoute } from '@angular/router';
 import { provideZonelessChangeDetection } from '@angular/core';
 

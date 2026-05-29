@@ -19,7 +19,7 @@ import {
   manageProfileModel,
   checkUsernameResponse,
   checkEmailResponse,
-} from 'src/app/testing/account-tests-helpers';
+} from '../../testing/account-tests-helpers';
 import { IManageProfile } from './account-manage-profile/i-manage-profile.dto';
 import { provideZonelessChangeDetection } from '@angular/core';
 

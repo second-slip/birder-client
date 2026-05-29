@@ -9,13 +9,13 @@ import {
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { finalize, Subject, takeUntil } from 'rxjs';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
-import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
-import { IObservationPosition } from 'src/app/_map/i-observation-position.dto';
-import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
-import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
-import { NavigationService } from 'src/app/_sharedServices/navigation.service';
-import { BirdsListValidator } from 'src/app/_validators';
+import { AuthenticationService } from '../../_auth/authentication.service';
+import { IBirdSummary } from '../../_bird/i-bird-summary.dto';
+import { IObservationPosition } from '../../_map/i-observation-position.dto';
+import { ReadWriteMapComponent } from '../../_map/read-write-map/read-write-map.component';
+import { AnnounceChangesService } from '../../_sharedServices/announce-changes.service';
+import { NavigationService } from '../../_sharedServices/navigation.service';
+import { BirdsListValidator } from '../../_validators';
 import { ObservationCrudService } from '../observation-crud.service';
 import { IUpdateObservation } from './i-update-observation.dto';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
@@ -27,7 +27,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { DateHelpersService } from 'src/app/_sharedServices/date-helpers.service';
+import { DateHelpersService } from '../../_sharedServices/date-helpers.service';
 
 @Component({
   selector: 'app-observation-update',

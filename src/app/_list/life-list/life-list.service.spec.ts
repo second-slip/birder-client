@@ -6,7 +6,7 @@ import { TestBed } from '@angular/core/testing';
 import {
   lifeListModel,
   lifeListResponse,
-} from 'src/app/testing/list-test-helpers';
+} from '../../testing/list-test-helpers';
 import { ILifeList } from './i-life-list.dto';
 import { LifeListService } from './life-list.service';
 import { provideZonelessChangeDetection } from '@angular/core';

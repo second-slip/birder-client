@@ -7,28 +7,28 @@ import {
   Validators,
 } from '@angular/forms';
 import { of, throwError } from 'rxjs';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
-import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
+import { AuthenticationService } from '../../_auth/authentication.service';
+import { AnnounceChangesService } from '../../_sharedServices/announce-changes.service';
 import { ObservationCrudService } from '../observation-crud.service';
 import { ObservationReadComponent } from '../observation-read/observation-read.component';
 import { ObservationCreateComponent } from './observation-create.component';
 import { SelectSpeciesComponent } from '../select-species/select-species.component';
 import { SelectDateTimeComponent } from '../select-date-time/select-date-time.component';
-import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
+import { ReadWriteMapComponent } from '../../_map/read-write-map/read-write-map.component';
 import { MockComponent } from 'ng-mocks';
 import { MatStepperModule } from '@angular/material/stepper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Router, Routes } from '@angular/router';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { BirdsListValidator } from 'src/app/_validators';
+import { BirdsListValidator } from '../../_validators';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { By } from '@angular/platform-browser';
-import { userModel } from 'src/app/testing/auth-test-helpers';
-import { fakeIBirdSummary } from 'src/app/testing/birds-helpers';
-import { findComponent } from 'src/app/testing/element.spec-helper';
+import { userModel } from '../../testing/auth-test-helpers';
+import { fakeIBirdSummary } from '../../testing/birds-helpers';
+import { findComponent } from '../../testing/element.spec-helper';
 import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 
 const routes: Routes = [{ path: 'login', component: ObservationReadComponent }];

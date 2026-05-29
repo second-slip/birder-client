@@ -2,10 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { SideMenuComponent } from './side-menu.component';
-import { ObservationCountComponent } from 'src/app/_analysis/observation-count/observation-count.component';
-import { TweetDayComponent } from 'src/app/_tweet/tweet-day/tweet-day.component';
-import { ObservationTopFiveComponent } from 'src/app/_analysis/observation-top-five/observation-top-five.component';
-import { NetworkSidebarComponent } from 'src/app/_network/network-sidebar/network-sidebar.component';
+import { ObservationCountComponent } from '../../_analysis/observation-count/observation-count.component';
+import { TweetDayComponent } from '../../_tweet/tweet-day/tweet-day.component';
+import { ObservationTopFiveComponent } from '../../_analysis/observation-top-five/observation-top-five.component';
+import { NetworkSidebarComponent } from '../../_network/network-sidebar/network-sidebar.component';
 import { MockComponent } from 'ng-mocks';
 import { provideZonelessChangeDetection } from '@angular/core';
 

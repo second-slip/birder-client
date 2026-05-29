@@ -3,13 +3,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
-import { expectText } from 'src/app/testing/element.spec-helper';
+import { expectText } from '../../testing/element.spec-helper';
 import {
   googleMapsApiResponse,
   testLatitude,
   testLongitude,
   testSearchAddress,
-} from 'src/app/testing/map-tests-helpers';
+} from '../../testing/map-tests-helpers';
 import { GeocodeService } from '../geocode.service';
 import { ReadWriteMapComponent } from './read-write-map.component';
 import { WindowGeolocateService } from '../window-geolocate.service';

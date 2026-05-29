@@ -4,7 +4,7 @@ import {
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { fakeNetworkUserModel } from 'src/app/testing/network-test-helpers';
+import { fakeNetworkUserModel } from '../../testing/network-test-helpers';
 import { INetworkUser } from '../i-network-user.dto';
 
 import { FollowCommandService } from './follow-command.service';

@@ -8,7 +8,7 @@ import { skip } from 'rxjs/operators';
 import {
   fakeBirdDetailResponse,
   fakeIBirdDetail,
-} from 'src/app/testing/birds-helpers';
+} from '../../testing/birds-helpers';
 
 import { BirdDetailService } from './bird-detail.service';
 import { IBirdDetail } from './i-bird-detail.dto';

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { fakeIBirdDetail } from 'src/app/testing/birds-helpers';
-import { expectText } from 'src/app/testing/element.spec-helper';
+import { fakeIBirdDetail } from '../../testing/birds-helpers';
+import { expectText } from '../../testing/element.spec-helper';
 
 import { BirdInfoComponent } from './bird-info.component';
 import { provideZonelessChangeDetection } from '@angular/core';

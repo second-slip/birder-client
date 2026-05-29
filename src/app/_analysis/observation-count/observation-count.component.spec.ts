@@ -4,15 +4,15 @@ import { of } from 'rxjs';
 import {
   fakeIObservationCount,
   fakeIObservationCountIsZero,
-} from 'src/app/testing/analysis-helpers';
+} from '../../testing/analysis-helpers';
 import { ObservationCountComponent } from './observation-count.component';
 import { ObservationCountService } from './observation-count.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { provideRouter } from '@angular/router';
-import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
+import { blankRoutesArray } from '../../testing/route-tests-helpers';
 import { MatButtonHarness } from '@angular/material/button/testing';
-import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
+import { AnnounceChangesService } from '../../_sharedServices/announce-changes.service';
 import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('ObservationCountComponent unit tests', () => {

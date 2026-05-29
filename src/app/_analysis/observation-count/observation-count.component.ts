@@ -3,8 +3,8 @@ import { ObservationCountService } from './observation-count.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { ObservationPluralPipe } from 'src/app/pipes/observation-plural.pipe';
-import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
+import { ObservationPluralPipe } from '../../pipes/observation-plural.pipe';
+import { AnnounceChangesService } from '../../_sharedServices/announce-changes.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({

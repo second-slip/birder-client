@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
-import { LoginComponent } from 'src/app/_auth/login/login.component';
+import { LoginComponent } from '../../_auth/login/login.component';
 import { AccountService } from '../account.service';
 import { AccountManagePasswordComponent } from './account-manage-password.component';
 import {
@@ -9,7 +9,7 @@ import {
   oldPassword,
   changePasswordModel,
   password
-} from 'src/app/testing/account-tests-helpers';
+} from '../../testing/account-tests-helpers';
 
 import { Routes, provideRouter } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

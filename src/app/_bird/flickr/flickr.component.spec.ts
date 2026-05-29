@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { photoUrlsArray } from 'src/app/testing/flickr-recordings-api-tests-helper';
+import { photoUrlsArray } from '../../testing/flickr-recordings-api-tests-helper';
 import { FlickrComponent } from './flickr.component';
 import { FlickrService } from './flickr.service';
 import { HarnessLoader } from '@angular/cdk/testing';

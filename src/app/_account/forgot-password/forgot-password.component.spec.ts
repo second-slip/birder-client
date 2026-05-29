@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccountService } from '../account.service';
 import { ForgotPasswordComponent } from './forgot-password.component';
 import { of, throwError } from 'rxjs';
-import { emailModel, email } from 'src/app/testing/account-tests-helpers';
+import { emailModel, email } from '../../testing/account-tests-helpers';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';

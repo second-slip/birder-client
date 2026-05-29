@@ -7,7 +7,7 @@ import { skip } from 'rxjs';
 import {
   fakeIObservationCount,
   fakeObservationCountResponse,
-} from 'src/app/testing/analysis-helpers';
+} from '../../testing/analysis-helpers';
 import { IObservationCount } from './i-observation-count.dto';
 
 import { ObservationCountService } from './observation-count.service';

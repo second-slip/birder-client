@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { expectText } from 'src/app/testing/element.spec-helper';
+import { expectText } from '../../testing/element.spec-helper';
 import {
   fakeNetworkUserModel,
   userName,
-} from 'src/app/testing/network-test-helpers';
-import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
+} from '../../testing/network-test-helpers';
+import { AnnounceChangesService } from '../../_sharedServices/announce-changes.service';
 import { INetworkUser } from '../i-network-user.dto';
 import { FollowCommandComponent } from './follow-command.component';
 import { FollowCommandService } from './follow-command.service';

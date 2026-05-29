@@ -6,12 +6,12 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
-import { fakeTweetArchiveArray } from 'src/app/testing/tweet-day-test-helper';
+import { expectText, findComponent } from '../../testing/element.spec-helper';
+import { fakeTweetArchiveArray } from '../../testing/tweet-day-test-helper';
 import { TweetDayArchiveComponent } from './tweet-day-archive.component';
 import { TweetDayArchiveService } from './tweet-day-archive.service';
 import { provideRouter } from '@angular/router';
-import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
+import { blankRoutesArray } from '../../testing/route-tests-helpers';
 
 describe('TweetDayArchiveComponent', () => {
   describe('test when success', () => {

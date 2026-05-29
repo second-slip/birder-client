@@ -6,18 +6,18 @@ import {
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { fakeIObservationCount } from 'src/app/testing/analysis-helpers';
-import { expectText } from 'src/app/testing/element.spec-helper';
+import { fakeIObservationCount } from '../../testing/analysis-helpers';
+import { expectText } from '../../testing/element.spec-helper';
 import {
   username,
   userProfileModel,
-} from 'src/app/testing/userProfile-tests-helpers';
-import { ObservationCountService } from 'src/app/_analysis/observation-count/observation-count.service';
+} from '../../testing/userProfile-tests-helpers';
+import { ObservationCountService } from '../../_analysis/observation-count/observation-count.service';
 import { IUserProfile } from './i-user-profile.dto';
 
 import { UserProfileComponent } from './user-profile.component';
 import { UserProfileService } from './user-profile.service';
-import { FollowCommandComponent } from 'src/app/_network/follow-command/follow-command.component';
+import { FollowCommandComponent } from '../../_network/follow-command/follow-command.component';
 import { MockComponent } from 'ng-mocks';
 import {
   NoopAnimationsModule,

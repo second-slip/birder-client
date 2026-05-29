@@ -8,12 +8,12 @@ import {
   expectTextToContain,
   findEl,
   setFieldValue,
-} from 'src/app/testing/element.spec-helper';
+} from '../../testing/element.spec-helper';
 import { AccountService } from '../account.service';
 import { DebugElement, provideZonelessChangeDetection } from '@angular/core';
 
 import { of, throwError } from 'rxjs';
-import { emailModel, email } from 'src/app/testing/account-tests-helpers';
+import { emailModel, email } from '../../testing/account-tests-helpers';
 
 const requiredFields = ['email'];
 

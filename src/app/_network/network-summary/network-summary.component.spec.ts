@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { userModel } from 'src/app/testing/auth-test-helpers';
-import { expectText } from 'src/app/testing/element.spec-helper';
-import { fakeNetworkSummary } from 'src/app/testing/network-test-helpers';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { userModel } from '../../testing/auth-test-helpers';
+import { expectText } from '../../testing/element.spec-helper';
+import { fakeNetworkSummary } from '../../testing/network-test-helpers';
+import { AuthenticationService } from '../../_auth/authentication.service';
 import { INetworkSummary } from './i-network-summary.dto';
 import { NetworkSummaryComponent } from './network-summary.component';
 import { NetworkSummaryService } from './network-summary.service';
 import { provideRouter } from '@angular/router';
-import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
-import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
+import { blankRoutesArray } from '../../testing/route-tests-helpers';
+import { AnnounceChangesService } from '../../_sharedServices/announce-changes.service';
 import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('NetworkSummaryComponent', () => {

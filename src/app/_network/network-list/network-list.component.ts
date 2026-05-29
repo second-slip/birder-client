@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { AuthenticationService } from '../../_auth/authentication.service';
 import { FollowingComponent } from '../following/following.component';
 import { FollowersComponent } from '../followers/followers.component';
 

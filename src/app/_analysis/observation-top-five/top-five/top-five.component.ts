@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
-import { LoadingComponent } from 'src/app/_loading/loading/loading.component';
-import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
+
 import { TopFiveService } from './top-five.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AnnounceChangesService } from '../../../_sharedServices/announce-changes.service';
+import { LoadingComponent } from '../../../_loading/loading/loading.component';
 
 @Component({
   selector: 'app-top-five',

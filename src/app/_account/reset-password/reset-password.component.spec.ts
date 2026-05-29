@@ -9,7 +9,7 @@ import {
   confirmPassword,
   email,
   code,
-} from 'src/app/testing/account-tests-helpers';
+} from '../../testing/account-tests-helpers';
 import { ActivatedRoute } from '@angular/router';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';

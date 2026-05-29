@@ -7,7 +7,7 @@ import {
 import {
   fakeIObservationTopFive,
   fakeTopObservationsResponse,
-} from 'src/app/testing/analysis-helpers';
+} from '../../testing/analysis-helpers';
 import { provideHttpClient } from '@angular/common/http';
 import { provideZonelessChangeDetection } from '@angular/core';
 

@@ -6,10 +6,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { BirdsDdlResponse } from 'src/app/testing/birds-helpers';
-import { findEl } from 'src/app/testing/element.spec-helper';
-import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
-import { BirdsListValidator } from 'src/app/_validators';
+import { BirdsDdlResponse } from '../../testing/birds-helpers';
+import { findEl } from '../../testing/element.spec-helper';
+import { IBirdSummary } from '../../_bird/i-bird-summary.dto';
+import { BirdsListValidator } from '../../_validators';
 import { SelectSpeciesComponent } from './select-species.component';
 import { SelectSpeciesService } from './select-species.service';
 import { provideAnimations } from '@angular/platform-browser/animations';

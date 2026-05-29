@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
-import { fakeNetworkUserModelArray } from 'src/app/testing/network-test-helpers';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { expectText, findComponent } from '../../testing/element.spec-helper';
+import { fakeNetworkUserModelArray } from '../../testing/network-test-helpers';
+import { AuthenticationService } from '../../_auth/authentication.service';
 import { FollowersComponent } from './followers.component';
 import { FollowersService } from './followers.service';
 import { NetworkUserComponent } from '../network-user/network-user.component';

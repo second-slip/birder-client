@@ -10,22 +10,22 @@ import {
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { userModel } from 'src/app/testing/auth-test-helpers';
+import { userModel } from '../../testing/auth-test-helpers';
 import {
   expectText,
   expectTextToContain,
   findComponent,
-} from 'src/app/testing/element.spec-helper';
+} from '../../testing/element.spec-helper';
 import {
   singleObservationView,
   singleObservationViewAuthUser,
-} from 'src/app/testing/observation-test-helpers';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
-import { NavigationService } from 'src/app/_sharedServices/navigation.service';
+} from '../../testing/observation-test-helpers';
+import { AuthenticationService } from '../../_auth/authentication.service';
+import { NavigationService } from '../../_sharedServices/navigation.service';
 import { ObservationReadService } from '../observation-read.service';
 import { ObservationReadComponent } from './observation-read.component';
-import { ReadOnlyMapComponent } from 'src/app/_map/read-only-map/read-only-map.component';
-import { ViewOnlyNotesComponent } from 'src/app/_observation-note/view-notes/view-only-notes.component';
+import { ReadOnlyMapComponent } from '../../_map/read-only-map/read-only-map.component';
+import { ViewOnlyNotesComponent } from '../../_observation-note/view-notes/view-only-notes.component';
 import { NavigationMenuComponent } from '../navigation-menu/navigation-menu.component';
 import { MockComponent } from 'ng-mocks';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';

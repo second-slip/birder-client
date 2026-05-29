@@ -6,7 +6,7 @@ import { TestBed } from '@angular/core/testing';
 import {
   recordingsResponse,
   species,
-} from 'src/app/testing/flickr-recordings-api-tests-helper';
+} from '../../testing/flickr-recordings-api-tests-helper';
 import { IRecording } from './i-recording.dto';
 import { RecordingsService } from './recordings.service';
 import { provideHttpClient } from '@angular/common/http';

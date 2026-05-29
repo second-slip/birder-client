@@ -3,7 +3,7 @@ import {
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { BirdsDdlResponse } from 'src/app/testing/birds-helpers';
+import { BirdsDdlResponse } from '../../testing/birds-helpers';
 import { SelectSpeciesService } from './select-species.service';
 import { provideHttpClient } from '@angular/common/http';
 import { provideZonelessChangeDetection } from '@angular/core';

@@ -7,7 +7,7 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { AuthenticationService } from '../../_auth/authentication.service';
 import { IObservationFeed } from '../i-observation-feed.dto';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';

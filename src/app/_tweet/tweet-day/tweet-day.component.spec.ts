@@ -4,10 +4,10 @@ import { TweetDayComponent } from './tweet-day.component';
 import { TweetDayService } from './tweet-day.service';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
-import { fakeITweet } from 'src/app/testing/tweet-day-test-helper';
-import { findEl } from 'src/app/testing/element.spec-helper';
-import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
+import { expectText, findComponent } from '../../testing/element.spec-helper';
+import { fakeITweet } from '../../testing/tweet-day-test-helper';
+import { findEl } from '../../testing/element.spec-helper';
+import { blankRoutesArray } from '../../testing/route-tests-helpers';
 import { provideRouter } from '@angular/router';
 
 describe('TweetDayComponent unit tests', () => {

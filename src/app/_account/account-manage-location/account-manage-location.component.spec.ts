@@ -1,7 +1,7 @@
 import { AccountManageLocationComponent } from './account-manage-location.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { expectText } from 'src/app/testing/element.spec-helper';
+import { expectText } from '../../testing/element.spec-helper';
 import { AccountService } from '../account.service';
 import {
   NO_ERRORS_SCHEMA,
@@ -13,14 +13,14 @@ import { MockComponent } from 'ng-mocks';
 import {
   locationModel,
   newAccountLocationMapMarker,
-} from 'src/app/testing/account-tests-helpers';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
-import { ReadWriteMapComponent } from 'src/app/_map/read-write-map/read-write-map.component';
+} from '../../testing/account-tests-helpers';
+import { AuthenticationService } from '../../_auth/authentication.service';
+import { ReadWriteMapComponent } from '../../_map/read-write-map/read-write-map.component';
 import {
   originalLatitude,
   originalLongitude,
   userModel,
-} from 'src/app/testing/auth-test-helpers';
+} from '../../testing/auth-test-helpers';
 import { By } from '@angular/platform-browser';
 import { provideRouter, Routes } from '@angular/router';
 

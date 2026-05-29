@@ -10,7 +10,7 @@ import { ITweet } from '../i-tweet.dto';
 import {
   fakeTweetArchiveArray,
   fakeTweetArchiveResponse,
-} from 'src/app/testing/tweet-day-test-helper';
+} from '../../testing/tweet-day-test-helper';
 import { provideHttpClient } from '@angular/common/http';
 import { provideZonelessChangeDetection } from '@angular/core';
 

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NavigationMenuComponent } from './navigation-menu.component';
 import { provideRouter } from '@angular/router';
-import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
+import { blankRoutesArray } from '../../testing/route-tests-helpers';
 import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('NavigationMenuComponent', () => {

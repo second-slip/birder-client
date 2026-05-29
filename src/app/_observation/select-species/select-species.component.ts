@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { SelectSpeciesService } from '../select-species/select-species.service';
-import { IBirdSummary } from 'src/app/_bird/i-bird-summary.dto';
+import { IBirdSummary } from '../../_bird/i-bird-summary.dto';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';

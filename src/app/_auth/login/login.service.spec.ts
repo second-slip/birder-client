@@ -7,7 +7,7 @@ import { TestBed } from '@angular/core/testing';
 import {
   authSuccessResult,
   loginModel,
-} from 'src/app/testing/auth-test-helpers';
+} from '../../testing/auth-test-helpers';
 import { IAuthenticationResult } from '../i-authentication-result.dto';
 import { LoginService } from './login.service';
 import { provideZonelessChangeDetection } from '@angular/core';

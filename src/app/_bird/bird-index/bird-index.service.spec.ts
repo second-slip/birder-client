@@ -3,7 +3,7 @@ import { BirdIndexService } from './bird-index.service';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { skip } from 'rxjs';
 import { IBirdSummary } from '../i-bird-summary.dto';
-import { fakeBirdIndexResponse, fakeIBirdArray } from 'src/app/testing/birds-helpers';
+import { fakeBirdIndexResponse, fakeIBirdArray } from '../../testing/birds-helpers';
 import { provideHttpClient } from '@angular/common/http';
 import { provideZonelessChangeDetection } from '@angular/core';
 

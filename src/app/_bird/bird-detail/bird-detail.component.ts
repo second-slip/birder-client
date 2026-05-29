@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { NavigationService } from 'src/app/_sharedServices/navigation.service';
+import { NavigationService } from '../../_sharedServices/navigation.service';
 import { BirdDetailService } from './bird-detail.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { RecordingsComponent } from '../recordings/recordings.component';
 import { FlickrComponent } from '../flickr/flickr.component';
 import { BirdInfoComponent } from '../bird-info/bird-info.component';
 import { AsyncPipe } from '@angular/common';
-import { LoremIpsumComponent } from 'src/app/lorem-ipsum/lorem-ipsum.component';
+import { LoremIpsumComponent } from '../../lorem-ipsum/lorem-ipsum.component';
 import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({

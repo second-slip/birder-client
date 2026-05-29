@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReadOnlyMapComponent } from './read-only-map.component';
 import { throwError } from 'rxjs';
-import { expectText } from 'src/app/testing/element.spec-helper';
+import { expectText } from '../../testing/element.spec-helper';
 import {
   NO_ERRORS_SCHEMA,
   provideZonelessChangeDetection,
 } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { By } from '@angular/platform-browser';
-import { fakeLocationMarker } from 'src/app/testing/map-tests-helpers';
+import { fakeLocationMarker } from '../../testing/map-tests-helpers';
 
 describe('ReadOnlyMapComponent', () => {
   let component: ReadOnlyMapComponent;

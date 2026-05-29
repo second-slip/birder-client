@@ -2,14 +2,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TopFiveComponent } from './top-five.component';
 import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { TopFiveService } from './top-five.service';
-import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
+import { AnnounceChangesService } from '../../_sharedServices/announce-changes.service';
 import { provideRouter } from '@angular/router';
-import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
+import { blankRoutesArray } from '../../testing/route-tests-helpers';
 import { of } from 'rxjs';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader, parallel } from '@angular/cdk/testing';
 import { MatTableHarness } from '@angular/material/table/testing';
-import { fakeIObservationTopFive } from 'src/app/testing/analysis-helpers';
+import { fakeIObservationTopFive } from '../../testing/analysis-helpers';
 import { By } from '@angular/platform-browser';
 import { MatButtonHarness } from '@angular/material/button/testing';
 

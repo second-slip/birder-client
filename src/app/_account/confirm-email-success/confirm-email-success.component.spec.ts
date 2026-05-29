@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfirmEmailSuccessComponent } from './confirm-email-success.component';
-import { LoginComponent } from 'src/app/_auth/login/login.component';
+import { LoginComponent } from '../../_auth/login/login.component';
 import { MockComponent } from 'ng-mocks';
 import { provideZonelessChangeDetection } from '@angular/core';
 

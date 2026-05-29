@@ -6,11 +6,11 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { fakeIBirdArray } from 'src/app/testing/birds-helpers';
-import { expectText, findComponent } from 'src/app/testing/element.spec-helper';
+import { fakeIBirdArray } from '../../testing/birds-helpers';
+import { expectText, findComponent } from '../../testing/element.spec-helper';
 import { BirdIndexComponent } from './bird-index.component';
 import { BirdIndexService } from './bird-index.service';
-import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
+import { blankRoutesArray } from '../../testing/route-tests-helpers';
 import { provideRouter } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HarnessLoader } from '@angular/cdk/testing';

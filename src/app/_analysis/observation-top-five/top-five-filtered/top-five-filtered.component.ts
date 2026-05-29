@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { TopFiveFilterService } from './top-five-filter.service';
-import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
 import { MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
-import { LoadingComponent } from 'src/app/_loading/loading/loading.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LoadingComponent } from '../../../_loading/loading/loading.component';
+import { AnnounceChangesService } from '../../../_sharedServices/announce-changes.service';
 
 @Component({
   selector: 'app-top-five-filtered',

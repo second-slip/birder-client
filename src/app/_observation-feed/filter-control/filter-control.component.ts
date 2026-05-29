@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { AuthenticationService } from '../../_auth/authentication.service';
 import { RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';

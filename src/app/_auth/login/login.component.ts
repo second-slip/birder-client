@@ -6,7 +6,7 @@ import { AuthenticationService } from '../authentication.service';
 import { Ilogin } from './ilogin.dto';
 import { LoginService } from './login.service';
 import { AuthenticationFailureReason } from '../authentication-failure-reason';
-import { NavigationService } from 'src/app/_sharedServices/navigation.service';
+import { NavigationService } from '../../_sharedServices/navigation.service';
 import { IAuthenticationResult } from '../i-authentication-result.dto';
 import { TokenService } from '../token.service';
 import { MatButtonModule } from '@angular/material/button';

@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthenticationService } from 'src/app/_auth/authentication.service';
+import { AuthenticationService } from '../../_auth/authentication.service';
 import { NetworkSummaryService } from './network-summary.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { AnnounceChangesService } from 'src/app/_sharedServices/announce-changes.service';
+import { AnnounceChangesService } from '../../_sharedServices/announce-changes.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({

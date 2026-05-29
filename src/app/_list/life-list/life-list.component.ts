@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ObservationCountService } from 'src/app/_analysis/observation-count/observation-count.service';
+import { ObservationCountService } from '../../_analysis/observation-count/observation-count.service';
 import { LifeListService } from './life-list.service';
 import { LoadingComponent } from '../../_loading/loading/loading.component';
 import { RouterLink } from '@angular/router';

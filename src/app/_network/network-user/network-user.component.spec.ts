@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { expectText } from 'src/app/testing/element.spec-helper';
+import { expectText } from '../../testing/element.spec-helper';
 import {
   fakeNetworkUserModel,
   userName,
-} from 'src/app/testing/network-test-helpers';
+} from '../../testing/network-test-helpers';
 import { NetworkUserComponent } from './network-user.component';
 import { FollowCommandComponent } from '../follow-command/follow-command.component';
 import { MockComponent } from 'ng-mocks';
 import { provideRouter } from '@angular/router';
-import { blankRoutesArray } from 'src/app/testing/route-tests-helpers';
+import { blankRoutesArray } from '../../testing/route-tests-helpers';
 import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('NetworkUserComponent', () => {

@@ -4,12 +4,10 @@ import {
   HttpTestingController,
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
-import {
-  fakeIObservationTopFive,
-  fakeTopObservationsResponse,
-} from '../../testing/analysis-helpers';
+
 import { provideHttpClient } from '@angular/common/http';
 import { provideZonelessChangeDetection } from '@angular/core';
+import { fakeTopObservationsResponse, fakeIObservationTopFive } from '../../../testing/analysis-helpers';
 
 const _apiUrl = 'api/list/top';
 

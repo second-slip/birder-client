@@ -9,7 +9,7 @@ import { provideHttpClient } from '@angular/common/http';
 import {
   fakeIObservationTopFive,
   fakeTopObservationsResponse,
-} from '../../testing/analysis-helpers';
+} from '../../../testing/analysis-helpers';
 import { provideZonelessChangeDetection } from '@angular/core';
 
 const _days = 30;

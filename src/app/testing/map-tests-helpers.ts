@@ -1,4 +1,5 @@
-import { environment } from "src/environments/environment";
+
+import { environment } from "../../environments/environment";
 import { IObservationPosition } from "../_map/i-observation-position.dto";
 
 export const searchTerm = 'London';

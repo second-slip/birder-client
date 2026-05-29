@@ -1,8 +1,9 @@
 import { writeFile } from 'fs';
 
 // import {name, version} from '../package.json';
+// import { environment } from "../../environments/environment";
 
-const targetPath = './src/environments/environment.prod.ts';
+const targetPath = './../../environments/environment.prod.ts';
 
 const envConfigFile = `export const environment = {
     production: true,
